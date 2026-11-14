@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-jakarta), var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+  --font-heading: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+  --font-serif: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-space-mono), "Space Mono", monospace;
+
+  --color-white: #ffffff;
+  --color-cream: #f8f5ef;
+  --color-beige: #f0eadf;
+  --color-charcoal: #292b27;
+  --color-muted: #77766f;
+  --color-gold: #c6a15b;
+  --color-border-subtle: #eae5dc;
+}
+
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f5ef;
+  --bg-beige: #f0eadf;
+  --text-primary: #292b27;
+  --text-secondary: #77766f;
+  --gold: #c6a15b;
+  --border: #eae5dc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+@layer base {
+  body {
+    margin: 0;
+    background-color: #ffffff;
+    color: #292b27;
+    font-family:
+      var(--font-jakarta),
+      var(--font-inter),
+      system-ui,
+      -apple-system,
+      sans-serif;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+    color: inherit;
+    letter-spacing: -0.025em;
+  }
+}
+
+/* Custom minimal scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c6a15b;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b5924d;
+}
+
+/* Lenis smooth scrolling rules */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}

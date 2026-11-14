@@ -1,0 +1,1028 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Project } from "@/types/project";
+import { useLanguage } from "@/hooks/useLanguage";
+import ProjectGallery from "./ProjectGallery";
+import {
+  MapPin,
+  ExternalLink,
+  Download,
+  Calendar,
+  MessageSquare,
+  Phone,
+  ShieldCheck,
+  CheckCircle2,
+  FileText,
+  ArrowLeft,
+  Share2,
+  Map,
+  Layers,
+  Sparkles,
+  Film,
+  Play,
+  Navigation,
+  ZoomIn,
+  X,
+  Car,
+  HeartPulse,
+  GraduationCap,
+  Droplets,
+  TrendingUp,
+  DollarSign,
+  Star,
+  Home,
+} from "lucide-react";
+import { PROJECT_DETAILS_MAP } from "@/data/projectDetailsExtra";
+
+interface ProjectDetailsProps {
+  project: Project;
+}
+
+export default function ProjectDetails({ project }: ProjectDetailsProps) {
+  const router = useRouter();
+  const { language } = useLanguage();
+  const [copied, setCopied] = useState(false);
+  const [activeVideoIndex, setActiveVideoIndex] = useState(0);
+  const [blueprintZoomed, setBlueprintZoomed] = useState(false);
+
+  useEffect(() => {
+    if (blueprintZoomed) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [blueprintZoomed]);
+
+  const videos = project.videoUrls && project.videoUrls.length > 0
+    ? project.videoUrls
+    : project.videoUrl
+    ? [project.videoUrl]
+    : [];
+  const isCompleted = project.status === "completed" || project.projectType === "completed";
+
+  const handleShare = () => {
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  const handleBrochureDownload = () => {
+    const text = encodeURIComponent(
+      `Hello Surya Promoters, please share the official brochure and documentation pack for ${project.title.en}.`
+    );
+    window.open(`https://wa.me/917708966452?text=${text}`, "_blank");
+  };
+
+  return (
+    <article className="min-h-screen bg-[#FFFFFF] text-[#242820] pt-6 pb-12">
+      {/* Back Navigation Bar */}
+      <div className="w-full max-w-[1760px] mx-auto px-6 sm:px-10 lg:px-16 2xl:px-24 mb-6">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => {
+                if (typeof window !== "undefined" && window.history.length > 1) {
+                  router.back();
+                } else {
+                  router.push("/projects");
+                }
+              }}
+              className="group inline-flex items-center gap-2 rounded-xl bg-white px-3.5 py-2 text-xs font-mono font-bold uppercase tracking-wider text-[#111827] border border-[#E8E2D7] shadow-2xs hover:bg-[#111827] hover:text-white hover:border-[#111827] transition-all cursor-pointer"
+              title="Go back to previous page"
+            >
+              <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1 text-[#C6A15B] group-hover:text-[#EAB308]" />
+              <span>{language === "ta" ? "முந்தைய பக்கம்" : "Back"}</span>
+            </button>
+
+            <Link
+              href="/projects"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-[#F8F5EF] px-3 py-2 text-xs font-mono font-semibold uppercase tracking-wider text-[#77766F] border border-[#E8E2D7] hover:text-[#111827] hover:bg-white transition"
+            >
+              <span>{language === "ta" ? "அனைத்து திட்டங்கள்" : "All Projects"}</span>
+            </Link>
+
+            <Link
+              href="/"
+              className="hidden sm:inline-flex items-center gap-1.5 rounded-xl bg-[#F8F5EF] px-3 py-2 text-xs font-mono font-semibold uppercase tracking-wider text-[#77766F] border border-[#E8E2D7] hover:text-[#111827] hover:bg-white transition"
+            >
+              <span>{language === "ta" ? "முகப்பு" : "Home"}</span>
+            </Link>
+          </div>
+
+          <button
+            onClick={handleShare}
+            className="inline-flex items-center gap-1.5 rounded-full border border-[#E8E2D7] bg-[#F8F5EF] px-3.5 py-1.5 text-xs text-[#242820] transition hover:border-[#C6A15B] cursor-pointer"
+          >
+            <Share2 className="h-3.5 w-3.5 text-[#C6A15B]" />
+            <span>{copied ? "Link Copied!" : "Share Property"}</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Project Hero Banner */}
+      <div className="w-full max-w-[1760px] mx-auto px-6 sm:px-10 lg:px-16 2xl:px-24">
+        <div className="relative aspect-[21/9] min-h-[360px] w-full overflow-hidden rounded-2xl border border-[#E8E2D7] bg-[#F8F5EF] shadow-sm">
+          <Image
+            src={project.heroImage}
+            alt={project.title[language]}
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+          />
+          {/* Dual High-Contrast Dark Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/20" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
+
+          {/* Overlaid Details */}
+          <div className="absolute bottom-8 left-6 right-6 md:left-12 md:right-12 z-10">
+            <div className="flex flex-wrap items-center gap-2.5">
+              <span className="rounded-full bg-white/95 px-3.5 py-1 font-mono text-xs uppercase tracking-wider text-[#242820] shadow-xs border border-[#E8E2D7]">
+                {project.categoryLabel[language]}
+              </span>
+
+              {/* Status Badge */}
+              {isCompleted ? (
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-700/90 px-3.5 py-1 text-xs font-mono font-semibold uppercase tracking-wider text-white shadow-xs backdrop-blur-xs">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-blue-300" />
+                  {language === "ta" ? "நிறைவடைந்தது (100% Delivered)" : "Completed Project (Delivered)"}
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-700/90 px-3.5 py-1 text-xs font-mono font-semibold uppercase tracking-wider text-white shadow-xs backdrop-blur-xs">
+                  <span className="h-2 w-2 rounded-full bg-emerald-300 animate-pulse" />
+                  {language === "ta" ? "நடைபெறும் திட்டம் (Running)" : "Running Project (Ongoing)"}
+                </span>
+              )}
+
+              <span className="rounded-full bg-white/90 px-3.5 py-1 text-xs text-[#242820] shadow-xs border border-[#E8E2D7] flex items-center gap-1.5">
+                <ShieldCheck className="h-3.5 w-3.5 text-[#C6A15B]" />
+                <span>100% Documented Clear Titles</span>
+              </span>
+            </div>
+
+            <h1
+              className="mt-4 font-display text-3xl font-extrabold text-white md:text-5xl lg:text-6xl drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] tracking-tight"
+              style={{ color: "#FFFFFF" }}
+            >
+              {project.title[language]}
+            </h1>
+
+            <div
+              className="mt-3 flex flex-wrap items-center gap-4 text-xs md:text-sm font-medium text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]"
+              style={{ color: "#FFFFFF" }}
+            >
+              <div className="flex items-center gap-1.5">
+                <MapPin className="h-4 w-4 text-[#C6A15B]" />
+                <span className="text-white font-medium drop-shadow-sm">{project.location[language]}</span>
+              </div>
+              <a
+                href={project.googleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-[#E6B84D] underline hover:text-white font-semibold"
+              >
+                <span>Google Maps</span>
+                <ExternalLink className="h-3 w-3" />
+              </a>
+
+              {project.mapBhoomiUrl && (
+                <a
+                  href={project.mapBhoomiUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#EAB308] px-3.5 py-1 text-xs font-bold text-[#0A0D12] shadow-sm hover:bg-[#ca9a07] transition"
+                >
+                  <span className="h-2 w-2 rounded-full bg-[#0A0D12] animate-pulse" />
+                  <span>{language === "ta" ? "நேரடி 3D வரைபடம் (MapBhoomi)" : "Interactive 3D/2D Map (MapBhoomi)"}</span>
+                  <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content Layout */}
+      <div className="w-full max-w-[1760px] mx-auto px-6 sm:px-10 lg:px-16 2xl:px-24 mt-8 md:mt-10 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
+        {/* Left Column: Narrative, Suitable For, Highlights, Gallery */}
+        <div className="lg:col-span-8 space-y-12">
+          {/* Overview Section */}
+          <div className="rounded-2xl border border-[#E8E2D7] bg-[#F8F5EF] p-8 shadow-xs">
+            <h2 className="font-display text-2xl font-normal text-[#242820]">
+              {language === "ta" ? "திட்ட கண்ணோட்டம்" : "Property Overview"}
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-[#77766F]">
+              {project.fullOverview[language]}
+            </p>
+
+            {/* Suitable For */}
+            <div className="mt-8 border-t border-[#E8E2D7] pt-6">
+              <h3 className="font-display text-lg font-medium text-[#242820]">
+                {language === "ta" ? "பொருத்தமான பயன்பாடுகள் & சாத்தியங்கள்" : "Recommended Suitability & Development Potential"}
+              </h3>
+              <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {project.suitableFor[language].map((item, idx) => (
+                  <div key={idx} className="flex items-start gap-2.5 text-sm text-[#242820]">
+                    <CheckCircle2 className="h-4 w-4 text-[#C6A15B] shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Nearby Features & Strategic Connectivity */}
+            {project.nearbyFeatures && project.nearbyFeatures.length > 0 && (
+              <div className="mt-8 border-t border-[#E8E2D7] pt-6">
+                <div className="flex items-center justify-between gap-3 mb-4">
+                  <h3 className="font-display text-lg font-medium text-[#242820]">
+                    {language === "ta" ? "அருகிலுள்ள முக்கிய வசதிகள் & இணைப்பு" : "Nearby Landmarks & Connectivity"}
+                  </h3>
+                  <span className="inline-flex items-center gap-1 font-mono text-[10px] uppercase font-bold tracking-wider text-[#C6A15B] bg-[#F8F5EF] px-2.5 py-1 rounded-md border border-[#E8E2D7]">
+                    <MapPin className="h-3 w-3" />
+                    Strategic Location
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {project.nearbyFeatures.map((feat, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-center justify-between p-3.5 rounded-xl border border-[#E8E2D7] bg-[#F8F5EF]/60 hover:bg-[#F8F5EF] transition"
+                    >
+                      <div className="flex items-center gap-2.5 min-w-0 pr-2">
+                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#C6A15B]/15 text-[#C6A15B]">
+                          <Navigation className="h-3.5 w-3.5" />
+                        </span>
+                        <span className="text-sm font-medium text-[#242820] truncate">
+                          {feat.name[language]}
+                        </span>
+                      </div>
+                      <span className="shrink-0 font-mono text-xs font-bold text-[#142C23] bg-white px-2.5 py-1 rounded-lg border border-[#E8E2D7] shadow-2xs">
+                        {feat.distance[language]}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Highlights */}
+            <div className="mt-8 border-t border-[#E8E2D7] pt-6">
+              <h3 className="font-display text-lg font-medium text-[#242820]">
+                {language === "ta" ? "திட்டத்தின் சிறப்பம்சங்கள்" : "Location & Survey Highlights"}
+              </h3>
+              <div className="mt-4 space-y-2.5">
+                {project.highlights[language].map((highlight, idx) => (
+                  <div key={idx} className="flex items-start gap-2.5 text-sm text-[#77766F]">
+                    <span className="font-mono text-xs text-[#C6A15B] shrink-0 mt-0.5">
+                      0{idx + 1}.
+                    </span>
+                    <span>{highlight}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Photo Gallery */}
+          <div>
+            <h2 className="font-display text-2xl font-normal text-[#242820] mb-6">
+              {language === "ta" ? "திட்ட புகைப்படங்கள்" : "Property Photo Gallery"}
+            </h2>
+            <ProjectGallery
+              images={project.galleryImages}
+              title={project.title[language]}
+            />
+          </div>
+
+          {/* On-Site Drone & Video Tour Section */}
+          {videos.length > 0 ? (
+            <div className="rounded-3xl border border-[#E8E2D7] bg-[#F8F5EF] p-6 sm:p-8 shadow-xs">
+              <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#142C23] text-[#E6B84D] shadow-md">
+                    <Film className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#C6A15B]">
+                        {language === "ta" ? "நேரடி கள ஆய்வு வீடியோ" : "ON-SITE DRONE FOOTAGE"}
+                      </span>
+                      <span className="inline-flex items-center gap-1 rounded-full bg-emerald-700/10 border border-emerald-600/30 px-2 py-0.5 text-[10px] font-mono font-bold text-emerald-800">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-600 animate-pulse" />
+                        HD VIDEO
+                      </span>
+                    </div>
+                    <h3 className="font-display text-xl sm:text-2xl font-bold text-[#242820] mt-0.5">
+                      {language === "ta"
+                        ? "நேரடி கள வீடியோ & ட்ரோன் பார்வை"
+                        : "On-Site Aerial & Walkthrough Video"}
+                    </h3>
+                  </div>
+                </div>
+                {videos.length > 1 && (
+                  <span className="font-mono text-xs font-semibold text-[#77766F] bg-white px-3 py-1.5 rounded-xl border border-[#E8E2D7]">
+                    {language === "ta" ? `${videos.length} வீடியோ காட்சிகள்` : `${videos.length} Videos Available`}
+                  </span>
+                )}
+              </div>
+
+              {/* Video Player */}
+              <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-black shadow-lg border border-black/10">
+                <video
+                  key={videos[activeVideoIndex]}
+
+                  poster={project.heroImage}
+                  controls
+                  playsInline
+                  preload="metadata"
+                  className="h-full w-full object-cover"
+                >
+                  <source
+                    src={videos[activeVideoIndex]}
+                    type={videos[activeVideoIndex].endsWith(".webm") ? "video/webm" : "video/mp4"}
+                  />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+
+              {/* Multi-video switcher buttons if > 1 */}
+              {videos.length > 1 && (
+                <div className="mt-4 flex flex-wrap items-center gap-2.5">
+                  <span className="text-xs font-mono uppercase tracking-wider text-[#77766F] mr-1">
+                    {language === "ta" ? "வீடியோ தேர்வு:" : "Select Video:"}
+                  </span>
+                  {videos.map((vid, idx) => {
+                    const isTour = vid.includes("tour") || vid.includes("0k");
+                    const isShowcase = vid.includes("showcase");
+                    let clipLabel = language === "ta" ? `வீடியோ 0${idx + 1}` : `Clip 0${idx + 1}`;
+                    if (isTour) {
+                      clipLabel = language === "ta" ? "நேரடி பண்ணை வீடியோ" : "On-Site Agro Tour";
+                    } else if (isShowcase) {
+                      clipLabel = language === "ta" ? "திட்ட கண்ணோட்டம்" : "Project Showcase";
+                    }
+
+                    return (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => setActiveVideoIndex(idx)}
+                        className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-mono font-bold uppercase tracking-wider transition cursor-pointer ${
+                          activeVideoIndex === idx
+                            ? "bg-[#142C23] text-[#E6B84D] shadow-md ring-2 ring-[#C6A15B]"
+                            : "bg-white text-[#242820] border border-[#E8E2D7] hover:border-[#C6A15B] hover:bg-[#FAF8F5]"
+                        }`}
+                      >
+                        <Play className={`h-3 w-3 ${activeVideoIndex === idx ? "fill-[#E6B84D] text-[#E6B84D]" : "text-[#77766F]"}`} />
+                        <span>{clipLabel}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+
+              <p className="mt-4 text-xs text-[#77766F] leading-relaxed">
+                {language === "ta"
+                  ? "திட்டத்தின் உண்மையான கள நிலவரம், அகலமான அணுகு சாலை மற்றும் நில எல்லைகள் ஆகியவை நேரடியாக பதிவு செய்யப்பட்டுள்ளது."
+                  : "Authentic drone and ground perspective capturing actual road access, survey boundaries, and surrounding connectivity."}
+              </p>
+            </div>
+          ) : (
+            <div className="rounded-3xl border border-[#E8E2D7] bg-[#F8F5EF] p-6 sm:p-8 shadow-xs">
+              <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#77766F]/15 text-[#77766F]">
+                    <Film className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#77766F]">
+                        {language === "ta" ? "கள ஆய்வு வீடியோ" : "ON-SITE DRONE FOOTAGE"}
+                      </span>
+                      <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/10 border border-amber-500/30 px-2.5 py-0.5 text-[10px] font-mono font-bold text-amber-800">
+                        {language === "ta" ? "வீடியோ தற்போது கிடைக்கவில்லை" : "VIDEO CURRENTLY UNAVAILABLE"}
+                      </span>
+                    </div>
+                    <h3 className="font-display text-xl sm:text-2xl font-bold text-[#242820] mt-0.5">
+                      {language === "ta" ? "நேரடி வீடியோ காட்சி" : "On-Site Aerial & Video Tour"}
+                    </h3>
+                  </div>
+                </div>
+              </div>
+
+              <div className="relative aspect-[21/9] min-h-[220px] w-full overflow-hidden rounded-2xl bg-gradient-to-br from-[#1C201C] to-[#2B3028] border border-white/10 p-6 sm:p-8 flex flex-col items-center justify-center text-center shadow-inner">
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/10 text-white/70 mb-3 backdrop-blur-sm">
+                  <Film className="h-7 w-7 text-amber-400" />
+                </div>
+                <h4 className="font-display text-lg sm:text-xl font-bold text-white">
+                  {language === "ta" ? "இந்த திட்டத்திற்கான வீடியோ தற்போது கிடைக்கவில்லை" : "Drone Video Footage Currently Unavailable"}
+                </h4>
+                <p className="mt-2 text-xs sm:text-sm text-gray-300 max-w-lg leading-relaxed">
+                  {language === "ta"
+                    ? `${project.title.ta} திட்டத்திற்கான புதிய வான்வழி ட்ரோன் மற்றும் நேரடி கள ஆய்வு வீடியோ தற்போது படப்பிடிப்பில் உள்ளது. புதிய காட்சிகள் விரைவில் இங்கு பதிவேற்றப்படும்.`
+                    : `The official high-definition drone tour and on-ground walkthrough for ${project.title.en} is currently in production and will be published shortly.`}
+                </p>
+                <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+                  <button
+                    onClick={handleBrochureDownload}
+                    className="inline-flex items-center gap-2 rounded-xl bg-[#C6A15B] px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-white shadow-xs transition hover:bg-[#b5924d] cursor-pointer"
+                  >
+                    <MessageSquare className="h-3.5 w-3.5" />
+                    <span>{language === "ta" ? "நேரடி புகைப்படங்கள் கேட்க" : "Request On-Site Media"}</span>
+                  </button>
+                  <a
+                    href="tel:+917708966452"
+                    className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-white shadow-xs backdrop-blur-sm transition hover:bg-white/20"
+                  >
+                    <Phone className="h-3.5 w-3.5" />
+                    <span>{language === "ta" ? "தொடர்பு கொள்ள" : "Call Promoter"}</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Interactive Digital Twin / MapBhoomi Section */}
+          {project.mapBhoomiUrl && (
+            <div className="rounded-3xl border-2 border-[#EAB308]/40 bg-gradient-to-br from-[#0A0D12] to-[#161B22] p-6 sm:p-8 text-white shadow-xl">
+              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-5">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#EAB308] text-[#0A0D12] shadow-md">
+                    <Layers className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#EAB308]">
+                        MAPBHOOMI DIGITAL TWIN
+                      </span>
+                      <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 px-2 py-0.5 text-[10px] font-mono font-bold text-emerald-300">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        LIVE
+                      </span>
+                    </div>
+                    <h3 className="font-display text-xl sm:text-2xl font-bold text-white mt-0.5">
+                      {language === "ta"
+                        ? "நேரடி 3D / 2D மனைப்பிரிவு வரைபடம்"
+                        : "Interactive 3D / 2D Layout Masterplan"}
+                    </h3>
+                  </div>
+                </div>
+
+                <a
+                  href={project.mapBhoomiUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-xl bg-[#EAB308] px-5 py-2.5 font-display text-xs font-extrabold uppercase tracking-wider text-[#0A0D12] shadow-md transition hover:bg-[#ca9a07] hover:scale-105"
+                >
+                  <Map className="h-4 w-4" />
+                  <span>{language === "ta" ? "வரைபடத்தை திறக்கவும்" : "Launch Live Map"}</span>
+                  <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+              </div>
+
+              {/* Live Inventory Status Badges */}
+              <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div className="rounded-xl border border-white/10 bg-white/5 p-3.5 text-center">
+                  <span className="block font-mono text-[10px] uppercase tracking-wider text-gray-400 font-bold">
+                    {language === "ta" ? "மொத்த மனைகள்" : "TOTAL UNITS"}
+                  </span>
+                  <span className="block font-display text-2xl font-extrabold text-white mt-1">
+                    {project.mapBhoomiTotalUnits ?? "—"}
+                  </span>
+                </div>
+
+                <div className="rounded-xl border border-emerald-500/30 bg-emerald-950/30 p-3.5 text-center">
+                  <span className="block font-mono text-[10px] uppercase tracking-wider text-emerald-400 font-bold">
+                    {language === "ta" ? "விற்பனைக்கு உள்ளவை" : "AVAILABLE"}
+                  </span>
+                  <span className="block font-display text-2xl font-extrabold text-emerald-400 mt-1">
+                    {project.mapBhoomiAvailableUnits ?? "—"}
+                  </span>
+                </div>
+
+                <div className="rounded-xl border border-white/10 bg-white/5 p-3.5 text-center">
+                  <span className="block font-mono text-[10px] uppercase tracking-wider text-gray-400 font-bold">
+                    {language === "ta" ? "ஒதுக்கீடு நிலை" : "HOLD / BOOKED"}
+                  </span>
+                  <span className="block font-display text-2xl font-extrabold text-gray-300 mt-1">
+                    0
+                  </span>
+                </div>
+
+                <div className="rounded-xl border border-white/10 bg-white/5 p-3.5 text-center">
+                  <span className="block font-mono text-[10px] uppercase tracking-wider text-gray-400 font-bold">
+                    {language === "ta" ? "பார்வை முறை" : "VIEW MODES"}
+                  </span>
+                  <span className="block font-display text-lg font-bold text-[#EAB308] mt-1.5">
+                    3D &amp; 2D Live
+                  </span>
+                </div>
+              </div>
+
+              {/* Instructions and Capabilities */}
+              <div className="mt-6 rounded-2xl border border-white/10 bg-black/40 p-4 sm:p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <Sparkles className="h-4 w-4 text-[#EAB308]" />
+                  <span className="text-xs font-bold uppercase tracking-wider text-gray-200">
+                    {language === "ta"
+                      ? "மேப்போமி நேரடி வரைபடத்தின் சிறப்பம்சங்கள்:"
+                      : "How to use the Interactive Map on MapBhoomi:"}
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-gray-300">
+                  <div className="flex items-start gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#EAB308] shrink-0 mt-1.5" />
+                    <span>
+                      <strong className="text-white">Tap any unit</strong> to inspect real-time boundary dimensions, sq.ft/cents area, and price.
+                    </span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#EAB308] shrink-0 mt-1.5" />
+                    <span>
+                      <strong className="text-white">3D Elevation &amp; Pinch:</strong> Rotate and zoom on mobile touchscreens or desktop scroll.
+                    </span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#EAB308] shrink-0 mt-1.5" />
+                    <span>
+                      <strong className="text-white">Government Boundary Alignment:</strong> Accurate survey boundary markers and approach roads.
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons inside Card */}
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                <a
+                  href={project.mapBhoomiUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 min-w-[200px] flex items-center justify-center gap-2 rounded-xl bg-[#EAB308] py-3 px-4 font-display text-xs font-bold uppercase tracking-wider text-[#0A0D12] hover:bg-[#ca9a07] transition text-center"
+                >
+                  <Map className="h-4 w-4" />
+                  <span>{language === "ta" ? "3D வரைபடத்தில் மனைகளை பார்க்க" : "Explore Interactive Map"}</span>
+                  <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+
+                {project.brochureUrl && (
+                  <a
+                    href={project.brochureUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 min-w-[200px] flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 py-3 px-4 font-display text-xs font-bold uppercase tracking-wider text-white hover:bg-white/10 transition text-center"
+                  >
+                    <Download className="h-4 w-4 text-[#EAB308]" />
+                    <span>{language === "ta" ? "டிஜிட்டல் வரைபட கையேடு" : "Digital Brochure Layout"}</span>
+                    <ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Layout Blueprint Image if available */}
+          {project.layoutPlanImage && (
+            <div className="rounded-2xl border border-[#E8E2D7] bg-[#F8F5EF] p-8 shadow-xs">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-display text-xl font-normal text-[#242820]">
+                  {language === "ta" ? "தள வரைபடம் & சர்வே திட்டம்" : "Layout Masterplan & Survey Drawing"}
+                </h3>
+                <span className="text-xs font-mono uppercase text-[#C6A15B]">
+                  Verified Cadastral Map
+                </span>
+              </div>
+
+              <div
+                onClick={() => setBlueprintZoomed(true)}
+                className="relative aspect-[4/3] sm:aspect-[16/10] md:aspect-[16/9] min-h-[380px] sm:min-h-[460px] w-full overflow-hidden rounded-xl border border-[#E8E2D7] bg-[#060A10] group cursor-pointer shadow-inner"
+              >
+                <Image
+                  src={project.layoutPlanImage}
+                  alt={`${project.title[language]} Layout Plan`}
+                  fill
+                  className="object-contain p-3 group-hover:scale-[1.02] transition-transform duration-300"
+                  sizes="(max-width: 1024px) 100vw, 1000px"
+                />
+                <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-xs font-bold text-[#0F172A] shadow-lg backdrop-blur-sm">
+                    <ZoomIn className="h-4 w-4 text-[#C6A15B]" />
+                    <span>{language === "ta" ? "பெரிதாக்கி பார்க்க" : "Click to Enlarge Blueprint"}</span>
+                  </span>
+                </div>
+              </div>
+
+              {project.slug === "madurai-farms" && (
+                <div className="mt-4 flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 text-xs font-mono font-bold text-emerald-800">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                    15 Demarcated Farm Plots (Plots 1–15)
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20 px-3 py-1.5 text-xs font-mono font-bold text-amber-900">
+                    Madurai Agricultural Green Belt Access
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20 px-3 py-1.5 text-xs font-mono font-bold text-blue-900">
+                    Central Plantation Avenue Corridor
+                  </span>
+                </div>
+              )}
+
+              <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-[#E8E2D7] pt-4">
+                <p className="text-xs text-[#77766F] max-w-md">
+                  Request high-resolution PDF blueprints with measured dimensions and government registrar survey coordinates.
+                </p>
+                <button
+                  onClick={handleBrochureDownload}
+                  className="inline-flex items-center gap-2 rounded-xl bg-[#C6A15B] px-5 py-2.5 text-xs font-semibold uppercase text-white shadow-xs transition hover:bg-[#b5924d] cursor-pointer"
+                >
+                  <Download className="h-4 w-4" />
+                  <span>Request Full Blueprint</span>
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Extended Locality, Valuation & Customer Reviews from PROJECT_DETAILS_MAP */}
+          {(() => {
+            const extra = PROJECT_DETAILS_MAP[project.slug] || PROJECT_DETAILS_MAP[project.id];
+            if (!extra) return null;
+
+            return (
+              <div className="space-y-10">
+                {/* 1. Infrastructure & Locality Deep-Dive */}
+                <div className="rounded-3xl border border-[#E8E2D7] bg-[#F8F5EF] p-6 sm:p-8 shadow-xs space-y-6">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#142C23] text-[#E6B84D] shadow-md">
+                      <Navigation className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#C6A15B]">
+                        {language === "ta" ? "அமைவிடம் & நேரடி உள்கட்டமைப்பு" : "LOCALITY & INFRASTRUCTURE"}
+                      </span>
+                      <h3 className="font-display text-xl sm:text-2xl font-bold text-[#242820] mt-0.5">
+                        {language === "ta" ? "சுற்றுப்புற வசதிகள் & இணைப்பு" : "Surrounding Connectivity & Facilities"}
+                      </h3>
+                    </div>
+                  </div>
+
+                  {/* Transport */}
+                  <div className="space-y-2.5">
+                    <div className="flex items-center gap-2">
+                      <Car className="h-4 w-4 text-[#C6A15B]" />
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-[#242820]">
+                        {language === "ta" ? "போக்குவரத்து இணைப்பு" : "Transportation & Highways"}
+                      </h4>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {extra.transportation.map((item, idx) => (
+                        <div key={idx} className="flex items-center justify-between p-3 rounded-xl bg-white border border-[#E8E2D7]">
+                          <span className="text-sm font-medium text-[#242820]">{item.name[language]}</span>
+                          <span className="font-mono text-xs font-bold text-[#142C23] bg-[#F8F5EF] px-2.5 py-1 rounded-lg border border-[#E8E2D7]">
+                            {item.distance} {item.time && `(${item.time})`}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Hospitals & Schools */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="p-4 rounded-2xl bg-white border border-[#E8E2D7] space-y-2">
+                      <div className="flex items-center gap-2 text-rose-600">
+                        <HeartPulse className="h-4 w-4" />
+                        <h4 className="text-xs font-bold uppercase tracking-wider text-[#242820]">
+                          {language === "ta" ? "மருத்துவமனைகள்" : "Hospitals"}
+                        </h4>
+                      </div>
+                      <div className="space-y-1.5">
+                        {extra.hospitals.map((h, i) => (
+                          <div key={i} className="flex items-center justify-between text-xs text-[#77766F]">
+                            <span>{h.name[language]}</span>
+                            <span className="font-mono font-bold text-[#242820]">{h.distance}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="p-4 rounded-2xl bg-white border border-[#E8E2D7] space-y-2">
+                      <div className="flex items-center gap-2 text-blue-600">
+                        <GraduationCap className="h-4 w-4" />
+                        <h4 className="text-xs font-bold uppercase tracking-wider text-[#242820]">
+                          {language === "ta" ? "பள்ளிகள் & கல்லூரிகள்" : "Schools & Colleges"}
+                        </h4>
+                      </div>
+                      <div className="space-y-1.5">
+                        {extra.schoolsAndColleges.map((s, i) => (
+                          <div key={i} className="flex items-center justify-between text-xs text-[#77766F]">
+                            <span>{s.name[language]}</span>
+                            <span className="font-mono font-bold text-[#242820]">{s.distance}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Groundwater & Neighborhood */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="p-4 rounded-2xl bg-cyan-50/50 border border-cyan-200/60 space-y-1.5">
+                      <div className="flex items-center gap-2 text-cyan-700">
+                        <Droplets className="h-4 w-4" />
+                        <h4 className="text-xs font-bold uppercase tracking-wider text-cyan-950">
+                          {language === "ta" ? "நிலத்தடி நீர் வசதி" : "Groundwater Facility"}
+                        </h4>
+                      </div>
+                      <p className="text-xs text-[#242820] font-semibold">{extra.groundwater.depth[language]}</p>
+                      <p className="text-xs text-emerald-700">{extra.groundwater.quality[language]}</p>
+                      <p className="text-[11px] text-[#77766F]">{extra.groundwater.source[language]}</p>
+                    </div>
+
+                    <div className="p-4 rounded-2xl bg-white border border-[#E8E2D7] space-y-1.5">
+                      <div className="flex items-center gap-2 text-[#242820]">
+                        <Home className="h-4 w-4 text-[#C6A15B]" />
+                        <h4 className="text-xs font-bold uppercase tracking-wider text-[#242820]">
+                          {language === "ta" ? "அண்டை வீடுகள் & சூழல்" : "Neighbour Houses & Community"}
+                        </h4>
+                      </div>
+                      <p className="text-xs text-[#242820] font-semibold">{extra.neighborhood.density[language]}</p>
+                      <p className="text-xs text-[#77766F]">{extra.neighborhood.surrounding[language]}</p>
+                      <p className="text-[11px] text-[#77766F]">{extra.neighborhood.atmosphere[language]}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 2. Ground Value & Future Predicted Appreciation */}
+                <div className="rounded-3xl border border-[#E8E2D7] bg-[#F8F5EF] p-6 sm:p-8 shadow-xs space-y-5">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#142C23] text-[#E6B84D] shadow-md">
+                      <TrendingUp className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#C6A15B]">
+                        {language === "ta" ? "விலை & எதிர்கால மதிப்பு" : "VALUATION & FUTURE ROI"}
+                      </span>
+                      <h3 className="font-display text-xl sm:text-2xl font-bold text-[#242820] mt-0.5">
+                        {language === "ta" ? "தற்போதைய மதிப்பு & வளர்ச்சி முன்கணிப்பு" : "Ground Value & Future ROI Forecast"}
+                      </h3>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="p-4 rounded-2xl bg-white border border-[#E8E2D7] space-y-2">
+                      <span className="text-[11px] font-mono font-bold uppercase text-[#77766F] block">
+                        {language === "ta" ? "தற்போதைய சந்தை விலை" : "Current Market Rate"}
+                      </span>
+                      <span className="text-lg font-black text-[#242820] block">
+                        {extra.groundValue.currentRate[language]}
+                      </span>
+                      <span className="text-xs text-[#77766F] block">
+                        {extra.groundValue.guidelineValue[language]}
+                      </span>
+                    </div>
+
+                    <div className="p-4 rounded-2xl bg-emerald-50/60 border border-emerald-200 space-y-2">
+                      <span className="text-[11px] font-mono font-bold uppercase text-emerald-800 block">
+                        {language === "ta" ? "எதிர்கால மதிப்பு (3 & 5 ஆண்டுகள்)" : "Projected ROI (3 & 5 Years)"}
+                      </span>
+                      <div className="flex items-center gap-3">
+                        <span className="text-base font-black text-emerald-700">{extra.futurePrediction.threeYearROI}</span>
+                        <span className="text-xs text-neutral-400">|</span>
+                        <span className="text-base font-black text-emerald-800">{extra.futurePrediction.fiveYearROI}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-3.5 rounded-xl bg-white border border-[#E8E2D7] space-y-1">
+                    <span className="text-xs font-bold text-[#242820]">
+                      {language === "ta" ? "மதிப்பு உயர்வதற்கான காரணங்கள்:" : "Future Growth Drivers:"}
+                    </span>
+                    <ul className="space-y-1 text-xs text-[#77766F]">
+                      {extra.futurePrediction.drivers[language].map((driver, d) => (
+                        <li key={d} className="flex items-start gap-1.5">
+                          <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                          <span>{driver}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                {/* 3. Verified Customer Reviews */}
+                <div className="rounded-3xl border border-[#E8E2D7] bg-[#F8F5EF] p-6 sm:p-8 shadow-xs space-y-6">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#142C23] text-[#E6B84D] shadow-md">
+                        <Star className="h-5 w-5 fill-[#E6B84D]" />
+                      </div>
+                      <div>
+                        <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#C6A15B]">
+                          {language === "ta" ? "வாடிக்கையாளர் திருப்தி" : "CLIENT SATISFACTION"}
+                        </span>
+                        <h3 className="font-display text-xl sm:text-2xl font-bold text-[#242820] mt-0.5">
+                          {language === "ta" ? "வாடிக்கையாளர் அனுபவம் & மதிப்புரை" : "Verified Customer Reviews"}
+                        </h3>
+                      </div>
+                    </div>
+                    <span className="inline-flex items-center gap-1 font-mono text-xs font-bold text-[#142C23] bg-white px-3 py-1.5 rounded-xl border border-[#E8E2D7]">
+                      98.6% Client Approval
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {extra.customerReviews.map((rev, r) => (
+                      <div key={r} className="p-5 rounded-2xl bg-white border border-[#E8E2D7] space-y-3 flex flex-col justify-between shadow-2xs">
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <div className="flex text-[#C6A15B]">
+                              {Array.from({ length: rev.rating }).map((_, s) => (
+                                <Star key={s} className="h-3.5 w-3.5 fill-[#C6A15B]" />
+                              ))}
+                            </div>
+                            <span className="text-[10px] text-[#77766F] font-mono">{rev.date}</span>
+                          </div>
+                          <p className="text-xs text-[#77766F] leading-relaxed italic">
+                            &ldquo;{rev.comment[language]}&rdquo;
+                          </p>
+                        </div>
+                        <div className="pt-2 border-t border-[#E8E2D7] flex items-center justify-between">
+                          <div>
+                            <span className="text-xs font-bold text-[#242820] block">{rev.name}</span>
+                            <span className="text-[10px] text-[#77766F] block">{rev.role[language]}</span>
+                          </div>
+                          <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-emerald-100 text-emerald-800">
+                            Verified Buyer ✓
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+        </div>
+
+        {/* Right Sticky Column: Actions, Site Visit Booking & Contact */}
+        <div className="lg:col-span-4">
+          <div className="sticky top-28 space-y-6">
+            {/* Quick Action Card */}
+            <div className="rounded-2xl border border-[#E8E2D7] bg-[#F8F5EF] p-6 shadow-xs">
+              <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-[#C6A15B]">
+                DIRECT PROMOTER INQUIRY
+              </span>
+              <h3 className="mt-1.5 font-display text-xl font-normal text-[#242820]">
+                Interested in {project.title[language]}?
+              </h3>
+              <p className="mt-2 text-xs leading-relaxed text-[#77766F]">
+                {isCompleted
+                  ? "This project is fully registered and handed over. Contact us to inquire about upcoming adjacent releases or similar developments."
+                  : "Connect directly with Mr. Manickam Natarajan's executive advisory team for current plots and live site visits."}
+              </p>
+
+              {/* Action Buttons */}
+              <div className="mt-6 space-y-3">
+                {isCompleted ? (
+                  <a
+                    href={`https://wa.me/917708966452?text=${encodeURIComponent(
+                      `Hello Surya Promoters, I saw your completed project ${project.title.en} and would like to inquire about similar upcoming developments.`
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#242820] py-3.5 text-xs font-semibold uppercase tracking-wider text-white shadow-xs transition hover:bg-black"
+                  >
+                    <CheckCircle2 className="h-4 w-4 text-[#C6A15B]" />
+                    <span>Inquire Similar Developments</span>
+                  </a>
+                ) : (
+                  <a
+                    href={`https://wa.me/917708966452?text=${encodeURIComponent(
+                      `Hello Surya Promoters, I am interested in ${project.title.en} (${project.location.en}). Please share price and details.`
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#C6A15B] py-3.5 text-xs font-semibold uppercase tracking-wider text-white shadow-xs transition hover:bg-[#b5924d]"
+                  >
+                    <MessageSquare className="h-4 w-4" />
+                    <span>Inquire via WhatsApp</span>
+                  </a>
+                )}
+
+                {project.mapBhoomiUrl && (
+                  <a
+                    href={project.mapBhoomiUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#0A0D12] py-3.5 text-xs font-bold uppercase tracking-wider text-[#EAB308] border border-[#EAB308]/40 shadow-xs transition hover:bg-[#161B22] hover:scale-[1.01]"
+                  >
+                    <Layers className="h-4 w-4 text-[#EAB308]" />
+                    <span>{language === "ta" ? "நேரடி 3D வரைபடம் (MapBhoomi)" : "Explore 3D Map (MapBhoomi)"}</span>
+                    <ExternalLink className="h-3 w-3" />
+                  </a>
+                )}
+
+                <a
+                  href="tel:+917708966452"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#E8E2D7] bg-white py-3.5 text-xs font-semibold uppercase tracking-wider text-[#242820] transition hover:bg-[#F1EBDD]"
+                >
+                  <Phone className="h-4 w-4 text-[#C6A15B]" />
+                  <span>Call +91 77089 66452</span>
+                </a>
+
+                <button
+                  onClick={handleBrochureDownload}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#E8E2D7] bg-white py-3 text-xs font-medium text-[#242820] transition hover:border-[#C6A15B] cursor-pointer"
+                >
+                  <FileText className="h-4 w-4 text-[#C6A15B]" />
+                  <span>Download Documentation Pack</span>
+                </button>
+              </div>
+
+              {/* Trust Callout */}
+              <div className="mt-6 border-t border-[#E8E2D7] pt-4">
+                <div className="flex items-center gap-2.5 text-xs text-[#242820]">
+                  <ShieldCheck className="h-4 w-4 text-[#C6A15B] shrink-0" />
+                  <span>Clear Encumbrance & Freehold Title</span>
+                </div>
+                <div className="mt-2 flex items-center gap-2.5 text-xs text-[#242820]">
+                  <Calendar className="h-4 w-4 text-[#C6A15B] shrink-0" />
+                  <span>Escorted Site Visits Available Daily</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Location Map Shortcut */}
+            <div className="rounded-2xl border border-[#E8E2D7] bg-[#F8F5EF] p-6 text-center">
+              <MapPin className="mx-auto h-7 w-7 text-[#C6A15B]" />
+              <h4 className="mt-2 font-display text-base font-normal text-[#242820]">
+                Visit On-Site Location
+              </h4>
+              <p className="mt-1 text-xs text-[#77766F]">
+                Explore surrounding access routes and infrastructure on Google Maps.
+              </p>
+              <div className="mt-4 flex flex-col gap-2">
+                {project.mapBhoomiUrl && (
+                  <a
+                    href={project.mapBhoomiUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#0A0D12] px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-[#EAB308] transition hover:bg-black"
+                  >
+                    <Layers className="h-3.5 w-3.5 text-[#EAB308]" />
+                    <span>Interactive MapBhoomi Layout</span>
+                    <ExternalLink className="h-3 w-3" />
+                  </a>
+                )}
+                <a
+                  href={project.googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-[#E8E2D7] bg-white px-5 py-2 text-xs font-semibold text-[#242820] transition hover:border-[#C6A15B]"
+                >
+                  <span>Open Google Maps</span>
+                  <ExternalLink className="h-3.5 w-3.5 text-[#C6A15B]" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Zoomed Blueprint Lightbox Modal */}
+      {blueprintZoomed && project.layoutPlanImage && (
+        <div
+          data-lenis-prevent
+          onClick={() => setBlueprintZoomed(false)}
+          onWheel={(e) => e.stopPropagation()}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md overflow-hidden"
+        >
+          <button
+            onClick={() => setBlueprintZoomed(false)}
+            className="absolute top-5 right-5 z-50 h-10 w-10 rounded-full bg-white/20 hover:bg-white text-white hover:text-black flex items-center justify-center transition cursor-pointer shadow-lg"
+            title="Close"
+          >
+            <X className="h-5 w-5" />
+          </button>
+          <div
+            onClick={(e) => e.stopPropagation()}
+            onWheel={(e) => e.stopPropagation()}
+            data-lenis-prevent
+            className="relative max-w-5xl max-h-[88vh] w-full h-[80vh] rounded-2xl overflow-hidden shadow-2xl bg-[#060A10] border border-white/10 overscroll-contain"
+          >
+            <Image
+              src={project.layoutPlanImage}
+              alt={`${project.title[language]} Layout Plan Full`}
+              fill
+              className="object-contain p-4"
+              sizes="1400px"
+            />
+          </div>
+        </div>
+      )}
+    </article>
+  );
+}
