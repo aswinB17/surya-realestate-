@@ -1,5 +1,5 @@
 export type ProjectCategory = 'commercial' | 'farm' | 'residential' | 'industrial';
-export type ProjectStatus = 'running' | 'completed' | 'upcoming' | 'ongoing' | 'available' | 'development' | 'prime';
+export type ProjectStatus = 'running' | 'completed' | 'upcoming' | 'ongoing' | 'available' | 'development' | 'prime' | 'sold';
 
 export interface LocalizedString {
   en: string;
@@ -24,6 +24,8 @@ export interface Project {
   subtitle: LocalizedString;
   category: ProjectCategory;
   categoryLabel: LocalizedString;
+  subcategory?: string;
+  subcategoryLabel?: LocalizedString;
   location: LocalizedString;
   googleMapsUrl: string;
   photographyReferenceUrl?: string;

@@ -5,6 +5,7 @@ import Image from "next/image";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { useLanguage } from "@/hooks/useLanguage";
+import { useCmsData } from "@/hooks/useCmsData";
 import {
   Film,
   Camera,
@@ -51,7 +52,7 @@ export default function GalleryPage() {
       title: "Vaigai Elite Commercial Highway Corridor Aerial Footage",
       category: "commercial",
       duration: "01:45",
-      thumbnail: "/images/projects/vaigai/corridor-aerial.jpg",
+      thumbnail: "/images/projects/vaigai/vaigai-elite-layout-plan.jpg",
     },
     {
       src: "/videos/vaigai/vaigai-drone-2.mp4",
@@ -65,7 +66,7 @@ export default function GalleryPage() {
       title: "Pandi Kovil Ring Road High-Traffic Corridor Overview",
       category: "commercial",
       duration: "02:00",
-      thumbnail: "/images/projects/vaigai/water-pool-1.jpg",
+      thumbnail: "/images/pandikovil.png",
     },
     {
       src: "/videos/herosection.mp4",
@@ -138,22 +139,22 @@ export default function GalleryPage() {
       location: "Agro Horizon",
     },
     {
-      src: "/images/projects/surya-green-enclave.jpg",
-      title: "Surya Green Enclave DTCP Villa Plots Township",
+      src: "/images/projects/flat-projects/1-exterior.jpg",
+      title: "Surya Residential Flat Projects & Community Living",
       category: "residential",
-      location: "Mudukangulam Road",
+      location: "Madurai Residential",
     },
     {
-      src: "/images/projects/surya-green-enclave/layout-blueprint.jpg",
-      title: "Surya Green Enclave Approved Blueprint Layout Plan",
+      src: "/images/projects/flat-projects/2-entrance.jpg",
+      title: "Grand Entrance Foyer & Reception Lobby",
       category: "residential",
-      location: "15 Surveyed Villa Units",
+      location: "Gated Enclave",
     },
     {
-      src: "/images/projects/surya-green-enclave/road-corridor.jpg",
-      title: "Bitumen Tar Roads & Streetlight Infrastructure",
+      src: "/images/projects/flat-projects/3-living.jpg",
+      title: "Spacious Interior Living Room & Balcony Vista",
       category: "development",
-      location: "Surya Green Enclave",
+      location: "Flat Layouts",
     },
     {
       src: "/images/hero/hero-house.jpg",
@@ -162,7 +163,7 @@ export default function GalleryPage() {
       location: "Madurai Residential",
     },
     {
-      src: "/images/projects/vaigai/corridor-aerial.jpg",
+      src: "/images/projects/vaigai/vaigai-elite-layout-plan.jpg",
       title: "Vaigai Elite Highway Frontage Drone View",
       category: "commercial",
       location: "Outer Ring Road NH-44",
@@ -174,7 +175,7 @@ export default function GalleryPage() {
       location: "Vaigai North Bank",
     },
     {
-      src: "/images/projects/vaigai/water-pool-1.jpg",
+      src: "/images/pandikovil.png",
       title: "Pandi Kovil Site High-Footfall Commercial Corridor",
       category: "commercial",
       location: "Pandi Kovil Junction",
@@ -193,8 +194,27 @@ export default function GalleryPage() {
     },
   ];
 
+  const { data: cmsData } = useCmsData();
+
+  const dynamicImages = React.useMemo(() => {
+    if (!cmsData?.gallery?.imageFolders || cmsData.gallery.imageFolders.length === 0) return images;
+    const list: typeof images = [];
+    cmsData.gallery.imageFolders.forEach((folder) => {
+      const cat = folder.id.includes("farm") ? "farm" : folder.id.includes("residen") ? "residential" : "commercial";
+      folder.images.forEach((imgUrl, i) => {
+        list.push({
+          src: imgUrl,
+          title: `${folder.title.en} - Photo #${i + 1}`,
+          category: cat,
+          location: "Madurai, Tamil Nadu",
+        });
+      });
+    });
+    return list.length > 0 ? list : images;
+  }, [cmsData]);
+
   const filteredVideos = videos.filter((v) => videoFilter === "all" || v.category === videoFilter);
-  const filteredImages = images.filter((img) => imageFilter === "all" || img.category === imageFilter);
+  const filteredImages = dynamicImages.filter((img) => imageFilter === "all" || img.category === imageFilter);
 
   return (
     <main className="min-h-screen bg-[#F5F4EE] text-[#171B18] font-sans selection:bg-[#C6A66B]/30">

@@ -6,6 +6,7 @@ import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { useLanguage } from "@/hooks/useLanguage";
+import { useCmsData } from "@/hooks/useCmsData";
 import {
   ShieldCheck,
   Award,
@@ -23,13 +24,21 @@ import {
 
 export default function AboutPage() {
   const { language } = useLanguage();
+  const { data: cmsData } = useCmsData();
 
-  const achievements = [
-    { value: "16+ Yrs", label: "Military-Grade Due Diligence", sub: "Established in 2010" },
-    { value: "100%", label: "Verified Computer Patta", sub: "Clear Title Deeds" },
-    { value: "1,000+", label: "Happy Landowner Families", sub: "Across Tamil Nadu" },
-    { value: "Zero", label: "Legal Disputes Since Inception", sub: "Defense Standard" },
-  ];
+  const achievements = (cmsData?.stats?.items && cmsData.stats.items.length > 0
+    ? cmsData.stats.items
+    : [
+        { value: "16+ Yrs", label: { en: "Military-Grade Due Diligence", ta: "இராணுவ ஒழுங்குமுறை ஆய்வு" }, sub: { en: "Established in 2010", ta: "2010 முதல்" } },
+        { value: "100%", label: { en: "Verified Computer Patta", ta: "சரிபார்க்கப்பட்ட பட்டா" }, sub: { en: "Clear Title Deeds", ta: "தெளிவான பத்திரம்" } },
+        { value: "1,000+", label: { en: "Happy Landowner Families", ta: "மகிழ்ச்சியான வாடிக்கையாளர்கள்" }, sub: { en: "Across Tamil Nadu", ta: "தமிழகம் முழுவதும்" } },
+        { value: "Zero", label: { en: "Legal Disputes Since Inception", ta: "சட்ட சிக்கல்கள் இல்லாத வரலாறு" }, sub: { en: "Defense Standard", ta: "பாதுகாப்பு தரம்" } },
+      ]
+  ).map((item) => ({
+    value: item.value,
+    label: language === "ta" ? item.label.ta : item.label.en,
+    sub: language === "ta" ? item.sub.ta : item.sub.en,
+  }));
 
   const coreValues = [
     {

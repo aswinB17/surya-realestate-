@@ -197,13 +197,13 @@ export default function ProjectIconGrid({
         priceTagTa: "விலை விபரம் கேட்க",
         location: "Madurai Outer Ring Road (NH-44)",
         locationTa: "மதுரை வெளிவட்டச் சாலை (NH-44)",
-        image: "/images/projects/vaigai/corridor-aerial.jpg",
-        posterImage: "/images/projects/vaigai/corridor-aerial.jpg",
+        image: "/images/projects/vaigai/vaigai-elite-layout-plan.jpg",
+        posterImage: "/images/projects/vaigai/vaigai-elite-layout-plan.jpg",
         screenshots: [
-          "/images/projects/vaigai/corridor-aerial.jpg",
+          "/images/projects/vaigai/vaigai-elite-layout-plan.jpg",
           "/images/projects/vaigai-commercial.jpg",
-          "/images/projects/vaigai/water-pool-1.jpg",
-          "/images/projects/vaigai/water-pool-2.jpg",
+          "/images/Riverbeltwal.png",
+          "/images/pandikovil.png",
         ],
         gradient: "from-amber-500 via-orange-600 to-amber-700",
         icon: Building2,
@@ -267,94 +267,51 @@ export default function ProjectIconGrid({
           "மதுரையின் வளமான விவசாயப் பகுதியில் அமைந்துள்ள இயற்கை பண்ணை மனைகள். சுத்தமான நிலத்தடி நீர், மரங்கள், வார இறுதி பண்ணை வீடு அமைக்கும் வசதி மற்றும் தெளிவான எல்லைக் கற்களுடன் கூடியது.",
       },
       {
-        id: "orange-garden",
-        slug: "orange-garden",
-        name: "Orange Garden",
-        nameTa: "ஆரஞ்ச் கார்டன்",
-        tagline: "Gated Orchard & Farm Estate",
-        taglineTa: "பழத்தோட்ட எஸ்டேட் மனைகள்",
-        category: "farm",
-        categoryLabel: "Gated Orchard Estate",
-        categoryLabelTa: "பழத்தோட்ட எஸ்டேட்",
-        projectType: "upcoming",
-        statusText: "UPCOMING 2026",
-        statusTextTa: "2026 வரவிருக்கும் திட்டம்",
-        badgeLabel: "Upcoming 2026",
-        badgeLabelTa: "வரவிருக்கும் திட்டம்",
-        badgeColor: "bg-amber-400 text-black font-extrabold",
-        actionLabel: "Launching Soon",
-        actionLabelTa: "விரைவில் தொடக்கம்",
-        priceTag: "Early Bird Booking",
-        priceTagTa: "முன்பதிவு சலுகை",
-        location: "Scenic Green Belt, Madurai",
-        locationTa: "பசுமை மண்டலம், மதுரை",
-        image: "/images/projects/orange-garden/hero-orchard.jpg",
-        posterImage: "/images/projects/orange-garden/hero-orchard.jpg",
-        screenshots: [
-          "/images/projects/orange-garden/hero-orchard.jpg",
-          "/images/projects/orange-garden/layout-blueprint.jpg",
-          "/images/projects/orange-garden/entrance-gate.jpg",
-          "/images/projects/orange-garden/citrus-groves.jpg",
-          "/images/projects/orange-garden/demarcated-plots.jpg",
-          "/images/projects/orange-garden/farmhouse-cottage.jpg",
-          "/images/projects/orange-garden/orchard-aerial.jpg",
-        ],
-        gradient: "from-amber-500 via-orange-500 to-amber-700",
-        icon: Sparkles,
-        googleMapsUrl: "https://maps.google.com/?q=Madurai+Orchard+Land",
-        specs: [
-          { icon: Wheat, label: "Harvested Orchards", labelTa: "பழத்தோட்டங்கள்" },
-          { icon: Home, label: "Farmhouse Plots", labelTa: "பண்ணை வீடு" },
-          { icon: ShieldCheck, label: "Registered Patta", labelTa: "பதிவு செய்யப்பட்ட பட்டா" },
-          { icon: Sparkles, label: "Launching Soon", labelTa: "விரைவில் தொடக்கம்" },
-        ],
-        overview:
-          "A signature upcoming gated orchard community offering citrus plantation plots, demarcated farm estates, grand entry portal, drip irrigation systems, and exclusive farmhouse cottage ownership opportunities in Madurai.",
-        overviewTa:
-          "மதுரையில் அமையவிருக்கும் பிரத்யேக பழத்தோட்ட எஸ்டேட் மனைப்பிரிவு. சொட்டு நீர்ப்பாசனம், பிரம்மாண்ட நுழைவு வளைவு மற்றும் சொகுசு பண்ணை வீடு அமைக்கும் வாய்ப்பு.",
-      },
-      {
-        id: "surya-green-enclave",
-        slug: "surya-green-enclave",
-        name: "Green Enclave",
-        nameTa: "கிரீன் என்கிளேவ்",
-        tagline: "DTCP & RERA Approved Township",
-        taglineTa: "DTCP & RERA மனைப்பிரிவு",
+        id: "flat-projects",
+        slug: "flat-projects",
+        name: "Modern Residential Flats",
+        nameTa: "நவீன குடியிருப்பு அடுக்குமாடி",
+        tagline: "Premium Residential Flats & Apartments",
+        taglineTa: "பிரீமியம் அடுக்குமாடி குடியிருப்புகள்",
         category: "residential",
-        categoryLabel: "DTCP & RERA Township",
-        categoryLabelTa: "DTCP & RERA மனைப்பிரிவு",
-        projectType: "completed",
-        statusText: "100% COMPLETED",
-        statusTextTa: "நிறைவடைந்தது",
-        badgeLabel: "100% Delivered",
-        badgeLabelTa: "நிறைவடைந்தது",
-        badgeColor: "bg-blue-600 text-white",
-        actionLabel: "Completed",
-        actionLabelTa: "நிறைவடைந்தது",
-        priceTag: "Delivered & Sold",
-        priceTagTa: "ஒப்படைக்கப்பட்டது",
-        location: "Mudukangulam Road, Madurai",
-        locationTa: "முதுகுளத்தூர் சாலை, மதுரை",
-        image: "/images/projects/surya-green-enclave.jpg",
-        posterImage: "/images/projects/surya-green-enclave.jpg",
+        categoryLabel: "Residential Flats",
+        categoryLabelTa: "அடுக்குமாடி குடியிருப்பு",
+        projectType: "running",
+        statusText: "2026 RUNNING",
+        statusTextTa: "2026 நடைபெறுகிறது",
+        badgeLabel: "Running 2026",
+        badgeLabelTa: "நடைபெறுகிறது",
+        badgeColor: "bg-emerald-600 text-white font-extrabold",
+        actionLabel: "View Flats",
+        actionLabelTa: "விபரங்களை பார்க்க",
+        priceTag: "Booking Open",
+        priceTagTa: "முன்பதிவு நடைபெறுகிறது",
+        location: "Madurai Prime Residential Belt",
+        locationTa: "மதுரை பிரதான குடியிருப்பு பகுதி",
+        image: "/images/projects/flat-projects/1-exterior.jpg",
+        posterImage: "/images/projects/flat-projects/1-exterior.jpg",
         screenshots: [
-          "/images/projects/surya-green-enclave/road-corridor.jpg",
-          "/images/projects/surya-green-enclave/layout-blueprint.jpg",
-          "/images/projects/surya-green-enclave.jpg",
+          "/images/projects/flat-projects/1-exterior.jpg",
+          "/images/projects/flat-projects/2-entrance.jpg",
+          "/images/projects/flat-projects/3-living.jpg",
+          "/images/projects/flat-projects/4-upper-living.jpg",
+          "/images/projects/flat-projects/5-bedroom.jpg",
+          "/images/projects/flat-projects/6-kitchen.jpg",
+          "/images/projects/flat-projects/7-bathroom.jpg",
         ],
         gradient: "from-blue-600 via-indigo-600 to-sky-700",
-        icon: CheckCircle2,
-        googleMapsUrl: "https://maps.google.com/?q=Madurai+Residential+Plots",
+        icon: Home,
+        googleMapsUrl: "https://maps.google.com/?q=Madurai+Residential+Apartments",
         specs: [
-          { icon: Home, label: "DTCP & RERA Approved", labelTa: "DTCP மனைப்பிரிவு" },
-          { icon: Sparkles, label: "30-40ft Bitumen Road", labelTa: "அகலமான தார்ச்சாலை" },
-          { icon: ShieldCheck, label: "Individual Patta", labelTa: "தனிநபர் பட்டா" },
-          { icon: CheckCircle2, label: "100% Delivered", labelTa: "ஒப்படைக்கப்பட்டது" },
+          { icon: Home, label: "Gated Community", labelTa: "பாதுகாப்பான வளாகம்" },
+          { icon: Sparkles, label: "Modern Amenities", labelTa: "நவீன வசதிகள்" },
+          { icon: ShieldCheck, label: "Approved Plan", labelTa: "அங்கீகரிக்கப்பட்ட திட்டம்" },
+          { icon: CheckCircle2, label: "Ready for Booking", labelTa: "முன்பதிவு தயார்" },
         ],
         overview:
-          "A landmark successfully delivered residential gated township layout on Mudukangulam Road, Madurai. Featuring 30-40ft wide tar roads, individual computer patta, secure fencing, streetlights, and immediate home construction readiness.",
+          "Modern residential flat developments in prime Madurai locations offering spacious layouts, premium construction, covered parking, and 24/7 security.",
         overviewTa:
-          "முதுகுளத்தூர் சாலையில் வெற்றிகரமாக முடிக்கப்பட்டு ஒப்படைக்கப்பட்ட குடியிருப்பு மனைப்பிரிவு. 30-40 அடி தார்ச்சாலை, தனிநபர் பட்டா மற்றும் உடனடி வீடு கட்டும் வசதி கொண்டது.",
+          "மதுரையின் பிரதான பகுதியில் அமைந்துள்ள நவீன குடியிருப்பு அடுக்குமாடி வீடுகள். விசாலமான அறைகள், தரமான கட்டுமானம் மற்றும் அனைத்து வசதிகளுடன் கூடியது.",
       },
       {
         id: "highway-logistics",
@@ -380,7 +337,7 @@ export default function ProjectIconGrid({
         locationTa: "மதுரை வெளிவட்டச் சாலை (NH-44)",
         image: "/images/projects/vaigai-commercial.jpg",
         posterImage: "/images/projects/vaigai-commercial.jpg",
-        screenshots: ["/images/projects/vaigai-commercial.jpg", "/images/projects/vaigai/corridor-aerial.jpg"],
+        screenshots: ["/images/projects/vaigai-commercial.jpg", "/images/Riverbeltwal.png"],
         gradient: "from-amber-600 to-orange-700",
         icon: Truck,
         mapBhoomiUrl: "https://mapbhoomi.com/l/surya-promoters/madurai-rameshwaram-nh-road",
@@ -544,15 +501,15 @@ export default function ProjectIconGrid({
   const loveShelfApps = useMemo(
     () => [
       {
-        id: "love-orange",
-        name: "Orange Garden",
-        nameTa: "ஆரஞ்ச் கார்டன்",
-        type: "Upcoming Orchard",
-        image: "/images/projects/orange-garden/hero-orchard.jpg",
-        icon: Sparkles,
-        badge: "Upcoming 2026",
-        badgeBg: "bg-amber-400 text-black",
-        gradient: "from-amber-500 to-yellow-600",
+        id: "love-flat",
+        name: "Flat Projects",
+        nameTa: "அடுக்குமாடி குடியிருப்பு",
+        type: "Modern Flats",
+        image: "/images/projects/flat-projects/1-exterior.jpg",
+        icon: Home,
+        badge: "Running 2026",
+        badgeBg: "bg-emerald-600 text-white",
+        gradient: "from-blue-600 to-indigo-600",
         onClick: () => setSelectedProject(storeProjects[2]),
       },
       {
@@ -560,7 +517,7 @@ export default function ProjectIconGrid({
         name: "Vaigai Elite",
         nameTa: "வைகை எலைட்",
         type: "Commercial Highway",
-        image: "/images/projects/vaigai/corridor-aerial.jpg",
+        image: "/images/projects/vaigai/vaigai-elite-layout-plan.jpg",
         icon: Building2,
         badge: "Running 2026",
         badgeBg: "bg-emerald-600 text-white",
@@ -580,23 +537,23 @@ export default function ProjectIconGrid({
         onClick: () => setSelectedProject(storeProjects[1]),
       },
       {
-        id: "love-green",
-        name: "Green Enclave",
-        nameTa: "கிரீன் என்கிளேவ்",
-        type: "DTCP Township",
-        image: "/images/projects/surya-green-enclave.jpg",
+        id: "love-pandi",
+        name: "Pandi Kovil",
+        nameTa: "பாண்டி கோவில்",
+        type: "Commercial Land",
+        image: "/images/pandikovil.png",
         icon: CheckCircle2,
-        badge: "Completed",
+        badge: "Commercial",
         badgeBg: "bg-blue-600 text-white",
         gradient: "from-blue-600 to-indigo-600",
-        onClick: () => setSelectedProject(storeProjects[3]),
+        onClick: () => setSelectedProject(storeProjects[0]),
       },
       {
         id: "love-3d",
         name: "3D Masterplan",
         nameTa: "3D மாதிரி",
         type: "MapBhoomi Live",
-        image: "/images/projects/surya-green-enclave/layout-blueprint.jpg",
+        image: "/images/pandikovil-layout.png",
         icon: Layers,
         badge: "Live 3D",
         badgeBg: "bg-purple-600 text-white",
@@ -1171,15 +1128,15 @@ export default function ProjectIconGrid({
           {!searchQuery && (
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
               
-              {/* Left Large Card: UPCOMING PROJECT: ORANGE GARDEN (As requested by user!) */}
+              {/* Left Large Card: FEATURED PROJECT */}
               <div
-                onClick={() => setSelectedProject(storeProjects[2])}
+                onClick={() => setSelectedProject(storeProjects[0])}
                 className="lg:col-span-7 xl:col-span-8 rounded-3xl overflow-hidden bg-gradient-to-br from-amber-600 via-orange-600 to-amber-700 p-6 sm:p-8 lg:p-10 text-white relative shadow-lg flex flex-col justify-between min-h-[300px] sm:min-h-[340px] cursor-pointer group"
               >
                 {/* Background Hero Image */}
                 <Image
-                  src="/images/projects/orange-garden/hero-orchard.jpg"
-                  alt="Orange Garden Upcoming Project"
+                  src="/images/Riverbeltwal.png"
+                  alt="Vaigai River Belt Project"
                   fill
                   priority
                   className="object-cover opacity-35 mix-blend-multiply group-hover:scale-105 transition-transform duration-700"
@@ -1294,7 +1251,7 @@ export default function ProjectIconGrid({
                     className="group relative rounded-2xl overflow-hidden aspect-[16/10] bg-gray-900 border border-gray-200 shadow-sm cursor-pointer hover:shadow-md transition-all"
                   >
                     <Image
-                      src="/images/projects/vaigai/corridor-aerial.jpg"
+                      src="/images/projects/vaigai/vaigai-elite-layout-plan.jpg"
                       alt="Vaigai Elite Running Project"
                       fill
                       className="object-cover group-hover:scale-110 transition-transform duration-500"
@@ -1315,29 +1272,29 @@ export default function ProjectIconGrid({
                     </div>
                   </div>
 
-                  {/* Tile 2: COMPLETED PROJECT - Surya Green Enclave */}
+                  {/* Tile 2: RESIDENTIAL FLATS */}
                   <div
-                    onClick={() => setSelectedProject(storeProjects[3])}
+                    onClick={() => setSelectedProject(storeProjects[2])}
                     className="group relative rounded-2xl overflow-hidden aspect-[16/10] bg-gray-900 border border-gray-200 shadow-sm cursor-pointer hover:shadow-md transition-all"
                   >
                     <Image
-                      src="/images/projects/surya-green-enclave.jpg"
-                      alt="Surya Green Enclave Completed Project"
+                      src="/images/projects/flat-projects/1-exterior.jpg"
+                      alt="Modern Residential Flats"
                       fill
                       className="object-cover group-hover:scale-110 transition-transform duration-500"
                       sizes="250px"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
                     <div className="absolute top-2 left-2">
-                      <span className="text-[8px] font-mono font-extrabold uppercase px-1.5 py-0.5 rounded-md bg-blue-600 text-white">
-                        100% Completed
+                      <span className="text-[8px] font-mono font-extrabold uppercase px-1.5 py-0.5 rounded-md bg-emerald-600 text-white">
+                        Running 2026
                       </span>
                     </div>
                     <div className="absolute bottom-2 left-2 right-2">
                       <h4 className="font-display text-xs font-bold text-white group-hover:text-[#EAB308] truncate">
-                        Green Enclave
+                        Residential Flats
                       </h4>
-                      <span className="text-[9px] text-gray-300 block truncate">DTCP Township</span>
+                      <span className="text-[9px] text-gray-300 block truncate">Modern Apartments</span>
                     </div>
                   </div>
 
@@ -2038,11 +1995,11 @@ export default function ProjectIconGrid({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[
-                  { src: "/images/projects/orange-garden/hero-orchard.jpg", title: "Orange Garden Orchard", location: "Madurai Green Belt" },
-                  { src: "/images/projects/vaigai/corridor-aerial.jpg", title: "Vaigai Elite Highway View", location: "NH-44 Outer Ring Road" },
+                  { src: "/images/projects/flat-projects/1-exterior.jpg", title: "Flat Projects Exterior", location: "Madurai Residential" },
+                  { src: "/images/projects/vaigai-commercial.jpg", title: "Vaigai Commercial Frontage", location: "NH-44 Outer Ring Road" },
                   { src: "/images/projects/madurai-farms/aerial-grove.jpg", title: "Madurai Farms Agro Land", location: "Agricultural Belt" },
-                  { src: "/images/projects/surya-green-enclave.jpg", title: "Green Enclave Township", location: "DTCP Residential" },
-                  { src: "/images/projects/orange-garden/entrance-gate.jpg", title: "Orange Garden Grand Arch", location: "Upcoming Orchard" },
+                  { src: "/images/pandikovil.png", title: "Pandi Kovil Commercial", location: "Pandi Kovil Junction" },
+                  { src: "/images/Riverbeltwal.png", title: "Vaigai River Belt", location: "Riverfront Development" },
                   { src: "/images/projects/madurai-farms/panoramic-view.jpg", title: "Madurai Farms Countryside Panorama", location: "Agro Farmland" },
                 ].map((photo, i) => (
                   <div
@@ -2168,10 +2125,10 @@ export default function ProjectIconGrid({
                   {language === "ta" ? "திட்டங்கள்" : "Projects"}
                 </span>
                 <ul className="space-y-1 text-[11px]">
-                  <li><Link href="/projects/orange-garden" className="text-amber-700 font-bold hover:underline">Orange Garden (Upcoming 2026)</Link></li>
-                  <li><Link href="/projects/vaigai-elite-commercial-land" className="hover:text-[#0F172A]">Vaigai Elite (NH-44 Running)</Link></li>
-                  <li><Link href="/projects/madurai-farms-and-fruits" className="hover:text-[#0F172A]">Madurai Farms & Fruits (Running)</Link></li>
-                  <li><Link href="/projects/surya-green-enclave" className="hover:text-[#0F172A]">Surya Green Enclave (Delivered)</Link></li>
+                  <li><Link href="/projects/flat-projects" className="text-amber-700 font-bold hover:underline">Flat Projects (Running 2026)</Link></li>
+                  <li><Link href="/projects/vaigai-elite" className="hover:text-[#0F172A]">Vaigai Elite (NH-44 Running)</Link></li>
+                  <li><Link href="/projects/madurai-farms" className="hover:text-[#0F172A]">Madurai Farms & Fruits (Running)</Link></li>
+                  <li><Link href="/projects/pandi-kovil" className="hover:text-[#0F172A]">Pandi Kovil Site</Link></li>
                 </ul>
               </div>
 

@@ -7,6 +7,8 @@ import { useSearchParams } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { useLanguage } from "@/hooks/useLanguage";
+import { useCmsData } from "@/hooks/useCmsData";
+import { Project } from "@/types/project";
 import { projectsData } from "@/data/projects";
 import {
   Home,
@@ -24,30 +26,51 @@ import {
 
 function ProjectsContent() {
   const { language } = useLanguage();
+  const { data: cmsData } = useCmsData();
+  const projectsList: Project[] =
+    cmsData?.projects && cmsData.projects.length > 0
+      ? (cmsData.projects as unknown as Project[])
+      : projectsData;
+
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("cat") || "all";
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory);
 
-  const categories = [
-    { id: "all", name: language === "ta" ? "அனைத்து திட்டங்கள்" : "All Projects", count: projectsData.length },
-    { id: "residential", name: language === "ta" ? "குடியிருப்பு" : "Residential", count: 2 },
-    { id: "commercial", name: language === "ta" ? "வணிக நிலங்கள்" : "Commercial", count: 5 },
-    { id: "farm", name: language === "ta" ? "பண்ணை நிலம்" : "Farm Land", count: 2 },
-  ];
+  const categories = useMemo(() => {
+    const list = (cmsData?.categories || []).map((cat) => ({
+      id: cat.id,
+      name: cat.name[language] || cat.name.en,
+      count: projectsList.filter((p) => p.category === cat.id).length,
+    }));
+
+    if (list.length > 0) {
+      return [
+        { id: "all", name: language === "ta" ? "அனைத்து திட்டங்கள்" : "All Projects", count: projectsList.length },
+        ...list,
+      ];
+    }
+
+    return [
+      { id: "all", name: language === "ta" ? "அனைத்து திட்டங்கள்" : "All Projects", count: projectsList.length },
+      { id: "residential", name: language === "ta" ? "குடியிருப்பு" : "Residential", count: projectsList.filter((p) => p.category === "residential").length },
+      { id: "commercial", name: language === "ta" ? "வணிக நிலங்கள்" : "Commercial", count: projectsList.filter((p) => p.category === "commercial").length },
+      { id: "farm", name: language === "ta" ? "பண்ணை நிலம்" : "Farm Land", count: projectsList.filter((p) => p.category === "farm").length },
+    ];
+  }, [cmsData?.categories, language, projectsList]);
 
   const commercialProjects = useMemo(
-    () => projectsData.filter((p) => p.category === "commercial"),
-    []
+    () => projectsList.filter((p) => p.category === "commercial"),
+    [projectsList]
   );
 
   const farmProjects = useMemo(
-    () => projectsData.filter((p) => p.category === "farm"),
-    []
+    () => projectsList.filter((p) => p.category === "farm"),
+    [projectsList]
   );
 
   const residentialProjects = useMemo(
-    () => projectsData.filter((p) => p.category === "residential"),
-    []
+    () => projectsList.filter((p) => p.category === "residential"),
+    [projectsList]
   );
 
   return (
@@ -119,7 +142,7 @@ function ProjectsContent() {
             <div className="group rounded-3xl bg-white border border-[#E8E2D7] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
               <div className="relative aspect-[16/10] w-full overflow-hidden bg-gray-100">
                 <Image
-                  src="/images/projects/surya-green-enclave.jpg"
+                  src="/images/projects/flat-projects/1-exterior.jpg"
                   alt="Residential Projects"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
@@ -152,7 +175,7 @@ function ProjectsContent() {
             <div className="group rounded-3xl bg-white border border-[#E8E2D7] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
               <div className="relative aspect-[16/10] w-full overflow-hidden bg-gray-100">
                 <Image
-                  src="/images/projects/vaigai/corridor-aerial.jpg"
+                  src="/images/projects/vaigai-commercial.jpg"
                   alt="Commercial Projects"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
@@ -468,6 +491,102 @@ function ProjectsContent() {
           </div>
         </section>
       )}
+
+      {/* ========================================================================= */}
+      {/* 5. DYNAMIC SECTIONS FOR ADDITIONAL / CUSTOM CATEGORIES                   */}
+      {/* ========================================================================= */}
+      {((cmsData?.categories || []).filter((c) => !["commercial", "farm", "residential"].includes(c.id))).map((customCat) => {
+        const customCatProjects = projectsList.filter((p) => p.category === customCat.id);
+        if (selectedCategory !== "all" && selectedCategory !== customCat.id) return null;
+        if (selectedCategory === "all" && customCatProjects.length === 0) return null;
+
+        return (
+          <section key={customCat.id} id={customCat.id} className="w-full max-w-[1760px] mx-auto px-6 sm:px-10 lg:px-16 2xl:px-24 py-12 sm:py-16 border-t border-[#E8E2D7]">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+              <div>
+                <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#C6A66B]">
+                  {customCat.id.toUpperCase()} CORRIDOR
+                </span>
+                <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#173D2B] mt-1 flex items-center gap-2.5">
+                  <Building2 className="h-7 w-7 text-[#C6A66B]" />
+                  <span>{customCat.name[language] || customCat.name.en} ({customCatProjects.length} Verified Properties)</span>
+                </h2>
+                {customCat.description && (
+                  <p className="text-xs sm:text-sm text-gray-600 mt-1 max-w-2xl">
+                    {customCat.description[language] || customCat.description.en}
+                  </p>
+                )}
+              </div>
+              <span className="font-mono text-xs font-bold text-amber-800 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
+                Verified Titles
+              </span>
+            </div>
+
+            {customCatProjects.length === 0 ? (
+              <div className="p-8 rounded-3xl bg-white border border-[#E8E2D7] text-center text-sm text-gray-500 font-medium">
+                No active projects listed under {customCat.name.en} yet. New developments coming soon.
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                {customCatProjects.map((project) => (
+                  <div
+                    key={project.id}
+                    className="group flex flex-col rounded-3xl bg-white border border-[#E8E2D7] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
+                  >
+                    <div className="relative aspect-[16/10] w-full overflow-hidden bg-gray-100">
+                      <Image
+                        src={project.heroImage || "/images/hero-poster.jpg"}
+                        alt={project.title[language] || project.title.en}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-700"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                      <div className="absolute top-4 left-4">
+                        <span className="px-3 py-1 rounded-full bg-[#173D2B]/90 backdrop-blur-md text-white font-mono text-[10px] font-bold uppercase tracking-wider border border-white/20">
+                          {project.subcategoryLabel?.[language] || project.categoryLabel?.[language] || customCat.name.en}
+                        </span>
+                      </div>
+                      <div className="absolute bottom-4 left-4 right-4 text-white">
+                        <div className="flex items-center gap-1.5 text-xs text-[#C6A66B] mb-1">
+                          <MapPin className="h-3.5 w-3.5" />
+                          <span className="truncate">{project.location[language]}</span>
+                        </div>
+                        <h3 className="font-display text-lg sm:text-xl font-bold leading-snug">
+                          {project.title[language]}
+                        </h3>
+                      </div>
+                    </div>
+
+                    <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+                      <p className="text-xs sm:text-sm text-gray-600 line-clamp-3 leading-relaxed">
+                        {project.description[language]}
+                      </p>
+
+                      <div className="pt-4 border-t border-[#F5F4EE] flex items-center gap-3">
+                        <Link
+                          href={`/projects/${project.slug}`}
+                          className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#173D2B] py-2.5 px-4 text-xs font-bold text-white shadow-xs hover:bg-[#122e20] transition"
+                        >
+                          <Eye className="h-3.5 w-3.5" />
+                          <span>View Details</span>
+                        </Link>
+                        <Link
+                          href={`/location#${project.slug}`}
+                          className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-[#E8E2D7] bg-[#F5F4EE] hover:bg-white py-2.5 px-3.5 text-xs font-bold text-[#171B18] transition"
+                        >
+                          <MapPin className="h-3.5 w-3.5 text-[#C6A66B]" />
+                          <span className="hidden sm:inline">Location</span>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+        );
+      })}
 
       <Footer />
     </main>

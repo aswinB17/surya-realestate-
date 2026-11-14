@@ -132,7 +132,7 @@ export const PROJECT_DETAILS_MAP: Record<string, ProjectExtendedDetails> = {
     galleryImages: [
       "/images/generated/residential-plot.jpg",
       "/images/hero/hero-gated-layout.jpg",
-      "/images/projects/surya-green-enclave.jpg",
+      "/images/projects/surya-green-enclave-blueprint.jpg",
       "/images/gallery/gallery-1.jpg",
     ],
     videoUrl: "/videos/herosection.mp4",

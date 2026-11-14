@@ -1,10 +1,12 @@
-﻿"use client";
+"use client";
 
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import SummitFooter from "@/components/layout/SummitFooter";
 import { useLanguage } from "@/hooks/useLanguage";
+import { useCmsData } from "@/hooks/useCmsData";
+import { Project } from "@/types/project";
 import { projectsData } from "@/data/projects";
 import {
   MapPin,
@@ -18,12 +20,26 @@ import {
 
 export default function LocationPage() {
   const { language } = useLanguage();
+  const { data: cmsData } = useCmsData();
+  const projectsList: Project[] =
+    cmsData?.projects && cmsData.projects.length > 0
+      ? (cmsData.projects as unknown as Project[])
+      : projectsData;
+
   const [activeCategory, setActiveCategory] = useState<string>("all");
 
-  const filteredProjects = projectsData.filter((p) => {
+  const filteredProjects = projectsList.filter((p) => {
     if (activeCategory === "all") return true;
     return p.category === activeCategory;
   });
+
+  const categories = [
+    { id: "all", label: "All Locations" },
+    ...(cmsData?.categories || []).map((c) => ({
+      id: c.id,
+      label: c.name[language] || c.name.en,
+    })),
+  ];
 
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
@@ -54,17 +70,17 @@ export default function LocationPage() {
 
           {/* Filter Pills */}
           <div className="mt-6 flex flex-wrap items-center gap-2 pt-4 border-t border-white/10">
-            {["all", "commercial", "farm", "residential"].map((cat) => (
+            {categories.map((cat) => (
               <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
                 className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase transition-all cursor-pointer ${
-                  activeCategory === cat
+                  activeCategory === cat.id
                     ? "bg-[#EAB308] text-[#0A0D12] shadow-xs scale-105"
                     : "bg-white/10 text-white hover:bg-white/20 border border-white/10"
                 }`}
               >
-                {cat === "all" ? "All Locations" : cat}
+                {cat.label}
               </button>
             ))}
           </div>
@@ -75,12 +91,18 @@ export default function LocationPage() {
       <section className="w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map((project) => {
+            const anyProj = project as any;
+            const projectTitle = anyProj.title || anyProj.name || { en: "Project", ta: "திட்டம்" };
+            const projectHeroImage = anyProj.heroImage || anyProj.image || "/images/hero-poster.jpg";
+            const projectLocation = anyProj.location || { en: "Madurai, Tamil Nadu", ta: "மதுரை, தமிழ்நாடு" };
+            const projectCategoryLabel = anyProj.categoryLabel || { en: project.category, ta: project.category };
+
             const Icon = project.category === "farm" ? TreePine : project.category === "residential" ? Home : Building2;
-            const googleMapsSearchUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-              `${project.title.en} ${project.location.en}`
+            const googleMapsSearchUrl = anyProj.mapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+              `${projectTitle.en} ${projectLocation.en}`
             )}`;
-            const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-              `${project.title.en} ${project.location.en}`
+            const directionsUrl = anyProj.mapsUrl || `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+              `${projectTitle.en} ${projectLocation.en}`
             )}`;
 
             return (
@@ -92,8 +114,8 @@ export default function LocationPage() {
                 {/* Visual Preview / Map Preview */}
                 <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#0A0D12]">
                   <Image
-                    src={project.heroImage}
-                    alt={project.title[language]}
+                    src={projectHeroImage}
+                    alt={projectTitle[language] || projectTitle.en}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-700 opacity-90"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -104,18 +126,18 @@ export default function LocationPage() {
                   <div className="absolute top-4 left-4 flex items-center gap-2">
                     <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#173D2B]/90 backdrop-blur-md text-white font-mono text-[10px] font-bold uppercase tracking-wider border border-white/20">
                       <Icon className="h-3 w-3 text-[#EAB308]" />
-                      <span>{project.categoryLabel[language]}</span>
+                      <span>{projectCategoryLabel[language] || projectCategoryLabel.en}</span>
                     </span>
                   </div>
 
                   {/* Overlaid Title & Address */}
                   <div className="absolute bottom-4 left-4 right-4 text-white">
                     <h3 className="font-display text-lg font-bold leading-tight">
-                      {project.title[language]}
+                      {projectTitle[language] || projectTitle.en}
                     </h3>
                     <div className="flex items-center gap-1.5 text-xs text-[#EAB308] mt-1 font-mono">
                       <MapPin className="h-3.5 w-3.5 shrink-0" />
-                      <span className="truncate">{project.location[language]}</span>
+                      <span className="truncate">{projectLocation[language] || projectLocation.en}</span>
                     </div>
                   </div>
                 </div>

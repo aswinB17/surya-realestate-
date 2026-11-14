@@ -5,9 +5,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail, MapPin, Clock, ShieldCheck, ArrowRight, ExternalLink } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
+import { useCmsData } from "@/hooks/useCmsData";
 
 export default function Footer() {
   const { language } = useLanguage();
+  const { data: cmsData } = useCmsData();
+  const company = cmsData?.company;
+  const phone = company?.phone || "+91 77089 66452";
+  const email = company?.email || "suryapromotersmdu@gmail.com";
+  const address = company?.address || "120 Feet Road, Near Mattuthavani Bus Stand, K.K. Nagar Corridor, Madurai, Tamil Nadu 625020";
 
   return (
     <footer className="w-full bg-[#173D2B] text-white border-t border-[#122e20]">
@@ -132,7 +138,7 @@ export default function Footer() {
             </h4>
             <div className="space-y-3 text-sm text-gray-300">
               <a
-                href="tel:+917708966452"
+                href={`tel:${phone}`}
                 className="flex items-center gap-3 hover:text-white transition group"
               >
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/10 text-[#C6A66B] group-hover:bg-[#C6A66B] group-hover:text-[#173D2B] transition">
@@ -140,12 +146,12 @@ export default function Footer() {
                 </div>
                 <div>
                   <span className="block text-[11px] text-gray-400 font-mono">Direct Hotline</span>
-                  <span className="font-mono font-bold text-white">+91 77089 66452</span>
+                  <span className="font-mono font-bold text-white">{phone}</span>
                 </div>
               </a>
 
               <a
-                href="mailto:suryapromotersmdu@gmail.com"
+                href={`mailto:${email}`}
                 className="flex items-center gap-3 hover:text-white transition group"
               >
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/10 text-[#C6A66B] group-hover:bg-[#C6A66B] group-hover:text-[#173D2B] transition">
@@ -153,7 +159,7 @@ export default function Footer() {
                 </div>
                 <div>
                   <span className="block text-[11px] text-gray-400 font-mono">Email Inquiries</span>
-                  <span className="text-xs text-white">suryapromotersmdu@gmail.com</span>
+                  <span className="text-xs text-white">{email}</span>
                 </div>
               </a>
 
@@ -163,7 +169,7 @@ export default function Footer() {
                 </div>
                 <div className="text-xs text-gray-300">
                   <span className="block text-[11px] text-gray-400 font-mono">Registered Office</span>
-                  <span>Madurai Region, Tamil Nadu, India</span>
+                  <span>{address}</span>
                 </div>
               </div>
             </div>

@@ -29,6 +29,7 @@ interface ProjectCardProps {
 export default function ProjectCard({ project }: ProjectCardProps) {
   const router = useRouter();
   const { language } = useLanguage();
+  const isSold = project.status === "sold";
   const isUpcoming = project.status === "upcoming" || project.projectType === "upcoming";
   const isCompleted = project.status === "completed" || project.projectType === "completed";
   const whatsappMsg = `Hello Surya Promoters, please share price and details for ${project.title.en}.`;
@@ -73,8 +74,13 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             {project.categoryLabel[language]}
           </span>
 
-          {/* Status Badge: Running vs Upcoming vs Completed */}
-          {isUpcoming ? (
+          {/* Status Badge: Sold vs Upcoming vs Completed vs Running */}
+          {isSold ? (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-rose-600/95 backdrop-blur-md px-3 py-1 font-mono text-[10px] font-black uppercase tracking-wider text-white shadow-sm border border-rose-400/40 shrink-0">
+              <span className="h-1.5 w-1.5 rounded-full bg-white" />
+              <span>{language === "ta" ? "விற்பனையானது" : "Sold Out"}</span>
+            </span>
+          ) : isUpcoming ? (
             <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/95 backdrop-blur-md px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-black shadow-sm border border-amber-300/40 shrink-0">
               <Sparkles className="h-3 w-3 text-black" />
               <span>{language === "ta" ? "வரவிருக்கும் திட்டம்" : "Upcoming"}</span>

@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/hooks/useLanguage";
+import { useCmsData } from "@/hooks/useCmsData";
 import { projectsData } from "@/data/projects";
 import {
   Phone,
@@ -22,6 +23,14 @@ import {
 
 export default function ContactPageClient() {
   const { language } = useLanguage();
+  const { data: cmsData } = useCmsData();
+  const company = cmsData?.company;
+  const phone = company?.phone || "+91 77089 66452";
+  const whatsapp = company?.whatsapp || "+91 77089 66452";
+  const rawWhatsapp = (whatsapp || "917708966452").replace(/[^0-9]/g, "");
+  const email = company?.email || "suryapromotersmdu@gmail.com";
+  const address = company?.address || "120 Feet Road, Near Mattuthavani Bus Stand, K.K. Nagar Corridor, Madurai, Tamil Nadu 625020";
+  const mapsLink = company?.mapsLink || "https://maps.google.com/?q=Mattuthavani+Madurai";
 
   const [formData, setFormData] = useState({
     name: "",
@@ -123,7 +132,7 @@ export default function ContactPageClient() {
                 {language === "ta" ? "நேரடி அழைப்பு" : "Direct Hotline"}
               </span>
               <h3 className="font-display text-lg font-bold text-[#171B18] mt-1">
-                +91 77089 66452
+                {phone}
               </h3>
               <p className="text-xs text-[#77766F] mt-1 leading-relaxed">
                 {language === "ta"
@@ -132,7 +141,7 @@ export default function ContactPageClient() {
               </p>
             </div>
             <a
-              href="tel:+917708966452"
+              href={`tel:${phone}`}
               className="mt-6 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#173D2B] hover:bg-[#64865A] text-white text-xs font-mono font-bold uppercase tracking-wider transition shadow-2xs"
             >
               <Phone className="h-4 w-4" />
@@ -150,7 +159,7 @@ export default function ContactPageClient() {
                 {language === "ta" ? "வாட்ஸ்அப் சாட்" : "WhatsApp Chat"}
               </span>
               <h3 className="font-display text-lg font-bold text-[#171B18] mt-1">
-                +91 77089 66452
+                {phone}
               </h3>
               <p className="text-xs text-[#77766F] mt-1 leading-relaxed">
                 {language === "ta"
@@ -159,7 +168,7 @@ export default function ContactPageClient() {
               </p>
             </div>
             <a
-              href="https://wa.me/917708966452?text=Hello%20Surya%20Promoters,%20I%20am%20interested%20in%20your%20Madurai%20projects.%20Please%20share%20details."
+              href={`https://wa.me/${rawWhatsapp}?text=Hello%20Surya%20Promoters,%20I%20am%20interested%20in%20your%20Madurai%20projects.%20Please%20share%20details.`}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-6 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#25D366] hover:bg-[#1EBE5B] text-white text-xs font-mono font-bold uppercase tracking-wider transition shadow-2xs"
@@ -179,7 +188,7 @@ export default function ContactPageClient() {
                 {language === "ta" ? "மின்னஞ்சல்" : "Official Email"}
               </span>
               <h3 className="font-display text-base font-bold text-[#171B18] mt-1 break-all">
-                suryapromotersmdu@gmail.com
+                {email}
               </h3>
               <p className="text-xs text-[#77766F] mt-1 leading-relaxed">
                 {language === "ta"
@@ -188,7 +197,7 @@ export default function ContactPageClient() {
               </p>
             </div>
             <a
-              href="mailto:suryapromotersmdu@gmail.com"
+              href={`mailto:${email}`}
               className="mt-6 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#173D2B] hover:bg-[#64865A] text-white text-xs font-mono font-bold uppercase tracking-wider transition shadow-2xs"
             >
               <Mail className="h-4 w-4" />
@@ -209,13 +218,11 @@ export default function ContactPageClient() {
                 Madurai, Tamil Nadu
               </h3>
               <p className="text-xs text-[#77766F] mt-1 leading-relaxed">
-                {language === "ta"
-                  ? "120 அடி ரோடு, மாட்டுத்தாவணி பேருந்து நிலையம் அருகில், கே.கே. நகர், மதுரை 625020."
-                  : "120 Feet Road, Near Mattuthavani Bus Stand, K.K. Nagar Corridor, Madurai 625020."}
+                {address}
               </p>
             </div>
             <a
-              href="https://maps.google.com/?q=Surya+Promoters+Mattuthavani+Madurai"
+              href={mapsLink}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-6 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#173D2B] hover:bg-[#64865A] text-white text-xs font-mono font-bold uppercase tracking-wider transition shadow-2xs"

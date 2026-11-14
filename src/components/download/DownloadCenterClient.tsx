@@ -4,6 +4,7 @@ import React, { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/hooks/useLanguage";
+import { useCmsData } from "@/hooks/useCmsData";
 import {
   Download,
   FileText,
@@ -99,8 +100,8 @@ const DOWNLOAD_ITEMS: DownloadItem[] = [
     type: "brochure",
     fileFormat: "PDF",
     fileSize: "4.2 MB",
-    thumbnailUrl: "/images/projects/surya-green-enclave.jpg",
-    downloadUrl: "/images/projects/surya-green-enclave.jpg",
+    thumbnailUrl: "/images/projects/surya-green-enclave-blueprint.jpg",
+    downloadUrl: "/images/projects/surya-green-enclave-blueprint.jpg",
     description: {
       en: "Key investment metrics, bank loan approvals (SBI, HDFC), surrounding educational hub distances, and price appreciation charts.",
       ta: "வங்கி கடன் வசதிகள், அருகிலுள்ள கல்லூரிகள், பள்ளிகள் மற்றும் மனை வளர்ச்சி சாத்தியக்கூறுகள் குறித்த விபரங்கள்.",
@@ -272,6 +273,29 @@ const DOWNLOAD_ITEMS: DownloadItem[] = [
 
 export default function DownloadCenterClient() {
   const { language } = useLanguage();
+  const { data: cmsData } = useCmsData();
+
+  const allDownloadItems = useMemo(() => {
+    if (!cmsData?.downloads?.items || cmsData.downloads.items.length === 0) {
+      return DOWNLOAD_ITEMS;
+    }
+    return cmsData.downloads.items.map((item) => ({
+      id: item.id,
+      name: item.title,
+      project: item.category,
+      category: (item.category?.en?.toLowerCase().includes("farm") ? "farmland" : item.category?.en?.toLowerCase().includes("residen") ? "residential" : "commercial") as any,
+      type: (item.fileType?.toLowerCase().includes("video") ? "video" : item.fileType?.toLowerCase().includes("map") || item.fileType?.toLowerCase().includes("plan") ? "map" : "brochure") as any,
+      fileFormat: (item.fileType?.toLowerCase().includes("pdf") ? "PDF" : item.fileType?.toLowerCase().includes("mp4") ? "MP4" : "JPG") as any,
+      fileSize: item.fileSize || "1.0 MB",
+      thumbnailUrl: item.downloadUrl?.endsWith(".jpg") || item.downloadUrl?.endsWith(".png") || item.downloadUrl?.endsWith(".jpeg") ? item.downloadUrl : "/images/hero-poster.jpg",
+      downloadUrl: item.downloadUrl,
+      description: {
+        en: `${item.title?.en || ""} - ${item.badge || ""}`,
+        ta: `${item.title?.ta || ""} - ${item.badge || ""}`,
+      },
+    }));
+  }, [cmsData]);
+
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedType, setSelectedType] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -293,7 +317,7 @@ export default function DownloadCenterClient() {
   ];
 
   const filteredItems = useMemo(() => {
-    return DOWNLOAD_ITEMS.filter((item) => {
+    return allDownloadItems.filter((item) => {
       const matchesCategory =
         selectedCategory === "all" || item.category === selectedCategory;
       const matchesType = selectedType === "all" || item.type === selectedType;

@@ -1,0 +1,1269 @@
+{
+  "lastUpdated": "2026-11-14T13:04:06.029Z",
+  "categories": [
+    {
+      "id": "residential",
+      "name": {
+        "en": "Residential",
+        "ta": "குடியிருப்பு"
+      },
+      "description": {
+        "en": "DTCP & RERA approved villa plots, luxury duplex houses & flats",
+        "ta": "DTCP & RERA அங்கீகரிக்கப்பட்ட வீட்டுமனைகள் & சொகுசு வீடுகள்"
+      },
+      "icon": "Home"
+    },
+    {
+      "id": "commercial",
+      "name": {
+        "en": "Commercial",
+        "ta": "வணிகம்"
+      },
+      "description": {
+        "en": "Highway frontage plots, high-visibility retail & logistics land",
+        "ta": "நெடுஞ்சாலை வணிக நிலங்கள் & பெருநிறுவன இடங்கள்"
+      },
+      "icon": "Building2"
+    },
+    {
+      "id": "farm",
+      "name": {
+        "en": "Farm Land",
+        "ta": "பண்ணை நிலம்"
+      },
+      "description": {
+        "en": "Managed agro acreage, drip irrigation & organic fruit orchards",
+        "ta": "சொட்டு நீர் பாசன வசதியுடன் கூடிய இயற்கை விவசாய நிலங்கள்"
+      },
+      "icon": "TreePine"
+    }
+  ],
+  "subcategories": [
+    {
+      "id": "flat",
+      "categoryId": "residential",
+      "name": {
+        "en": "Flat / Apartment",
+        "ta": "அடுக்குமாடி குடியிருப்பு"
+      }
+    },
+    {
+      "id": "plot",
+      "categoryId": "residential",
+      "name": {
+        "en": "Villa Plot",
+        "ta": "வீட்டுமனை"
+      }
+    },
+    {
+      "id": "villa",
+      "categoryId": "residential",
+      "name": {
+        "en": "Luxury Villa",
+        "ta": "சொகுசு வில்லா"
+      }
+    },
+    {
+      "id": "comm-land",
+      "categoryId": "commercial",
+      "name": {
+        "en": "Commercial Land",
+        "ta": "வணிக நிலம்"
+      }
+    },
+    {
+      "id": "comm-building",
+      "categoryId": "commercial",
+      "name": {
+        "en": "Commercial Building",
+        "ta": "வணிக கட்டிடம்"
+      }
+    },
+    {
+      "id": "warehouse",
+      "categoryId": "commercial",
+      "name": {
+        "en": "Warehouse / Logistics",
+        "ta": "கிடங்கு / சேமிப்பு தளம்"
+      }
+    },
+    {
+      "id": "farm-land",
+      "categoryId": "farm",
+      "name": {
+        "en": "Agro Farmland",
+        "ta": "வேளாண் பண்ணை"
+      }
+    },
+    {
+      "id": "farmhouse",
+      "categoryId": "farm",
+      "name": {
+        "en": "Weekend Farmhouse",
+        "ta": "வார இறுதி பண்ணை வீடு"
+      }
+    },
+    {
+      "id": "factory-shed",
+      "categoryId": "industrial",
+      "name": {
+        "en": "Factory / Industrial Shed",
+        "ta": "தொழிற்சாலை வளாகம்"
+      }
+    },
+    {
+      "id": "industrial-plot",
+      "categoryId": "industrial",
+      "name": {
+        "en": "Industrial Land Parcel",
+        "ta": "தொழில் மனை"
+      }
+    }
+  ],
+  "projects": [
+    {
+      "id": "flat-projects",
+      "slug": "flat-projects",
+      "name": {
+        "en": "3 BHK Duplex Luxury Villa for Sale",
+        "ta": "3 BHK டூப்ளக்ஸ் சொகுசு வில்லா விற்பனைக்கு"
+      },
+      "category": "residential",
+      "categoryLabel": {
+        "en": "Residential",
+        "ta": "குடியிருப்பு"
+      },
+      "subcategory": "villa",
+      "subcategoryLabel": {
+        "en": "Luxury Villa",
+        "ta": "சொகுசு வில்லா"
+      },
+      "location": {
+        "en": "Surya Nagar, Madurai",
+        "ta": "சூர்யா நகர், மதுரை"
+      },
+      "distanceInfo": {
+        "en": "East Facing · 4.12 Cents · 2,750 Sq.Ft · ₹1.67 Cr (Neg)",
+        "ta": "கிழக்கு பார்த்தது · 4.12 சென்ட் · 2,750 ச.அடி · ₹1.67 கோடி"
+      },
+      "image": "/images/projects/flat-projects/1-exterior.jpg",
+      "galleryImages": [
+        "/images/projects/flat-projects/1-exterior.jpg",
+        "/images/projects/flat-projects/2-entrance.jpg",
+        "/images/projects/flat-projects/3-living.jpg",
+        "/images/projects/flat-projects/4-upper-living.jpg",
+        "/images/projects/flat-projects/5-bedroom.jpg",
+        "/images/projects/flat-projects/6-kitchen.jpg",
+        "/images/projects/flat-projects/7-bathroom.jpg"
+      ],
+      "statusBadge": {
+        "en": "₹1.67 Cr (Negotiable)",
+        "ta": "₹1.67 கோடி (பேசலாம்)"
+      },
+      "rating": "5.0",
+      "status": "running",
+      "description": {
+        "en": "Brand new East-Facing high-ceiling 3 BHK luxury duplex villa for sale in prime Madurai Surya Nagar. Spanning 2,750 sq.ft total built-up area on 4.12 cents of DTCP-approved land, featuring a dedicated Dolby Atmos home theatre, 5 bathrooms with rain showers, elegant elevation, premium fully furnished interiors, and covered car parking at ₹1.67 Cr (negotiable).",
+        "ta": "மதுரை சூர்யா நகரில் கிழக்கு பார்த்த அதிநவீன 3 BHK டூப்ளக்ஸ் சொகுசு வில்லா விற்பனைக்கு. 4.12 சென்ட் DTCP அங்கீகரிக்கப்பட்ட நிலத்தில் 2,750 சதுர அடி பரப்பளவில் டால்பி அட்மாஸ் ஹோம் தியேட்டர், ரெயின் ஷவர் கொண்ட 5 குளியலறைகள், பிரீமியம் இன்டீரியர் வடிவமைப்பு மற்றும் கார் பார்க்கிங் வசதியுடன் கூடிய புதிய வீடு - ₹1.67 கோடி (விலை பேசத்தக்கது)."
+      },
+      "highlights": {
+        "en": [
+          "Fully Furnished 3 BHK Duplex with Hi-Ceiling Architecture",
+          "Private Home Theatre with Dolby Atmos Sound System",
+          "5 Luxurious Bathrooms Fitted with Rain Showers",
+          "4.12 Cents Land (DTCP Approved) & 2,750 Sq.Ft Buildup",
+          "100% East Facing Vastu Compliant with Elegant Elevation",
+          "Premium Designer Interiors, Woodwork & Covered Car Parking"
+        ],
+        "ta": [
+          "முழுமையாக அலங்கரிக்கப்பட்ட 3 BHK டூப்ளக்ஸ் உயர் கூரை வடிவமைப்பு",
+          "டால்பி அட்மாஸ் பிரத்யேக ஹோம் தியேட்டர் வசதி",
+          "ரெயின் ஷவர் கொண்ட 5 நவீன ஆடம்பர குளியலறைகள்",
+          "4.12 சென்ட் DTCP அனுமதி பெற்ற மனை & 2,750 ச.அடி கட்டிடம்",
+          "100% கிழக்கு பார்த்த வாஸ்து மற்றும் கவர்ச்சிகரமான எலிவேஷன்",
+          "பாதுகாப்பான கார் பார்க்கிங் & உயர்தர இன்டீரியர் வுட்ஒர்க்"
+        ]
+      },
+      "mapsUrl": "https://maps.app.goo.gl/ky2jGFwFY7TU7TnJ7?g_st=iw",
+      "specs": [
+        {
+          "label": {
+            "en": "Configuration",
+            "ta": "அமைப்பு"
+          },
+          "value": {
+            "en": "Fully Furnished 3 BHK",
+            "ta": "முழு வசதியுடன் 3 BHK"
+          }
+        },
+        {
+          "label": {
+            "en": "Buildup Area",
+            "ta": "கட்டிட பரப்பு"
+          },
+          "value": {
+            "en": "2,750 Sq.Ft (Duplex)",
+            "ta": "2,750 ச.அடி (டூப்ளக்ஸ்)"
+          }
+        },
+        {
+          "label": {
+            "en": "Land Area",
+            "ta": "நில அளவு"
+          },
+          "value": {
+            "en": "4.12 Cents (DTCP)",
+            "ta": "4.12 சென்ட் (DTCP)"
+          }
+        },
+        {
+          "label": {
+            "en": "Facing",
+            "ta": "திசை"
+          },
+          "value": {
+            "en": "East Facing (Hi-Ceiling)",
+            "ta": "கிழக்கு (உயர் கூரை)"
+          }
+        },
+        {
+          "label": {
+            "en": "Features",
+            "ta": "சிறப்பம்சங்கள்"
+          },
+          "value": {
+            "en": "Dolby Theatre · 5 Baths",
+            "ta": "ஹோம் தியேட்டர் · 5 பாத்ரூம்"
+          }
+        },
+        {
+          "label": {
+            "en": "Price",
+            "ta": "விலை"
+          },
+          "value": {
+            "en": "₹1.67 Cr (Negotiable)",
+            "ta": "₹1.67 கோடி (பேசலாம்)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "vaigai-elite",
+      "slug": "vaigai-elite-garden",
+      "name": {
+        "en": "Vaigai Elite Garden – Manalur",
+        "ta": "வைகை எலைட் கார்டன் – மணலூர்"
+      },
+      "category": "commercial",
+      "categoryLabel": {
+        "en": "Commercial",
+        "ta": "வணிகம்"
+      },
+      "subcategory": "comm-land",
+      "subcategoryLabel": {
+        "en": "Commercial Land",
+        "ta": "வணிக நிலம்"
+      },
+      "location": {
+        "en": "Madurai – Rameshwaram NH, Manalur",
+        "ta": "மதுரை – ராமேஸ்வரம் NH, மணலூர்"
+      },
+      "distanceInfo": {
+        "en": "6 km from Viraganur Roundana · 700 ft NH Frontage · 5.23 Acres",
+        "ta": "விரகனூர் ரவுண்டானாவிலிருந்து 6 கி.மீ · 700 அடி முகப்பு · 5.23 ஏக்கர்"
+      },
+      "image": "/images/VG/VG6.jpeg",
+      "galleryImages": [
+        "/images/VG/VG6.jpeg",
+        "/images/VG/VG2.jpeg",
+        "/images/VG/VG1.jpeg",
+        "/images/VG/VG3.jpeg",
+        "/images/VG/VG4.jpeg"
+      ],
+      "blueprint": "/images/projects/vaigai/vaigai-elite-layout-plan.jpg",
+      "mapbhoomiUrl": "https://mapbhoomi.com/l/surya-promoters/madurai-rameshwaram-nh-road",
+      "brochureUrl": "https://mapbhoomi.com/l/surya-promoters/madurai-rameshwaram-nh-road/brochure?layout=01a16275-c6df-721b-adaa-45994b084ec7",
+      "statusBadge": {
+        "en": "5.23 Acres · 700 Ft Frontage",
+        "ta": "5.23 ஏக்கர் · 700 அடி முகப்பு"
+      },
+      "rating": "5.0",
+      "status": "running",
+      "description": {
+        "en": "High-value 5.23 Acres commercial land opportunity on Madurai–Rameshwaram National Highway, Manalur. Features massive 700 ft direct highway frontage, scenic river view, just 6 km from Viraganur Roundana, and 15 km to Madurai Airport. Available as a whole or in 1-acre parcels with 100% clear titles at an attractive rate compared to nearby on-road lands.",
+        "ta": "மதுரை – ராமேஸ்வரம் தேசிய நெடுஞ்சாலை, மணலூரில் அமைந்துள்ள 5.23 ஏக்கர் பிரீமியம் வணிக பெருநிலம். 700 அடி நேரடி நெடுஞ்சாலை முகப்பு, வைகை நதி பார்வை, விரகனூர் ரவுண்டானாவிலிருந்து 6 கி.மீ, விமான நிலையத்திற்கு 15 கி.மீ தொலைவில் அமைந்துள்ளது. 1 ஏக்கர் மற்றும் அதற்கு மேற்பட்ட பிரிவுகளாக 100% தெளிவான பட்டாவுடன் கிடைக்கும்."
+      },
+      "highlights": {
+        "en": [
+          "Total 5.23 Acres – Available as a whole or in 1-acre parcels",
+          "700 ft massive direct frontage on Madurai–Rameshwaram NH",
+          "Just 6 km from Viraganur Roundana & close to Outer Ring Road junction",
+          "Scenic river view & 15 km to Madurai International Airport",
+          "100% clear titles & very attractive rate vs nearby on-road properties",
+          "Ideal for Showrooms, Warehousing, Institutions, Fuel/EV Stations & Resorts"
+        ],
+        "ta": [
+          "மொத்தம் 5.23 ஏக்கர் – முழுமையாகவோ அல்லது 1 ஏக்கர் பிரிவுகளாகவோ கிடைக்கும்",
+          "மதுரை – ராமேஸ்வரம் தேசிய நெடுஞ்சாலையில் 700 அடி நேரடி முகப்பு",
+          "விரகனூர் ரவுண்டானாவிலிருந்து வெறும் 6 கி.மீ & ரிங் ரோடு சந்திப்புக்கு மிக அருகில்",
+          "இயற்கை நதி பார்வை & மதுரை விமான நிலையத்திற்கு 15 கி.மீ",
+          "100% தெளிவான பட்டா & சந்தை விலையை விட மிகக் குறைந்த விலை",
+          "ஷோரூம், கிடங்கு, கல்வி/மருத்துவ நிறுவனம், பெட்ரோல் பங்க், ஹோட்டலுக்கு ஏற்றது"
+        ]
+      },
+      "mapsUrl": "https://goo.gl/maps/qvGsEjuSPPX18vBK6?g_st=aw",
+      "specs": [
+        {
+          "label": {
+            "en": "Total Extent",
+            "ta": "மொத்த அளவு"
+          },
+          "value": {
+            "en": "5.23 Acres (Split: 1 Acre+)",
+            "ta": "5.23 ஏக்கர் (1 ஏக்கர்+)"
+          }
+        },
+        {
+          "label": {
+            "en": "NH Frontage",
+            "ta": "நெடுஞ்சாலை முகப்பு"
+          },
+          "value": {
+            "en": "700 Feet Direct Frontage",
+            "ta": "700 அடி நேரடி முகப்பு"
+          }
+        },
+        {
+          "label": {
+            "en": "Highway",
+            "ta": "நெடுஞ்சாலை"
+          },
+          "value": {
+            "en": "Madurai–Rameshwaram NH",
+            "ta": "மதுரை – ராமேஸ்வரம் NH"
+          }
+        },
+        {
+          "label": {
+            "en": "Roundana",
+            "ta": "ரவுண்டானா"
+          },
+          "value": {
+            "en": "6 km from Viraganur",
+            "ta": "விரகனூரிலிருந்து 6 கி.மீ"
+          }
+        },
+        {
+          "label": {
+            "en": "Special Feature",
+            "ta": "சிறப்பம்சம்"
+          },
+          "value": {
+            "en": "River View · Clear Titles",
+            "ta": "நதி பார்வை · தெளிவான பட்டா"
+          }
+        },
+        {
+          "label": {
+            "en": "Suitability",
+            "ta": "பயன்பாடு"
+          },
+          "value": {
+            "en": "Showrooms / Warehouses / Fuel",
+            "ta": "ஷோரூம் / கிடங்கு / பங்க்"
+          }
+        }
+      ]
+    },
+    {
+      "id": "vaigai-river",
+      "slug": "vaigai-river-build",
+      "name": {
+        "en": "River Belt Land – Vandiyur",
+        "ta": "வைகை நதிக்கரை நிலம் – வண்டியூர்"
+      },
+      "category": "commercial",
+      "categoryLabel": {
+        "en": "Commercial",
+        "ta": "வணிகம்"
+      },
+      "subcategory": "comm-land",
+      "subcategoryLabel": {
+        "en": "Commercial Land",
+        "ta": "வணிக நிலம்"
+      },
+      "location": {
+        "en": "Vandiyur, Madurai",
+        "ta": "வண்டியூர், மதுரை"
+      },
+      "distanceInfo": {
+        "en": "2 min to Anna Nagar · 3 km to Mattuthavani · Bye Pass Road Frontage",
+        "ta": "அண்ணா நகருக்கு 2 நிமிடம் · மாட்டுத்தாவணிக்கு 3 கி.மீ · பை பாஸ் சாலை முகப்பு"
+      },
+      "image": "/images/Riverbeltwal.png",
+      "blueprint": "/images/Riverbelt.png",
+      "statusBadge": {
+        "en": "27 Cent · River View",
+        "ta": "27 சென்ட் · நதி பார்வை"
+      },
+      "rating": "4.9",
+      "status": "running",
+      "description": {
+        "en": "Premium 27 Cent Commercial Land located at Vandiyur, Madurai, offering excellent Vaigai River views and direct Bye Pass Road frontage. A prime commercial investment opportunity with high visibility, high footfall, and excellent future growth potential. Ideal for business establishments, commercial developments, hospitality ventures, and long-term investments.",
+        "ta": "மதுரை வண்டியூரில் அமைந்துள்ள 27 சென்ட் பிரீமியம் வணிக நிலம். வைகை நதியின் எழில்மிகு பார்வை மற்றும் நேரடி பை பாஸ் சாலை முகப்புடன் கூடியது. அதிக பார்வைத் திறன், அதிக மக்கள் நடமாட்டம் மற்றும் எதிர்கால வளர்ச்சி நிறைந்த சிறந்த வணிக முதலீட்டு வாய்ப்பு. ஷோரூம், கிடங்கு, ஹோட்டல், மருத்துவமனை, அலுவலகம் மற்றும் நீண்டகால முதலீட்டிற்கு மிகவும் உகந்தது."
+      },
+      "highlights": {
+        "en": [
+          "Premium 27 Cent Commercial Land with Clear Titles",
+          "Prime Direct Bye Pass Road Frontage (Mattuthavani to Airport corridor)",
+          "Scenic Vaigai River View with serene natural breeze",
+          "Clear Titles & 100% Hassle-Free Ownership",
+          "Very Low Price Compared to Nearby Properties",
+          "High Visibility & High Footfall strategic commercial zone",
+          "Excellent Commercial Investment Opportunity & Long-Term Returns",
+          "Strategic Location: 2 Mins from Anna Nagar & 3 KM to Mattuthavani"
+        ],
+        "ta": [
+          "பிரீமியம் 27 சென்ட் வணிக நிலம் – 100% தெளிவான பட்டா",
+          "நேரடி பை பாஸ் சாலை முகப்பு (மாட்டுத்தாவணி – விமான நிலைய வழித்தடம்)",
+          "இயற்கை எழில் கொஞ்சும் வைகை நதி நேரடி பார்வை",
+          "தெளிவான பட்டா & வில்லங்கமற்ற நேரடி உரிமை",
+          "அருகிலுள்ள வணிக நிலங்களை விட மிகக் குறைந்த விலை",
+          "அதிக விளம்பர பார்வைத் திறன் (High Visibility) & மக்கள் நடமாட்டம்",
+          "நீண்டகால மூலதன பெருக்கத்திற்கு உகந்த சிறந்த வணிக முதலீடு",
+          "அண்ணா நகரிலிருந்து வெறும் 2 நிமிடம் & மாட்டுத்தாவணியிலிருந்து 3 கி.மீ"
+        ]
+      },
+      "suitableActivities": {
+        "en": [
+          "Showroom",
+          "Warehouse",
+          "Retail Store",
+          "Hotel",
+          "Hospital",
+          "Institute",
+          "Office",
+          "Other Commercial Establishments"
+        ],
+        "ta": [
+          "ஷோரூம்",
+          "கிடங்கு (Warehouse)",
+          "சில்லறை விற்பனை அங்காடி",
+          "ஹோட்டல்",
+          "மருத்துவமனை",
+          "கல்வி நிறுவனம்",
+          "அலுவலகம்",
+          "பிற வணிக நிறுவனங்கள்"
+        ]
+      },
+      "marketingBanner": {
+        "en": "High Visibility | High Footfall | High Growth — Ideal Commercial Land for Business, Investment & Long-Term Returns",
+        "ta": "அதிக பார்வைத் திறன் | அதிக மக்கள் நடமாட்டம் | அதிவேக வளர்ச்சி — வணிகம், முதலீடு மற்றும் நீண்டகால லாபத்திற்கான சிறந்த வணிக மனை"
+      },
+      "mapsUrl": "https://maps.google.com/?q=Vandiyur+Madurai",
+      "specs": [
+        {
+          "label": {
+            "en": "Land Size",
+            "ta": "நில அளவு"
+          },
+          "value": {
+            "en": "27 Cent Commercial Land",
+            "ta": "27 சென்ட் வணிக நிலம்"
+          }
+        },
+        {
+          "label": {
+            "en": "Road Access",
+            "ta": "சாலை முகப்பு"
+          },
+          "value": {
+            "en": "Bye Pass Road Frontage",
+            "ta": "பை பாஸ் சாலை முகப்பு"
+          }
+        },
+        {
+          "label": {
+            "en": "River View",
+            "ta": "நதி பார்வை"
+          },
+          "value": {
+            "en": "Scenic Vaigai River View",
+            "ta": "வைகை நதி நேரடி பார்வை"
+          }
+        },
+        {
+          "label": {
+            "en": "Location",
+            "ta": "அமைவிடம்"
+          },
+          "value": {
+            "en": "Vandiyur, Madurai",
+            "ta": "வண்டியூர், மதுரை"
+          }
+        },
+        {
+          "label": {
+            "en": "Title Status",
+            "ta": "உரிமம்"
+          },
+          "value": {
+            "en": "Clear Titles & Hassle-Free",
+            "ta": "தெளிவான வில்லங்கமற்ற பட்டா"
+          }
+        },
+        {
+          "label": {
+            "en": "Pricing Advantage",
+            "ta": "விலை நன்மை"
+          },
+          "value": {
+            "en": "Very Low vs Nearby Properties",
+            "ta": "சந்தை விலையை விட மிகக் குறைந்த விலை"
+          }
+        }
+      ]
+    },
+    {
+      "id": "pandi-kovil",
+      "slug": "pandi-kovil-site",
+      "name": {
+        "en": "Pandi Kovil",
+        "ta": "பாண்டி கோவில் வணிக நிலம்"
+      },
+      "category": "commercial",
+      "categoryLabel": {
+        "en": "Commercial",
+        "ta": "வணிகம்"
+      },
+      "subcategory": "comm-land",
+      "subcategoryLabel": {
+        "en": "Commercial Land",
+        "ta": "வணிக நிலம்"
+      },
+      "location": {
+        "en": "Pandi Kovil, Madurai",
+        "ta": "பாண்டி கோவில், மதுரை"
+      },
+      "distanceInfo": {
+        "en": "60 Cent · 130 Ft Frontage · On Madurai Airport Road · 2 KM to Mattuthavani",
+        "ta": "60 சென்ட் · 130 அடி முகப்பு · மதுரை ஏர்போர்ட் சாலை · மாட்டுத்தாவணிக்கு 2 கி.மீ"
+      },
+      "image": "/images/pandikovil.png",
+      "blueprint": "/images/pandikovil-layout.png",
+      "statusBadge": {
+        "en": "60 Cent · 130 Ft Frontage",
+        "ta": "60 சென்ட் · 130 அடி முகப்பு"
+      },
+      "rating": "4.9",
+      "status": "running",
+      "description": {
+        "en": "Premium 60 Cent Commercial Land located at Pandi Kovil, Madurai, offering an excellent opportunity for high-value commercial development. The property features an impressive 130 Ft wide road frontage and is strategically located in a prime commercial area on Madurai Airport Road with excellent connectivity to major landmarks.",
+        "ta": "மதுரை பாண்டி கோவில் பகுதியில் அமைந்துள்ள 60 சென்ட் பிரீமியம் வணிக நிலம், அதிக மதிப்புமிக்க வணிக வளர்ச்சிக்கு சிறந்த வாய்ப்பை வழங்குகிறது. 130 அடி அகலமான பிரம்மாண்ட சாலை முகப்புடன், மதுரை விமான நிலைய சாலையில் முக்கிய அடையாளங்களுடன் விரைவான இணைப்பைக் கொண்டுள்ளது."
+      },
+      "highlights": {
+        "en": [
+          "Total Land Area: 60 Cent Premium Commercial Land",
+          "130 Ft Wide Road Frontage on Madurai Airport Road",
+          "Prime Commercial Location with High Footfall & Visibility",
+          "Clear Titles & 100% Hassle-Free Deal",
+          "Very Less Rate Compared to Other Properties on This Road",
+          "High Growth Potential & High Returns on Investment",
+          "Suitable for Multiple Commercial Developments",
+          "Strategic Connectivity: 2 KM to Mattuthavani & 5 Mins to Anna Nagar"
+        ],
+        "ta": [
+          "மொத்த நிலப்பரப்பு: 60 சென்ட் பிரீமியம் வணிக நிலம்",
+          "மதுரை விமான நிலைய சாலையில் 130 அடி அகன்ற பிரம்மாண்ட முகப்பு",
+          "அதிக மக்கள் வரத்து கொண்ட முதன்மையான வணிக மைய அமைவிடம்",
+          "100% தெளிவான பட்டா & வில்லங்கமற்ற உடனடி ஒப்பந்தம்",
+          "இச்சாலையில் உள்ள மற்ற இடங்களை விட மிகக் குறைந்த விலை",
+          "அதிவேக மூலதன வளர்ச்சி மற்றும் அதிக முதலீட்டு வருவாய்",
+          "திருமண மண்டபம், கிடங்கு, ஹாஸ்டல் போன்ற பல வணிகங்களுக்கு ஏற்றது",
+          "மாட்டுத்தாவணிக்கு 2 கி.மீ & அண்ணா நகருக்கு 5 நிமிட விரைவு இணைப்பு"
+        ]
+      },
+      "suitableActivities": {
+        "en": [
+          "Marriage Hall",
+          "Meeting Hall",
+          "Warehouse",
+          "Rooms",
+          "Hostel",
+          "All Other Commercial Activities"
+        ],
+        "ta": [
+          "திருமண மண்டபம்",
+          "கூட்ட அரங்கம்",
+          "கிடங்கு (Warehouse)",
+          "தங்கும் அறைகள் (Rooms)",
+          "ஹாஸ்டல் (Hostel)",
+          "பிற அனைத்து வணிக பயன்பாடுகள்"
+        ]
+      },
+      "marketingBanner": {
+        "en": "High Growth | High Returns | Prime Commercial Location — 60 Cent Premium Commercial Land with 130 Ft Wide Frontage. Ideal for Commercial Business, Development & Investment.",
+        "ta": "அதிவேக வளர்ச்சி | அதிக வருவாய் | முதன்மை வணிக மையம் — 130 அடி அகன்ற முகப்புடன் கூடிய 60 சென்ட் பிரீமியம் வணிக நிலம். வணிகம், வளர்ச்சி மற்றும் முதலீட்டிற்கு மிகவும் உகந்தது."
+      },
+      "mapsUrl": "https://maps.google.com/?q=Pandi+Kovil+Madurai",
+      "specs": [
+        {
+          "label": {
+            "en": "Land Area",
+            "ta": "நில அளவு"
+          },
+          "value": {
+            "en": "60 Cent Commercial Land",
+            "ta": "60 சென்ட் வணிக நிலம்"
+          }
+        },
+        {
+          "label": {
+            "en": "Road Frontage",
+            "ta": "சாலை முகப்பு"
+          },
+          "value": {
+            "en": "130 Ft Wide Frontage",
+            "ta": "130 அடி அகன்ற முகப்பு"
+          }
+        },
+        {
+          "label": {
+            "en": "Location",
+            "ta": "அமைவிடம்"
+          },
+          "value": {
+            "en": "Pandi Kovil, Madurai",
+            "ta": "பாண்டி கோவில், மதுரை"
+          }
+        },
+        {
+          "label": {
+            "en": "Road Type",
+            "ta": "சாலை வகை"
+          },
+          "value": {
+            "en": "Commercial / Airport Road",
+            "ta": "விமான நிலைய பிரதான சாலை"
+          }
+        },
+        {
+          "label": {
+            "en": "Zoning",
+            "ta": "வகைப்பாடு"
+          },
+          "value": {
+            "en": "Commercial Zoning",
+            "ta": "வணிக வகைப்பாடு"
+          }
+        },
+        {
+          "label": {
+            "en": "Title Status",
+            "ta": "உரிமம்"
+          },
+          "value": {
+            "en": "Clear Titles & Hassle-Free",
+            "ta": "தெளிவான வில்லங்கமற்ற பட்டா"
+          }
+        }
+      ]
+    },
+    {
+      "id": "madurai-farms",
+      "slug": "madurai-farms-and-fruits",
+      "name": {
+        "en": "Madurai Farms & Fruits",
+        "ta": "மதுரை பார்ம்ஸ் & புரூட்ஸ்"
+      },
+      "category": "farm",
+      "categoryLabel": {
+        "en": "Farm Land",
+        "ta": "பண்ணை நிலம்"
+      },
+      "subcategory": "farm-land",
+      "subcategoryLabel": {
+        "en": "Agro Farmland",
+        "ta": "வேளாண் பண்ணை"
+      },
+      "location": {
+        "en": "Agricultural Green Belt, Madurai",
+        "ta": "விவசாய பசுமை மண்டலம், மதுரை"
+      },
+      "distanceInfo": {
+        "en": "Scenic Countryside · 25 min from Madurai city center",
+        "ta": "இயற்கை எழில் கொஞ்சும் கிராமப்புறம் · 25 நிமிடம்"
+      },
+      "image": "/images/projects/madurai-farms/1.jpg",
+      "galleryImages": [
+        "/images/projects/madurai-farms/1.jpg",
+        "/images/projects/madurai-farms/2.jpg",
+        "/images/projects/madurai-farms/3.jpg",
+        "/images/projects/madurai-farms/aerial-cottage.jpg",
+        "/images/projects/madurai-farms/entrance-gate.jpg",
+        "/images/projects/madurai-farms/concrete-pathway.jpg",
+        "/images/projects/madurai-farms/aerial-grove.jpg",
+        "/images/projects/madurai-farms/water-reservoir.jpg",
+        "/images/projects/madurai-farms/panoramic-view.jpg"
+      ],
+      "blueprint": "/images/farmlayou1.png",
+      "blueprints": [
+        {
+          "title": {
+            "en": "15-Plot Cadastral Layout",
+            "ta": "15 பண்ணை மனைகள் வரைபடம்"
+          },
+          "image": "/images/farmlayou1.png",
+          "tag": {
+            "en": "15 Plots · 30ft Road",
+            "ta": "15 மனைகள் · 30 அடி ரோடு"
+          }
+        },
+        {
+          "title": {
+            "en": "Enlarged Facility Details (Entrance, Sheds & Fish Ponds)",
+            "ta": "பண்ணை வசதிகள்: நுழைவு, கொட்டகை & மீன் குளங்கள்"
+          },
+          "image": "/images/farmlayout-facility.png",
+          "tag": {
+            "en": "Fish Ponds · Water Tank · 208/1",
+            "ta": "மீன் குளங்கள் · மேல்நிலை தொட்டி · 208/1"
+          }
+        }
+      ],
+      "mapbhoomiUrl": "https://mapbhoomi.com/l/surya-promoters/green-acres",
+      "statusBadge": {
+        "en": "Managed Agro Estate",
+        "ta": "நிர்வகிக்கப்படும் பண்ணை"
+      },
+      "rating": "4.9",
+      "status": "running",
+      "description": {
+        "en": "Managed organic agro-acreage with pre-planted fruit groves (mango, guava, coconut), drip irrigation systems, scenic mountain views, and weekend farmhouse living.",
+        "ta": "மா, கொய்யா, தென்னை மரங்கள் மற்றும் சொட்டு நீர் பாசன வசதியுடன் கூடிய நிர்வகிக்கப்படும் இயற்கை விவசாய பண்ணை மனைகள்."
+      },
+      "highlights": {
+        "en": [
+          "Rich fertile red soil with shallow sweet water table",
+          "Pre-planted yielding fruit trees with automated drip systems",
+          "Gated community with 24/7 security & ongoing farm maintenance",
+          "Generates continuous organic agricultural yield & tax-free income"
+        ],
+        "ta": [
+          "வற்றாத நிலத்தடி நீருடன் கூடிய வளமான செம்மண் பூமி",
+          "சொட்டு நீர் பாசனத்துடன் கூடிய பலன் தரும் பழ மரங்கள்",
+          "24/7 காவலாளி மற்றும் தோட்டப் பராமரிப்பு வசதி",
+          "வரிவிலக்குடன் கூடிய தொடர் விவசாய வருமானம்"
+        ]
+      },
+      "mapsUrl": "https://goo.gl/maps/reSXDDNmSNzkve699?g_st=aw",
+      "specs": [
+        {
+          "label": {
+            "en": "Acreage Type",
+            "ta": "பண்ணை வகை"
+          },
+          "value": {
+            "en": "Organic Fruit & Tree Farm",
+            "ta": "இயற்கை பழத்தோட்ட பண்ணை"
+          }
+        },
+        {
+          "label": {
+            "en": "Irrigation",
+            "ta": "பாசனம்"
+          },
+          "value": {
+            "en": "Installed Drip Systems",
+            "ta": "சொட்டு நீர் பாசன அமைப்பு"
+          }
+        },
+        {
+          "label": {
+            "en": "Soil Type",
+            "ta": "மண் வகை"
+          },
+          "value": {
+            "en": "High-Yield Red Soil",
+            "ta": "வளமான செம்மண்"
+          }
+        },
+        {
+          "label": {
+            "en": "Management",
+            "ta": "பராமரிப்பு"
+          },
+          "value": {
+            "en": "Full Turnkey Maintenance",
+            "ta": "முழுமையான பராமரிப்பு உண்டு"
+          }
+        }
+      ]
+    }
+  ],
+  "gallery": {
+    "videoFolders": [
+      {
+        "id": "drone-reels",
+        "title": {
+          "en": "Aerial Drone Overview Reel",
+          "ta": "வான்வழி ட்ரோன் வீடியோக்கள்"
+        },
+        "count": "3 Videos",
+        "thumbnail": "/images/hero/hero-gated-layout.jpg",
+        "videos": [
+          {
+            "title": {
+              "en": "Madurai Outer Ring Road Corridor",
+              "ta": "மதுரை அவுட்டர் ரிங் ரோடு வழித்தடம்"
+            },
+            "duration": "1:45"
+          },
+          {
+            "title": {
+              "en": "Vaigai Highway Commercial Aerial",
+              "ta": "வைகை நெடுஞ்சாலை வணிக வான்பார்வை"
+            },
+            "duration": "2:10"
+          },
+          {
+            "title": {
+              "en": "Madurai Farms Agro Panorama",
+              "ta": "மதுரை பார்ம்ஸ் இயற்கை காட்சி"
+            },
+            "duration": "3:05"
+          }
+        ]
+      },
+      {
+        "id": "commercial-corridors",
+        "title": {
+          "en": "Commercial Corridors Tour",
+          "ta": "வணிக வழித்தட வீடியோக்கள்"
+        },
+        "count": "2 Videos",
+        "thumbnail": "/images/generated/vaigai-elite-garden.jpg",
+        "videos": [
+          {
+            "title": {
+              "en": "Vaigai Elite Garden Site Walkthrough",
+              "ta": "வைகை எலைட் கார்டன் நேரடி ஆய்வு"
+            },
+            "duration": "2:30"
+          },
+          {
+            "title": {
+              "en": "Anna Nagar Commercial Hub Elevation",
+              "ta": "அண்ணா நகர் வணிக கட்டிட பார்வை"
+            },
+            "duration": "1:55"
+          }
+        ]
+      },
+      {
+        "id": "farm-agro",
+        "title": {
+          "en": "Madurai Farms Agro Acreage",
+          "ta": "மதுரை பார்ம்ஸ் வேளாண் பண்ணை"
+        },
+        "count": "2 Videos",
+        "thumbnail": "/images/projects/madurai-farms.jpg",
+        "videos": [
+          {
+            "title": {
+              "en": "Managed Organic Drip Irrigation",
+              "ta": "சொட்டு நீர் பாசன அமைப்பு செயல்முறை"
+            },
+            "duration": "2:40"
+          },
+          {
+            "title": {
+              "en": "Weekend Farmhouse Living Tour",
+              "ta": "வார இறுதி பண்ணை வீடு வாழ்க்கை"
+            },
+            "duration": "3:15"
+          }
+        ]
+      },
+      {
+        "id": "client-handover",
+        "title": {
+          "en": "Customer Testimonials & Patta Handover",
+          "ta": "வாடிக்கையாளர் கருத்துக்கள் & பட்டா வழங்கல்"
+        },
+        "count": "3 Videos",
+        "thumbnail": "/images/founder/founder.png",
+        "videos": [
+          {
+            "title": {
+              "en": "IAF Veteran Leadership - Buyer Trust",
+              "ta": "விமானப்படை அதிகாரியின் நேர்மையான சேவை"
+            },
+            "duration": "3:40"
+          },
+          {
+            "title": {
+              "en": "Immediate Registration Client Experience",
+              "ta": "உடனடி பத்திர பதிவு அனுபவம்"
+            },
+            "duration": "2:05"
+          }
+        ]
+      }
+    ],
+    "imageFolders": [
+      {
+        "id": "vaigai-photos",
+        "title": {
+          "en": "Vaigai Elite Highway & Ring Road",
+          "ta": "வைகை எலைட் & ரிங் ரோடு"
+        },
+        "count": "5 Photos",
+        "thumbnail": "/images/VG/VG6.jpeg",
+        "images": [
+          "/images/VG/VG6.jpeg",
+          "/images/VG/VG2.jpeg",
+          "/images/VG/VG1.jpeg",
+          "/images/VG/VG3.jpeg",
+          "/images/VG/VG4.jpeg"
+        ]
+      },
+      {
+        "id": "farms-photos",
+        "title": {
+          "en": "Madurai Farms Agro Acreage",
+          "ta": "மதுரை பார்ம்ஸ் வேளாண் நிலங்கள்"
+        },
+        "count": "9 Photos",
+        "thumbnail": "/images/projects/madurai-farms/1.jpg",
+        "images": [
+          "/images/projects/madurai-farms/1.jpg",
+          "/images/projects/madurai-farms/2.jpg",
+          "/images/projects/madurai-farms/3.jpg",
+          "/images/projects/madurai-farms/aerial-cottage.jpg",
+          "/images/projects/madurai-farms/entrance-gate.jpg",
+          "/images/projects/madurai-farms/concrete-pathway.jpg",
+          "/images/projects/madurai-farms/aerial-grove.jpg",
+          "/images/projects/madurai-farms/water-reservoir.jpg",
+          "/images/projects/madurai-farms/panoramic-view.jpg"
+        ]
+      },
+      {
+        "id": "residential-photos",
+        "title": {
+          "en": "Residential Flats & Villa Plots",
+          "ta": "குடியிருப்பு அடுக்குமாடி & மனைப்பிரிவுகள்"
+        },
+        "count": "7 Photos",
+        "thumbnail": "/images/projects/flat-projects/1-exterior.jpg",
+        "images": [
+          "/images/projects/flat-projects/1-exterior.jpg",
+          "/images/projects/flat-projects/2-entrance.jpg",
+          "/images/projects/flat-projects/3-living.jpg",
+          "/images/projects/flat-projects/4-upper-living.jpg",
+          "/images/projects/flat-projects/5-bedroom.jpg",
+          "/images/projects/flat-projects/6-kitchen.jpg",
+          "/images/projects/flat-projects/7-bathroom.jpg"
+        ]
+      },
+      {
+        "id": "commercial-photos",
+        "title": {
+          "en": "Vaigai Highway & Commercial Belts",
+          "ta": "வைகை நெடுஞ்சாலை & வணிக வளாகங்கள்"
+        },
+        "count": "4 Photos",
+        "thumbnail": "/images/generated/vaigai-elite-garden.jpg",
+        "images": [
+          "/images/generated/vaigai-elite-garden.jpg",
+          "/images/projects/vaigai-commercial.jpg",
+          "/images/Riverbeltwal.png",
+          "/images/pandikovil.png"
+        ]
+      }
+    ]
+  },
+  "downloads": {
+    "items": [
+      {
+        "id": "mapbhoomi-cadastral-portal",
+        "title": {
+          "en": "Mapbhoomi Interactive 3D Cadastral Layout Portal",
+          "ta": "Mapbhoomi நேரடி 3D மனை வரைபட தளம்"
+        },
+        "category": {
+          "en": "Interactive Cadastral Layouts",
+          "ta": "நேரடி மனை வரைபடம்"
+        },
+        "fileType": "Live 3D / Web App",
+        "fileSize": "Live Online",
+        "downloadUrl": "https://mapbhoomi.com/l/surya-promoters",
+        "badge": "Official Surya Promoters Hub"
+      },
+      {
+        "id": "vaigai-elite-plan",
+        "title": {
+          "en": "Vaigai Elite Commercial Highway Masterplan",
+          "ta": "வைகை எலைட் வணிக வரைபடம்"
+        },
+        "category": {
+          "en": "Commercial Masterplan",
+          "ta": "வணிக வரைபடம்"
+        },
+        "fileType": "JPG / Plan",
+        "fileSize": "356 KB",
+        "downloadUrl": "/images/projects/vaigai/vaigai-elite-layout-plan.jpg",
+        "badge": "5.23 Acres · 40 Ft Road & Bridge"
+      },
+      {
+        "id": "vandiyur-riverbelt-plan",
+        "title": {
+          "en": "Vandiyur River Belt Site Layout Map",
+          "ta": "வண்டியூர் நதிக்கரை மனை வரைபடம்"
+        },
+        "category": {
+          "en": "Commercial Site Layout",
+          "ta": "வணிக மனை வரைபடம்"
+        },
+        "fileType": "JPG / Layout",
+        "fileSize": "260 KB",
+        "downloadUrl": "/images/Riverbelt.png",
+        "badge": "27.4 Cents · 70 Ft Road & River View"
+      },
+      {
+        "id": "pandi-kovil-plan",
+        "title": {
+          "en": "Pandi Kovil Commercial Land Cadastral Layout Map",
+          "ta": "பாண்டி கோவில் கள மனை வரைபடம்"
+        },
+        "category": {
+          "en": "Cadastral Layout Plan",
+          "ta": "கள வரைபடம்"
+        },
+        "fileType": "PNG / Layout",
+        "fileSize": "60 KB",
+        "downloadUrl": "/images/pandikovil-layout.png",
+        "badge": "S.No 2-1B3 · 130 Ft Frontage"
+      },
+      {
+        "id": "surya-green-enclave-map",
+        "title": {
+          "en": "Surya Green Enclave DTCP Layout Map",
+          "ta": "சூர்யா கிரீன் என்கிளேவ் DTCP வரைபடம்"
+        },
+        "category": {
+          "en": "DTCP Layout Map",
+          "ta": "DTCP வரைபடம்"
+        },
+        "fileType": "PDF / Cadastral",
+        "fileSize": "36.8 KB",
+        "downloadUrl": "/images/projects/surya-green-enclave-blueprint.jpg",
+        "badge": "DTCP Approved"
+      },
+      {
+        "id": "madurai-farms-map",
+        "title": {
+          "en": "Madurai Farms 15-Plot Cadastral Map",
+          "ta": "மதுரை பார்ம்ஸ் 15 பண்ணை மனைகள் வரைபடம்"
+        },
+        "category": {
+          "en": "Agro Estate Layout",
+          "ta": "வேளாண் வரைபடம்"
+        },
+        "fileType": "PNG / Layout",
+        "fileSize": "1.52 MB",
+        "downloadUrl": "/images/farmlayou1.png",
+        "badge": "15 Farm Plots · Mudukangulam"
+      },
+      {
+        "id": "madurai-farms-facility-map",
+        "title": {
+          "en": "Madurai Farms Facility Details (Sheds & Fish Ponds)",
+          "ta": "மதுரை பார்ம்ஸ் பண்ணை வசதிகள் வரைபடம் (கொட்டகை & மீன் குளம்)"
+        },
+        "category": {
+          "en": "Facility Details Plan",
+          "ta": "பண்ணை வசதிகள் வரைபடம்"
+        },
+        "fileType": "PNG / Blueprint",
+        "fileSize": "109 KB",
+        "downloadUrl": "/images/farmlayout-facility.png",
+        "badge": "Fish Ponds · Water Tank · S.No 208/1"
+      },
+      {
+        "id": "portfolio-brochure",
+        "title": {
+          "en": "Surya Promoters Complete Portfolio Brochure",
+          "ta": "சூர்யா புரமோட்டர்ஸ் முழு திட்ட கையேடு"
+        },
+        "category": {
+          "en": "Company Brochure",
+          "ta": "முழு கையேடு"
+        },
+        "fileType": "PDF / Document",
+        "fileSize": "6.8 MB",
+        "downloadUrl": "/images/hero-poster.jpg",
+        "badge": "Full Portfolio Brochure"
+      }
+    ]
+  },
+  "company": {
+    "name": {
+      "en": "Surya Promoters",
+      "ta": "சூர்யா புரமோட்டர்ஸ்"
+    },
+    "phone": "+91 77089 66452",
+    "whatsapp": "+91 77089 66452",
+    "email": "suryapromotersmdu@gmail.com"
+  },
+  "hero": {
+    "heroBadge": {
+      "en": "IAF Veteran Leadership · 16+ Years Defense-Grade Due Diligence",
+      "ta": "விமானப்படை அதிகாரியின் தலைமையில் · 16+ வருட நேர்மையான சேவை"
+    },
+    "heroTitle": {
+      "en": "From Land. To Legacy.",
+      "ta": "நிலத்திலிருந்து... நிலைத்த சொத்து வரை."
+    },
+    "heroSubtitle": {
+      "en": "Premier residential plots, highway commercial acreage, and managed organic farm estates in Madurai with 100% Computer Patta guarantee.",
+      "ta": "மதுரையில் 100% கணினி பட்டாவுடன் கூடிய பிரீமியம் வீட்டுமனைகள், நெடுஞ்சாலை வணிக நிலங்கள் மற்றும் இயற்கை பண்ணை நிலங்கள்."
+    },
+    "announcementTicker": {
+      "en": "Exclusive New Launch: Vaigai Elite Highway Commercial Plots (700 Ft Frontage) & Surya Nagar Duplex Luxury Villa now available for site inspection.",
+      "ta": "புதிய வெளியீடு: வைகை எலைட் நெடுஞ்சாலை வணிக நிலம் (700 அடி முகப்பு) & சூர்யா நகர் 3 BHK டூப்ளக்ஸ் சொகுசு வில்லா நேரடி பார்வைக்கு தயார்."
+    },
+    "videoPosterImage": "/images/hero-poster.jpg"
+  },
+  "stats": {
+    "items": [
+      {
+        "value": "16+ Yrs",
+        "label": {
+          "en": "Military-Grade Due Diligence",
+          "ta": "இராணுவ ஒழுங்குமுறை ஆய்வு"
+        },
+        "sub": {
+          "en": "Estd. 2010 by IAF Veteran",
+          "ta": "2010 முதல் நம்பகமான சேவை"
+        }
+      },
+      {
+        "value": "100%",
+        "label": {
+          "en": "Verified Computer Patta",
+          "ta": "சரிபார்க்கப்பட்ட கணினி பட்டா"
+        },
+        "sub": {
+          "en": "Clear Parent Title Deeds",
+          "ta": "வில்லங்கமற்ற தூய மூலப்பத்திரம்"
+        }
+      },
+      {
+        "value": "1,000+",
+        "label": {
+          "en": "Happy Landowner Families",
+          "ta": "மகிழ்ச்சியான நில உரிமையாளர்கள்"
+        },
+        "sub": {
+          "en": "Across Madurai & Tamil Nadu",
+          "ta": "மதுரை மற்றும் தமிழகம் முழுவதும்"
+        }
+      },
+      {
+        "value": "Zero",
+        "label": {
+          "en": "Legal Disputes Since Inception",
+          "ta": "சட்ட சிக்கல்கள் இல்லாத வரலாறு"
+        },
+        "sub": {
+          "en": "16 Years Defense Standard",
+          "ta": "16 ஆண்டு கால பாதுகாப்பு தரம்"
+        }
+      }
+    ]
+  },
+  "services": {
+    "items": [
+      {
+        "id": "residential-development",
+        "title": {
+          "en": "DTCP & RERA Approved Layouts",
+          "ta": "DTCP & RERA அங்கீகரிக்கப்பட்ட மனைகள்"
+        },
+        "description": {
+          "en": "Meticulously planned gated communities with broad bitumen roads, sweet groundwater, boundary fencing, and immediate computer patta registry.",
+          "ta": "அகலமான தார் சாலைகள், குடிநீர் வசதி, சுற்றுச்சுவர் மற்றும் உடனடி தனி பட்டாவுடன் கூடிய வீட்டுமனைப் பிரிவுகள்."
+        },
+        "icon": "Building2",
+        "features": {
+          "en": [
+            "Gated security",
+            "Broad tar roads",
+            "Immediate patta",
+            "Clear parent documents"
+          ],
+          "ta": [
+            "பாதுகாப்பான வளாகம்",
+            "அகலமான தார் ரோடு",
+            "உடனடி பட்டா பதிவு",
+            "தூய மூலப்பத்திரங்கள்"
+          ]
+        }
+      },
+      {
+        "id": "commercial-corridors",
+        "title": {
+          "en": "Highway Commercial Land & Belts",
+          "ta": "நெடுஞ்சாலை வணிக பெருநிலங்கள்"
+        },
+        "description": {
+          "en": "Strategic parcels on Madurai Ring Road and National Highways with wide frontage ideal for showrooms, hotels, educational campuses, and logistics hubs.",
+          "ta": "மதுரை ரிங் ரோடு மற்றும் தேசிய நெடுஞ்சாலைகளில் ஷோரூம்கள், ஹோட்டல்கள், கல்லூரிகளுக்கு ஏற்ற பிரம்மாண்ட முகப்பு கொண்ட வணிக நிலங்கள்."
+        },
+        "icon": "Briefcase",
+        "features": {
+          "en": [
+            "Up to 700 ft frontage",
+            "High vehicle footfall",
+            "Airport connectivity",
+            "High ROI"
+          ],
+          "ta": [
+            "700 அடி வரை முகப்பு",
+            "அதிக மக்கள் நடமாட்டம்",
+            "விமான நிலைய விரைவு இணைப்பு",
+            "அதிக மூலதன வளர்ச்சி"
+          ]
+        }
+      },
+      {
+        "id": "farm-agro-acreage",
+        "title": {
+          "en": "Managed Organic Farm Estates",
+          "ta": "நிர்வகிக்கப்படும் இயற்கை பண்ணைகள்"
+        },
+        "description": {
+          "en": "Turnkey agro-farmlands with drip irrigation, fruit orchards (mango, guava, coconut), 24/7 security, caretaker management, and weekend cottages.",
+          "ta": "சொட்டு நீர் பாசனம், பழ மரங்கள், 24/7 பாதுகாப்பு மற்றும் பண்ணை வீடு வசதியுடன் கூடிய விவசாய நிலங்கள்."
+        },
+        "icon": "Trees",
+        "features": {
+          "en": [
+            "Rich fertile red soil",
+            "Pre-planted fruit trees",
+            "Tax-free farm income",
+            "Full maintenance"
+          ],
+          "ta": [
+            "வளமான செம்மண் பூமி",
+            "பலன் தரும் பழ மரங்கள்",
+            "வரிவிலக்குடன் கூடிய வருமானம்",
+            "முழுமையான தோட்டப் பராமரிப்பு"
+          ]
+        }
+      }
+    ]
+  }
+}

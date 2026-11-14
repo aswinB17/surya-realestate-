@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Project } from "@/types/project";
 import { useLanguage } from "@/hooks/useLanguage";
+import { useCmsData } from "@/hooks/useCmsData";
 import ProjectGallery from "./ProjectGallery";
 import {
   MapPin,
@@ -42,9 +43,44 @@ interface ProjectDetailsProps {
   project: Project;
 }
 
-export default function ProjectDetails({ project }: ProjectDetailsProps) {
+export default function ProjectDetails({ project: initialProject }: ProjectDetailsProps) {
   const router = useRouter();
   const { language } = useLanguage();
+  const { data: cmsData } = useCmsData();
+
+  // Find live project from CMS so any admin edits appear in real-time without page refresh
+  const liveCms = (cmsData?.projects || []).find(
+    (p) => p.slug === initialProject.slug || p.id === initialProject.id
+  );
+
+  const project: Project = useMemo(() => {
+    if (!liveCms) return initialProject;
+    return {
+      ...initialProject,
+      title: liveCms.name || initialProject.title,
+      subtitle: liveCms.distanceInfo || initialProject.subtitle,
+      category: (liveCms.category as any) || initialProject.category,
+      categoryLabel: liveCms.categoryLabel || initialProject.categoryLabel,
+      subcategory: liveCms.subcategory || initialProject.subcategory,
+      subcategoryLabel: liveCms.subcategoryLabel || initialProject.subcategoryLabel,
+      location: liveCms.location || initialProject.location,
+      googleMapsUrl: (liveCms as any).googleMapsUrl || initialProject.googleMapsUrl,
+      mapBhoomiUrl: liveCms.mapbhoomiUrl || initialProject.mapBhoomiUrl,
+      brochureUrl: liveCms.brochureUrl || initialProject.brochureUrl,
+      heroImage: liveCms.image || initialProject.heroImage,
+      galleryImages: liveCms.galleryImages && liveCms.galleryImages.length > 0 ? liveCms.galleryImages : initialProject.galleryImages,
+      videoUrl: liveCms.videoUrl || initialProject.videoUrl,
+      videoUrls: liveCms.videoUrls || initialProject.videoUrls,
+      description: liveCms.description || initialProject.description,
+      fullOverview: liveCms.fullOverview || liveCms.description || initialProject.fullOverview,
+      suitableFor: (liveCms.suitableActivities as any) || initialProject.suitableFor,
+      highlights: (liveCms.highlights as any) || initialProject.highlights,
+      layoutPlanImage: liveCms.blueprint || initialProject.layoutPlanImage,
+      status: liveCms.status as any,
+      projectType: (liveCms as any).projectType || (liveCms.status === "running" ? "running" : liveCms.status === "completed" || liveCms.status === "sold" ? "completed" : "upcoming"),
+    };
+  }, [liveCms, initialProject]);
+
   const [copied, setCopied] = useState(false);
   const [activeVideoIndex, setActiveVideoIndex] = useState(0);
   const [blueprintZoomed, setBlueprintZoomed] = useState(false);

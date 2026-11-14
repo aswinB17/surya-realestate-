@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Space_Mono, Inter } from "next/font/google";
 import { LanguageProvider } from "@/hooks/useLanguage";
+import { CmsProvider } from "@/hooks/useCmsData";
 import SmoothScroll from "@/components/animations/SmoothScroll";
 import ScrollToTop from "@/components/layout/ScrollToTop";
 import "./globals.css";
@@ -74,8 +75,10 @@ export default function RootLayout({
     <html lang="en" className={`${jakarta.variable} ${spaceMono.variable} ${inter.variable}`}>
       <body className="min-h-screen bg-[#FFFFFF] text-[#242820] font-sans antialiased selection:bg-[#EAB308] selection:text-[#0A0D12]">
         <LanguageProvider>
-          <SmoothScroll>{children}</SmoothScroll>
-          <ScrollToTop />
+          <CmsProvider>
+            <SmoothScroll>{children}</SmoothScroll>
+            <ScrollToTop />
+          </CmsProvider>
         </LanguageProvider>
       </body>
     </html>

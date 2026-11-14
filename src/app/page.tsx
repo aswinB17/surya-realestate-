@@ -1,10 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/hooks/useLanguage";
+import { useCmsData } from "@/hooks/useCmsData";
+import { CmsCategory } from "@/types/cms";
 import {
   Building2,
   MapPin,
@@ -48,6 +50,10 @@ import {
   DollarSign,
   ThumbsUp,
   Building,
+  Factory,
+  Warehouse,
+  Landmark,
+  TreePine,
   Clock,
 } from "lucide-react";
 import { PROJECT_DETAILS_MAP } from "@/data/projectDetailsExtra";
@@ -56,9 +62,9 @@ import { PROJECT_DETAILS_MAP } from "@/data/projectDetailsExtra";
 interface AppProject {
   id: string;
   name: { en: string; ta: string };
-  category: "residential" | "commercial" | "farm";
+  category: string;
   categoryLabel: { en: string; ta: string };
-  subcategory: "flat" | "plot" | "villa" | "comm-building" | "comm-land" | "farm-land";
+  subcategory: string;
   subcategoryLabel: { en: string; ta: string };
   location: { en: string; ta: string };
   distanceInfo: { en: string; ta: string };
@@ -76,515 +82,97 @@ interface AppProject {
   specs: { label: { en: string; ta: string }; value: { en: string; ta: string } }[];
 }
 
-const ALL_PROJECTS: AppProject[] = [
-  // -------------------------------------------------------------------------
-  // 1. RESIDENTIAL PROJECTS (Flat & Plot)
-  // -------------------------------------------------------------------------
-  {
-    id: "flat-projects",
-    name: { en: "3 BHK Duplex Luxury Villa for Sale", ta: "3 BHK டூப்ளக்ஸ் சொகுசு வில்லா விற்பனைக்கு" },
-    category: "residential",
-    categoryLabel: { en: "Residential", ta: "குடியிருப்பு" },
-    subcategory: "villa",
-    subcategoryLabel: { en: "Luxury Villa", ta: "சொகுசு வில்லா" },
-    location: { en: "Surya Nagar, Madurai", ta: "சூர்யா நகர், மதுரை" },
-    distanceInfo: { en: "East Facing · 4.12 Cents · 2,750 Sq.Ft · ₹1.67 Cr (Neg)", ta: "கிழக்கு பார்த்தது · 4.12 சென்ட் · 2,750 ச.அடி · ₹1.67 கோடி" },
-    image: "/images/projects/flat-projects/1-exterior.jpg",
-    statusBadge: { en: "₹1.67 Cr (Negotiable)", ta: "₹1.67 கோடி (பேசலாம்)" },
-    rating: "5.0",
-    description: {
-      en: "Brand new East-Facing high-ceiling 3 BHK luxury duplex villa for sale in prime Madurai Surya Nagar. Spanning 2,750 sq.ft total built-up area on 4.12 cents of DTCP-approved land, featuring a dedicated Dolby Atmos home theatre, 5 bathrooms with rain showers, elegant elevation, premium fully furnished interiors, and covered car parking at ₹1.67 Cr (negotiable).",
-      ta: "மதுரை சூர்யா நகரில் கிழக்கு பார்த்த அதிநவீன 3 BHK டூப்ளக்ஸ் சொகுசு வில்லா விற்பனைக்கு. 4.12 சென்ட் DTCP அங்கீகரிக்கப்பட்ட நிலத்தில் 2,750 சதுர அடி பரப்பளவில் டால்பி அட்மாஸ் ஹோம் தியேட்டர், ரெயின் ஷவர் கொண்ட 5 குளியலறைகள், பிரீமியம் இன்டீரியர் வடிவமைப்பு மற்றும் கார் பார்க்கிங் வசதியுடன் கூடிய புதிய வீடு - ₹1.67 கோடி (விலை பேசத்தக்கது).",
-    },
-    highlights: {
-      en: [
-        "Fully Furnished 3 BHK Duplex with Hi-Ceiling Architecture",
-        "Private Home Theatre with Dolby Atmos Sound System",
-        "5 Luxurious Bathrooms Fitted with Rain Showers",
-        "4.12 Cents Land (DTCP Approved) & 2,750 Sq.Ft Buildup",
-        "100% East Facing Vastu Compliant with Elegant Elevation",
-        "Premium Designer Interiors, Woodwork & Covered Car Parking",
-      ],
-      ta: [
-        "முழுமையாக அலங்கரிக்கப்பட்ட 3 BHK டூப்ளக்ஸ் உயர் கூரை வடிவமைப்பு",
-        "டால்பி அட்மாஸ் பிரத்யேக ஹோம் தியேட்டர் வசதி",
-        "ரெயின் ஷவர் கொண்ட 5 நவீன ஆடம்பர குளியலறைகள்",
-        "4.12 சென்ட் DTCP அனுமதி பெற்ற மனை & 2,750 ச.அடி கட்டிடம்",
-        "100% கிழக்கு பார்த்த வாஸ்து மற்றும் கவர்ச்சிகரமான எலிவேஷன்",
-        "பாதுகாப்பான கார் பார்க்கிங் & உயர்தர இன்டீரியர் வுட்ஒர்க்",
-      ],
-    },
-    mapsUrl: "https://maps.app.goo.gl/ky2jGFwFY7TU7TnJ7?g_st=iw",
-    specs: [
-      { label: { en: "Configuration", ta: "அமைப்பு" }, value: { en: "Fully Furnished 3 BHK", ta: "முழு வசதியுடன் 3 BHK" } },
-      { label: { en: "Buildup Area", ta: "கட்டிட பரப்பு" }, value: { en: "2,750 Sq.Ft (Duplex)", ta: "2,750 ச.அடி (டூப்ளக்ஸ்)" } },
-      { label: { en: "Land Area", ta: "நில அளவு" }, value: { en: "4.12 Cents (DTCP)", ta: "4.12 சென்ட் (DTCP)" } },
-      { label: { en: "Facing", ta: "திசை" }, value: { en: "East Facing (Hi-Ceiling)", ta: "கிழக்கு (உயர் கூரை)" } },
-      { label: { en: "Features", ta: "சிறப்பம்சங்கள்" }, value: { en: "Dolby Theatre · 5 Baths", ta: "ஹோம் தியேட்டர் · 5 பாத்ரூம்" } },
-      { label: { en: "Price", ta: "விலை" }, value: { en: "₹1.67 Cr (Negotiable)", ta: "₹1.67 கோடி (பேசலாம்)" } },
-    ],
-  },
-
-  // -------------------------------------------------------------------------
-  // 2. COMMERCIAL PROJECTS (Building & Land - 5 Projects)
-  // -------------------------------------------------------------------------
-  {
-    id: "vaigai-elite",
-    name: { en: "Vaigai Elite Garden – Manalur", ta: "வைகை எலைட் கார்டன் – மணலூர்" },
-    category: "commercial",
-    categoryLabel: { en: "Commercial", ta: "வணிகம்" },
-    subcategory: "comm-land",
-    subcategoryLabel: { en: "Commercial Land", ta: "வணிக நிலம்" },
-    location: { en: "Madurai – Rameshwaram NH, Manalur", ta: "மதுரை – ராமேஸ்வரம் NH, மணலூர்" },
-    distanceInfo: { en: "6 km from Viraganur Roundana · 700 ft NH Frontage · 5.23 Acres", ta: "விரகனூர் ரவுண்டானாவிலிருந்து 6 கி.மீ · 700 அடி முகப்பு · 5.23 ஏக்கர்" },
-    image: "/images/VG/VG6.jpeg",
-    blueprint: "/images/projects/vaigai/vaigai-elite-layout-plan.jpg",
-    mapbhoomiUrl: "https://mapbhoomi.com/l/surya-promoters/madurai-rameshwaram-nh-road",
-    statusBadge: { en: "5.23 Acres · 700 Ft Frontage", ta: "5.23 ஏக்கர் · 700 அடி முகப்பு" },
-    rating: "5.0",
-    description: {
-      en: "High-value 5.23 Acres commercial land opportunity on Madurai–Rameshwaram National Highway, Manalur. Features massive 700 ft direct highway frontage, scenic river view, just 6 km from Viraganur Roundana, and 15 km to Madurai Airport. Available as a whole or in 1-acre parcels with 100% clear titles at an attractive rate compared to nearby on-road lands.",
-      ta: "மதுரை – ராமேஸ்வரம் தேசிய நெடுஞ்சாலை, மணலூரில் அமைந்துள்ள 5.23 ஏக்கர் பிரீமியம் வணிக பெருநிலம். 700 அடி நேரடி நெடுஞ்சாலை முகப்பு, வைகை நதி பார்வை, விரகனூர் ரவுண்டானாவிலிருந்து 6 கி.மீ, விமான நிலையத்திற்கு 15 கி.மீ தொலைவில் அமைந்துள்ளது. 1 ஏக்கர் மற்றும் அதற்கு மேற்பட்ட பிரிவுகளாக 100% தெளிவான பட்டாவுடன் கிடைக்கும்.",
-    },
-    highlights: {
-      en: [
-        "Total 5.23 Acres – Available as a whole or in 1-acre parcels",
-        "700 ft massive direct frontage on Madurai–Rameshwaram NH",
-        "Just 6 km from Viraganur Roundana & close to Outer Ring Road junction",
-        "Scenic river view & 15 km to Madurai International Airport",
-        "100% clear titles & very attractive rate vs nearby on-road properties",
-        "Ideal for Showrooms, Warehousing, Institutions, Fuel/EV Stations & Resorts",
-      ],
-      ta: [
-        "மொத்தம் 5.23 ஏக்கர் – முழுமையாகவோ அல்லது 1 ஏக்கர் பிரிவுகளாகவோ கிடைக்கும்",
-        "மதுரை – ராமேஸ்வரம் தேசிய நெடுஞ்சாலையில் 700 அடி நேரடி முகப்பு",
-        "விரகனூர் ரவுண்டானாவிலிருந்து வெறும் 6 கி.மீ & ரிங் ரோடு சந்திப்புக்கு மிக அருகில்",
-        "இயற்கை நதி பார்வை & மதுரை விமான நிலையத்திற்கு 15 கி.மீ",
-        "100% தெளிவான பட்டா & சந்தை விலையை விட மிகக் குறைந்த விலை",
-        "ஷோரூம், கிடங்கு, கல்வி/மருத்துவ நிறுவனம், பெட்ரோல் பங்க், ஹோட்டலுக்கு ஏற்றது",
-      ],
-    },
-    mapsUrl: "https://goo.gl/maps/qvGsEjuSPPX18vBK6?g_st=aw",
-    specs: [
-      { label: { en: "Total Extent", ta: "மொத்த அளவு" }, value: { en: "5.23 Acres (Split: 1 Acre+)", ta: "5.23 ஏக்கர் (1 ஏக்கர்+)" } },
-      { label: { en: "NH Frontage", ta: "நெடுஞ்சாலை முகப்பு" }, value: { en: "700 Feet Direct Frontage", ta: "700 அடி நேரடி முகப்பு" } },
-      { label: { en: "Highway", ta: "நெடுஞ்சாலை" }, value: { en: "Madurai–Rameshwaram NH", ta: "மதுரை – ராமேஸ்வரம் NH" } },
-      { label: { en: "Roundana", ta: "ரவுண்டானா" }, value: { en: "6 km from Viraganur", ta: "விரகனூரிலிருந்து 6 கி.மீ" } },
-      { label: { en: "Special Feature", ta: "சிறப்பம்சம்" }, value: { en: "River View · Clear Titles", ta: "நதி பார்வை · தெளிவான பட்டா" } },
-      { label: { en: "Suitability", ta: "பயன்பாடு" }, value: { en: "Showrooms / Warehouses / Fuel", ta: "ஷோரூம் / கிடங்கு / பங்க்" } },
-    ],
-  },
-
-  {
-    id: "vaigai-river",
-    name: { en: "River Belt Land – Vandiyur", ta: "வைகை நதிக்கரை நிலம் – வண்டியூர்" },
-    category: "commercial",
-    categoryLabel: { en: "Commercial", ta: "வணிகம்" },
-    subcategory: "comm-land",
-    subcategoryLabel: { en: "Commercial Land", ta: "வணிக நிலம்" },
-    location: { en: "Vandiyur, Madurai", ta: "வண்டியூர், மதுரை" },
-    distanceInfo: { en: "2 min to Anna Nagar · 3 km to Mattuthavani · Bye Pass Road Frontage", ta: "அண்ணா நகருக்கு 2 நிமிடம் · மாட்டுத்தாவணிக்கு 3 கி.மீ · பை பாஸ் சாலை முகப்பு" },
-    image: "/images/Riverbeltwal.png",
-    blueprint: "/images/Riverbelt.png",
-    statusBadge: { en: "27 Cent · River View", ta: "27 சென்ட் · நதி பார்வை" },
-    rating: "4.9",
-    description: {
-      en: "Premium 27 Cent Commercial Land located at Vandiyur, Madurai, offering excellent Vaigai River views and direct Bye Pass Road frontage. A prime commercial investment opportunity with high visibility, high footfall, and excellent future growth potential. Ideal for business establishments, commercial developments, hospitality ventures, and long-term investments.",
-      ta: "மதுரை வண்டியூரில் அமைந்துள்ள 27 சென்ட் பிரீமியம் வணிக நிலம். வைகை நதியின் எழில்மிகு பார்வை மற்றும் நேரடி பை பாஸ் சாலை முகப்புடன் கூடியது. அதிக பார்வைத் திறன், அதிக மக்கள் நடமாட்டம் மற்றும் எதிர்கால வளர்ச்சி நிறைந்த சிறந்த வணிக முதலீட்டு வாய்ப்பு. ஷோரூம், கிடங்கு, ஹோட்டல், மருத்துவமனை, அலுவலகம் மற்றும் நீண்டகால முதலீட்டிற்கு மிகவும் உகந்தது.",
-    },
-    highlights: {
-      en: [
-        "Premium 27 Cent Commercial Land with Clear Titles",
-        "Prime Direct Bye Pass Road Frontage (Mattuthavani to Airport corridor)",
-        "Scenic Vaigai River View with serene natural breeze",
-        "Clear Titles & 100% Hassle-Free Ownership",
-        "Very Low Price Compared to Nearby Properties",
-        "High Visibility & High Footfall strategic commercial zone",
-        "Excellent Commercial Investment Opportunity & Long-Term Returns",
-        "Strategic Location: 2 Mins from Anna Nagar & 3 KM to Mattuthavani",
-      ],
-      ta: [
-        "பிரீமியம் 27 சென்ட் வணிக நிலம் – 100% தெளிவான பட்டா",
-        "நேரடி பை பாஸ் சாலை முகப்பு (மாட்டுத்தாவணி – விமான நிலைய வழித்தடம்)",
-        "இயற்கை எழில் கொஞ்சும் வைகை நதி நேரடி பார்வை",
-        "தெளிவான பட்டா & வில்லங்கமற்ற நேரடி உரிமை",
-        "அருகிலுள்ள வணிக நிலங்களை விட மிகக் குறைந்த விலை",
-        "அதிக விளம்பர பார்வைத் திறன் (High Visibility) & மக்கள் நடமாட்டம்",
-        "நீண்டகால மூலதன பெருக்கத்திற்கு உகந்த சிறந்த வணிக முதலீடு",
-        "அண்ணா நகரிலிருந்து வெறும் 2 நிமிடம் & மாட்டுத்தாவணியிலிருந்து 3 கி.மீ",
-      ],
-    },
-    suitableActivities: {
-      en: [
-        "Showroom",
-        "Warehouse",
-        "Retail Store",
-        "Hotel",
-        "Hospital",
-        "Institute",
-        "Office",
-        "Other Commercial Establishments",
-      ],
-      ta: [
-        "ஷோரூம்",
-        "கிடங்கு (Warehouse)",
-        "சில்லறை விற்பனை அங்காடி",
-        "ஹோட்டல்",
-        "மருத்துவமனை",
-        "கல்வி நிறுவனம்",
-        "அலுவலகம்",
-        "பிற வணிக நிறுவனங்கள்",
-      ],
-    },
-    marketingBanner: {
-      en: "High Visibility | High Footfall | High Growth — Ideal Commercial Land for Business, Investment & Long-Term Returns",
-      ta: "அதிக பார்வைத் திறன் | அதிக மக்கள் நடமாட்டம் | அதிவேக வளர்ச்சி — வணிகம், முதலீடு மற்றும் நீண்டகால லாபத்திற்கான சிறந்த வணிக மனை",
-    },
-    mapsUrl: "https://maps.google.com/?q=Vandiyur+Madurai",
-    specs: [
-      { label: { en: "Land Size", ta: "நில அளவு" }, value: { en: "27 Cent Commercial Land", ta: "27 சென்ட் வணிக நிலம்" } },
-      { label: { en: "Road Access", ta: "சாலை முகப்பு" }, value: { en: "Bye Pass Road Frontage", ta: "பை பாஸ் சாலை முகப்பு" } },
-      { label: { en: "River View", ta: "நதி பார்வை" }, value: { en: "Scenic Vaigai River View", ta: "வைகை நதி நேரடி பார்வை" } },
-      { label: { en: "Location", ta: "அமைவிடம்" }, value: { en: "Vandiyur, Madurai", ta: "வண்டியூர், மதுரை" } },
-      { label: { en: "Title Status", ta: "உரிமம்" }, value: { en: "Clear Titles & Hassle-Free", ta: "தெளிவான வில்லங்கமற்ற பட்டா" } },
-      { label: { en: "Pricing Advantage", ta: "விலை நன்மை" }, value: { en: "Very Low vs Nearby Properties", ta: "சந்தை விலையை விட மிகக் குறைந்த விலை" } },
-      { label: { en: "Visibility & Footfall", ta: "பார்வை & மக்கள் வரத்து" }, value: { en: "High Visibility · High Footfall", ta: "அதிக பார்வை · அதிக மக்கள் வரத்து" } },
-      { label: { en: "Growth Potential", ta: "வளர்ச்சி வாய்ப்பு" }, value: { en: "High Capital Growth", ta: "அதிவேக மூலதன வளர்ச்சி" } },
-    ],
-  },
-
-  {
-    id: "pandi-kovil",
-    name: { en: "Pandi Kovil", ta: "பாண்டி கோவில் வணிக நிலம்" },
-    category: "commercial",
-    categoryLabel: { en: "Commercial", ta: "வணிகம்" },
-    subcategory: "comm-land",
-    subcategoryLabel: { en: "Commercial Land", ta: "வணிக நிலம்" },
-    location: { en: "Pandi Kovil, Madurai", ta: "பாண்டி கோவில், மதுரை" },
-    distanceInfo: { en: "60 Cent · 130 Ft Frontage · On Madurai Airport Road · 2 KM to Mattuthavani", ta: "60 சென்ட் · 130 அடி முகப்பு · மதுரை ஏர்போர்ட் சாலை · மாட்டுத்தாவணிக்கு 2 கி.மீ" },
-    image: "/images/pandikovil.png",
-    blueprint: "/images/pandikovil-layout.png",
-    statusBadge: { en: "60 Cent · 130 Ft Frontage", ta: "60 சென்ட் · 130 அடி முகப்பு" },
-    rating: "4.9",
-    description: {
-      en: "Premium 60 Cent Commercial Land located at Pandi Kovil, Madurai, offering an excellent opportunity for high-value commercial development. The property features an impressive 130 Ft wide road frontage and is strategically located in a prime commercial area on Madurai Airport Road with excellent connectivity to major landmarks. Ideal for marriage halls, meeting halls, warehouses, rooms, hostels, and all other commercial activities. With clear titles, hassle-free ownership, competitive pricing, and strong growth potential, this property is an excellent choice for commercial investment.",
-      ta: "மதுரை பாண்டி கோவில் பகுதியில் அமைந்துள்ள 60 சென்ட் பிரீமியம் வணிக நிலம், அதிக மதிப்புமிக்க வணிக வளர்ச்சிக்கு சிறந்த வாய்ப்பை வழங்குகிறது. 130 அடி அகலமான பிரம்மாண்ட சாலை முகப்புடன், மதுரை விமான நிலைய சாலையில் முக்கிய அடையாளங்களுடன் விரைவான இணைப்பைக் கொண்டுள்ளது. திருமண மண்டபங்கள், கூட்ட அரங்குகள், கிடங்குகள், தங்கும் விடுதிகள், ஹாஸ்டல்கள் மற்றும் அனைத்து வணிக நடவடிக்கைகளுக்கும் மிகவும் உகந்தது. 100% தெளிவான பட்டா, வில்லங்கமற்ற உரிமை, சந்தையை விட மிகக் குறைந்த விலை மற்றும் வலுவான வளர்ச்சி சாத்தியக்கூறுகளுடன் இது ஒரு மிகச்சிறந்த வணிக முதலீடாகும்.",
-    },
-    highlights: {
-      en: [
-        "Total Land Area: 60 Cent Premium Commercial Land",
-        "130 Ft Wide Road Frontage on Madurai Airport Road",
-        "Prime Commercial Location with High Footfall & Visibility",
-        "Clear Titles & 100% Hassle-Free Deal",
-        "Very Less Rate Compared to Other Properties on This Road",
-        "High Growth Potential & High Returns on Investment",
-        "Suitable for Multiple Commercial Developments",
-        "Strategic Connectivity: 2 KM to Mattuthavani & 5 Mins to Anna Nagar",
-      ],
-      ta: [
-        "மொத்த நிலப்பரப்பு: 60 சென்ட் பிரீமியம் வணிக நிலம்",
-        "மதுரை விமான நிலைய சாலையில் 130 அடி அகன்ற பிரம்மாண்ட முகப்பு",
-        "அதிக மக்கள் வரத்து கொண்ட முதன்மையான வணிக மைய அமைவிடம்",
-        "100% தெளிவான பட்டா & வில்லங்கமற்ற உடனடி ஒப்பந்தம்",
-        "இச்சாலையில் உள்ள மற்ற இடங்களை விட மிகக் குறைந்த விலை",
-        "அதிவேக மூலதன வளர்ச்சி மற்றும் அதிக முதலீட்டு வருவாய்",
-        "திருமண மண்டபம், கிடங்கு, ஹாஸ்டல் போன்ற பல வணிகங்களுக்கு ஏற்றது",
-        "மாட்டுத்தாவணிக்கு 2 கி.மீ & அண்ணா நகருக்கு 5 நிமிட விரைவு இணைப்பு",
-      ],
-    },
-    suitableActivities: {
-      en: [
-        "Marriage Hall",
-        "Meeting Hall",
-        "Warehouse",
-        "Rooms",
-        "Hostel",
-        "All Other Commercial Activities",
-      ],
-      ta: [
-        "திருமண மண்டபம்",
-        "கூட்ட அரங்கம்",
-        "கிடங்கு (Warehouse)",
-        "தங்கும் அறைகள் (Rooms)",
-        "ஹாஸ்டல் (Hostel)",
-        "பிற அனைத்து வணிக பயன்பாடுகள்",
-      ],
-    },
-    marketingBanner: {
-      en: "High Growth | High Returns | Prime Commercial Location — 60 Cent Premium Commercial Land with 130 Ft Wide Frontage. Ideal for Commercial Business, Development & Investment.",
-      ta: "அதிவேக வளர்ச்சி | அதிக வருவாய் | முதன்மை வணிக மையம் — 130 அடி அகன்ற முகப்புடன் கூடிய 60 சென்ட் பிரீமியம் வணிக நிலம். வணிகம், வளர்ச்சி மற்றும் முதலீட்டிற்கு மிகவும் உகந்தது.",
-    },
-    mapsUrl: "https://maps.google.com/?q=Pandi+Kovil+Madurai",
-    specs: [
-      { label: { en: "Land Area", ta: "நில அளவு" }, value: { en: "60 Cent Commercial Land", ta: "60 சென்ட் வணிக நிலம்" } },
-      { label: { en: "Road Frontage", ta: "சாலை முகப்பு" }, value: { en: "130 Ft Wide Frontage", ta: "130 அடி அகன்ற முகப்பு" } },
-      { label: { en: "Location", ta: "அமைவிடம்" }, value: { en: "Pandi Kovil, Madurai", ta: "பாண்டி கோவில், மதுரை" } },
-      { label: { en: "Road Type", ta: "சாலை வகை" }, value: { en: "Commercial / Airport Road", ta: "விமான நிலைய பிரதான சாலை" } },
-      { label: { en: "Zoning", ta: "வகைப்பாடு" }, value: { en: "Commercial Zoning", ta: "வணிக வகைப்பாடு" } },
-      { label: { en: "Title Status", ta: "உரிமம்" }, value: { en: "Clear Titles & Hassle-Free", ta: "தெளிவான வில்லங்கமற்ற பட்டா" } },
-      { label: { en: "Pricing Advantage", ta: "விலை நன்மை" }, value: { en: "Very Less Rate on This Road", ta: "இச்சாலையிலுள்ள நிலங்களை விட மிகக் குறைவு" } },
-      { label: { en: "Development Potential", ta: "வளர்ச்சி வாய்ப்பு" }, value: { en: "High-Value Development", ta: "அதிமதிப்பு வணிக வளர்ச்சி" } },
-    ],
-  },
-
-  // -------------------------------------------------------------------------
-  // 3. FARM LAND PROJECTS (2 Projects)
-  // -------------------------------------------------------------------------
-  {
-    id: "madurai-farms",
-    name: { en: "Madurai Farms & Fruits", ta: "மதுரை பார்ம்ஸ் & புரூட்ஸ்" },
-    category: "farm",
-    categoryLabel: { en: "Farm Land", ta: "பண்ணை நிலம்" },
-    subcategory: "farm-land",
-    subcategoryLabel: { en: "Agro Farmland", ta: "வேளாண் பண்ணை" },
-    location: { en: "Agricultural Green Belt, Madurai", ta: "விவசாய பசுமை மண்டலம், மதுரை" },
-    distanceInfo: { en: "Scenic Countryside · 25 min from Madurai city center", ta: "இயற்கை எழில் கொஞ்சும் கிராமப்புறம் · 25 நிமிடம்" },
-    image: "/images/projects/madurai-farms/1.jpg",
-    blueprint: "/images/farmlayou1.png",
-    blueprints: [
-      {
-        title: { en: "15-Plot Cadastral Layout", ta: "15 பண்ணை மனைகள் வரைபடம்" },
-        image: "/images/farmlayou1.png",
-        tag: { en: "15 Plots · 30ft Road", ta: "15 மனைகள் · 30 அடி ரோடு" },
-      },
-      {
-        title: { en: "Enlarged Facility Details (Entrance, Sheds & Fish Ponds)", ta: "பண்ணை வசதிகள்: நுழைவு, கொட்டகை & மீன் குளங்கள்" },
-        image: "/images/farmlayout-facility.png",
-        tag: { en: "Fish Ponds · Water Tank · 208/1", ta: "மீன் குளங்கள் · மேல்நிலை தொட்டி · 208/1" },
-      },
-    ],
-    mapbhoomiUrl: "https://mapbhoomi.com/l/surya-promoters/green-acres",
-    statusBadge: { en: "Managed Agro Estate", ta: "நிர்வகிக்கப்படும் பண்ணை" },
-    rating: "4.9",
-    description: {
-      en: "Managed organic agro-acreage with pre-planted fruit groves (mango, guava, coconut), drip irrigation systems, scenic mountain views, and weekend farmhouse living.",
-      ta: "மா, கொய்யா, தென்னை மரங்கள் மற்றும் சொட்டு நீர் பாசன வசதியுடன் கூடிய நிர்வகிக்கப்படும் இயற்கை விவசாய பண்ணை மனைகள்.",
-    },
-    highlights: {
-      en: [
-        "Rich fertile red soil with shallow sweet water table",
-        "Pre-planted yielding fruit trees with automated drip systems",
-        "Gated community with 24/7 security & ongoing farm maintenance",
-        "Generates continuous organic agricultural yield & tax-free income",
-      ],
-      ta: [
-        "வற்றாத நிலத்தடி நீருடன் கூடிய வளமான செம்மண் பூமி",
-        "சொட்டு நீர் பாசனத்துடன் கூடிய பலன் தரும் பழ மரங்கள்",
-        "24/7 காவலாளி மற்றும் தோட்டப் பராமரிப்பு வசதி",
-        "வரிவிலக்குடன் கூடிய தொடர் விவசாய வருமானம்",
-      ],
-    },
-    mapsUrl: "https://goo.gl/maps/reSXDDNmSNzkve699?g_st=aw",
-    specs: [
-      { label: { en: "Acreage Type", ta: "பண்ணை வகை" }, value: { en: "Organic Fruit & Tree Farm", ta: "இயற்கை பழத்தோட்ட பண்ணை" } },
-      { label: { en: "Irrigation", ta: "பாசனம்" }, value: { en: "Installed Drip Systems", ta: "சொட்டு நீர் பாசன அமைப்பு" } },
-      { label: { en: "Soil Type", ta: "மண் வகை" }, value: { en: "High-Yield Red Soil", ta: "வளமான செம்மண்" } },
-      { label: { en: "Management", ta: "பராமரிப்பு" }, value: { en: "Full Turnkey Maintenance", ta: "முழுமையான பராமரிப்பு உண்டு" } },
-    ],
-  },
-];
-
-// Video Folders for Gallery
-const GALLERY_VIDEO_FOLDERS = [
-  {
-    id: "drone-reels",
-    title: { en: "Aerial Drone Overview Reel", ta: "வான்வழி ட்ரோன் வீடியோக்கள்" },
-    count: "3 Videos",
-    thumbnail: "/images/hero/hero-gated-layout.jpg",
-    videos: [
-      { title: { en: "Madurai Outer Ring Road Corridor", ta: "மதுரை அவுட்டர் ரிங் ரோடு வழித்தடம்" }, duration: "1:45" },
-      { title: { en: "Vaigai Highway Commercial Aerial", ta: "வைகை நெடுஞ்சாலை வணிக வான்பார்வை" }, duration: "2:10" },
-      { title: { en: "Madurai Farms Agro Panorama", ta: "மதுரை பார்ம்ஸ் இயற்கை காட்சி" }, duration: "3:05" },
-    ],
-  },
-  {
-    id: "commercial-corridors",
-    title: { en: "Commercial Corridors Tour", ta: "வணிக வழித்தட வீடியோக்கள்" },
-    count: "2 Videos",
-    thumbnail: "/images/generated/vaigai-elite-garden.jpg",
-    videos: [
-      { title: { en: "Vaigai Elite Garden Site Walkthrough", ta: "வைகை எலைட் கார்டன் நேரடி ஆய்வு" }, duration: "2:30" },
-      { title: { en: "Anna Nagar Commercial Hub Elevation", ta: "அண்ணா நகர் வணிக கட்டிட பார்வை" }, duration: "1:55" },
-    ],
-  },
-  {
-    id: "farm-agro",
-    title: { en: "Madurai Farms Agro Acreage", ta: "மதுரை பார்ம்ஸ் வேளாண் பண்ணை" },
-    count: "2 Videos",
-    thumbnail: "/images/projects/madurai-farms.jpg",
-    videos: [
-      { title: { en: "Managed Organic Drip Irrigation", ta: "சொட்டு நீர் பாசன அமைப்பு செயல்முறை" }, duration: "2:40" },
-      { title: { en: "Weekend Farmhouse Living Tour", ta: "வார இறுதி பண்ணை வீடு வாழ்க்கை" }, duration: "3:15" },
-    ],
-  },
-  {
-    id: "client-handover",
-    title: { en: "Customer Testimonials & Patta Handover", ta: "வாடிக்கையாளர் கருத்துக்கள் & பட்டா வழங்கல்" },
-    count: "3 Videos",
-    thumbnail: "/images/founder/founder.png",
-    videos: [
-      { title: { en: "IAF Veteran Leadership - Buyer Trust", ta: "விமானப்படை அதிகாரியின் நேர்மையான சேவை" }, duration: "3:40" },
-      { title: { en: "Immediate Registration Client Experience", ta: "உடனடி பத்திர பதிவு அனுபவம்" }, duration: "2:05" },
-    ],
-  },
-];
-
-// Image Folders for Gallery
-const GALLERY_IMAGE_FOLDERS = [
-  {
-    id: "vaigai-photos",
-    title: { en: "Vaigai Elite Highway & Ring Road", ta: "வைகை எலைட் & ரிங் ரோடு" },
-    count: "5 Photos",
-    thumbnail: "/images/VG/VG6.jpeg",
-    images: [
-      "/images/VG/VG6.jpeg",
-      "/images/VG/VG2.jpeg",
-      "/images/VG/VG1.jpeg",
-      "/images/VG/VG3.jpeg",
-      "/images/VG/VG4.jpeg",
-    ],
-  },
-  {
-    id: "farms-photos",
-    title: { en: "Madurai Farms Agro Acreage", ta: "மதுரை பார்ம்ஸ் வேளாண் நிலங்கள்" },
-    count: "9 Photos",
-    thumbnail: "/images/projects/madurai-farms/1.jpg",
-    images: [
-      "/images/projects/madurai-farms/1.jpg",
-      "/images/projects/madurai-farms/2.jpg",
-      "/images/projects/madurai-farms/3.jpg",
-      "/images/projects/madurai-farms/aerial-cottage.jpg",
-      "/images/projects/madurai-farms/entrance-gate.jpg",
-      "/images/projects/madurai-farms/concrete-pathway.jpg",
-      "/images/projects/madurai-farms/aerial-grove.jpg",
-      "/images/projects/madurai-farms/water-reservoir.jpg",
-      "/images/projects/madurai-farms/panoramic-view.jpg",
-    ],
-  },
-  {
-    id: "residential-photos",
-    title: { en: "Residential Flats & Villa Plots", ta: "குடியிருப்பு அடுக்குமாடி & மனைப்பிரிவுகள்" },
-    count: "7 Photos",
-    thumbnail: "/images/projects/flat-projects/1-exterior.jpg",
-    images: [
-      "/images/projects/flat-projects/1-exterior.jpg",
-      "/images/projects/flat-projects/2-entrance.jpg",
-      "/images/projects/flat-projects/3-living.jpg",
-      "/images/projects/flat-projects/4-upper-living.jpg",
-      "/images/projects/flat-projects/5-bedroom.jpg",
-      "/images/projects/flat-projects/6-kitchen.jpg",
-      "/images/projects/flat-projects/7-bathroom.jpg",
-    ],
-  },
-  {
-    id: "commercial-photos",
-    title: { en: "Vaigai Highway & Commercial Belts", ta: "வைகை நெடுஞ்சாலை & வணிக வளாகங்கள்" },
-    count: "4 Photos",
-    thumbnail: "/images/generated/vaigai-elite-garden.jpg",
-    images: [
-      "/images/generated/vaigai-elite-garden.jpg",
-      "/images/projects/vaigai-commercial.jpg",
-      "/images/Riverbeltwal.png",
-      "/images/pandikovil.png",
-    ],
-  },
-];
-
-// Downloads Hub Items
-const DOWNLOAD_ITEMS = [
-  {
-    id: "mapbhoomi-cadastral-portal",
-    title: { en: "Mapbhoomi Interactive 3D Cadastral Layout Portal", ta: "Mapbhoomi நேரடி 3D மனை வரைபட தளம்" },
-    category: { en: "Interactive Cadastral Layouts", ta: "நேரடி மனை வரைபடம்" },
-    fileType: "Live 3D / Web App",
-    fileSize: "Live Online",
-    downloadUrl: "https://mapbhoomi.com/l/surya-promoters",
-    badge: "Official Surya Promoters Hub",
-  },
-
-  {
-    id: "vaigai-elite-plan",
-    title: { en: "Vaigai Elite Commercial Highway Masterplan", ta: "வைகை எலைட் வணிக வரைபடம்" },
-    category: { en: "Commercial Masterplan", ta: "வணிக வரைபடம்" },
-    fileType: "JPG / Plan",
-    fileSize: "356 KB",
-    downloadUrl: "/images/projects/vaigai/vaigai-elite-layout-plan.jpg",
-    badge: "5.23 Acres · 40 Ft Road & Bridge",
-  },
-  {
-    id: "vandiyur-riverbelt-plan",
-    title: { en: "Vandiyur River Belt Site Layout Map", ta: "வண்டியூர் நதிக்கரை மனை வரைபடம்" },
-    category: { en: "Commercial Site Layout", ta: "வணிக மனை வரைபடம்" },
-    fileType: "JPG / Layout",
-    fileSize: "260 KB",
-    downloadUrl: "/images/Riverbelt.png",
-    badge: "27.4 Cents · 70 Ft Road & River View",
-  },
-  {
-    id: "pandi-kovil-plan",
-    title: { en: "Pandi Kovil Commercial Land Cadastral Layout Map", ta: "பாண்டி கோவில் கள மனை வரைபடம்" },
-    category: { en: "Cadastral Layout Plan", ta: "கள வரைபடம்" },
-    fileType: "PNG / Layout",
-    fileSize: "60 KB",
-    downloadUrl: "/images/pandikovil-layout.png",
-    badge: "S.No 2-1B3 · 130 Ft Frontage",
-  },
-  {
-    id: "surya-green-enclave-map",
-    title: { en: "Surya Green Enclave DTCP Layout Map", ta: "சூர்யா கிரீன் என்கிளேவ் DTCP வரைபடம்" },
-    category: { en: "DTCP Layout Map", ta: "DTCP வரைபடம்" },
-    fileType: "PDF / Cadastral",
-    fileSize: "36.8 KB",
-    downloadUrl: "/images/projects/surya-green-enclave/layout-blueprint.jpg",
-    badge: "DTCP Approved",
-  },
-  {
-    id: "madurai-farms-map",
-    title: { en: "Madurai Farms 15-Plot Cadastral Map", ta: "மதுரை பார்ம்ஸ் 15 பண்ணை மனைகள் வரைபடம்" },
-    category: { en: "Agro Estate Layout", ta: "வேளாண் வரைபடம்" },
-    fileType: "PNG / Layout",
-    fileSize: "1.52 MB",
-    downloadUrl: "/images/farmlayou1.png",
-    badge: "15 Farm Plots · Mudukangulam",
-  },
-  {
-    id: "madurai-farms-facility-map",
-    title: { en: "Madurai Farms Facility Details (Sheds & Fish Ponds)", ta: "மதுரை பார்ம்ஸ் பண்ணை வசதிகள் வரைபடம் (கொட்டகை & மீன் குளம்)" },
-    category: { en: "Facility Details Plan", ta: "பண்ணை வசதிகள் வரைபடம்" },
-    fileType: "PNG / Blueprint",
-    fileSize: "109 KB",
-    downloadUrl: "/images/farmlayout-facility.png",
-    badge: "Fish Ponds · Water Tank · S.No 208/1",
-  },
-  {
-    id: "portfolio-brochure",
-    title: { en: "Surya Promoters 2026 Complete Portfolio Brochure", ta: "சூர்யா புரமோட்டர்ஸ் 2026 முழு திட்ட கையேடு" },
-    category: { en: "Company Brochure", ta: "முழு கையேடு" },
-    fileType: "PDF / Document",
-    fileSize: "6.8 MB",
-    downloadUrl: "/images/hero-poster.jpg",
-    badge: "Full Portfolio Brochure",
-  },
-  {
-    id: "drone-video-pack",
-    title: { en: "HD Aerial Video & Drone Footage Reel", ta: "HD ட்ரோன் வீடியோ தொகுப்பு" },
-    category: { en: "Video Reel", ta: "வீடியோ தொகுப்பு" },
-    fileType: "MP4 / HD Video",
-    fileSize: "42.5 MB",
-    downloadUrl: "/images/hero/hero-gated-layout.jpg",
-    badge: "4K Aerial Reel",
-  },
-];
-
 export default function HomePage() {
   const { language, toggleLanguage } = useLanguage();
+  const { data: cmsData } = useCmsData();
+
+  const ALL_PROJECTS: AppProject[] = (cmsData?.projects || []) as AppProject[];
+  const GALLERY_VIDEO_FOLDERS = cmsData?.gallery?.videoFolders || [];
+  const GALLERY_IMAGE_FOLDERS = cmsData?.gallery?.imageFolders || [];
+  const DOWNLOAD_ITEMS = cmsData?.downloads?.items || [];
+  const companyInfo = cmsData?.company;
+  const heroContent = cmsData?.hero;
+  const statsList = cmsData?.stats?.items || [];
+  const servicesList = cmsData?.services?.items || [];
+
+  const phone = companyInfo?.phone || "+91 77089 66452";
+  const whatsapp = companyInfo?.whatsapp || "+91 77089 66452";
+  const rawWhatsapp = (whatsapp || "917708966452").replace(/[^0-9]/g, "");
+  const email = companyInfo?.email || "suryapromotersmdu@gmail.com";
+  const address = companyInfo?.address || "120 Feet Road, Near Mattuthavani Bus Stand, K.K. Nagar Corridor, Madurai, Tamil Nadu 625020";
+  const mapsLink = companyInfo?.mapsLink || "https://maps.google.com/?q=Mattuthavani+Madurai";
 
   // Navigation State: Which of the 5 Main Icons / Sections is Active
   // 'home' | 'projects' | 'location' | 'gallery' | 'about' | 'download'
   const [activeTab, setActiveTab] = useState<"home" | "projects" | "location" | "gallery" | "about" | "download" | "contact">("home");
 
-  // In "Our Projects": Which Category is Active ('residential' | 'commercial' | 'farm')
-  const [activeCategory, setActiveCategory] = useState<"residential" | "commercial" | "farm" | null>(null);
+  // In "Our Projects": Which Category is Active
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+
+  // Dynamic Categories from CMS
+  const categoriesList: CmsCategory[] = useMemo<CmsCategory[]>(() => {
+    if (cmsData?.categories && cmsData.categories.length > 0) {
+      return cmsData.categories;
+    }
+    return [
+      {
+        id: "residential",
+        name: { en: "Residential", ta: "குடியிருப்பு" },
+        description: {
+          en: "Surya Nagar 3 BHK Duplex Villa & Plotted Layouts",
+          ta: "சூர்யா நகர் 3 BHK டூப்ளக்ஸ் வில்லா & மனைப்பிரிவுகள்",
+        },
+        icon: "Home",
+      },
+      {
+        id: "commercial",
+        name: { en: "Commercial", ta: "வணிக நிலங்கள்" },
+        description: {
+          en: "Manalur, Vandiyur & Pandi Kovil High-Exposure Corridors",
+          ta: "மணலூர், வண்டியூர் & பாண்டி கோவில் பெருநிலங்கள்",
+        },
+        icon: "Briefcase",
+      },
+      {
+        id: "farm",
+        name: { en: "Farm Land", ta: "பண்ணை நிலம்" },
+        description: {
+          en: "Madurai Farms & Fruits Managed Agro Acreage",
+          ta: "மதுரை பார்ம்ஸ் & புரூட்ஸ் இயற்கை பண்ணை நிலங்கள்",
+        },
+        icon: "TreePine",
+      },
+    ];
+  }, [cmsData?.categories]);
+
+  const currentCategoryObj = useMemo(() => {
+    return categoriesList.find((c: CmsCategory) => c.id === activeCategory);
+  }, [categoriesList, activeCategory]);
+
+  const getPageCategoryIcon = (iconName?: string) => {
+    switch (iconName?.toLowerCase()) {
+      case "home":
+        return Home;
+      case "building2":
+      case "building":
+        return Building2;
+      case "treepine":
+      case "trees":
+      case "wheat":
+      case "tree":
+        return Trees;
+      case "factory":
+        return Factory;
+      case "warehouse":
+        return Warehouse;
+      case "briefcase":
+        return Briefcase;
+      case "landmark":
+        return Landmark;
+      default:
+        return Folder;
+    }
+  };
 
   // Search input query
   const [searchQuery, setSearchQuery] = useState("");
@@ -723,7 +311,7 @@ export default function HomePage() {
 
             {/* WhatsApp Direct */}
             <a
-              href="https://wa.me/917708966452?text=Hello%20Surya%20Promoters,%20I%20am%20interested%20in%20your%20Madurai%20projects."
+              href={`https://wa.me/${rawWhatsapp}?text=Hello%20Surya%20Promoters,%20I%20am%20interested%20in%20your%20Madurai%20projects.`}
               target="_blank"
               rel="noopener noreferrer"
               className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-bold transition-all shadow-xs cursor-pointer"
@@ -734,11 +322,11 @@ export default function HomePage() {
 
             {/* Call Now */}
             <a
-              href="tel:+917708966452"
+              href={`tel:${phone}`}
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#0A0D12] hover:bg-neutral-800 text-[#EAB308] font-bold transition-all shadow-xs cursor-pointer"
             >
               <Phone className="h-3.5 w-3.5 text-[#EAB308]" />
-              <span className="hidden xs:inline">+91 77089 66452</span>
+              <span className="hidden xs:inline">{phone}</span>
             </a>
           </div>
 
@@ -1111,7 +699,9 @@ export default function HomePage() {
                           {language === "ta" ? "படி 1: திட்ட பிரிவை தேர்ந்தெடுக்கவும்" : "Step 1: Choose Property Category"}
                         </span>
                         <h3 className="text-xl sm:text-2xl font-black text-neutral-900">
-                          {language === "ta" ? "3 பிரிவுகள் (Residential · Commercial · Farm Land)" : "Our 3 Property Categories"}
+                          {language === "ta"
+                            ? `${categoriesList.length} பிரிவுகள் (${categoriesList.map((c) => c.name.ta).join(" · ")})`
+                            : `Our ${categoriesList.length} Property Categories`}
                         </h3>
                         <p className="text-xs text-neutral-500 mt-0.5">
                           {language === "ta" ? "கீழே உள்ள பிரிவை கிளிக் செய்யவும் — திட்டங்கள் புதிய பக்கத்தில் திறக்கும்" : "Click a category card to open that category's dedicated project page"}
@@ -1122,111 +712,55 @@ export default function HomePage() {
                       </span>
                     </div>
 
-                    {/* 3 Categories Box / Icons Grid */}
+                    {/* Categories Box / Icons Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      {/* Category 1: Residential luxury villa / flat project */}
-                      <button
-                        onClick={() => setActiveCategory("residential")}
-                        className="p-5 sm:p-6 rounded-2xl border text-left transition-all duration-300 cursor-pointer flex flex-col justify-between group relative overflow-hidden bg-white hover:bg-amber-50/40 text-neutral-900 border-neutral-200 shadow-xs hover:shadow-lg hover:border-[#EAB308] hover:-translate-y-0.5"
-                      >
-                        <div className="flex items-start justify-between mb-3">
-                          <div className="h-14 w-14 rounded-2xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-105 shadow-xs bg-amber-50 text-[#B45309] border border-amber-200">
-                            <Home className="h-7 w-7" />
-                          </div>
-                          <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-100 text-[#B45309]">
-                            {residentialCount} {residentialCount === 1 ? "Project" : "Projects"}
-                          </span>
-                        </div>
+                      {categoriesList.map((cat, idx) => {
+                        const count = ALL_PROJECTS.filter((p) => p.category === cat.id).length;
+                        const IconComp = getPageCategoryIcon(cat.icon);
+                        const catNum = String(idx + 1).padStart(2, "0");
 
-                        <div>
-                          <span className="text-[10px] font-black uppercase tracking-widest block text-neutral-400 mb-1">
-                            Category 01
-                          </span>
-                          <h4 className="text-base sm:text-lg font-black leading-snug group-hover:text-[#B45309] transition-colors">
-                            {language === "ta" ? "1. குடியிருப்பு சொகுசு வில்லா திட்டம்" : "1. Residential Luxury Villa Project"}
-                          </h4>
-                          <p className="text-xs mt-1.5 leading-relaxed text-neutral-500">
-                            {language === "ta" ? `சூர்யா நகர் 3 BHK டூப்ளக்ஸ் வில்லா (${residentialCount} திட்டம்)` : `Surya Nagar 3 BHK Duplex Villa (${residentialCount} ${residentialCount === 1 ? "Card" : "Cards"})`}
-                          </p>
-                        </div>
+                        return (
+                          <button
+                            key={cat.id}
+                            onClick={() => setActiveCategory(cat.id)}
+                            className="p-5 sm:p-6 rounded-2xl border text-left transition-all duration-300 cursor-pointer flex flex-col justify-between group relative overflow-hidden bg-white hover:bg-amber-50/40 text-neutral-900 border-neutral-200 shadow-xs hover:shadow-lg hover:border-[#EAB308] hover:-translate-y-0.5"
+                          >
+                            <div className="flex items-start justify-between mb-3">
+                              <div className="h-14 w-14 rounded-2xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-105 shadow-xs bg-amber-50 text-[#B45309] border border-amber-200">
+                                <IconComp className="h-7 w-7" />
+                              </div>
+                              <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-100 text-[#B45309]">
+                                {count} {count === 1 ? "Project" : "Projects"}
+                              </span>
+                            </div>
 
-                        <div className="mt-4 pt-3 border-t border-neutral-100 flex items-center justify-between text-xs font-bold text-[#B45309]">
-                          <span>{language === "ta" ? "கார்டுகளை காண கிளிக் செய்க" : "Click to View Cards"}</span>
-                          <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                        </div>
-                      </button>
+                            <div>
+                              <span className="text-[10px] font-black uppercase tracking-widest block text-neutral-400 mb-1">
+                                Category {catNum}
+                              </span>
+                              <h4 className="text-base sm:text-lg font-black leading-snug group-hover:text-[#B45309] transition-colors">
+                                {idx + 1}. {cat.name[language] || cat.name.en}
+                              </h4>
+                              <p className="text-xs mt-1.5 leading-relaxed text-neutral-500 line-clamp-2">
+                                {cat.description?.[language] || cat.description?.en || `${count} Projects available`}
+                              </p>
+                            </div>
 
-                      {/* Category 2: Commercial highway & land projects */}
-                      <button
-                        onClick={() => setActiveCategory("commercial")}
-                        className="p-5 sm:p-6 rounded-2xl border text-left transition-all duration-300 cursor-pointer flex flex-col justify-between group relative overflow-hidden bg-white hover:bg-blue-50/40 text-neutral-900 border-neutral-200 shadow-xs hover:shadow-lg hover:border-blue-400 hover:-translate-y-0.5"
-                      >
-                        <div className="flex items-start justify-between mb-3">
-                          <div className="h-14 w-14 rounded-2xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-105 shadow-xs bg-blue-50 text-blue-600 border border-blue-200">
-                            <Briefcase className="h-7 w-7" />
-                          </div>
-                          <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-blue-100 text-blue-700">
-                            {commercialCount} Projects
-                          </span>
-                        </div>
-
-                        <div>
-                          <span className="text-[10px] font-black uppercase tracking-widest block text-neutral-400 mb-1">
-                            Category 02
-                          </span>
-                          <h4 className="text-base sm:text-lg font-black leading-snug group-hover:text-blue-700 transition-colors">
-                            {language === "ta" ? "2. வணிக நில திட்டங்கள்" : "2. Commercial Land Projects"}
-                          </h4>
-                          <p className="text-xs mt-1.5 leading-relaxed text-neutral-500">
-                            {language === "ta" ? `மணலூர், வண்டியூர் & பாண்டி கோவில் (${commercialCount} திட்டங்கள்)` : `Manalur, Vandiyur & Pandi Kovil (${commercialCount} Cards)`}
-                          </p>
-                        </div>
-
-                        <div className="mt-4 pt-3 border-t border-neutral-100 flex items-center justify-between text-xs font-bold text-blue-600">
-                          <span>{language === "ta" ? "கார்டுகளை காண கிளிக் செய்க" : "Click to View Cards"}</span>
-                          <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                        </div>
-                      </button>
-
-                      {/* Category 3: Farm land project */}
-                      <button
-                        onClick={() => setActiveCategory("farm")}
-                        className="p-5 sm:p-6 rounded-2xl border text-left transition-all duration-300 cursor-pointer flex flex-col justify-between group relative overflow-hidden bg-white hover:bg-emerald-50/40 text-neutral-900 border-neutral-200 shadow-xs hover:shadow-lg hover:border-emerald-400 hover:-translate-y-0.5"
-                      >
-                        <div className="flex items-start justify-between mb-3">
-                          <div className="h-14 w-14 rounded-2xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-105 shadow-xs bg-emerald-50 text-emerald-700 border border-emerald-200">
-                            <Trees className="h-7 w-7" />
-                          </div>
-                          <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-100 text-emerald-800">
-                            {farmCount} Projects
-                          </span>
-                        </div>
-
-                        <div>
-                          <span className="text-[10px] font-black uppercase tracking-widest block text-neutral-400 mb-1">
-                            Category 03
-                          </span>
-                          <h4 className="text-base sm:text-lg font-black leading-snug group-hover:text-emerald-800 transition-colors">
-                            {language === "ta" ? "3. பண்ணை நில திட்டங்கள்" : "3. Farm Land Project"}
-                          </h4>
-                          <p className="text-xs mt-1.5 leading-relaxed text-neutral-500">
-                            {language === "ta" ? `மதுரை பார்ம்ஸ் & புரூட்ஸ் (${farmCount} திட்டம்)` : `Madurai Farms & Fruits (${farmCount} Card)`}
-                          </p>
-                        </div>
-
-                        <div className="mt-4 pt-3 border-t border-neutral-100 flex items-center justify-between text-xs font-bold text-emerald-700">
-                          <span>{language === "ta" ? "கார்டுகளை காண கிளிக் செய்க" : "Click to View Cards"}</span>
-                          <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                        </div>
-                      </button>
+                            <div className="mt-4 pt-3 border-t border-neutral-100 flex items-center justify-between text-xs font-bold text-[#B45309]">
+                              <span>{language === "ta" ? "கார்டுகளை காண கிளிக் செய்க" : "Click to View Cards"}</span>
+                              <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                            </div>
+                          </button>
+                        );
+                      })}
                     </div>
 
                     {/* Direct Contact strip */}
                     <div className="pt-3 border-t border-neutral-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-neutral-500">
                       <div className="flex items-center gap-2">
                         <span className="font-semibold text-neutral-700">{language === "ta" ? "நேரடி ஆலோசனை:" : "Direct Assistance:"}</span>
-                        <a href="tel:+917708966452" className="font-mono font-bold text-neutral-900 hover:text-[#B45309]">
-                          +91 77089 66452
+                        <a href={`tel:${phone}`} className="font-mono font-bold text-neutral-900 hover:text-[#B45309]">
+                          {phone}
                         </a>
                       </div>
                     </div>
@@ -1246,7 +780,7 @@ export default function HomePage() {
                         className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0A0D12] hover:bg-neutral-800 text-white text-xs sm:text-sm font-black transition-all hover:scale-105 cursor-pointer shadow-md"
                       >
                         <ArrowLeft className="h-4 w-4 text-[#EAB308]" />
-                        <span>{language === "ta" ? "3 பிரிவுகளுக்கு திரும்புக" : "Back to Categories"}</span>
+                        <span>{language === "ta" ? "அனைத்து பிரிவுகளுக்கும் திரும்புக" : "Back to Categories"}</span>
                       </button>
 
                       <button
@@ -1267,42 +801,32 @@ export default function HomePage() {
                         <span>Our Projects</span>
                         <span>/</span>
                         <span className="font-bold text-neutral-900">
-                          {activeCategory === "residential" && (language === "ta" ? "1. குடியிருப்பு" : "1. Residential")}
-                          {activeCategory === "commercial" && (language === "ta" ? "2. வணிகம்" : "2. Commercial")}
-                          {activeCategory === "farm" && (language === "ta" ? "3. பண்ணை நிலம்" : "3. Farm Land")}
+                          {currentCategoryObj
+                            ? currentCategoryObj.name[language] || currentCategoryObj.name.en
+                            : activeCategory}
                         </span>
                       </div>
                     </div>
 
                     {/* Category Switcher Pills */}
                     <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
-                      <button
-                        onClick={() => setActiveCategory("residential")}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${activeCategory === "residential"
-                            ? "bg-[#0A0D12] text-[#EAB308] shadow-xs font-black ring-1 ring-[#EAB308]"
-                            : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
-                          }`}
-                      >
-                        1. Residential ({ALL_PROJECTS.filter((p) => p.category === "residential").length})
-                      </button>
-                      <button
-                        onClick={() => setActiveCategory("commercial")}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${activeCategory === "commercial"
-                            ? "bg-[#0A0D12] text-[#EAB308] shadow-xs font-black ring-1 ring-[#EAB308]"
-                            : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
-                          }`}
-                      >
-                        2. Commercial ({ALL_PROJECTS.filter((p) => p.category === "commercial").length})
-                      </button>
-                      <button
-                        onClick={() => setActiveCategory("farm")}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${activeCategory === "farm"
-                            ? "bg-[#0A0D12] text-[#EAB308] shadow-xs font-black ring-1 ring-[#EAB308]"
-                            : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
-                          }`}
-                      >
-                        3. Farm Land ({ALL_PROJECTS.filter((p) => p.category === "farm").length})
-                      </button>
+                      {categoriesList.map((cat, idx) => {
+                        const isCatActive = activeCategory === cat.id;
+                        const pCount = ALL_PROJECTS.filter((p) => p.category === cat.id).length;
+                        return (
+                          <button
+                            key={cat.id}
+                            onClick={() => setActiveCategory(cat.id)}
+                            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
+                              isCatActive
+                                ? "bg-[#0A0D12] text-[#EAB308] shadow-xs font-black ring-1 ring-[#EAB308]"
+                                : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
+                            }`}
+                          >
+                            {idx + 1}. {cat.name[language] || cat.name.en} ({pCount})
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
 
@@ -1313,21 +837,17 @@ export default function HomePage() {
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-[#EAB308] text-xs font-bold mb-2">
                           <Sparkles className="h-3.5 w-3.5" />
                           <span>
-                            {activeCategory === "residential" && (language === "ta" ? "பிரிவு 01: குடியிருப்பு திட்டங்கள்" : "Category 01: Residential Projects")}
-                            {activeCategory === "commercial" && (language === "ta" ? "பிரிவு 02: வணிக பெருநிலங்கள் & கட்டிடங்கள்" : "Category 02: Commercial Projects")}
-                            {activeCategory === "farm" && (language === "ta" ? "பிரிவு 03: பண்ணை நிலங்கள் & எஸ்டேட்கள்" : "Category 03: Farm Land Projects")}
+                            {language === "ta" ? "பிரிவு:" : "Category:"} {currentCategoryObj ? (currentCategoryObj.name[language] || currentCategoryObj.name.en) : activeCategory}
                           </span>
                         </div>
                         <h3 className="text-xl sm:text-2xl font-black text-white">
-                          {activeCategory === "residential" && (language === "ta" ? "குடியிருப்பு சொகுசு வில்லா திட்டங்கள்" : "Residential Luxury Villa Projects")}
-                          {activeCategory === "commercial" && (language === "ta" ? "வணிக கட்டிடம் & நெடுஞ்சாலை நிலங்கள்" : "Commercial Building & Highway Land Projects")}
-                          {activeCategory === "farm" && (language === "ta" ? "இயற்கை பண்ணை நிலங்கள் & வேளாண் எஸ்டேட்" : "Farm Land & Managed Agro Projects")}
+                          {currentCategoryObj ? (currentCategoryObj.name[language] || currentCategoryObj.name.en) : activeCategory}
                         </h3>
-                        {/* <p className="text-xs sm:text-sm text-neutral-300 mt-1 max-w-2xl leading-relaxed">
-                      {activeCategory === "residential" && (language === "ta" ? "அடுக்குமாடி குடியிருப்பு & வீட்டு மனைப்பிரிவுகள் — 100% கம்ப்யூட்டர் பட்டா மற்றும் உடனடி பத்திரப்பதிவு." : "Contemporary luxury flat apartments and ready-to-build villa plotted layouts with 100% verified computer patta.")}
-                      {activeCategory === "commercial" && (language === "ta" ? "NH-44 & ரிங் ரோடு வணிக நிலங்கள், மருத்துவமனை, கிடங்கு, கல்லூரிகளுக்கு ஏற்ற பிரதான இடங்கள்." : "High-exposure commercial land parcels along NH-44, Madurai Outer Ring Road, and city commercial buildings.")}
-                      {activeCategory === "farm" && (language === "ta" ? "சுத்தமான நிலத்தடி நீருடன் கூடிய இயற்கை விவசாய பண்ணை எஸ்டேட்கள்." : "Managed agro farm acreage, orchard estates, and fertile farmland with sweet potable water table.")}
-                    </p> */}
+                        {currentCategoryObj?.description && (
+                          <p className="text-xs sm:text-sm text-neutral-300 mt-1 max-w-2xl leading-relaxed">
+                            {currentCategoryObj.description[language] || currentCategoryObj.description.en}
+                          </p>
+                        )}
                       </div>
                       <div className="shrink-0 flex sm:flex-col items-center sm:items-end justify-between gap-1 border-t sm:border-t-0 border-white/10 pt-2 sm:pt-0">
                         <span className="text-2xl font-black text-[#EAB308]">{activeCategoryProjects.length}</span>
@@ -1355,8 +875,33 @@ export default function HomePage() {
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
 
-                          <div className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#0A0D12]/90 text-[#EAB308] border border-[#EAB308]/40 pointer-events-none">
-                            {project.statusBadge[language]}
+                          {/* Sold Out Visual Watermark Overlay */}
+                          {(project as any).status === "sold" && (
+                            <div className="absolute inset-0 bg-black/40 backdrop-grayscale-[30%] flex items-center justify-center pointer-events-none z-10">
+                              <span className="px-4 py-1.5 rounded-xl bg-rose-600/95 text-white font-black text-xs uppercase tracking-widest border border-rose-300 shadow-xl rotate-[-6deg]">
+                                {language === "ta" ? "100% விற்பனையானது" : "100% SOLD OUT"}
+                              </span>
+                            </div>
+                          )}
+
+                          <div className="absolute top-3 left-3 flex items-center gap-1.5 z-20 pointer-events-none">
+                            {(project as any).status === "sold" ? (
+                              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-rose-600 text-white shadow-md uppercase tracking-wider border border-rose-400">
+                                {language === "ta" ? "விற்பனையானது" : "SOLD OUT"}
+                              </span>
+                            ) : (project as any).status === "upcoming" ? (
+                              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-amber-500 text-black shadow-md uppercase tracking-wider border border-amber-300">
+                                {language === "ta" ? "வரவிருக்கும் திட்டம்" : "UPCOMING"}
+                              </span>
+                            ) : (project as any).status === "completed" ? (
+                              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-blue-600 text-white shadow-md uppercase tracking-wider border border-blue-400">
+                                {language === "ta" ? "நிறைவடைந்தது" : "COMPLETED"}
+                              </span>
+                            ) : null}
+
+                            <div className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#0A0D12]/90 text-[#EAB308] border border-[#EAB308]/40">
+                              {project.statusBadge[language]}
+                            </div>
                           </div>
 
                           <div className="absolute top-3 right-3 flex items-center gap-1.5 z-10">
@@ -1420,7 +965,7 @@ export default function HomePage() {
                               </button>
 
                               <a
-                                href={`https://wa.me/917708966452?text=Hello%20Surya%20Promoters,%20I%20want%20details%20for%20${encodeURIComponent(
+                                href={`https://wa.me/${rawWhatsapp}?text=Hello%20Surya%20Promoters,%20I%20want%20details%20for%20${encodeURIComponent(
                                   project.name.en
                                 )}.`}
                                 target="_blank"
@@ -2031,13 +1576,13 @@ export default function HomePage() {
                     <span className="text-[10px] font-black uppercase tracking-wider text-[#B45309] block mb-0.5">
                       {language === "ta" ? "தொலைபேசி அழைப்பு" : "Direct Call"}
                     </span>
-                    <h4 className="text-base font-black text-neutral-900 mb-1">+91 77089 66452</h4>
+                    <h4 className="text-base font-black text-neutral-900 mb-1">{phone}</h4>
                     <p className="text-xs text-neutral-500 mb-4">
                       {language === "ta" ? "நில ஆலோசகருடன் உடனே பேச நேரடி அழைப்பு." : "Speak directly with our senior land acquisition specialist."}
                     </p>
                   </div>
                   <a
-                    href="tel:+917708966452"
+                    href={`tel:${phone}`}
                     className="w-full py-2.5 px-3 rounded-xl bg-[#0A0D12] hover:bg-neutral-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-xs"
                   >
                     <PhoneCall className="h-3.5 w-3.5 text-[#EAB308]" />
@@ -2060,7 +1605,7 @@ export default function HomePage() {
                     </p>
                   </div>
                   <a
-                    href="https://wa.me/917708966452?text=Hello%20Surya%20Promoters,%20I%20am%20interested%20in%20your%20Madurai%20projects."
+                    href={`https://wa.me/${rawWhatsapp}?text=Hello%20Surya%20Promoters,%20I%20am%20interested%20in%20your%20Madurai%20projects.`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full py-2.5 px-3 rounded-xl bg-[#25D366] hover:bg-[#20BD5A] text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-xs"
@@ -2079,13 +1624,13 @@ export default function HomePage() {
                     <span className="text-[10px] font-black uppercase tracking-wider text-blue-700 block mb-0.5">
                       {language === "ta" ? "மின்னஞ்சல்" : "Official Email"}
                     </span>
-                    <h4 className="text-base font-black text-neutral-900 mb-1 truncate">info@suryapromoters.com</h4>
+                    <h4 className="text-base font-black text-neutral-900 mb-1 truncate">{email}</h4>
                     <p className="text-xs text-neutral-500 mb-4">
                       {language === "ta" ? "கார்ப்பரேட் கோரிக்கைகள் மற்றும் கூட்டாண்மை விசாரணை." : "Send corporate inquiries, deeds verification, or proposals."}
                     </p>
                   </div>
                   <a
-                    href="mailto:info@suryapromoters.com"
+                    href={`mailto:${email}`}
                     className="w-full py-2.5 px-3 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-900 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors border border-neutral-300"
                   >
                     <Mail className="h-3.5 w-3.5 text-blue-600" />
@@ -2133,7 +1678,7 @@ export default function HomePage() {
                   <div className="space-y-2 text-xs text-neutral-600">
                     <div className="flex items-start gap-2">
                       <MapPin className="h-4 w-4 text-[#B45309] shrink-0 mt-0.5" />
-                      <span>Madurai City Corporate Office & Project Centers across Ring Road, NH-44 & Thiruppuvanam Road, Madurai, Tamil Nadu.</span>
+                      <span>{address}</span>
                     </div>
                     <div className="flex items-center gap-2 text-neutral-700 font-semibold">
                       <Clock className="h-4 w-4 text-emerald-600 shrink-0" />
@@ -2145,7 +1690,7 @@ export default function HomePage() {
                 {/* Right Aligned Action Buttons */}
                 <div className="shrink-0 flex flex-wrap sm:flex-nowrap items-center md:justify-end gap-2.5">
                   <a
-                    href="https://maps.google.com/?q=Madurai,Tamil+Nadu"
+                    href={mapsLink}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-4 py-2.5 rounded-xl bg-[#0A0D12] hover:bg-neutral-800 text-white font-bold text-xs inline-flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
@@ -2285,6 +1830,25 @@ export default function HomePage() {
                 >
                   <X className="h-5 w-5" />
                 </button>
+
+                {/* Sold Out Banner Notification */}
+                {(selectedProject as any).status === "sold" && (
+                  <div className="bg-rose-50 border-b border-rose-200 px-5 py-3 flex items-center justify-between text-xs font-bold text-rose-800 z-20">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2.5 py-0.5 rounded-md bg-rose-600 text-white text-[10px] uppercase font-mono font-black">
+                        {language === "ta" ? "விற்பனையானது" : "SOLD OUT"}
+                      </span>
+                      <span>
+                        {language === "ta"
+                          ? "இத்திட்டத்தின் அனைத்து மனைகளும் 100% விற்பனை செய்யப்பட்டு பதிவு நிறைவடைந்தது."
+                          : "This property is 100% Sold Out & Handed Over. All units are occupied."}
+                      </span>
+                    </div>
+                    <span className="text-[11px] text-rose-600 font-semibold hidden md:inline">
+                      {language === "ta" ? "அடுத்த கட்ட திட்டங்களுக்கு எங்களை தொடர்பு கொள்ளவும்" : "Contact us for upcoming phases & similar lands"}
+                    </span>
+                  </div>
+                )}
 
                 {/* Scrollable Container */}
                 <div
@@ -2959,39 +2523,6 @@ export default function HomePage() {
                           </div>
                         </div>
 
-                        {/* Multiple Blueprint Selector Tabs for Projects with > 1 Layout Plan */}
-                        {selectedProject.blueprints && selectedProject.blueprints.length > 1 && (
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 p-1.5 bg-neutral-100 rounded-2xl border border-neutral-200">
-                            {selectedProject.blueprints.map((bp, bpIdx) => {
-                              const isSelected = modalActiveBlueprintIndex === bpIdx;
-                              return (
-                                <button
-                                  key={bpIdx}
-                                  type="button"
-                                  onClick={() => setModalActiveBlueprintIndex(bpIdx)}
-                                  className={`py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-between gap-2 text-left ${
-                                    isSelected
-                                      ? "bg-[#0A0D12] text-[#EAB308] shadow-md ring-2 ring-[#EAB308]/40"
-                                      : "bg-white text-neutral-700 hover:text-neutral-950 hover:bg-neutral-50 border border-neutral-200/60"
-                                  }`}
-                                >
-                                  <div className="flex items-center gap-2 truncate">
-                                    <span className="text-sm shrink-0">{bpIdx === 0 ? "🗺️" : "📐"}</span>
-                                    <span className="truncate">{bp.title[language]}</span>
-                                  </div>
-                                  {bp.tag && (
-                                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded-md shrink-0 font-bold ${
-                                      isSelected ? "bg-amber-400 text-black" : "bg-neutral-100 text-neutral-600"
-                                    }`}>
-                                      {bp.tag[language]}
-                                    </span>
-                                  )}
-                                </button>
-                              );
-                            })}
-                          </div>
-                        )}
-
                         {/* Interactive Layout Plan Container */}
                         <div
                           onClick={() => {
@@ -3244,7 +2775,7 @@ export default function HomePage() {
 
                   <div className="flex items-center gap-2 w-full sm:w-auto">
                     <a
-                      href="tel:+917708966452"
+                      href={`tel:${phone}`}
                       className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-[#0A0D12] text-white hover:bg-neutral-800 font-bold text-xs flex items-center justify-center gap-1.5 cursor-pointer"
                     >
                       <Phone className="h-3.5 w-3.5 text-[#EAB308]" />
@@ -3252,7 +2783,7 @@ export default function HomePage() {
                     </a>
 
                     <a
-                      href={`https://wa.me/917708966452?text=Hello%20Surya%20Promoters,%20I%20am%20interested%20in%20${encodeURIComponent(
+                      href={`https://wa.me/${rawWhatsapp}?text=Hello%20Surya%20Promoters,%20I%20am%20interested%20in%20${encodeURIComponent(
                         selectedProject.name.en
                       )}.`}
                       target="_blank"
@@ -3346,7 +2877,7 @@ export default function HomePage() {
                 <h4 className="text-sm font-bold text-white mb-1">{selectedVideo.title}</h4>
                 <p className="text-xs text-neutral-400 mb-4">4K drone footage stream available on request</p>
                 <a
-                  href="https://wa.me/917708966452?text=Hello%20Surya%20Promoters,%20please%20send%20full%20project%20video."
+                  href={`https://wa.me/${rawWhatsapp}?text=Hello%20Surya%20Promoters,%20please%20send%20full%20project%20video.`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-4 py-2 rounded-xl bg-[#25D366] text-white font-bold text-xs flex items-center gap-1.5"

@@ -73,7 +73,7 @@ export default function ModernFeaturedProperties() {
       propertyType: "Commercial Zone",
       statusBadge: "2026 RUNNING",
       statusBadgeTa: "2026 நடைபெறுகிறது",
-      image: "/images/projects/vaigai/corridor-aerial.jpg",
+      image: "/images/projects/vaigai-commercial.jpg",
       googleMapsUrl: "https://maps.google.com/?q=Madurai+Outer+Ring+Road+Tamil+Nadu",
       mapBhoomiUrl: "https://mapbhoomi.com/l/surya-promoters/madurai-rameshwaram-nh-road",
       iconSpecs: [
@@ -123,7 +123,7 @@ export default function ModernFeaturedProperties() {
       propertyType: "Gated Community",
       statusBadge: "COMPLETED",
       statusBadgeTa: "நிறைவடைந்தது",
-      image: "/images/projects/surya-green-enclave/road-corridor.jpg",
+      image: "/images/projects/flat-projects/1-exterior.jpg",
       googleMapsUrl: "https://maps.google.com/?q=Madurai+Residential+Plots",
       iconSpecs: [
         { icon: Home, label: "DTCP & RERA Approved", labelTa: "DTCP மனைப்பிரிவு" },
