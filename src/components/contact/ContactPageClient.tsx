@@ -25,9 +25,9 @@ export default function ContactPageClient() {
   const { language } = useLanguage();
   const { data: cmsData } = useCmsData();
   const company = cmsData?.company;
-  const phone = company?.phone || "+91 77089 66452";
-  const whatsapp = company?.whatsapp || "+91 77089 66452";
-  const rawWhatsapp = (whatsapp || "917708966452").replace(/[^0-9]/g, "");
+  const phone = company?.phone || "+91 78457 16453";
+  const whatsapp = company?.whatsapp || "+91 78457 16453";
+  const rawWhatsapp = (whatsapp || "917845716453").replace(/[^0-9]/g, "");
   const email = company?.email || "suryapromotersmdu@gmail.com";
   const address = company?.address || "120 Feet Road, Near Mattuthavani Bus Stand, K.K. Nagar Corridor, Madurai, Tamil Nadu 625020";
   const mapsLink = company?.mapsLink || "https://maps.google.com/?q=Mattuthavani+Madurai";
@@ -85,7 +85,7 @@ export default function ContactPageClient() {
           formData.email || "N/A"
         }\nProject: ${formData.project || "General Enquiry"}\nMessage: ${formData.message || "I would like to schedule a site visit."}`
       );
-      // Optional: window.open(`https://wa.me/917708966452?text=${text}`, "_blank");
+      // Optional: window.open(`https://wa.me/917845716453?text=${text}`, "_blank");
     }, 1200);
   };
 
@@ -112,7 +112,7 @@ export default function ContactPageClient() {
           <p className="text-sm sm:text-base text-[#F5F4EE]/80 max-w-2xl mx-auto font-sans leading-relaxed">
             {language === "ta"
               ? "மதுரையின் முதன்மையான வீட்டு மனைகள், வணிக நிலங்கள் மற்றும் பண்ணைத் தோட்டங்களை நேரில் பார்வையிடவும் ஆவணங்களைச் சரிபார்க்கவும் எங்களை நேரடியாகத் தொடர்பு கொள்ளுங்கள்."
-              : "Connect directly with our leadership team for DTCP site visits, certified revenue documentation, cadastral map verification, and custom property acquisition."}
+              : "Connect directly with our leadership team for DTCP site visits, certified revenue documentation, layout map verification, and custom property acquisition."}
           </p>
         </div>
       </section>
@@ -250,7 +250,7 @@ export default function ContactPageClient() {
               <p className="text-xs sm:text-sm text-[#77766F] mt-2 leading-relaxed">
                 {language === "ta"
                   ? "கீழே உள்ள படிவத்தைப் பூர்த்தி செய்யுங்கள். எங்கள் நிர்வாகக் குழு 30 நிமிடங்களுக்குள் உங்களுடன் தொடர்பு கொள்ளும்."
-                  : "Fill out the verified details below. Our field executive will connect with cadastral sketches, current availability, and site transportation."}
+                  : "Fill out the verified details below. Our field executive will connect with layout sketches, current availability, and site transportation."}
               </p>
             </div>
 

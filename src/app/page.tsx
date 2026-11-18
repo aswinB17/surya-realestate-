@@ -6,10 +6,11 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useCmsData } from "@/hooks/useCmsData";
-import { CmsCategory } from "@/types/cms";
+import { CmsCategory, CmsDownloadItem } from "@/types/cms";
 import {
   Building2,
   MapPin,
+  Map,
   Camera,
   ShieldCheck,
   Download,
@@ -32,6 +33,7 @@ import {
   Search,
   Sparkles,
   Maximize2,
+  ZoomIn,
   FileCheck,
   Home,
   Trees,
@@ -180,13 +182,23 @@ export default function HomePage() {
   // Modals & Popups
   const [selectedProject, setSelectedProject] = useState<AppProject | null>(null);
   const [selectedFolderImages, setSelectedFolderImages] = useState<{ title: string; images: string[] } | null>(null);
-  const [selectedVideo, setSelectedVideo] = useState<{ title: string; duration: string } | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<{ title: string; duration: string; url?: string } | null>(null);
   const [isEnquiryModalOpen, setIsEnquiryModalOpen] = useState(false);
+  const [selectedDownloadPreview, setSelectedDownloadPreview] = useState<{
+    item: CmsDownloadItem;
+    activeTab: "layout" | "brochure";
+  } | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Lock body & background scrolling whenever any modal popup is open
   useEffect(() => {
-    const isAnyModalOpen = Boolean(selectedProject || selectedFolderImages || selectedVideo || isEnquiryModalOpen);
+    const isAnyModalOpen = Boolean(
+      selectedProject ||
+      selectedFolderImages ||
+      selectedVideo ||
+      isEnquiryModalOpen ||
+      selectedDownloadPreview
+    );
     if (isAnyModalOpen) {
       const originalBodyOverflow = document.body.style.overflow;
       const originalHtmlOverflow = document.documentElement.style.overflow;
@@ -197,13 +209,105 @@ export default function HomePage() {
         document.documentElement.style.overflow = originalHtmlOverflow;
       };
     }
-  }, [selectedProject, selectedFolderImages, selectedVideo, isEnquiryModalOpen]);
+  }, [selectedProject, selectedFolderImages, selectedVideo, isEnquiryModalOpen, selectedDownloadPreview]);
+
+  // Handler to download both layout and brochure of a card
+  const handleDownloadCard = (item: CmsDownloadItem) => {
+    // 1. Download Layout
+    const layoutLink = document.createElement("a");
+    layoutLink.href = item.downloadUrl;
+    layoutLink.setAttribute("download", "");
+    document.body.appendChild(layoutLink);
+    layoutLink.click();
+    document.body.removeChild(layoutLink);
+
+    // 2. Download Brochure if present
+    if (item.brochureUrl) {
+      setTimeout(() => {
+        const brochureLink = document.createElement("a");
+        brochureLink.href = item.brochureUrl!;
+        brochureLink.setAttribute("download", "");
+        document.body.appendChild(brochureLink);
+        brochureLink.click();
+        document.body.removeChild(brochureLink);
+      }, 400);
+
+      triggerToast(
+        language === "ta"
+          ? `${item.title[language]}: வரைபடம் மற்றும் கையேடு இரண்டும் பதிவிறக்கப்படுகின்றன...`
+          : `Downloading Layout & Brochure for ${item.title[language]}...`
+      );
+    } else {
+      triggerToast(
+        language === "ta"
+          ? `${item.title[language]} பதிவிறக்கப்படுகிறது...`
+          : `Downloading ${item.title[language]}...`
+      );
+    }
+  };
 
   // Project Details Modal interactive media & tab states
   const [modalActiveImage, setModalActiveImage] = useState<string | null>(null);
   const [modalMediaMode, setModalMediaMode] = useState<"photos" | "video">("photos");
   const [modalSectionTab, setModalSectionTab] = useState<"overview" | "locality" | "valuation" | "reviews">("overview");
   const [modalActiveBlueprintIndex, setModalActiveBlueprintIndex] = useState<number>(0);
+  const [cardImageIndices, setCardImageIndices] = useState<Record<string, number>>({});
+  const [activeFolderImageIndex, setActiveFolderImageIndex] = useState<number | null>(null);
+
+  // Keyboard navigation for gallery folder images popup
+  useEffect(() => {
+    if (!selectedFolderImages || activeFolderImageIndex === null) return;
+    const handleFolderKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setActiveFolderImageIndex(null);
+        return;
+      }
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        setActiveFolderImageIndex((prev) =>
+          prev !== null ? (prev - 1 + selectedFolderImages.images.length) % selectedFolderImages.images.length : 0
+        );
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        setActiveFolderImageIndex((prev) =>
+          prev !== null ? (prev + 1) % selectedFolderImages.images.length : 0
+        );
+      }
+    };
+    window.addEventListener("keydown", handleFolderKeyDown);
+    return () => window.removeEventListener("keydown", handleFolderKeyDown);
+  }, [selectedFolderImages, activeFolderImageIndex]);
+
+  // Keyboard navigation for project modal images
+  useEffect(() => {
+    if (!selectedProject) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setSelectedProject(null);
+        return;
+      }
+      const projectExtra = PROJECT_DETAILS_MAP[selectedProject.id];
+      const gallery = projectExtra?.galleryImages && projectExtra.galleryImages.length > 0
+        ? projectExtra.galleryImages
+        : [selectedProject.image];
+      if (gallery.length <= 1) return;
+      const activeImg = modalActiveImage || selectedProject.image;
+      const curIdx = gallery.indexOf(activeImg) !== -1 ? gallery.indexOf(activeImg) : 0;
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        const prevIdx = (curIdx - 1 + gallery.length) % gallery.length;
+        setModalActiveImage(gallery[prevIdx]);
+        setModalMediaMode("photos");
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        const nextIdx = (curIdx + 1) % gallery.length;
+        setModalActiveImage(gallery[nextIdx]);
+        setModalMediaMode("photos");
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedProject, modalActiveImage]);
 
   useEffect(() => {
     if (selectedProject) {
@@ -549,7 +653,7 @@ export default function HomePage() {
                         {language === "ta" ? "தள அமைவிடம்" : "Site Location"}
                       </h3>
                       <p className="text-[9px] sm:text-[10px] text-neutral-500 mt-0.5 line-clamp-1">
-                        {language === "ta" ? "கூகிள் மேப்ஸ் & 3D வரைபடங்கள்" : "3D Cadastral & GPS Maps"}
+                        {language === "ta" ? "கூகிள் மேப்ஸ் & 3D வரைபடங்கள்" : "3D & GPS Maps"}
                       </p>
                     </div>
                   </button>
@@ -675,7 +779,7 @@ export default function HomePage() {
                       <div className="h-4 w-px bg-neutral-200 hidden sm:block" />
                       <div>
                         <h3 className="text-sm sm:text-base font-black text-neutral-900 leading-tight">
-                          {language === "ta" ? "எங்கள் திட்டங்கள் (3 முக்கிய பிரிவுகள்)" : "Our Projects (3 Main Categories)"}
+                          {language === "ta" ? "எங்கள் திட்டங்கள் (முக்கிய பிரிவுகள்)" : "Our Projects (Property Categories)"}
                         </h3>
                         <p className="text-[11px] text-neutral-500 hidden sm:block">
                           {language === "ta" ? "பிரிவை கிளிக் செய்து அந்த பிரிவின் திட்டங்களை தனி பக்கத்தில் காண்க" : "Click any category below to navigate to its dedicated project cards"}
@@ -684,10 +788,10 @@ export default function HomePage() {
                     </div>
                     <button
                       onClick={() => setActiveTab("home")}
-                      className="p-2 rounded-xl hover:bg-neutral-100 text-neutral-400 hover:text-neutral-800 transition-colors cursor-pointer"
+                      className="h-9 w-9 rounded-full bg-red-600 hover:bg-red-700 text-white border border-white/80 flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-md"
                       title="Close section and return to Home"
                     >
-                      <X className="h-4 w-4" />
+                      <X className="h-4 w-4 stroke-[2.5]" />
                     </button>
                   </div>
 
@@ -700,8 +804,8 @@ export default function HomePage() {
                         </span>
                         <h3 className="text-xl sm:text-2xl font-black text-neutral-900">
                           {language === "ta"
-                            ? `${categoriesList.length} பிரிவுகள் (${categoriesList.map((c) => c.name.ta).join(" · ")})`
-                            : `Our ${categoriesList.length} Property Categories`}
+                            ? "எங்கள் திட்டப் பிரிவுகள்"
+                            : "Our Property Categories"}
                         </h3>
                         <p className="text-xs text-neutral-500 mt-0.5">
                           {language === "ta" ? "கீழே உள்ள பிரிவை கிளிக் செய்யவும் — திட்டங்கள் புதிய பக்கத்தில் திறக்கும்" : "Click a category card to open that category's dedicated project page"}
@@ -849,31 +953,74 @@ export default function HomePage() {
                           </p>
                         )}
                       </div>
-                      <div className="shrink-0 flex sm:flex-col items-center sm:items-end justify-between gap-1 border-t sm:border-t-0 border-white/10 pt-2 sm:pt-0">
-                        <span className="text-2xl font-black text-[#EAB308]">{activeCategoryProjects.length}</span>
-                        <span className="text-xs text-neutral-400 font-semibold">{language === "ta" ? "திட்டங்கள் உள்ளன" : "Verified Projects"}</span>
-                      </div>
                     </div>
                   </div>
 
                   {/* Cards Grid for activeCategory */}
                   <div className={`grid grid-cols-1 md:grid-cols-2 ${activeCategoryProjects.length > 2 ? "lg:grid-cols-3" : "lg:grid-cols-2"} gap-5`}>
-                    {activeCategoryProjects.map((project) => (
+                    {activeCategoryProjects.map((project) => {
+                      const projectExtra = PROJECT_DETAILS_MAP[project.id];
+                      const cardGallery = projectExtra?.galleryImages && projectExtra.galleryImages.length > 0
+                        ? projectExtra.galleryImages
+                        : [project.image];
+                      const cardImgIndex = cardImageIndices[project.id] ?? 0;
+                      const currentCardImage = cardGallery[cardImgIndex % cardGallery.length] || project.image;
+
+                      return (
                       <div
                         key={project.id}
                         onClick={() => setSelectedProject(project)}
                         className="bg-white rounded-3xl overflow-hidden border border-neutral-200 shadow-xs hover:shadow-xl hover:border-[#EAB308]/60 transition-all duration-300 flex flex-col group cursor-pointer"
                       >
                         {/* Card Thumbnail */}
-                        <div className="relative h-56 w-full overflow-hidden bg-neutral-900">
+                        <div className="relative h-56 w-full overflow-hidden bg-neutral-900 group/cardimg">
                           <Image
-                            src={project.image}
+                            src={currentCardImage}
                             alt={project.name.en}
                             fill
                             sizes="(max-width: 768px) 100vw, 50vw"
                             className="object-cover transition-transform duration-500 group-hover:scale-105 pointer-events-none"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
+
+                          {/* Next / Previous Arrows on Card */}
+                          {cardGallery.length > 1 && (
+                            <>
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setCardImageIndices((prev) => ({
+                                    ...prev,
+                                    [project.id]: (cardImgIndex - 1 + cardGallery.length) % cardGallery.length,
+                                  }));
+                                }}
+                                aria-label="Previous image"
+                                className="absolute left-2.5 top-1/2 -translate-y-1/2 z-20 h-9 w-9 rounded-full bg-black/65 hover:bg-[#EAB308] text-white hover:text-[#0A0D12] border border-white/20 hover:border-[#EAB308] flex items-center justify-center backdrop-blur-md shadow-lg transition-all hover:scale-110 active:scale-95 cursor-pointer pointer-events-auto opacity-80 sm:opacity-0 sm:group-hover/cardimg:opacity-100"
+                                title="Previous image"
+                              >
+                                <ChevronLeft className="h-5 w-5 stroke-[2.5]" />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setCardImageIndices((prev) => ({
+                                    ...prev,
+                                    [project.id]: (cardImgIndex + 1) % cardGallery.length,
+                                  }));
+                                }}
+                                aria-label="Next image"
+                                className="absolute right-2.5 top-1/2 -translate-y-1/2 z-20 h-9 w-9 rounded-full bg-black/65 hover:bg-[#EAB308] text-white hover:text-[#0A0D12] border border-white/20 hover:border-[#EAB308] flex items-center justify-center backdrop-blur-md shadow-lg transition-all hover:scale-110 active:scale-95 cursor-pointer pointer-events-auto opacity-80 sm:opacity-0 sm:group-hover/cardimg:opacity-100"
+                                title="Next image"
+                              >
+                                <ChevronRight className="h-5 w-5 stroke-[2.5]" />
+                              </button>
+                              <div className="absolute bottom-2 right-2 z-20 px-2 py-0.5 rounded-full bg-black/70 backdrop-blur-md text-[10px] font-mono font-bold text-white/90 border border-white/10 pointer-events-none">
+                                {(cardImgIndex % cardGallery.length) + 1} / {cardGallery.length}
+                              </div>
+                            </>
+                          )}
 
                           {/* Sold Out Visual Watermark Overlay */}
                           {(project as any).status === "sold" && (
@@ -912,10 +1059,10 @@ export default function HomePage() {
                                 rel="noopener noreferrer"
                                 onClick={(e) => e.stopPropagation()}
                                 className="px-2.5 py-0.5 rounded-full text-[9px] font-black bg-[#0A0D12]/95 hover:bg-[#EAB308] text-[#EAB308] hover:text-[#0A0D12] border border-[#EAB308]/60 flex items-center gap-1 shadow-md transition-all hover:scale-105 cursor-pointer pointer-events-auto"
-                                title="Open map on Mapbhoomi"
+                                title="2D/3D views"
                               >
                                 <Compass className="h-3 w-3" />
-                                <span>Mapbhoomi ↗</span>
+                                <span>2D/3D views ↗</span>
                               </a>
                             )}
                             <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase bg-white/90 text-[#0A0D12] pointer-events-none">
@@ -988,13 +1135,14 @@ export default function HomePage() {
                                 className="w-full py-2 px-3 rounded-xl bg-[#0A0D12] hover:bg-neutral-800 text-[#EAB308] hover:text-white border border-[#EAB308]/50 text-xs font-black transition-all flex items-center justify-center gap-1.5 shadow-sm group/mb cursor-pointer"
                               >
                                 <Compass className="h-3.5 w-3.5 text-[#EAB308] group-hover/mb:rotate-45 transition-transform shrink-0" />
-                                <span>{language === "ta" ? "Mapbhoomi வரைபடம் (Open map ↗)" : "Open map (Mapbhoomi) ↗"}</span>
+                                <span>{language === "ta" ? "2D/3D views (வரைபடம் ↗)" : "2D/3D views ↗"}</span>
                               </a>
                             )}
                           </div>
                         </div>
                       </div>
-                    ))}
+                      );
+                    })}
                   </div>
 
                   {/* Bottom Back Button */}
@@ -1007,7 +1155,7 @@ export default function HomePage() {
                       className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-white hover:bg-neutral-50 text-neutral-900 border border-neutral-300 shadow-sm hover:shadow-md text-xs sm:text-sm font-bold transition-all cursor-pointer hover:border-[#EAB308]"
                     >
                       <ArrowLeft className="h-4 w-4 text-[#B45309]" />
-                      <span>{language === "ta" ? "← அனைத்து 3 பிரிவுகளுக்கும் திரும்புக" : "← Back to All 3 Categories"}</span>
+                      <span>{language === "ta" ? "← அனைத்து பிரிவுகளுக்கும் திரும்புக" : "← Back to All Categories"}</span>
                     </button>
                   </div>
                 </div>
@@ -1047,15 +1195,15 @@ export default function HomePage() {
               <div className="bg-white rounded-3xl p-5 sm:p-6 border border-neutral-200/80 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="max-w-xl">
                   <span className="text-[10px] font-black uppercase text-blue-600 tracking-wider block mb-1">
-                    Geolocation & Mapbhoomi Hub
+                    Geolocation & 2D/3D Hub
                   </span>
                   <h3 className="text-xl font-black text-neutral-900 mb-1">
-                    {language === "ta" ? "அனைத்து திட்டங்களின் அமைவிடம் & Mapbhoomi" : "All Project Map Locations & Mapbhoomi"}
+                    {language === "ta" ? "அனைத்து திட்டங்களின் அமைவிடம் & 2D/3D வரைபடங்கள்" : "All Project Map Locations & 2D/3D Views"}
                   </h3>
                   <p className="text-xs text-neutral-600">
                     {language === "ta"
-                      ? "மதுரையின் முக்கிய தேசிய நெடுஞ்சாலைகள், ரிங் ரோடு மற்றும் Mapbhoomi நேரடி மனை வரைபடங்களை பார்வையிடவும்."
-                      : "Directly navigate to each development along Madurai's NH-44, Ring Road, and interactive Mapbhoomi 3D cadastral layouts."}
+                      ? "மதுரையின் முக்கிய தேசிய நெடுஞ்சாலைகள், ரிங் ரோடு மற்றும் நேரடி 2D/3D மனை வரைபடங்களை பார்வையிடவும்."
+                      : "Directly navigate to each development along Madurai's NH-44, Ring Road, and interactive 2D/3D layouts."}
                   </p>
                 </div>
                 <a
@@ -1065,7 +1213,7 @@ export default function HomePage() {
                   className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#0A0D12] text-[#EAB308] hover:bg-neutral-800 text-xs font-black transition-all border border-[#EAB308]/40 shadow-md shrink-0 w-fit"
                 >
                   <Compass className="h-4 w-4 text-[#EAB308]" />
-                  <span>{language === "ta" ? "Mapbhoomi நேரடி தளம் ↗" : "Surya Promoters on Mapbhoomi ↗"}</span>
+                  <span>{language === "ta" ? "2D/3D நேரடி தளம் ↗" : "Surya Promoters 2D/3D Views ↗"}</span>
                 </a>
               </div>
 
@@ -1120,7 +1268,7 @@ export default function HomePage() {
                           className="w-full py-2 px-3 rounded-xl bg-[#0A0D12] hover:bg-neutral-800 text-[#EAB308] border border-[#EAB308]/40 text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
                         >
                           <Compass className="h-3.5 w-3.5 text-[#EAB308]" />
-                          <span>{language === "ta" ? "Mapbhoomi நேரடி வரைபடம் ↗" : "Open Mapbhoomi Cadastral ↗"}</span>
+                          <span>{language === "ta" ? "2D/3D நேரடி வரைபடம் ↗" : "2D/3D views ↗"}</span>
                         </a>
                       )}
 
@@ -1169,7 +1317,7 @@ export default function HomePage() {
                   </button>
                   <div className="h-4 w-px bg-neutral-200 hidden sm:block" />
                   <h3 className="text-sm font-black text-neutral-900 leading-tight">
-                    {language === "ta" ? "புகைப்படங்கள் & வீடியோ (Folder Style Gallery)" : "Photo & Video Gallery (Folder Style)"}
+                    {language === "ta" ? "புகைப்படங்கள் & வீடியோ மையம்" : "Photo & Video Gallery"}
                   </h3>
                 </div>
                 <button
@@ -1200,7 +1348,7 @@ export default function HomePage() {
                 <div className="flex items-center gap-2">
                   <Folder className="h-4 w-4 text-purple-600" />
                   <h4 className="text-sm font-black text-neutral-900">
-                    {language === "ta" ? "1. வீடியோ கோப்புகள் (Folder Style)" : "1. Video Folders (Folder Style)"}
+                    {language === "ta" ? "1. வீடியோ கோப்புகள்" : "1. Video Folders"}
                   </h4>
                 </div>
 
@@ -1219,7 +1367,10 @@ export default function HomePage() {
                           <span className="text-[10px] font-bold text-neutral-400">4K Reel</span>
                         </div>
 
-                        <div className="relative h-40 w-full rounded-2xl overflow-hidden mb-3 bg-neutral-900 group">
+                        <div
+                          onClick={() => setSelectedVideo({ title: folder.videos[0].title[language], duration: folder.videos[0].duration, url: folder.videos[0].url })}
+                          className="relative h-40 w-full rounded-2xl overflow-hidden mb-3 bg-neutral-900 group cursor-pointer"
+                        >
                           <Image
                             src={folder.thumbnail}
                             alt={folder.title.en}
@@ -1228,7 +1379,7 @@ export default function HomePage() {
                             className="object-cover opacity-85 group-hover:scale-105 transition-transform duration-500"
                           />
                           <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-                            <div className="h-10 w-10 rounded-full bg-white text-purple-700 flex items-center justify-center shadow-md">
+                            <div className="h-10 w-10 rounded-full bg-white text-purple-700 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
                               <Play className="h-4 w-4 fill-purple-700 ml-0.5" />
                             </div>
                           </div>
@@ -1240,7 +1391,7 @@ export default function HomePage() {
                           {folder.videos.map((vid, idx) => (
                             <button
                               key={idx}
-                              onClick={() => setSelectedVideo({ title: vid.title[language], duration: vid.duration })}
+                              onClick={() => setSelectedVideo({ title: vid.title[language], duration: vid.duration, url: vid.url })}
                               className="w-full text-left flex items-center justify-between p-1.5 rounded-lg hover:bg-neutral-50 text-[11px] text-neutral-700 cursor-pointer"
                             >
                               <span className="font-semibold truncate">▶ {vid.title[language]}</span>
@@ -1251,11 +1402,11 @@ export default function HomePage() {
                       </div>
 
                       <button
-                        onClick={() => setSelectedVideo({ title: folder.videos[0].title[language], duration: folder.videos[0].duration })}
+                        onClick={() => setSelectedVideo({ title: folder.videos[0].title[language], duration: folder.videos[0].duration, url: folder.videos[0].url })}
                         className="w-full py-2 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-700 font-bold text-xs transition-colors flex items-center justify-center gap-1 cursor-pointer"
                       >
                         <Play className="h-3.5 w-3.5 fill-purple-700" />
-                        <span>{language === "ta" ? "வீடியோ பார்க்க" : "Play Reel"}</span>
+                        <span>{language === "ta" ? "வீடியோ பார்க்க" : "Play"}</span>
                       </button>
                     </div>
                   ))}
@@ -1267,7 +1418,7 @@ export default function HomePage() {
                 <div className="flex items-center gap-2">
                   <Folder className="h-4 w-4 text-[#B45309]" />
                   <h4 className="text-sm font-black text-neutral-900">
-                    {language === "ta" ? "2. புகைப்பட கோப்புகள் (Folder Style)" : "2. Image Folders (Folder Style)"}
+                    {language === "ta" ? "2. புகைப்பட கோப்புகள்" : "2. Image Folders"}
                   </h4>
                 </div>
 
@@ -1287,8 +1438,11 @@ export default function HomePage() {
                         </div>
 
                         <div
-                          onClick={() => setSelectedFolderImages({ title: folder.title[language], images: folder.images })}
-                          className="relative h-40 w-full rounded-2xl overflow-hidden mb-3 bg-neutral-900 cursor-pointer group"
+                          onClick={() => {
+                            setSelectedFolderImages({ title: folder.title[language], images: folder.images });
+                            setActiveFolderImageIndex(null);
+                          }}
+                          className="relative h-40 w-full rounded-2xl overflow-hidden mb-3 bg-neutral-900 cursor-pointer group shadow-inner"
                         >
                           <Image
                             src={folder.thumbnail}
@@ -1297,11 +1451,7 @@ export default function HomePage() {
                             sizes="300px"
                             className="object-cover group-hover:scale-105 transition-transform duration-500"
                           />
-                          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-                            <div className="h-9 w-9 rounded-full bg-white text-neutral-900 flex items-center justify-center shadow-md">
-                              <Maximize2 className="h-4 w-4" />
-                            </div>
-                          </div>
+                          <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />
                         </div>
 
                         <h5 className="font-extrabold text-neutral-900 text-sm mb-1">{folder.title[language]}</h5>
@@ -1309,7 +1459,10 @@ export default function HomePage() {
                       </div>
 
                       <button
-                        onClick={() => setSelectedFolderImages({ title: folder.title[language], images: folder.images })}
+                        onClick={() => {
+                          setSelectedFolderImages({ title: folder.title[language], images: folder.images });
+                          setActiveFolderImageIndex(null);
+                        }}
                         className="w-full py-2 rounded-xl bg-neutral-100 hover:bg-[#0A0D12] text-neutral-900 hover:text-white font-bold text-xs transition-colors flex items-center justify-center gap-1 cursor-pointer"
                       >
                         <Camera className="h-3.5 w-3.5" />
@@ -1451,7 +1604,7 @@ export default function HomePage() {
                 <p className="text-xs text-neutral-600">
                   {language === "ta"
                     ? "ஆரஞ்ச் கார்டன், வைகை எலைட் உள்ளிட்ட அனைத்து திட்டங்களின் கள வரைபடம், கையேடுகள் மற்றும் வீடியோக்களை பதிவிறக்குங்கள்."
-                    : "Download high-resolution cadastral layout maps, blueprints, project brochures, and video reels directly."}
+                    : "Download high-resolution layout maps, blueprints, project brochures, and video reels directly."}
                 </p>
               </div>
 
@@ -1471,9 +1624,16 @@ export default function HomePage() {
                   >
                     <div>
                       <div className="flex items-center justify-between mb-2">
-                        <span className="px-2 py-0.5 rounded-md text-[9px] font-black uppercase bg-amber-50 text-[#854D0E]">
-                          {item.category[language]}
-                        </span>
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className="px-2 py-0.5 rounded-md text-[9px] font-black uppercase bg-amber-50 text-[#854D0E]">
+                            {item.category[language]}
+                          </span>
+                          {item.brochureUrl && (
+                            <span className="px-2 py-0.5 rounded-md text-[9px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">
+                              {language === "ta" ? "வரைபடம் + கையேடு" : "Layout + Brochure"}
+                            </span>
+                          )}
+                        </div>
                         <span className="text-xs font-mono text-neutral-400">{item.fileSize}</span>
                       </div>
                       <h4 className="font-extrabold text-neutral-900 text-sm mb-1">{item.title[language]}</h4>
@@ -1486,25 +1646,23 @@ export default function HomePage() {
                     </div>
 
                     <div className="grid grid-cols-2 gap-2">
-                      <a
-                        href={item.downloadUrl}
-                        download
-                        onClick={() => triggerToast(`Downloading ${item.title[language]}...`)}
+                      <button
+                        onClick={() => handleDownloadCard(item)}
                         className="py-2 px-3 rounded-xl bg-[#0A0D12] hover:bg-neutral-800 text-white font-bold text-xs transition-colors flex items-center justify-center gap-1 cursor-pointer"
+                        title={language === "ta" ? "வரைபடம் மற்றும் கையேடு இரண்டையும் பதிவிறக்கவும்" : "Download both Layout Map and Brochure"}
                       >
                         <Download className="h-3.5 w-3.5 text-[#EAB308]" />
-                        <span>{language === "ta" ? "பதிவிறக்க" : "Download"}</span>
-                      </a>
+                        <span>{language === "ta" ? "பதிவிறக்க (இரு கோப்புகள்)" : "Download Both"}</span>
+                      </button>
 
-                      <a
-                        href={item.downloadUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <button
+                        onClick={() => setSelectedDownloadPreview({ item, activeTab: "layout" })}
                         className="py-2 px-3 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-800 font-bold text-xs transition-colors flex items-center justify-center gap-1 cursor-pointer"
+                        title={language === "ta" ? "வரைபடம் மற்றும் கையேட்டை முன்னோட்டம் பார்க்க" : "Preview Layout & Brochure"}
                       >
                         <ExternalLink className="h-3.5 w-3.5" />
                         <span>{language === "ta" ? "முன்னோட்டம்" : "Preview"}</span>
-                      </a>
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -1698,15 +1856,6 @@ export default function HomePage() {
                     <Navigation className="h-3.5 w-3.5 text-[#EAB308]" />
                     <span>{language === "ta" ? "கூகிள் மேப்ஸ் வழித்தடம்" : "Open in Google Maps"}</span>
                   </a>
-                  <a
-                    href="https://mapbhoomi.com/l/surya-promoters"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-900 font-bold text-xs inline-flex items-center gap-1.5 transition-colors cursor-pointer border border-neutral-300 shadow-2xs"
-                  >
-                    <Compass className="h-3.5 w-3.5 text-[#EAB308]" />
-                    <span>Mapbhoomi 3D Store ↗</span>
-                  </a>
                 </div>
               </div>
 
@@ -1804,7 +1953,22 @@ export default function HomePage() {
             ? projectExtra.galleryImages
             : [selectedProject.image];
           const activeImage = modalActiveImage || selectedProject.image;
+          const currentImgIndex = gallery.indexOf(activeImage) !== -1 ? gallery.indexOf(activeImage) : 0;
           const videoUrl = projectExtra?.videoUrl;
+
+          const handlePrevImage = (e: React.MouseEvent) => {
+            e.stopPropagation();
+            const prevIdx = (currentImgIndex - 1 + gallery.length) % gallery.length;
+            setModalActiveImage(gallery[prevIdx]);
+            setModalMediaMode("photos");
+          };
+
+          const handleNextImage = (e: React.MouseEvent) => {
+            e.stopPropagation();
+            const nextIdx = (currentImgIndex + 1) % gallery.length;
+            setModalActiveImage(gallery[nextIdx]);
+            setModalMediaMode("photos");
+          };
 
           return (
             <div
@@ -1822,13 +1986,14 @@ export default function HomePage() {
                 data-lenis-prevent
                 className="relative w-full max-w-4xl bg-white rounded-3xl overflow-hidden shadow-2xl border border-neutral-200 flex flex-col max-h-[90vh] sm:max-h-[88vh] my-auto"
               >
-                {/* Close Button */}
+                {/* Close Button - Highly Visible Red X */}
                 <button
                   onClick={() => setSelectedProject(null)}
-                  className="absolute top-4 right-4 z-30 h-9 w-9 rounded-full bg-black/70 hover:bg-black text-white flex items-center justify-center transition-transform hover:scale-110 cursor-pointer shadow-lg"
-                  title="Close"
+                  className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 z-40 h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-red-600 hover:bg-red-700 text-white border-2 border-white shadow-2xl flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer ring-4 ring-red-600/30 pointer-events-auto"
+                  title="Close (Esc)"
+                  aria-label="Close"
                 >
-                  <X className="h-5 w-5" />
+                  <X className="h-6 w-6 sm:h-7 sm:w-7 stroke-[3]" />
                 </button>
 
                 {/* Sold Out Banner Notification */}
@@ -1859,7 +2024,7 @@ export default function HomePage() {
                 >
                   {/* 1. MEDIA BANNER & VIDEO TOUR */}
                   <div className="space-y-3">
-                    <div className="relative h-60 sm:h-80 w-full rounded-2xl overflow-hidden bg-neutral-900 border border-neutral-200 shadow-inner">
+                    <div className="relative h-60 sm:h-80 w-full rounded-2xl overflow-hidden bg-neutral-900 border border-neutral-200 shadow-inner group/hero">
                       {modalMediaMode === "video" && videoUrl ? (
                         <video
                           src={videoUrl}
@@ -1881,6 +2046,31 @@ export default function HomePage() {
                         </>
                       )}
 
+                      {/* Previous / Next Arrow Buttons for Modal Hero */}
+                      {gallery.length > 1 && (
+                        <>
+                          <button
+                            type="button"
+                            onClick={handlePrevImage}
+                            aria-label="Previous image"
+                            className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 z-20 h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-black/65 hover:bg-[#EAB308] text-white hover:text-[#0A0D12] border border-white/30 hover:border-[#EAB308] flex items-center justify-center backdrop-blur-md shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer pointer-events-auto"
+                            title="Previous image (←)"
+                          >
+                            <ChevronLeft className="h-6 w-6 sm:h-7 sm:w-7 stroke-[2.5]" />
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={handleNextImage}
+                            aria-label="Next image"
+                            className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 z-20 h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-black/65 hover:bg-[#EAB308] text-white hover:text-[#0A0D12] border border-white/30 hover:border-[#EAB308] flex items-center justify-center backdrop-blur-md shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer pointer-events-auto"
+                            title="Next image (→)"
+                          >
+                            <ChevronRight className="h-6 w-6 sm:h-7 sm:w-7 stroke-[2.5]" />
+                          </button>
+                        </>
+                      )}
+
                       {/* Top Badges & Media Switcher */}
                       <div className="absolute top-3 left-3 right-14 flex items-center justify-between gap-2 z-10 pointer-events-auto">
                         <div className="flex flex-wrap items-center gap-1.5">
@@ -1892,7 +2082,7 @@ export default function HomePage() {
                           </span>
                         </div>
 
-                        {videoUrl && (
+                        {videoUrl ? (
                           <div className="flex items-center gap-1 bg-black/70 backdrop-blur-md p-1 rounded-xl border border-white/20">
                             <button
                               onClick={() => setModalMediaMode("photos")}
@@ -1901,7 +2091,7 @@ export default function HomePage() {
                                   : "text-white/80 hover:text-white"
                                 }`}
                             >
-                              Photos ({gallery.length})
+                              Photos ({currentImgIndex + 1}/{gallery.length})
                             </button>
                             <button
                               onClick={() => setModalMediaMode("video")}
@@ -1914,7 +2104,11 @@ export default function HomePage() {
                               Video
                             </button>
                           </div>
-                        )}
+                        ) : gallery.length > 1 ? (
+                          <div className="flex items-center gap-1 bg-black/70 backdrop-blur-md px-3 py-1 rounded-xl border border-white/20 text-white text-[10px] font-mono font-bold tracking-wider">
+                            <span>Photos ({currentImgIndex + 1}/{gallery.length})</span>
+                          </div>
+                        ) : null}
                       </div>
 
                       {/* Banner Bottom Title Info */}
@@ -1958,7 +2152,7 @@ export default function HomePage() {
                     )}
                   </div>
 
-                  {/* 2. MAPBHOOMI LIVE CADASTRAL LINK */}
+                  {/* 2. LIVE 2D/3D LAYOUT LINK */}
                   {selectedProject.mapbhoomiUrl && (
                     <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-[#0A0D12] via-[#111827] to-[#1F2937] text-white border border-[#EAB308]/40 shadow-lg flex flex-col sm:flex-row sm:items-center justify-between gap-3.5">
                       <div className="flex items-start sm:items-center gap-3">
@@ -1967,15 +2161,15 @@ export default function HomePage() {
                         </div>
                         <div>
                           <div className="flex items-center gap-2">
-                            <h4 className="text-sm font-black text-white">Mapbhoomi Interactive 3D Cadastral Layout</h4>
+                            <h4 className="text-sm font-black text-white">{language === "ta" ? "நேரடி 2D/3D மனை வரைபடம்" : "Interactive 2D/3D Layout"}</h4>
                             <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
                               Live Map
                             </span>
                           </div>
                           <p className="text-[11px] text-neutral-300 mt-0.5 max-w-xl leading-relaxed">
                             {language === "ta"
-                              ? "ஒவ்வொரு மனையின் எல்லைகள், அளவு மற்றும் விபரங்களை Mapbhoomi நேரடி தளத்தில் பார்க்கவும்."
-                              : "Explore verified cadastral plot boundaries, numbering, and dimensions on the official Mapbhoomi interactive layout."}
+                              ? "ஒவ்வொரு மனையின் எல்லைகள், அளவு மற்றும் விபரங்களை 2D/3D நேரடி தளத்தில் பார்க்கவும்."
+                              : "Explore verified plot boundaries, numbering, and dimensions on the official 2D/3D interactive layout."}
                           </p>
                         </div>
                       </div>
@@ -1986,7 +2180,7 @@ export default function HomePage() {
                         className="px-5 py-2.5 rounded-xl bg-[#EAB308] hover:bg-[#CA8A04] text-[#0A0D12] font-black text-xs transition-all flex items-center justify-center gap-1.5 shrink-0 shadow-md hover:scale-105 cursor-pointer"
                       >
                         <Navigation className="h-3.5 w-3.5" />
-                        <span>Open map ↗</span>
+                        <span>2D/3D views ↗</span>
                       </a>
                     </div>
                   )}
@@ -2259,54 +2453,6 @@ export default function HomePage() {
                           </div>
                         </div>
                       </div>
-
-                      {/* Future Ground Value Predicted Card */}
-                      <div className="p-5 rounded-2xl bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-transparent border border-emerald-300/60 space-y-3">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <TrendingUp className="h-5 w-5 text-emerald-600" />
-                            <h4 className="text-sm font-black text-neutral-900">
-                              {language === "ta" ? "எதிர்கால மதிப்பு முன்கணிப்பு (ROI)" : "Future Ground Value Predicted (ROI)"}
-                            </h4>
-                          </div>
-                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-emerald-600 text-white">
-                            High Growth Potential
-                          </span>
-                        </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                          <div className="p-3.5 rounded-xl bg-white border border-emerald-200 shadow-xs">
-                            <span className="text-[10px] uppercase font-bold text-neutral-400 block">
-                              {language === "ta" ? "3 வருட உத்தேச வளர்ச்சி" : "3-Year Projected Growth"}
-                            </span>
-                            <span className="text-base sm:text-lg font-black text-emerald-600 block mt-1">
-                              {projectExtra.futurePrediction.threeYearROI}
-                            </span>
-                          </div>
-                          <div className="p-3.5 rounded-xl bg-white border border-emerald-200 shadow-xs">
-                            <span className="text-[10px] uppercase font-bold text-neutral-400 block">
-                              {language === "ta" ? "5 வருட மூலதன மதிப்பு" : "5-Year Projected Growth"}
-                            </span>
-                            <span className="text-base sm:text-lg font-black text-emerald-700 block mt-1">
-                              {projectExtra.futurePrediction.fiveYearROI}
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Growth Drivers */}
-                        <div className="p-3 rounded-xl bg-white/80 border border-emerald-200/60 space-y-1.5 mt-2">
-                          <span className="text-[11px] font-black uppercase tracking-wider text-emerald-950 block">
-                            {language === "ta" ? "மதிப்பு உயர்வதற்கான முக்கிய காரணங்கள்:" : "Key Drivers of Future Appreciation:"}
-                          </span>
-                          <ul className="space-y-1 text-xs text-neutral-700">
-                            {projectExtra.futurePrediction.drivers[language].map((driver, dIdx) => (
-                              <li key={dIdx} className="flex items-start gap-1.5">
-                                <TrendingUp className="h-3.5 w-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                                <span>{driver}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
                     </div>
                   )}
 
@@ -2495,7 +2641,7 @@ export default function HomePage() {
                                 ? (language === "ta" ? "60 சென்ட் (52.4 சென்ட் சர்வே) · 130 அடி முகப்பு · S.No 2-1B3" : "60 Cents (52.4 Cts Surveyed) · 130 Ft Frontage · S.No 2-1B3")
                                 : selectedProject.id === "madurai-farms"
                                 ? (language === "ta" ? "15 பண்ணை மனைகள் · மீன் குளங்கள் & வசதிகள் (2 வரைபடங்கள்)" : "15 Farm Plots · Fish Ponds & Facilities (2 Layout Plans)")
-                                : (language === "ta" ? "கள வரைபடம்" : "Cadastral Layout Blueprint")}
+                                : (language === "ta" ? "கள வரைபடம்" : "Layout Blueprint")}
                             </span>
                           </div>
                           <div className="flex items-center gap-2">
@@ -2768,7 +2914,7 @@ export default function HomePage() {
                         className="flex-1 sm:flex-none px-3.5 py-2.5 rounded-xl bg-[#0A0D12] hover:bg-neutral-800 text-[#EAB308] border border-[#EAB308]/50 font-black text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
                       >
                         <Compass className="h-3.5 w-3.5 text-[#EAB308]" />
-                        <span>Mapbhoomi (Open map ↗)</span>
+                        <span>2D/3D views ↗</span>
                       </a>
                     )}
                   </div>
@@ -2808,7 +2954,10 @@ export default function HomePage() {
         {selectedFolderImages && (
           <div
             data-lenis-prevent
-            onClick={() => setSelectedFolderImages(null)}
+            onClick={() => {
+              setSelectedFolderImages(null);
+              setActiveFolderImageIndex(null);
+            }}
             onWheel={(e) => e.stopPropagation()}
             className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md overflow-hidden"
           >
@@ -2819,30 +2968,180 @@ export default function HomePage() {
               onClick={(e) => e.stopPropagation()}
               onWheel={(e) => e.stopPropagation()}
               data-lenis-prevent
-              className="relative w-full max-w-5xl bg-white rounded-3xl p-5 sm:p-7 max-h-[88vh] overflow-y-auto overscroll-contain"
+              className="relative w-full max-w-5xl bg-white rounded-3xl p-5 sm:p-7 max-h-[88vh] overflow-y-auto overscroll-contain shadow-2xl border border-neutral-200"
             >
-              <div className="flex items-center justify-between pb-3 mb-3 border-b border-neutral-100">
-                <h3 className="text-base font-black text-neutral-900">{selectedFolderImages.title}</h3>
-                <button onClick={() => setSelectedFolderImages(null)} className="p-1 text-neutral-500 cursor-pointer">
-                  <X className="h-5 w-5" />
+              <div className="flex items-center justify-between pb-3 mb-4 border-b border-neutral-100">
+                <div className="flex items-center gap-2.5">
+                  <div className="h-9 w-9 rounded-xl bg-amber-50 text-[#B45309] flex items-center justify-center">
+                    <Folder className="h-4 w-4 fill-[#B45309]" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-black text-neutral-900">{selectedFolderImages.title}</h3>
+                    <p className="text-[11px] text-neutral-500">
+                      {selectedFolderImages.images.length} {language === "ta" ? "புகைப்படங்கள் உள்ளன • பெரிதாக்கி பார்க்க கிளிக் செய்க" : "Photos • Click any image to view in popup"}
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => {
+                    setSelectedFolderImages(null);
+                    setActiveFolderImageIndex(null);
+                  }}
+                  className="h-10 w-10 rounded-full bg-red-600 hover:bg-red-700 text-white border-2 border-white shadow-lg flex items-center justify-center cursor-pointer transition-all hover:scale-110 active:scale-95 ring-2 ring-red-600/30"
+                  title="Close"
+                  aria-label="Close folder"
+                >
+                  <X className="h-5 w-5 stroke-[3]" />
                 </button>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+
+              {/* Grid of Images with popup trigger */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
                 {selectedFolderImages.images.map((img, idx) => (
-                  <div key={idx} className="relative h-48 rounded-xl overflow-hidden bg-neutral-900 group">
-                    <Image src={img} alt="Photo" fill sizes="300px" className="object-cover" />
-                    <a
-                      href={img}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="absolute bottom-2 right-2 p-1.5 rounded-lg bg-black/60 text-white"
-                    >
-                      <ExternalLink className="h-3.5 w-3.5" />
-                    </a>
+                  <div
+                    key={idx}
+                    onClick={() => setActiveFolderImageIndex(idx)}
+                    className="relative h-48 rounded-2xl overflow-hidden bg-neutral-900 group cursor-pointer border border-neutral-200/80 shadow-xs hover:shadow-xl hover:border-[#EAB308] transition-all duration-200 hover:scale-[1.02]"
+                  >
+                    <Image
+                      src={img}
+                      alt={`${selectedFolderImages.title} ${idx + 1}`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/35 transition-colors flex items-center justify-center">
+                      <div className="opacity-0 group-hover:opacity-100 transition-all transform translate-y-1 group-hover:translate-y-0 bg-black/75 backdrop-blur-md text-[#EAB308] px-3.5 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-lg border border-[#EAB308]/40">
+                        <ZoomIn className="h-3.5 w-3.5" />
+                        <span>{language === "ta" ? "காண்க (Popup)" : "View Image"}</span>
+                      </div>
+                    </div>
+                    <div className="absolute bottom-2 left-2 px-2 py-0.5 rounded-md bg-black/60 text-[10px] font-mono text-white/90 backdrop-blur-xs pointer-events-none">
+                      {idx + 1} / {selectedFolderImages.images.length}
+                    </div>
                   </div>
                 ))}
               </div>
             </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* ------------------------------------------------------------------------- */}
+      {/* 4B. FULLSCREEN IMAGE LIGHTBOX POPUP WITH NEXT/PREV NAVIGATION             */}
+      {/* ------------------------------------------------------------------------- */}
+      <AnimatePresence>
+        {selectedFolderImages && activeFolderImageIndex !== null && (
+          <div
+            data-lenis-prevent
+            onClick={() => setActiveFolderImageIndex(null)}
+            onWheel={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-60 flex items-center justify-center p-3 sm:p-6 bg-black/92 backdrop-blur-lg overflow-hidden animate-fadeIn"
+          >
+            {/* Top Bar: Title, Counter & Close */}
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className="absolute top-4 left-4 right-4 flex items-center justify-between z-70 pointer-events-auto"
+            >
+              <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-white text-xs font-medium">
+                <Folder className="h-3.5 w-3.5 text-[#EAB308] fill-[#EAB308]" />
+                <span className="font-bold">{selectedFolderImages.title}</span>
+                <span className="text-[#EAB308]">•</span>
+                <span className="font-mono text-[11px] text-neutral-300">
+                  {activeFolderImageIndex + 1} / {selectedFolderImages.images.length}
+                </span>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setActiveFolderImageIndex(null)}
+                className="h-11 w-11 rounded-full bg-red-600 hover:bg-red-700 text-white border-2 border-white flex items-center justify-center backdrop-blur-md shadow-2xl transition-all hover:scale-110 active:scale-95 cursor-pointer ring-4 ring-red-600/30"
+                title="Close (Esc)"
+                aria-label="Close"
+              >
+                <X className="h-6 w-6 stroke-[3]" />
+              </button>
+            </div>
+
+            {/* Left / Previous Arrow Button */}
+            {selectedFolderImages.images.length > 1 && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActiveFolderImageIndex(
+                    (activeFolderImageIndex - 1 + selectedFolderImages.images.length) %
+                      selectedFolderImages.images.length
+                  );
+                }}
+                aria-label="Previous image"
+                className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-70 h-11 w-11 sm:h-14 sm:w-14 rounded-full bg-black/70 hover:bg-[#EAB308] text-white hover:text-[#0A0D12] border border-white/20 hover:border-[#EAB308] flex items-center justify-center backdrop-blur-md shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer"
+                title="Previous image (←)"
+              >
+                <ChevronLeft className="h-7 w-7 sm:h-8 sm:w-8 stroke-[2.5]" />
+              </button>
+            )}
+
+            {/* Right / Next Arrow Button */}
+            {selectedFolderImages.images.length > 1 && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActiveFolderImageIndex(
+                    (activeFolderImageIndex + 1) % selectedFolderImages.images.length
+                  );
+                }}
+                aria-label="Next image"
+                className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-70 h-11 w-11 sm:h-14 sm:w-14 rounded-full bg-black/70 hover:bg-[#EAB308] text-white hover:text-[#0A0D12] border border-white/20 hover:border-[#EAB308] flex items-center justify-center backdrop-blur-md shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer"
+                title="Next image (→)"
+              >
+                <ChevronRight className="h-7 w-7 sm:h-8 sm:w-8 stroke-[2.5]" />
+              </button>
+            )}
+
+            {/* Active Image Container */}
+            <motion.div
+              key={activeFolderImageIndex}
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.2 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-5xl h-[70vh] sm:h-[80vh] flex items-center justify-center p-2"
+            >
+              <Image
+                src={selectedFolderImages.images[activeFolderImageIndex]}
+                alt={`${selectedFolderImages.title} view ${activeFolderImageIndex + 1}`}
+                fill
+                priority
+                className="object-contain drop-shadow-2xl"
+                sizes="(max-width: 1280px) 100vw, 1200px"
+              />
+            </motion.div>
+
+            {/* Bottom thumbnail selector strip */}
+            {selectedFolderImages.images.length > 1 && (
+              <div
+                onClick={(e) => e.stopPropagation()}
+                className="absolute bottom-4 left-1/2 -translate-x-1/2 z-70 max-w-[90vw] overflow-x-auto flex items-center gap-2 p-2 rounded-2xl bg-black/60 backdrop-blur-md border border-white/10 scrollbar-none"
+              >
+                {selectedFolderImages.images.map((tImg, tIdx) => (
+                  <button
+                    key={tIdx}
+                    type="button"
+                    onClick={() => setActiveFolderImageIndex(tIdx)}
+                    className={`relative h-12 w-16 sm:h-14 sm:w-20 rounded-xl overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${
+                      activeFolderImageIndex === tIdx
+                        ? "border-[#EAB308] scale-105 shadow-md ring-2 ring-[#EAB308]/40"
+                        : "border-white/20 opacity-60 hover:opacity-100 hover:border-white/50"
+                    }`}
+                  >
+                    <Image src={tImg} alt={`Thumbnail ${tIdx + 1}`} fill sizes="80px" className="object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </AnimatePresence>
@@ -2866,25 +3165,203 @@ export default function HomePage() {
             >
               <div className="flex items-center justify-between pb-3 mb-3 border-b border-neutral-800">
                 <h3 className="text-base font-black text-white">{selectedVideo.title}</h3>
-                <button onClick={() => setSelectedVideo(null)} className="p-1 text-neutral-400 cursor-pointer">
-                  <X className="h-5 w-5" />
+                <button
+                  onClick={() => setSelectedVideo(null)}
+                  className="h-9 w-9 rounded-full bg-red-600 hover:bg-red-700 text-white border border-white/80 flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-md"
+                  title="Close"
+                  aria-label="Close video"
+                >
+                  <X className="h-5 w-5 stroke-[3]" />
                 </button>
               </div>
-              <div className="h-64 sm:h-80 w-full rounded-2xl bg-neutral-950 flex flex-col items-center justify-center p-6 text-center border border-neutral-800">
-                <div className="h-14 w-14 rounded-full bg-[#EAB308] text-[#0A0D12] flex items-center justify-center mb-3">
-                  <Play className="h-6 w-6 fill-[#0A0D12] ml-0.5" />
+
+              {selectedVideo.url ? (
+                <div className="space-y-3">
+                  <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-black border border-neutral-800 shadow-2xl">
+                    <video
+                      src={selectedVideo.url}
+                      controls
+                      autoPlay
+                      playsInline
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
+                  <div className="flex items-center justify-between text-xs text-neutral-400">
+                    <span className="font-mono">Duration: {selectedVideo.duration}</span>
+                    <a
+                      href={`https://wa.me/${rawWhatsapp}?text=Hello%20Surya%20Promoters,%20I%20am%20interested%20in%20${encodeURIComponent(selectedVideo.title)}.`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-1.5 rounded-xl bg-[#25D366] text-white font-bold text-xs flex items-center gap-1.5 hover:bg-[#20ba5a] transition"
+                    >
+                      <MessageCircle className="h-3.5 w-3.5 fill-white" />
+                      <span>Inquire on WhatsApp</span>
+                    </a>
+                  </div>
                 </div>
-                <h4 className="text-sm font-bold text-white mb-1">{selectedVideo.title}</h4>
-                <p className="text-xs text-neutral-400 mb-4">4K drone footage stream available on request</p>
-                <a
-                  href={`https://wa.me/${rawWhatsapp}?text=Hello%20Surya%20Promoters,%20please%20send%20full%20project%20video.`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-xl bg-[#25D366] text-white font-bold text-xs flex items-center gap-1.5"
-                >
-                  <MessageCircle className="h-4 w-4 fill-white" />
-                  <span>Request Full Video on WhatsApp</span>
-                </a>
+              ) : (
+                <div className="h-64 sm:h-80 w-full rounded-2xl bg-neutral-950 flex flex-col items-center justify-center p-6 text-center border border-neutral-800">
+                  <div className="h-14 w-14 rounded-full bg-[#EAB308] text-[#0A0D12] flex items-center justify-center mb-3">
+                    <Play className="h-6 w-6 fill-[#0A0D12] ml-0.5" />
+                  </div>
+                  <h4 className="text-sm font-bold text-white mb-1">{selectedVideo.title}</h4>
+                  <p className="text-xs text-neutral-400 mb-4">4K drone footage stream available on request</p>
+                  <a
+                    href={`https://wa.me/${rawWhatsapp}?text=Hello%20Surya%20Promoters,%20please%20send%20full%20project%20video.`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 rounded-xl bg-[#25D366] text-white font-bold text-xs flex items-center gap-1.5"
+                  >
+                    <MessageCircle className="h-4 w-4 fill-white" />
+                    <span>Request Full Video on WhatsApp</span>
+                  </a>
+                </div>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* ------------------------------------------------------------------------- */}
+      {/* 4.5. DOWNLOAD ASSET PREVIEW MODAL (Layout Map & Project Brochure)        */}
+      {/* ------------------------------------------------------------------------- */}
+      <AnimatePresence>
+        {selectedDownloadPreview && (
+          <div
+            data-lenis-prevent
+            onClick={() => setSelectedDownloadPreview(null)}
+            onWheel={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md overflow-hidden"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              onClick={(e) => e.stopPropagation()}
+              onWheel={(e) => e.stopPropagation()}
+              data-lenis-prevent
+              className="relative w-full max-w-4xl bg-white rounded-3xl p-5 sm:p-7 max-h-[92vh] overflow-y-auto overscroll-contain flex flex-col justify-between"
+            >
+              <div>
+                {/* Header */}
+                <div className="flex items-center justify-between pb-3 border-b border-neutral-100">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 rounded-md text-[9px] font-black uppercase bg-amber-50 text-[#854D0E]">
+                        {selectedDownloadPreview.item.category[language]}
+                      </span>
+                      <span className="text-xs font-mono text-neutral-400">
+                        {selectedDownloadPreview.item.fileSize}
+                      </span>
+                    </div>
+                    <h3 className="text-base sm:text-lg font-black text-neutral-900">
+                      {selectedDownloadPreview.item.title[language]}
+                    </h3>
+                  </div>
+                  <button
+                    onClick={() => setSelectedDownloadPreview(null)}
+                    className="h-9 w-9 rounded-full bg-red-600 hover:bg-red-700 text-white border border-white/80 flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-md"
+                    title="Close"
+                    aria-label="Close preview"
+                  >
+                    <X className="h-5 w-5 stroke-[3]" />
+                  </button>
+                </div>
+
+                {/* Tabs: Layout Map vs Brochure */}
+                {selectedDownloadPreview.item.brochureUrl ? (
+                  <div className="flex items-center gap-2 mt-4 mb-4 p-1 rounded-2xl bg-neutral-100">
+                    <button
+                      onClick={() =>
+                        setSelectedDownloadPreview({
+                          ...selectedDownloadPreview,
+                          activeTab: "layout",
+                        })
+                      }
+                      className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                        selectedDownloadPreview.activeTab === "layout"
+                          ? "bg-white text-neutral-900 shadow-xs"
+                          : "text-neutral-500 hover:text-neutral-800"
+                      }`}
+                    >
+                      <Map className="h-4 w-4 text-[#B45309]" />
+                      <span>{language === "ta" ? "மனை வரைபடம் (Layout Map)" : "Layout Map / Blueprint"}</span>
+                    </button>
+                    <button
+                      onClick={() =>
+                        setSelectedDownloadPreview({
+                          ...selectedDownloadPreview,
+                          activeTab: "brochure",
+                        })
+                      }
+                      className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                        selectedDownloadPreview.activeTab === "brochure"
+                          ? "bg-white text-neutral-900 shadow-xs"
+                          : "text-neutral-500 hover:text-neutral-800"
+                      }`}
+                    >
+                      <FileText className="h-4 w-4 text-[#B45309]" />
+                      <span>{language === "ta" ? "திட்ட கையேடு (Project Brochure)" : "Official Project Brochure"}</span>
+                    </button>
+                  </div>
+                ) : null}
+
+                {/* Preview Image Container */}
+                <div className="relative w-full h-[52vh] min-h-[300px] rounded-2xl overflow-hidden bg-neutral-950 flex items-center justify-center border border-neutral-200">
+                  <Image
+                    src={
+                      selectedDownloadPreview.activeTab === "brochure" && selectedDownloadPreview.item.brochureUrl
+                        ? selectedDownloadPreview.item.brochureUrl
+                        : selectedDownloadPreview.item.downloadUrl
+                    }
+                    alt={selectedDownloadPreview.item.title.en}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 800px"
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+
+              {/* Modal Actions */}
+              <div className="pt-4 mt-4 border-t border-neutral-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div className="text-xs text-neutral-500 font-medium text-center sm:text-left">
+                  {language === "ta"
+                    ? "பதிவிறக்க பட்டனை அழுத்தி வரைபடம் & கையேடு இரண்டையும் ஒரே கிளிக்கில் பெறுங்கள்."
+                    : "Download includes both the high-resolution layout map and the official brochure flyer."}
+                </div>
+
+                <div className="flex items-center gap-2 w-full sm:w-auto">
+                  <button
+                    onClick={() => handleDownloadCard(selectedDownloadPreview.item)}
+                    className="flex-1 sm:flex-none py-2.5 px-5 rounded-xl bg-[#0A0D12] hover:bg-neutral-800 text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                  >
+                    <Download className="h-4 w-4 text-[#EAB308]" />
+                    <span>
+                      {selectedDownloadPreview.item.brochureUrl
+                        ? language === "ta"
+                          ? "இரண்டையும் பதிவிறக்கு (வரைபடம் + கையேடு)"
+                          : "Download Both (Layout + Brochure)"
+                        : language === "ta"
+                        ? "பதிவிறக்க"
+                        : "Download File"}
+                    </span>
+                  </button>
+
+                  <a
+                    href={
+                      selectedDownloadPreview.activeTab === "brochure" && selectedDownloadPreview.item.brochureUrl
+                        ? selectedDownloadPreview.item.brochureUrl
+                        : selectedDownloadPreview.item.downloadUrl
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="py-2.5 px-3 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-800 font-bold text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                    title={language === "ta" ? "புதிய தாவலில் திறக்கவும்" : "Open Original in New Tab"}
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                    <span className="hidden sm:inline">{language === "ta" ? "முழுத்திரை" : "Full Screen"}</span>
+                  </a>
+                </div>
               </div>
             </motion.div>
           </div>
@@ -2913,8 +3390,13 @@ export default function HomePage() {
             >
               <div className="flex items-center justify-between pb-3 mb-3 border-b border-neutral-100">
                 <h3 className="text-base font-black text-neutral-900">Direct Enquiry</h3>
-                <button onClick={() => setIsEnquiryModalOpen(false)} className="p-1 text-neutral-400 cursor-pointer">
-                  <X className="h-5 w-5" />
+                <button
+                  onClick={() => setIsEnquiryModalOpen(false)}
+                  className="h-9 w-9 rounded-full bg-red-600 hover:bg-red-700 text-white border border-white/80 flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-md"
+                  title="Close"
+                  aria-label="Close enquiry"
+                >
+                  <X className="h-5 w-5 stroke-[3]" />
                 </button>
               </div>
 

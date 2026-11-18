@@ -101,7 +101,7 @@ export default function AdminDashboardClient() {
   const [isDownloadModalOpen, setIsDownloadModalOpen] = useState<boolean>(false);
   const [newDownload, setNewDownload] = useState<Partial<CmsDownloadItem>>({
     title: { en: "", ta: "" },
-    category: { en: "Cadastral Layout", ta: "வரைபடம்" },
+    category: { en: "Layout Map", ta: "வரைபடம்" },
     fileType: "PDF / Layout",
     fileSize: "1.0 MB",
     downloadUrl: "",
@@ -574,7 +574,7 @@ export default function AdminDashboardClient() {
     setIsDownloadModalOpen(false);
     setNewDownload({
       title: { en: "", ta: "" },
-      category: { en: "Cadastral Layout", ta: "வரைபடம்" },
+      category: { en: "Layout Map", ta: "வரைபடம்" },
       fileType: "PDF / Layout",
       fileSize: "1.0 MB",
       downloadUrl: "",
@@ -1536,7 +1536,7 @@ export default function AdminDashboardClient() {
                     <span>Download Centre Assets ({cmsData.downloads.items.length})</span>
                   </h2>
                   <p className="text-xs text-neutral-500 mt-0.5">
-                    Manage cadastral maps, DTCP layouts, PDF dossiers, and brochures available for download.
+                    Manage masterplan maps, DTCP layouts, PDF dossiers, and brochures available for download.
                   </p>
                 </div>
 
@@ -2528,7 +2528,7 @@ export default function AdminDashboardClient() {
                   {/* Blueprint Image */}
                   <div>
                     <label className="block text-[10px] font-mono font-bold uppercase text-neutral-700 mb-1">
-                      Cadastral Blueprint / Layout Map URL
+                      Blueprint / Layout Map URL
                     </label>
                     <div className="flex gap-2">
                       <input
@@ -2580,7 +2580,7 @@ export default function AdminDashboardClient() {
                     </div>
                     <div>
                       <label className="block text-[10px] font-mono font-bold uppercase text-neutral-700 mb-1">
-                        Mapbhoomi 3D Cadastral URL
+                        Mapbhoomi 3D Layout URL
                       </label>
                       <input
                         type="text"

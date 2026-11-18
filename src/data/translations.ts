@@ -247,14 +247,14 @@ export const translations = {
       title: "Start Your Land Journey Today",
       subtitle: "Visit our Madurai office or connect with our senior advisory team directly via phone or WhatsApp.",
       phoneLabel: "Call Directly",
-      phone: "+91 77089 66452",
+      phone: "+91 78457 16453",
       emailLabel: "Official Email",
       email: "suryconstruction@gmail.com",
       addressLabel: "Head Office Location",
       address:
         "No. 11, Arasu Nagar, Near Rio Hospital, Pandi Kovil Ring Road, Vandiyur, Madurai – 625020, Tamil Nadu.",
       whatsappBtn: "Chat on WhatsApp",
-      callBtn: "Call +91 77089 66452",
+      callBtn: "Call +91 78457 16453",
       hours: "Monday – Saturday: 9:00 AM – 7:30 PM | Sunday: By Appointment",
     },
     footer: {
@@ -514,14 +514,14 @@ export const translations = {
       title: "உங்கள் நில கனவை இன்றே தொடங்குங்கள்",
       subtitle: "எங்கள் மதுரை அலுவலகத்திற்கு வாருங்கள் அல்லது தொலைபேசி/வாட்ஸ்அப் வழியாக தொடர்புகொள்ளுங்கள்.",
       phoneLabel: "நேரடி அழைப்பு",
-      phone: "+91 77089 66452",
+      phone: "+91 78457 16453",
       emailLabel: "அலுவலக மின்னஞ்சல்",
       email: "suryconstruction@gmail.com",
       addressLabel: "தலைமை அலுவலக முகவரி",
       address:
         "எண் 11, அரசு நகர், ரியோ மருத்துவமனை அருகில், பாண்டி கோவில் ரிங் ரோடு, வந்தியூர், மதுரை – 625020, தமிழ்நாடு.",
       whatsappBtn: "வாட்ஸ்அப்பில் பேசவும்",
-      callBtn: "அழைக்க: +91 77089 66452",
+      callBtn: "அழைக்க: +91 78457 16453",
       hours: "திங்கள் – சனி: காலை 9:00 – மாலை 7:30 | ஞாயிறு: முன்பதிவின் பேரில்",
     },
     footer: {

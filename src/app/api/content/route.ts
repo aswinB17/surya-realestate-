@@ -2,9 +2,10 @@ import { NextResponse } from "next/server";
 import { getCmsData, getCmsVersion } from "@/lib/cms/store";
 
 export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const section = searchParams.get("section");
+
   try {
-    const { searchParams } = new URL(request.url);
-    const section = searchParams.get("section");
     const data = await getCmsData();
     const version = getCmsVersion();
 

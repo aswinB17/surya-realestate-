@@ -416,14 +416,14 @@ export default function ProjectIconGrid({
         icon: MessageCircle,
         gradient: "from-[#25D366] to-[#128C7E]",
         actionType: "whatsapp",
-        targetUrl: "https://wa.me/917708966452?text=Hello%20Surya%20Promoters,%20I%20am%20interested%20in%20your%20land%20and%20plots.",
+        targetUrl: "https://wa.me/917845716453?text=Hello%20Surya%20Promoters,%20I%20am%20interested%20in%20your%20land%20and%20plots.",
       },
       {
         id: "call",
         name: "Direct Hotline",
         nameTa: "நேரடி அழைப்பு",
-        subtitle: "+91 77089 66452",
-        subtitleTa: "+91 77089 66452",
+        subtitle: "+91 78457 16453",
+        subtitleTa: "+91 78457 16453",
         actionText: "Call",
         actionTextTa: "அழைக்க",
         badge: "Verified",
@@ -431,7 +431,7 @@ export default function ProjectIconGrid({
         icon: Phone,
         gradient: "from-blue-500 to-indigo-600",
         actionType: "tel",
-        targetUrl: "tel:+917708966452",
+        targetUrl: "tel:+91 78457 16453",
       },
       {
         id: "mapbhoomi",
@@ -588,13 +588,13 @@ export default function ProjectIconGrid({
         id: "love-call",
         name: "Direct Hotline",
         nameTa: "நேரடி அழைப்பு",
-        type: "+91 77089 66452",
+        type: "+91 78457 16453",
         image: "/images/surya-logo.png",
         icon: Phone,
         badge: "Verified",
         badgeBg: "bg-green-600 text-white",
         gradient: "from-green-500 to-emerald-600",
-        onClick: () => window.open("tel:+917708966452", "_self"),
+        onClick: () => window.open("tel:+91 78457 16453", "_self"),
       },
     ],
     [storeProjects, router]
@@ -610,16 +610,16 @@ export default function ProjectIconGrid({
         tag: "Instant Message",
         icon: MessageCircle,
         bg: "bg-[#25D366]",
-        url: "https://wa.me/917708966452?text=Hello%20Surya%20Promoters,%20I%20would%20like%20to%20discuss%20my%20property%20requirements.",
+        url: "https://wa.me/917845716453?text=Hello%20Surya%20Promoters,%20I%20would%20like%20to%20discuss%20my%20property%20requirements.",
       },
       {
         id: "qc-call",
         name: "Direct Call",
         nameTa: "அழைக்க",
-        tag: "+91 77089 66452",
+        tag: "+91 78457 16453",
         icon: Phone,
         bg: "bg-[#2563EB]",
-        url: "tel:+917708966452",
+        url: "tel:+91 78457 16453",
       },
       {
         id: "qc-mapbhoomi",
@@ -802,7 +802,7 @@ export default function ProjectIconGrid({
 
             {/* Solid CTA: Discuss Your Project / WhatsApp */}
             <a
-              href="https://wa.me/917708966452?text=Hello%20Surya%20Promoters,%20I%20would%20like%20to%20discuss%20my%20property%20requirements."
+              href="https://wa.me/917845716453?text=Hello%20Surya%20Promoters,%20I%20would%20like%20to%20discuss%20my%20property%20requirements."
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#EAB308] hover:bg-[#ca9a07] text-[#0A0D12] text-xs font-extrabold uppercase tracking-wider shadow-xs transition hover:scale-105"
@@ -1176,7 +1176,7 @@ export default function ProjectIconGrid({
                       onClick={(e) => {
                         e.stopPropagation();
                         window.open(
-                          "https://wa.me/917708966452?text=Hello%20Surya%20Promoters,%20I%20am%20interested%20in%20Orange%20Garden%20upcoming%20project.%20Please%20share%20details.",
+                          "https://wa.me/917845716453?text=Hello%20Surya%20Promoters,%20I%20am%20interested%20in%20Orange%20Garden%20upcoming%20project.%20Please%20share%20details.",
                           "_blank"
                         );
                       }}
@@ -1737,7 +1737,7 @@ export default function ProjectIconGrid({
                             onClick={(e) => {
                               e.stopPropagation();
                               window.open(
-                                `https://wa.me/917708966452?text=${encodeURIComponent(
+                                `https://wa.me/917845716453?text=${encodeURIComponent(
                                   `Hello Surya Promoters, please share price and details for ${project.name}.`
                                 )}`,
                                 "_blank"
@@ -1871,7 +1871,7 @@ export default function ProjectIconGrid({
                     return (
                       <div
                         key={idx}
-                        onClick={() => window.open(`https://wa.me/917708966452?text=${encodeURIComponent(item.wa)}`, "_blank")}
+                        onClick={() => window.open(`https://wa.me/917845716453?text=${encodeURIComponent(item.wa)}`, "_blank")}
                         className="group p-5 sm:p-6 rounded-2xl bg-[#F8FAFC] hover:bg-white border border-[#E2E8F0] hover:border-[#EAB308] hover:shadow-md transition-all cursor-pointer flex items-center justify-between gap-4"
                       >
                         <div className="flex items-start gap-4">
@@ -2051,7 +2051,7 @@ export default function ProjectIconGrid({
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-8">
                   <a
-                    href="tel:+917708966452"
+                    href="tel:+91 78457 16453"
                     className="p-6 rounded-2xl bg-[#F8FAFC] hover:bg-white border border-[#E2E8F0] hover:border-blue-500 hover:shadow-md transition-all text-center space-y-3 group"
                   >
                     <div className="h-12 w-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
@@ -2059,13 +2059,13 @@ export default function ProjectIconGrid({
                     </div>
                     <div>
                       <span className="text-[11px] font-mono uppercase text-[#64748B] font-bold">Official Hotline</span>
-                      <div className="font-display text-lg font-bold text-[#0F172A] mt-0.5">+91 77089 66452</div>
+                      <div className="font-display text-lg font-bold text-[#0F172A] mt-0.5">+91 78457 16453</div>
                     </div>
                     <span className="inline-block text-xs font-bold text-blue-600">Click to Call Now →</span>
                   </a>
 
                   <a
-                    href="https://wa.me/917708966452?text=Hello%20Surya%20Promoters,%20I%20would%20like%20to%20know%20about%20your%20properties."
+                    href="https://wa.me/917845716453?text=Hello%20Surya%20Promoters,%20I%20would%20like%20to%20know%20about%20your%20properties."
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-6 rounded-2xl bg-[#F8FAFC] hover:bg-white border border-[#E2E8F0] hover:border-emerald-500 hover:shadow-md transition-all text-center space-y-3 group"
@@ -2075,7 +2075,7 @@ export default function ProjectIconGrid({
                     </div>
                     <div>
                       <span className="text-[11px] font-mono uppercase text-[#64748B] font-bold">WhatsApp Direct</span>
-                      <div className="font-display text-lg font-bold text-[#0F172A] mt-0.5">+91 77089 66452</div>
+                      <div className="font-display text-lg font-bold text-[#0F172A] mt-0.5">+91 78457 16453</div>
                     </div>
                     <span className="inline-block text-xs font-bold text-emerald-600">Start Instant Chat →</span>
                   </a>
@@ -2153,12 +2153,12 @@ export default function ProjectIconGrid({
                 </span>
                 <p className="text-[11px] leading-relaxed">
                   Madurai, Tamil Nadu, India<br />
-                  Hotline: +91 77089 66452<br />
+                  Hotline: +91 78457 16453<br />
                   Email: suryapromotersmadurai@gmail.com
                 </p>
                 <div className="pt-1">
                   <a
-                    href="https://wa.me/917708966452"
+                    href="https://wa.me/917845716453"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-600 text-white text-[10px] font-bold"
@@ -2305,7 +2305,7 @@ export default function ProjectIconGrid({
               {/* Action Buttons */}
               <div className="space-y-2.5 pt-2 border-t border-[#F1F5F9]">
                 <a
-                  href={`https://wa.me/917708966452?text=${encodeURIComponent(
+                  href={`https://wa.me/917845716453?text=${encodeURIComponent(
                     `Hello Surya Promoters, please share price, layout plan and details for ${selectedProject.name}.`
                   )}`}
                   target="_blank"
@@ -2322,7 +2322,7 @@ export default function ProjectIconGrid({
 
                 <div className="flex items-center gap-2">
                   <a
-                    href="tel:+917708966452"
+                    href="tel:+91 78457 16453"
                     className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-gray-50 hover:bg-gray-100 text-[#0F172A] py-2.5 text-xs font-bold uppercase tracking-wider transition"
                   >
                     <Phone className="h-4 w-4 text-blue-600" />
@@ -2664,11 +2664,11 @@ export default function ProjectIconGrid({
                 <span>16+ Yrs IAF Veteran Leadership</span>
               </div>
               <a
-                href="tel:+917708966452"
+                href="tel:+91 78457 16453"
                 className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-[#0F172A] text-white font-mono text-xs font-bold shadow-xs hover:bg-[#1E293B] transition"
               >
                 <Phone className="h-3.5 w-3.5 text-[#EAB308]" />
-                <span>+91 77089 66452</span>
+                <span>+91 78457 16453</span>
               </a>
             </div>
           </div>

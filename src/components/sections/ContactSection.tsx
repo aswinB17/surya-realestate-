@@ -54,10 +54,10 @@ export default function ContactSection() {
                       {t.contact.phoneLabel}
                     </span>
                     <a
-                      href="tel:+917708966452"
+                      href="tel:+91 78457 16453"
                       className="block text-base font-semibold text-[#242820] transition hover:text-[#C6A15B]"
                     >
-                      +91 77089 66452
+                      +91 78457 16453
                     </a>
                     <span className="text-xs text-[#77766F]">Direct Phone & WhatsApp</span>
                   </div>

@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-14T13:04:06.029Z",
+  "lastUpdated": "2026-11-17T14:04:03.124Z",
   "categories": [
     {
       "id": "residential",
@@ -461,7 +461,7 @@
         "en": "High Visibility | High Footfall | High Growth — Ideal Commercial Land for Business, Investment & Long-Term Returns",
         "ta": "அதிக பார்வைத் திறன் | அதிக மக்கள் நடமாட்டம் | அதிவேக வளர்ச்சி — வணிகம், முதலீடு மற்றும் நீண்டகால லாபத்திற்கான சிறந்த வணிக மனை"
       },
-      "mapsUrl": "https://maps.google.com/?q=Vandiyur+Madurai",
+      "mapsUrl": "https://maps.app.goo.gl/SPFYtT6kANxrNYat9?g_st=aw",
       "specs": [
         {
           "label": {
@@ -606,7 +606,7 @@
         "en": "High Growth | High Returns | Prime Commercial Location — 60 Cent Premium Commercial Land with 130 Ft Wide Frontage. Ideal for Commercial Business, Development & Investment.",
         "ta": "அதிவேக வளர்ச்சி | அதிக வருவாய் | முதன்மை வணிக மையம் — 130 அடி அகன்ற முகப்புடன் கூடிய 60 சென்ட் பிரீமியம் வணிக நிலம். வணிகம், வளர்ச்சி மற்றும் முதலீட்டிற்கு மிகவும் உகந்தது."
       },
-      "mapsUrl": "https://maps.google.com/?q=Pandi+Kovil+Madurai",
+      "mapsUrl": "https://maps.app.goo.gl/dQkYzJFQqRbJgKsC8?g_st=aw",
       "specs": [
         {
           "label": {
@@ -695,23 +695,23 @@
         "en": "Scenic Countryside · 25 min from Madurai city center",
         "ta": "இயற்கை எழில் கொஞ்சும் கிராமப்புறம் · 25 நிமிடம்"
       },
-      "image": "/images/projects/madurai-farms/1.jpg",
+      "image": "/images/projects/madurai-farms/aerial-cottage.jpg",
       "galleryImages": [
-        "/images/projects/madurai-farms/1.jpg",
-        "/images/projects/madurai-farms/2.jpg",
-        "/images/projects/madurai-farms/3.jpg",
         "/images/projects/madurai-farms/aerial-cottage.jpg",
         "/images/projects/madurai-farms/entrance-gate.jpg",
         "/images/projects/madurai-farms/concrete-pathway.jpg",
         "/images/projects/madurai-farms/aerial-grove.jpg",
         "/images/projects/madurai-farms/water-reservoir.jpg",
-        "/images/projects/madurai-farms/panoramic-view.jpg"
+        "/images/projects/madurai-farms/panoramic-view.jpg",
+        "/images/projects/madurai-farms/1.jpg",
+        "/images/projects/madurai-farms/2.jpg",
+        "/images/projects/madurai-farms/3.jpg"
       ],
       "blueprint": "/images/farmlayou1.png",
       "blueprints": [
         {
           "title": {
-            "en": "15-Plot Cadastral Layout",
+            "en": "15-Plot Layout",
             "ta": "15 பண்ணை மனைகள் வரைபடம்"
           },
           "image": "/images/farmlayou1.png",
@@ -805,109 +805,48 @@
   "gallery": {
     "videoFolders": [
       {
-        "id": "drone-reels",
+        "id": "madurai-farms-videos",
         "title": {
-          "en": "Aerial Drone Overview Reel",
-          "ta": "வான்வழி ட்ரோன் வீடியோக்கள்"
-        },
-        "count": "3 Videos",
-        "thumbnail": "/images/hero/hero-gated-layout.jpg",
-        "videos": [
-          {
-            "title": {
-              "en": "Madurai Outer Ring Road Corridor",
-              "ta": "மதுரை அவுட்டர் ரிங் ரோடு வழித்தடம்"
-            },
-            "duration": "1:45"
-          },
-          {
-            "title": {
-              "en": "Vaigai Highway Commercial Aerial",
-              "ta": "வைகை நெடுஞ்சாலை வணிக வான்பார்வை"
-            },
-            "duration": "2:10"
-          },
-          {
-            "title": {
-              "en": "Madurai Farms Agro Panorama",
-              "ta": "மதுரை பார்ம்ஸ் இயற்கை காட்சி"
-            },
-            "duration": "3:05"
-          }
-        ]
-      },
-      {
-        "id": "commercial-corridors",
-        "title": {
-          "en": "Commercial Corridors Tour",
-          "ta": "வணிக வழித்தட வீடியோக்கள்"
+          "en": "Madurai Farms & Fruits",
+          "ta": "மதுரை பார்ம்ஸ் & புரூட்ஸ்"
         },
         "count": "2 Videos",
-        "thumbnail": "/images/generated/vaigai-elite-garden.jpg",
+        "thumbnail": "/images/projects/madurai-farms/aerial-cottage.jpg",
         "videos": [
           {
             "title": {
-              "en": "Vaigai Elite Garden Site Walkthrough",
-              "ta": "வைகை எலைட் கார்டன் நேரடி ஆய்வு"
+              "en": "Madurai Farms & Fruits Drone Walkthrough",
+              "ta": "மதுரை பார்ம்ஸ் & புரூட்ஸ் ட்ரோன் வீடியோ"
             },
-            "duration": "2:30"
+            "duration": "02:15",
+            "url": "/videos/madurai-farms-tour.mp4"
           },
           {
             "title": {
-              "en": "Anna Nagar Commercial Hub Elevation",
-              "ta": "அண்ணா நகர் வணிக கட்டிட பார்வை"
+              "en": "Client Site Visit & Layout Inspection",
+              "ta": "வாடிக்கையாளர் தள ஆய்வு வீடியோ"
             },
-            "duration": "1:55"
+            "duration": "01:50",
+            "url": "/videos/projects/showcase.mp4"
           }
         ]
       },
       {
-        "id": "farm-agro",
+        "id": "pandi-kovil-videos",
         "title": {
-          "en": "Madurai Farms Agro Acreage",
-          "ta": "மதுரை பார்ம்ஸ் வேளாண் பண்ணை"
+          "en": "Pandi Kovil",
+          "ta": "பாண்டி கோவில் வணிக நிலம்"
         },
-        "count": "2 Videos",
-        "thumbnail": "/images/projects/madurai-farms.jpg",
+        "count": "1 Video",
+        "thumbnail": "/images/pandikovil.png",
         "videos": [
           {
             "title": {
-              "en": "Managed Organic Drip Irrigation",
-              "ta": "சொட்டு நீர் பாசன அமைப்பு செயல்முறை"
+              "en": "Pandi Kovil Airport Road Site Tour",
+              "ta": "பாண்டி கோவில் ஏர்போர்ட் சாலை தள வீடியோ"
             },
-            "duration": "2:40"
-          },
-          {
-            "title": {
-              "en": "Weekend Farmhouse Living Tour",
-              "ta": "வார இறுதி பண்ணை வீடு வாழ்க்கை"
-            },
-            "duration": "3:15"
-          }
-        ]
-      },
-      {
-        "id": "client-handover",
-        "title": {
-          "en": "Customer Testimonials & Patta Handover",
-          "ta": "வாடிக்கையாளர் கருத்துக்கள் & பட்டா வழங்கல்"
-        },
-        "count": "3 Videos",
-        "thumbnail": "/images/founder/founder.png",
-        "videos": [
-          {
-            "title": {
-              "en": "IAF Veteran Leadership - Buyer Trust",
-              "ta": "விமானப்படை அதிகாரியின் நேர்மையான சேவை"
-            },
-            "duration": "3:40"
-          },
-          {
-            "title": {
-              "en": "Immediate Registration Client Experience",
-              "ta": "உடனடி பத்திர பதிவு அனுபவம்"
-            },
-            "duration": "2:05"
+            "duration": "01:45",
+            "url": "/videos/pandi-kovil-video.mp4"
           }
         ]
       }
@@ -916,7 +855,7 @@
       {
         "id": "vaigai-photos",
         "title": {
-          "en": "Vaigai Elite Highway & Ring Road",
+          "en": "Vaigai Elite Garden – Manalur",
           "ta": "வைகை எலைட் & ரிங் ரோடு"
         },
         "count": "5 Photos",
@@ -932,28 +871,55 @@
       {
         "id": "farms-photos",
         "title": {
-          "en": "Madurai Farms Agro Acreage",
-          "ta": "மதுரை பார்ம்ஸ் வேளாண் நிலங்கள்"
+          "en": "Madurai Farms & Fruits",
+          "ta": "மதுரை பார்ம்ஸ் & புரூட்ஸ்"
         },
         "count": "9 Photos",
-        "thumbnail": "/images/projects/madurai-farms/1.jpg",
+        "thumbnail": "/images/projects/madurai-farms/aerial-cottage.jpg",
         "images": [
-          "/images/projects/madurai-farms/1.jpg",
-          "/images/projects/madurai-farms/2.jpg",
-          "/images/projects/madurai-farms/3.jpg",
           "/images/projects/madurai-farms/aerial-cottage.jpg",
           "/images/projects/madurai-farms/entrance-gate.jpg",
           "/images/projects/madurai-farms/concrete-pathway.jpg",
           "/images/projects/madurai-farms/aerial-grove.jpg",
           "/images/projects/madurai-farms/water-reservoir.jpg",
-          "/images/projects/madurai-farms/panoramic-view.jpg"
+          "/images/projects/madurai-farms/panoramic-view.jpg",
+          "/images/projects/madurai-farms/1.jpg",
+          "/images/projects/madurai-farms/2.jpg",
+          "/images/projects/madurai-farms/3.jpg"
+        ]
+      },
+      {
+        "id": "pandi-kovil-photos",
+        "title": {
+          "en": "Pandi Kovil Commercial Land",
+          "ta": "பாண்டி கோவில் வணிக நிலம்"
+        },
+        "count": "2 Photos",
+        "thumbnail": "/images/projects/pandi-kovil/pandi-kovil-brochure.jpg",
+        "images": [
+          "/images/projects/pandi-kovil/pandi-kovil-brochure.jpg",
+          "/images/pandikovil-layout.png"
+        ]
+      },
+      {
+        "id": "river-belt-photos",
+        "title": {
+          "en": "River Belt Land – Vandiyur",
+          "ta": "வைகை நதிக்கரை நிலம் – வண்டியூர்"
+        },
+        "count": "3 Photos",
+        "thumbnail": "/images/Riverbeltwal.png",
+        "images": [
+          "/images/Riverbeltwal.png",
+          "/images/projects/vandiyur/vandiyur-riverbelt-brochure.jpg",
+          "/images/Riverbelt.png"
         ]
       },
       {
         "id": "residential-photos",
         "title": {
-          "en": "Residential Flats & Villa Plots",
-          "ta": "குடியிருப்பு அடுக்குமாடி & மனைப்பிரிவுகள்"
+          "en": "3 BHK Duplex Luxury Villa for Sale",
+          "ta": "3 BHK டூப்ளக்ஸ் சொகுசு வில்லா"
         },
         "count": "7 Photos",
         "thumbnail": "/images/projects/flat-projects/1-exterior.jpg",
@@ -966,46 +932,16 @@
           "/images/projects/flat-projects/6-kitchen.jpg",
           "/images/projects/flat-projects/7-bathroom.jpg"
         ]
-      },
-      {
-        "id": "commercial-photos",
-        "title": {
-          "en": "Vaigai Highway & Commercial Belts",
-          "ta": "வைகை நெடுஞ்சாலை & வணிக வளாகங்கள்"
-        },
-        "count": "4 Photos",
-        "thumbnail": "/images/generated/vaigai-elite-garden.jpg",
-        "images": [
-          "/images/generated/vaigai-elite-garden.jpg",
-          "/images/projects/vaigai-commercial.jpg",
-          "/images/Riverbeltwal.png",
-          "/images/pandikovil.png"
-        ]
       }
     ]
   },
   "downloads": {
     "items": [
       {
-        "id": "mapbhoomi-cadastral-portal",
-        "title": {
-          "en": "Mapbhoomi Interactive 3D Cadastral Layout Portal",
-          "ta": "Mapbhoomi நேரடி 3D மனை வரைபட தளம்"
-        },
-        "category": {
-          "en": "Interactive Cadastral Layouts",
-          "ta": "நேரடி மனை வரைபடம்"
-        },
-        "fileType": "Live 3D / Web App",
-        "fileSize": "Live Online",
-        "downloadUrl": "https://mapbhoomi.com/l/surya-promoters",
-        "badge": "Official Surya Promoters Hub"
-      },
-      {
         "id": "vaigai-elite-plan",
         "title": {
-          "en": "Vaigai Elite Commercial Highway Masterplan",
-          "ta": "வைகை எலைட் வணிக வரைபடம்"
+          "en": "Vaigai Elite Commercial Land",
+          "ta": "வைகை எலைட் வணிக நிலம்"
         },
         "category": {
           "en": "Commercial Masterplan",
@@ -1014,13 +950,14 @@
         "fileType": "JPG / Plan",
         "fileSize": "356 KB",
         "downloadUrl": "/images/projects/vaigai/vaigai-elite-layout-plan.jpg",
+        "brochureUrl": "/images/projects/vaigai/vaigai-elite-brochure.jpg",
         "badge": "5.23 Acres · 40 Ft Road & Bridge"
       },
       {
         "id": "vandiyur-riverbelt-plan",
         "title": {
-          "en": "Vandiyur River Belt Site Layout Map",
-          "ta": "வண்டியூர் நதிக்கரை மனை வரைபடம்"
+          "en": "Vandiyur River Belt Site",
+          "ta": "வண்டியூர் நதிக்கரை மனை"
         },
         "category": {
           "en": "Commercial Site Layout",
@@ -1029,43 +966,30 @@
         "fileType": "JPG / Layout",
         "fileSize": "260 KB",
         "downloadUrl": "/images/Riverbelt.png",
+        "brochureUrl": "/images/projects/vandiyur/vandiyur-riverbelt-brochure.jpg",
         "badge": "27.4 Cents · 70 Ft Road & River View"
       },
       {
         "id": "pandi-kovil-plan",
         "title": {
-          "en": "Pandi Kovil Commercial Land Cadastral Layout Map",
-          "ta": "பாண்டி கோவில் கள மனை வரைபடம்"
+          "en": "Pandi Kovil Commercial Land",
+          "ta": "பாண்டி கோவில் வணிக நிலம்"
         },
         "category": {
-          "en": "Cadastral Layout Plan",
+          "en": "Layout Plan",
           "ta": "கள வரைபடம்"
         },
         "fileType": "PNG / Layout",
         "fileSize": "60 KB",
         "downloadUrl": "/images/pandikovil-layout.png",
+        "brochureUrl": "/images/projects/pandi-kovil/pandi-kovil-brochure.jpg",
         "badge": "S.No 2-1B3 · 130 Ft Frontage"
-      },
-      {
-        "id": "surya-green-enclave-map",
-        "title": {
-          "en": "Surya Green Enclave DTCP Layout Map",
-          "ta": "சூர்யா கிரீன் என்கிளேவ் DTCP வரைபடம்"
-        },
-        "category": {
-          "en": "DTCP Layout Map",
-          "ta": "DTCP வரைபடம்"
-        },
-        "fileType": "PDF / Cadastral",
-        "fileSize": "36.8 KB",
-        "downloadUrl": "/images/projects/surya-green-enclave-blueprint.jpg",
-        "badge": "DTCP Approved"
       },
       {
         "id": "madurai-farms-map",
         "title": {
-          "en": "Madurai Farms 15-Plot Cadastral Map",
-          "ta": "மதுரை பார்ம்ஸ் 15 பண்ணை மனைகள் வரைபடம்"
+          "en": "Madurai Farms & Fruits",
+          "ta": "மதுரை பார்ம்ஸ் & புரூட்ஸ்"
         },
         "category": {
           "en": "Agro Estate Layout",
@@ -1074,48 +998,49 @@
         "fileType": "PNG / Layout",
         "fileSize": "1.52 MB",
         "downloadUrl": "/images/farmlayou1.png",
+        "brochureUrl": "/images/projects/madurai-farms/madurai-farms-brochure.png",
         "badge": "15 Farm Plots · Mudukangulam"
       },
       {
-        "id": "madurai-farms-facility-map",
+        "id": "surya-nagar-villa-plan",
         "title": {
-          "en": "Madurai Farms Facility Details (Sheds & Fish Ponds)",
-          "ta": "மதுரை பார்ம்ஸ் பண்ணை வசதிகள் வரைபடம் (கொட்டகை & மீன் குளம்)"
+          "en": "Residential Villa @ Surya Nagar",
+          "ta": "சூர்யா நகர் குடியிருப்பு வில்லா வரைபடம்"
         },
         "category": {
-          "en": "Facility Details Plan",
-          "ta": "பண்ணை வசதிகள் வரைபடம்"
+          "en": "Residential Villa Layout",
+          "ta": "குடியிருப்பு வில்லா வரைபடம்"
         },
-        "fileType": "PNG / Blueprint",
-        "fileSize": "109 KB",
-        "downloadUrl": "/images/farmlayout-facility.png",
-        "badge": "Fish Ponds · Water Tank · S.No 208/1"
-      },
-      {
-        "id": "portfolio-brochure",
-        "title": {
-          "en": "Surya Promoters Complete Portfolio Brochure",
-          "ta": "சூர்யா புரமோட்டர்ஸ் முழு திட்ட கையேடு"
-        },
-        "category": {
-          "en": "Company Brochure",
-          "ta": "முழு கையேடு"
-        },
-        "fileType": "PDF / Document",
-        "fileSize": "6.8 MB",
-        "downloadUrl": "/images/hero-poster.jpg",
-        "badge": "Full Portfolio Brochure"
+        "fileType": "PNG / Layout",
+        "fileSize": "2.61 MB",
+        "downloadUrl": "/images/projects/flat-projects/surya-nagar-villa-plan.png",
+        "brochureUrl": "/images/projects/flat-projects/surya-nagar-villa-brochure.jpg",
+        "badge": "4.12 Cents · 2,750 Sq.Ft · 3 BHK Duplex"
       }
     ]
   },
   "company": {
+    "founderName": "Mr. Manickam Natarajan",
+    "militaryTitle": "Indian Air Force (IAF) Veteran",
+    "experienceYears": "16+",
+    "phone": "+91 78457 16453",
+    "whatsapp": "+91 78457 16453",
+    "email": "suryapromotersmdu@gmail.com",
+    "address": "120 Feet Road, Near Mattuthavani Bus Stand, K.K. Nagar Corridor, Madurai, Tamil Nadu 625020",
+    "mapsLink": "https://maps.google.com/?q=Mattuthavani+Madurai",
+    "googleMapsEmbedUrl": "https://maps.google.com/maps?q=Mattuthavani%20Madurai&t=&z=14&ie=UTF8&iwloc=&output=embed",
+    "aboutBio": {
+      "en": "Surya Promoters was established in 2010 by Indian Air Force Veteran Mr. Manickam Natarajan. Rooted in military precision, absolute honesty, and uncompromising clear titles, we have empowered over 1,000+ families and business owners across Madurai and southern Tamil Nadu to secure legal, appreciating land wealth.",
+      "ta": "சூர்யா புரமோட்டர்ஸ் 2010 ஆம் ஆண்டு இந்திய விமானப்படை அதிகாரி திரு. மாணிக்கம் நடராஜன் அவர்களால் நிறுவப்பட்டது. இராணுவ ஒழுக்கம், முழுமையான வெளிப்படைத்தன்மை மற்றும் 100% தெளிவான பட்டா உத்தரவாதத்துடன் மதுரை மற்றும் தென் தமிழ்நாட்டில் 1,000 க்கும் மேற்பட்ட குடும்பங்களுக்கு நில உடமை பாதுகாப்பை வழங்கி வருகிறோம்."
+    },
+    "missionStatement": {
+      "en": "From Land. To Legacy. Every square foot we deliver carries 30+ years of verified parent documentation, zero legal disputes, and direct developer transparency.",
+      "ta": "நிலத்திலிருந்து நிலைத்த சொத்து வரை. நாம் வழங்கும் ஒவ்வொரு சதுர அடி நிலமும் 30 ஆண்டுகால தூய மூலப்பத்திரங்கள் மற்றும் நேரடி உரிமையாளர் பாதுகாப்பை கொண்டுள்ளது."
+    },
     "name": {
       "en": "Surya Promoters",
       "ta": "சூர்யா புரமோட்டர்ஸ்"
-    },
-    "phone": "+91 77089 66452",
-    "whatsapp": "+91 77089 66452",
-    "email": "suryapromotersmdu@gmail.com"
+    }
   },
   "hero": {
     "heroBadge": {

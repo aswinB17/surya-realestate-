@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { X, ZoomIn } from "lucide-react";
+import { X, ZoomIn, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface ProjectGalleryProps {
   images: string[];
@@ -43,11 +43,43 @@ export default function ProjectGallery({ images, title }: ProjectGalleryProps) {
         >
           <button
             onClick={() => setActiveImage(null)}
-            className="absolute top-6 right-6 rounded-full border border-white/20 bg-white/20 p-2.5 text-white transition hover:bg-white/40"
+            className="absolute top-6 right-6 z-30 h-11 w-11 rounded-full bg-red-600 hover:bg-red-700 text-white border-2 border-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-2xl ring-4 ring-red-600/30"
             aria-label="Close"
           >
-            <X className="h-5 w-5" />
+            <X className="h-6 w-6 stroke-[3]" />
           </button>
+
+          {images.length > 1 && (
+            <>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  const cur = images.indexOf(activeImage);
+                  const prev = (cur - 1 + images.length) % images.length;
+                  setActiveImage(images[prev]);
+                }}
+                className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-30 h-12 w-12 rounded-full bg-black/60 hover:bg-[#EAB308] text-white hover:text-[#0A0D12] border border-white/30 flex items-center justify-center backdrop-blur-md transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-2xl"
+                title="Previous image"
+              >
+                <ChevronLeft className="h-7 w-7 stroke-[2.5]" />
+              </button>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  const cur = images.indexOf(activeImage);
+                  const next = (cur + 1) % images.length;
+                  setActiveImage(images[next]);
+                }}
+                className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-30 h-12 w-12 rounded-full bg-black/60 hover:bg-[#EAB308] text-white hover:text-[#0A0D12] border border-white/30 flex items-center justify-center backdrop-blur-md transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-2xl"
+                title="Next image"
+              >
+                <ChevronRight className="h-7 w-7 stroke-[2.5]" />
+              </button>
+            </>
+          )}
+
           <div
             className="relative aspect-[16/10] w-full max-w-5xl overflow-hidden rounded-2xl border border-white/20 shadow-2xl"
             onClick={(e) => e.stopPropagation()}

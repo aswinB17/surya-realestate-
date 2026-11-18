@@ -171,7 +171,7 @@ export default function ServicesSection() {
               {servicesList.map((service) => (
                 <StaggerItem key={service.id}>
                   <a
-                    href={`https://wa.me/917708966452?text=${encodeURIComponent(service.whatsappText)}`}
+                    href={`https://wa.me/917845716453?text=${encodeURIComponent(service.whatsappText)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group relative flex items-center justify-between gap-4 sm:gap-5 rounded-2xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-2xs hover:shadow-lg hover:border-[#EAB308] hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"

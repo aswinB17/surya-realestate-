@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -20,6 +20,8 @@ import {
   Droplets,
   Truck,
   Sparkles,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
 interface ProjectCardProps {
@@ -33,6 +35,10 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   const isUpcoming = project.status === "upcoming" || project.projectType === "upcoming";
   const isCompleted = project.status === "completed" || project.projectType === "completed";
   const whatsappMsg = `Hello Surya Promoters, please share price and details for ${project.title.en}.`;
+
+  const [cardImgIdx, setCardImgIdx] = useState(0);
+  const cardGallery = project.galleryImages && project.galleryImages.length > 0 ? project.galleryImages : [project.heroImage];
+  const activeHeroImg = cardGallery[cardImgIdx % cardGallery.length] || project.heroImage;
 
   // Get appropriate category icon
   const getCategoryIcon = () => {
@@ -57,15 +63,48 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-gray-200/90 bg-white shadow-xs hover:shadow-2xl hover:border-[#EAB308] hover:-translate-y-1 transition-all duration-300 cursor-pointer h-full"
     >
       {/* Top Visual Image Banner (Mobile Ad Style) */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-gray-100">
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-gray-100 group/cardimg">
         <Image
-          src={project.heroImage}
+          src={activeHeroImg}
           alt={project.title[language]}
           fill
           className="object-cover transition-transform duration-700 group-hover:scale-108"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent pointer-events-none" />
+
+        {/* Prev / Next Arrows on Card */}
+        {cardGallery.length > 1 && (
+          <>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setCardImgIdx((prev) => (prev - 1 + cardGallery.length) % cardGallery.length);
+              }}
+              aria-label="Previous image"
+              className="absolute left-2.5 top-1/2 -translate-y-1/2 z-20 h-9 w-9 rounded-full bg-black/65 hover:bg-[#EAB308] text-white hover:text-[#0A0D12] border border-white/20 hover:border-[#EAB308] flex items-center justify-center backdrop-blur-md shadow-lg transition-all hover:scale-110 active:scale-95 cursor-pointer pointer-events-auto opacity-80 sm:opacity-0 sm:group-hover/cardimg:opacity-100"
+              title="Previous image"
+            >
+              <ChevronLeft className="h-5 w-5 stroke-[2.5]" />
+            </button>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setCardImgIdx((prev) => (prev + 1) % cardGallery.length);
+              }}
+              aria-label="Next image"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 z-20 h-9 w-9 rounded-full bg-black/65 hover:bg-[#EAB308] text-white hover:text-[#0A0D12] border border-white/20 hover:border-[#EAB308] flex items-center justify-center backdrop-blur-md shadow-lg transition-all hover:scale-110 active:scale-95 cursor-pointer pointer-events-auto opacity-80 sm:opacity-0 sm:group-hover/cardimg:opacity-100"
+              title="Next image"
+            >
+              <ChevronRight className="h-5 w-5 stroke-[2.5]" />
+            </button>
+            <div className="absolute bottom-2 right-2 z-20 px-2 py-0.5 rounded-full bg-black/70 backdrop-blur-md text-[10px] font-mono font-bold text-white/90 border border-white/10 pointer-events-none">
+              {(cardImgIdx % cardGallery.length) + 1} / {cardGallery.length}
+            </div>
+          </>
+        )}
 
         {/* Top Badges Strip */}
         <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 z-10 pointer-events-none">
@@ -177,7 +216,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <div className="flex items-center gap-2 pt-3">
           {/* Primary Mobile Ad Action: WhatsApp Chat Button */}
           <a
-            href={`https://wa.me/917708966452?text=${encodeURIComponent(whatsappMsg)}`}
+            href={`https://wa.me/917845716453?text=${encodeURIComponent(whatsappMsg)}`}
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
@@ -190,7 +229,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
           {/* Quick Call Button */}
           <a
-            href="tel:+917708966452"
+            href="tel:+91 78457 16453"
             onClick={(e) => e.stopPropagation()}
             className="h-9 w-9 flex items-center justify-center rounded-xl border border-gray-200 bg-gray-50 text-gray-700 hover:bg-[#EAB308] hover:border-[#EAB308] hover:text-[#0A0D12] transition shadow-2xs"
             title="Call Surya Promoters"

@@ -47,14 +47,14 @@ export default function StitchPortfolioShowcase() {
         `Legal Pack Requested: ${form.requestLegalPack ? "Yes" : "No"}\n` +
         `Notes: ${form.notes}`
     );
-    window.open(`https://wa.me/917708966452?text=${msg}`, "_blank");
+    window.open(`https://wa.me/917845716453?text=${msg}`, "_blank");
   };
 
   const handleBrochure = (projectName: string) => {
     const msg = encodeURIComponent(
       `Hello Surya Promoters, please share the official brochure and documentation pack for ${projectName}.`
     );
-    window.open(`https://wa.me/917708966452?text=${msg}`, "_blank");
+    window.open(`https://wa.me/917845716453?text=${msg}`, "_blank");
   };
 
   return (

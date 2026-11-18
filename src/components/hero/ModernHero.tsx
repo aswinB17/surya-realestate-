@@ -117,7 +117,7 @@ export default function ModernHero() {
               className="flex flex-wrap items-center gap-3.5 pt-1"
             >
               <a
-                href="https://wa.me/917708966452?text=Hello%20Surya%20Promoters,%20I%20would%20like%20to%20discuss%20my%20property%20requirements."
+                href="https://wa.me/917845716453?text=Hello%20Surya%20Promoters,%20I%20would%20like%20to%20discuss%20my%20property%20requirements."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 rounded-xl bg-[#EAB308] px-6 py-3.5 font-display text-xs sm:text-sm font-extrabold uppercase tracking-widest text-[#0A0D12] shadow-md transition-all hover:bg-[#ca9a07] hover:shadow-lg hover:scale-[1.02]"
@@ -213,7 +213,7 @@ export default function ModernHero() {
               >
                 <span className="h-2 w-2 rounded-full bg-[#EAB308] animate-pulse" />
                 <span className="font-mono text-[10px] sm:text-xs font-bold text-white uppercase tracking-wider group-hover/bhoomi:text-[#EAB308]">
-                  {language === "ta" ? "3D வரைபடங்கள் (MapBhoomi)" : "3D Layouts (MapBhoomi)"}
+                  {language === "ta" ? "2D/3D வரைபடங்கள்" : "2D/3D views"}
                 </span>
                 <span className="text-[9px] font-mono font-bold text-[#EAB308] bg-[#EAB308]/20 px-1.5 py-0.5 rounded-full">
                   LIVE

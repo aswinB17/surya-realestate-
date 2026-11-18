@@ -114,7 +114,7 @@ export default function ProjectDetails({ project: initialProject }: ProjectDetai
     const text = encodeURIComponent(
       `Hello Surya Promoters, please share the official brochure and documentation pack for ${project.title.en}.`
     );
-    window.open(`https://wa.me/917708966452?text=${text}`, "_blank");
+    window.open(`https://wa.me/917845716453?text=${text}`, "_blank");
   };
 
   return (
@@ -237,7 +237,7 @@ export default function ProjectDetails({ project: initialProject }: ProjectDetai
                   className="inline-flex items-center gap-2 rounded-full bg-[#EAB308] px-3.5 py-1 text-xs font-bold text-[#0A0D12] shadow-sm hover:bg-[#ca9a07] transition"
                 >
                   <span className="h-2 w-2 rounded-full bg-[#0A0D12] animate-pulse" />
-                  <span>{language === "ta" ? "நேரடி 3D வரைபடம் (MapBhoomi)" : "Interactive 3D/2D Map (MapBhoomi)"}</span>
+                  <span>{language === "ta" ? "2D/3D views" : "2D/3D views"}</span>
                   <ExternalLink className="h-3.5 w-3.5" />
                 </a>
               )}
@@ -474,7 +474,7 @@ export default function ProjectDetails({ project: initialProject }: ProjectDetai
                     <span>{language === "ta" ? "நேரடி புகைப்படங்கள் கேட்க" : "Request On-Site Media"}</span>
                   </button>
                   <a
-                    href="tel:+917708966452"
+                    href="tel:+91 78457 16453"
                     className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-white shadow-xs backdrop-blur-sm transition hover:bg-white/20"
                   >
                     <Phone className="h-3.5 w-3.5" />
@@ -631,7 +631,7 @@ export default function ProjectDetails({ project: initialProject }: ProjectDetai
                   {language === "ta" ? "தள வரைபடம் & சர்வே திட்டம்" : "Layout Masterplan & Survey Drawing"}
                 </h3>
                 <span className="text-xs font-mono uppercase text-[#C6A15B]">
-                  Verified Cadastral Map
+                  Verified Layout Map
                 </span>
               </div>
 
@@ -719,7 +719,7 @@ export default function ProjectDetails({ project: initialProject }: ProjectDetai
                       {extra.transportation.map((item, idx) => (
                         <div key={idx} className="flex items-center justify-between p-3 rounded-xl bg-white border border-[#E8E2D7]">
                           <span className="text-sm font-medium text-[#242820]">{item.name[language]}</span>
-                          <span className="font-mono text-xs font-bold text-[#142C23] bg-[#F8F5EF] px-2.5 py-1 rounded-lg border border-[#E8E2D7]">
+                          <span className="font-sans text-xs font-bold text-[#142C23] bg-[#F8F5EF] px-2.5 py-1 rounded-lg border border-[#E8E2D7] tabular-nums">
                             {item.distance} {item.time && `(${item.time})`}
                           </span>
                         </div>
@@ -740,7 +740,7 @@ export default function ProjectDetails({ project: initialProject }: ProjectDetai
                         {extra.hospitals.map((h, i) => (
                           <div key={i} className="flex items-center justify-between text-xs text-[#77766F]">
                             <span>{h.name[language]}</span>
-                            <span className="font-mono font-bold text-[#242820]">{h.distance}</span>
+                            <span className="font-sans font-bold text-[#242820] tabular-nums">{h.distance}</span>
                           </div>
                         ))}
                       </div>
@@ -757,7 +757,7 @@ export default function ProjectDetails({ project: initialProject }: ProjectDetai
                         {extra.schoolsAndColleges.map((s, i) => (
                           <div key={i} className="flex items-center justify-between text-xs text-[#77766F]">
                             <span>{s.name[language]}</span>
-                            <span className="font-mono font-bold text-[#242820]">{s.distance}</span>
+                            <span className="font-sans font-bold text-[#242820] tabular-nums">{s.distance}</span>
                           </div>
                         ))}
                       </div>
@@ -924,7 +924,7 @@ export default function ProjectDetails({ project: initialProject }: ProjectDetai
               <div className="mt-6 space-y-3">
                 {isCompleted ? (
                   <a
-                    href={`https://wa.me/917708966452?text=${encodeURIComponent(
+                    href={`https://wa.me/917845716453?text=${encodeURIComponent(
                       `Hello Surya Promoters, I saw your completed project ${project.title.en} and would like to inquire about similar upcoming developments.`
                     )}`}
                     target="_blank"
@@ -936,7 +936,7 @@ export default function ProjectDetails({ project: initialProject }: ProjectDetai
                   </a>
                 ) : (
                   <a
-                    href={`https://wa.me/917708966452?text=${encodeURIComponent(
+                    href={`https://wa.me/917845716453?text=${encodeURIComponent(
                       `Hello Surya Promoters, I am interested in ${project.title.en} (${project.location.en}). Please share price and details.`
                     )}`}
                     target="_blank"
@@ -956,17 +956,17 @@ export default function ProjectDetails({ project: initialProject }: ProjectDetai
                     className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#0A0D12] py-3.5 text-xs font-bold uppercase tracking-wider text-[#EAB308] border border-[#EAB308]/40 shadow-xs transition hover:bg-[#161B22] hover:scale-[1.01]"
                   >
                     <Layers className="h-4 w-4 text-[#EAB308]" />
-                    <span>{language === "ta" ? "நேரடி 3D வரைபடம் (MapBhoomi)" : "Explore 3D Map (MapBhoomi)"}</span>
+                    <span>{language === "ta" ? "2D/3D views" : "2D/3D views"}</span>
                     <ExternalLink className="h-3 w-3" />
                   </a>
                 )}
 
                 <a
-                  href="tel:+917708966452"
+                  href="tel:+91 78457 16453"
                   className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#E8E2D7] bg-white py-3.5 text-xs font-semibold uppercase tracking-wider text-[#242820] transition hover:bg-[#F1EBDD]"
                 >
                   <Phone className="h-4 w-4 text-[#C6A15B]" />
-                  <span>Call +91 77089 66452</span>
+                  <span>Call +91 78457 16453</span>
                 </a>
 
                 <button
@@ -1038,10 +1038,11 @@ export default function ProjectDetails({ project: initialProject }: ProjectDetai
         >
           <button
             onClick={() => setBlueprintZoomed(false)}
-            className="absolute top-5 right-5 z-50 h-10 w-10 rounded-full bg-white/20 hover:bg-white text-white hover:text-black flex items-center justify-center transition cursor-pointer shadow-lg"
+            className="absolute top-5 right-5 z-50 h-11 w-11 rounded-full bg-red-600 hover:bg-red-700 text-white border-2 border-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-2xl ring-4 ring-red-600/30"
             title="Close"
+            aria-label="Close"
           >
-            <X className="h-5 w-5" />
+            <X className="h-6 w-6 stroke-[3]" />
           </button>
           <div
             onClick={(e) => e.stopPropagation()}

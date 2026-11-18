@@ -62,10 +62,10 @@ export default function GalleryPage() {
       thumbnail: "/images/projects/vaigai-commercial.jpg",
     },
     {
-      src: "/videos/vaigai/vaigai-drone-3.mp4",
+      src: "/videos/pandi-kovil-video.mp4",
       title: "Pandi Kovil Ring Road High-Traffic Corridor Overview",
       category: "commercial",
-      duration: "02:00",
+      duration: "01:45",
       thumbnail: "/images/pandikovil.png",
     },
     {

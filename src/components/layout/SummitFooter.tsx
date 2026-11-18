@@ -86,7 +86,7 @@ export default function SummitFooter() {
               </a>
 
               <a
-                href="https://wa.me/917708966452"
+                href="https://wa.me/917845716453"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-800 text-gray-300 hover:text-emerald-400 hover:bg-slate-700 transition"
@@ -147,7 +147,7 @@ export default function SummitFooter() {
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-4 w-4 text-[#C6A15B] shrink-0" />
-                <a href="tel:+917708966452" className="hover:text-white transition">+91 77089 66452</a>
+                <a href="tel:+91 78457 16453" className="hover:text-white transition">+91 78457 16453</a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-4 w-4 text-[#C6A15B] shrink-0" />

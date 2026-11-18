@@ -54,7 +54,6 @@ export const PROJECT_DETAILS_MAP: Record<string, ProjectExtendedDetails> = {
       "/images/projects/flat-projects/6-kitchen.jpg",
       "/images/projects/flat-projects/7-bathroom.jpg",
     ],
-    videoUrl: "/videos/projects/showcase.mp4",
     transportation: [
       { name: { en: "K.Pudur & Surveyor Colony Main Road", ta: "கே.புதூர் & சர்வேயர் காலனி பிரதான சாலை" }, distance: "800 m", time: "2 mins" },
       { name: { en: "Mattuthavani Integrated Bus Terminal", ta: "மாட்டுத்தாவணி பேருந்து முனையம்" }, distance: "3.5 km", time: "8 mins" },
@@ -189,7 +188,7 @@ export const PROJECT_DETAILS_MAP: Record<string, ProjectExtendedDetails> = {
         rating: 5,
         date: "September 2026",
         comment: {
-          en: "Registered my 1200 sq.ft plot within 48 hours of token advance. Clear cadastral boundary stones and wide 40ft blacktop bitumen road. Zero legal hassle.",
+          en: "Registered my 1200 sq.ft plot within 48 hours of token advance. Clear boundary stones and wide 40ft blacktop bitumen road. Zero legal hassle.",
           ta: "முன்பணம் செலுத்திய 48 மணி நேரத்தில் தனி பட்டா பதிவு முடிந்தது. துல்லியமான எல்லைக் கற்கள் மற்றும் 40 அடி தார்ச் சாலை. எந்த சட்டச் சிக்கலும் இல்லை.",
         },
       },
@@ -217,20 +216,18 @@ export const PROJECT_DETAILS_MAP: Record<string, ProjectExtendedDetails> = {
       "/images/VG/VG3.jpeg",
       "/images/VG/VG4.jpeg",
     ],
-    videoUrl: "/videos/vaigai/vaigai-drone-1.mp4",
     transportation: [
       { name: { en: "Madurai – Rameshwaram NH Direct Frontage (700 ft)", ta: "மதுரை – ராமேஸ்வரம் தேசிய நெடுஞ்சாலை நேரடி முகப்பு (700 அடி)" }, distance: "0 km (Direct Access)", time: "0 mins" },
       { name: { en: "Viraganur Roundana (Madurai)", ta: "விரகனூர் ரவுண்டானா (மதுரை)" }, distance: "6.0 km", time: "7 mins" },
-      { name: { en: "Upcoming Madurai Outer Ring Road Junction", ta: "மதுரை வெளிவட்ட சாலை சந்திப்பு" }, distance: "1.5 km", time: "2 mins" },
+      { name: { en: "Upcoming Madurai Outer Ring Road Junction", ta: "மதுரை வெளிவட்ட சாலை சந்திப்பு" }, distance: "0.5 km", time: "1 min" },
       { name: { en: "Madurai International Airport", ta: "மதுரை சர்வதேச விமான நிலையம்" }, distance: "15 km", time: "18 mins" },
     ],
     hospitals: [
       { name: { en: "Velammal Medical College Hospital", ta: "வேலம்மாள் மருத்துவக் கல்லூரி மருத்துவமனை" }, distance: "6.5 km", time: "9 mins" },
       { name: { en: "Apollo Specialty Hospital", ta: "அப்பல்லோ சிறப்பு மருத்துவமனை" }, distance: "9.5 km", time: "14 mins" },
-      { name: { en: "Proposed Multi-Speciality Medical Hub", ta: "பல்நோக்கு மருத்துவமனை மண்டலம்" }, distance: "2.0 km", time: "3 mins" },
     ],
     schoolsAndColleges: [
-      { name: { en: "KLN College of Engineering & Information Tech", ta: "கே.எல்.என் பொறியியல் கல்லூரி" }, distance: "4.5 km", time: "6 mins" },
+      { name: { en: "KLN College of Engineering & Information Tech", ta: "கே.எல்.என் பொறியியல் கல்லூரி" }, distance: "10 km", time: "14 mins" },
       { name: { en: "Velammal Global CBSE School", ta: "வேலம்மாள் குளோபல் பள்ளி" }, distance: "5.0 km", time: "7 mins" },
       { name: { en: "Thiyagarajar Arts & Science College", ta: "தியாகராஜர் கலை & அறிவியல் கல்லூரி" }, distance: "7.0 km", time: "10 mins" },
     ],
@@ -299,12 +296,11 @@ export const PROJECT_DETAILS_MAP: Record<string, ProjectExtendedDetails> = {
       "/images/projects/vaigai-commercial.jpg",
       "/images/Riverbelt.png",
     ],
-    videoUrl: "/videos/vaigai/vaigai-drone-2.mp4",
     transportation: [
       { name: { en: "Direct Bye Pass Road Frontage (Mattuthavani to Airport Ring Road)", ta: "நேரடி பை பாஸ் சாலை முகப்பு (மாட்டுத்தாவணி - ஏர்போர்ட் ரிங் ரோடு)" }, distance: "0 km (Direct Access)", time: "0 mins" },
       { name: { en: "Anna Nagar, Madurai", ta: "அண்ணா நகர், மதுரை" }, distance: "1.0 km", time: "2 mins" },
       { name: { en: "Mattuthavani Integrated Bus Terminus", ta: "மாட்டுத்தாவணி ஒருங்கிணைந்த பேருந்து முனையம்" }, distance: "3.0 km", time: "5 mins" },
-      { name: { en: "Viraganur Roundana Junction", ta: "விரகனூர் ரவுண்டானா சந்திப்பு" }, distance: "1.5 km", time: "3 mins" },
+      { name: { en: "Viraganur Roundana Junction", ta: "விரகனூர் ரவுண்டானா சந்திப்பு" }, distance: "0.5 km", time: "1 min" },
       { name: { en: "Madurai International Airport", ta: "மதுரை சர்வதேச விமான நிலையம்" }, distance: "10 km", time: "14 mins" },
     ],
     hospitals: [
@@ -314,7 +310,7 @@ export const PROJECT_DETAILS_MAP: Record<string, ProjectExtendedDetails> = {
     ],
     schoolsAndColleges: [
       { name: { en: "Suguna International School & Velammal Vidyalaya", ta: "சுகுணா சர்வதேச பள்ளி & வேலம்மாள் வித்யாலயா" }, distance: "2.0 km", time: "4 mins" },
-      { name: { en: "Thiagarajar College & American College", ta: "தியாகராஜர் & அமெரிக்கன் கல்லூரி" }, distance: "3.5 km", time: "8 mins" },
+      { name: { en: "Thiagarajar College & American College", ta: "தியாகராஜர் & அமெரிக்கன் கல்லூரி" }, distance: "2.0 km", time: "4 mins" },
       { name: { en: "Madurai Law College & Leading Institutions", ta: "மதுரை சட்டக்கல்லூரி மற்றும் கல்வி நிறுவனங்கள்" }, distance: "3.0 km", time: "6 mins" },
     ],
     groundwater: {
@@ -381,7 +377,7 @@ export const PROJECT_DETAILS_MAP: Record<string, ProjectExtendedDetails> = {
       "/images/pandikovil.png",
       "/images/pandikovil-layout.png",
     ],
-    videoUrl: "/videos/vaigai/vaigai-drone-3.mp4",
+    videoUrl: "/videos/pandi-kovil-video.mp4",
     transportation: [
       { name: { en: "Madurai Airport Road (Direct 130 Ft Frontage)", ta: "மதுரை விமான நிலைய சாலை (நேரடி 130 அடி முகப்பு)" }, distance: "0 km (Direct Access)", time: "0 mins" },
       { name: { en: "Mattuthavani Integrated Bus Terminal", ta: "மாட்டுத்தாவணி பேருந்து நிலையம்" }, distance: "2.0 km", time: "4 mins" },
@@ -391,14 +387,13 @@ export const PROJECT_DETAILS_MAP: Record<string, ProjectExtendedDetails> = {
     ],
     hospitals: [
       { name: { en: "Guru Hospital (Multi-Speciality)", ta: "குரு மருத்துவமனை" }, distance: "1.2 km", time: "3 mins" },
-      { name: { en: "Rio Hospital", ta: "ரியோ மருத்துவமனை" }, distance: "2.0 km", time: "4 mins" },
-      { name: { en: "Vikram Hospital", ta: "விக்ரம் மருத்துவமனை" }, distance: "2.8 km", time: "5 mins" },
-      { name: { en: "Meenakshi Mission Hospital & Research", ta: "மீனாட்சி மிஷன் மருத்துவமனை" }, distance: "3.5 km", time: "7 mins" },
+      { name: { en: "Rio Hospital", ta: "ரியோ மருத்துவமனை" }, distance: "1.0 km", time: "2 mins" },
+      { name: { en: "Vikram Hospital", ta: "விக்ரம் மருத்துவமனை" }, distance: "0.5 km", time: "1 min" },
+      { name: { en: "Meenakshi Mission Hospital & Research", ta: "மீனாட்சி மிஷன் மருத்துவமனை" }, distance: "1.0 km", time: "2 mins" },
     ],
     schoolsAndColleges: [
-      { name: { en: "HCL Tech (IT Company Campus)", ta: "எச்சிஎல் டெக் (தகவல் தொழில்நுட்ப வளாகம்)" }, distance: "1.5 km", time: "3 mins" },
+      { name: { en: "HCL Tech (IT Company Campus)", ta: "எச்சிஎல் டெக் (தகவல் தொழில்நுட்ப வளாகம்)" }, distance: "0.5 km", time: "1 min" },
       { name: { en: "5 Leading Schools in Vicinity (Vikas, Velammal, etc.)", ta: "அருகிலுள்ள 5 முன்னணி பள்ளிகள் (விகாஸ், வேலம்மாள்)" }, distance: "1.0 - 2.5 km", time: "4 mins" },
-      { name: { en: "Thiagarajar School of Management", ta: "தியாகராஜர் மேலாண்மை பள்ளி" }, distance: "6.0 km", time: "10 mins" },
     ],
     groundwater: {
       depth: { en: "35 – 45 ft Sweet Potable Borewell Aquifer", ta: "35 – 45 அடியில் சுவையான ஆழ்துளை நீர்" },
@@ -595,15 +590,15 @@ export const PROJECT_DETAILS_MAP: Record<string, ProjectExtendedDetails> = {
   // ---------------------------------------------------------------------------
   "madurai-farms": {
     galleryImages: [
-      "/images/projects/madurai-farms/1.jpg",
-      "/images/projects/madurai-farms/2.jpg",
-      "/images/projects/madurai-farms/3.jpg",
       "/images/projects/madurai-farms/aerial-cottage.jpg",
       "/images/projects/madurai-farms/entrance-gate.jpg",
       "/images/projects/madurai-farms/concrete-pathway.jpg",
       "/images/projects/madurai-farms/aerial-grove.jpg",
       "/images/projects/madurai-farms/water-reservoir.jpg",
       "/images/projects/madurai-farms/panoramic-view.jpg",
+      "/images/projects/madurai-farms/1.jpg",
+      "/images/projects/madurai-farms/2.jpg",
+      "/images/projects/madurai-farms/3.jpg",
       "/images/farmlayou1.png",
       "/images/farmlayout-facility.png",
     ],

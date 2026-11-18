@@ -31,6 +31,7 @@ interface DownloadItem {
   fileSize: string;
   thumbnailUrl: string;
   downloadUrl: string;
+  brochureUrl?: string;
   description: { en: string; ta: string };
 }
 
@@ -38,7 +39,7 @@ const DOWNLOAD_ITEMS: DownloadItem[] = [
   {
     id: "madurai-farms-blueprint",
     name: {
-      en: "Madurai Farms 15-Unit Cadastral Masterplan & Road Access Blueprint",
+      en: "Madurai Farms 15-Unit Masterplan & Road Access Blueprint",
       ta: "மதுரை பார்ம்ஸ் 15 அலகுகள் கொண்ட பண்ணை நில வரைபடம்",
     },
     project: { en: "Madurai Farms & Fruits", ta: "மதுரை பார்ம்ஸ் & புரூட்ஸ்" },
@@ -49,7 +50,7 @@ const DOWNLOAD_ITEMS: DownloadItem[] = [
     thumbnailUrl: "/images/projects/madurai-farms/farmlayou1.png",
     downloadUrl: "/images/projects/madurai-farms/farmlayou1.png",
     description: {
-      en: "Authentic cadastral layout plan detailing units 1 through 15 along Madurai Green Belt with internal 30ft access lanes.",
+      en: "Authentic layout plan detailing units 1 through 15 along Madurai Green Belt with internal 30ft access lanes.",
       ta: "மதுரை பசுமை மண்டலத்தில் அமைந்துள்ள 15 பண்ணை மனைப் பிரிவுகளின் துல்லியமான கள வரைபடம்.",
     },
   },
@@ -69,6 +70,24 @@ const DOWNLOAD_ITEMS: DownloadItem[] = [
     description: {
       en: "Complete project specification including soil report, fruit tree planting roster, drip irrigation layout, and legal clear title documentation.",
       ta: "மண் பரிசோதனை அறிக்கை, பழ மரங்களின் பட்டியல், சொட்டு நீர் பாசன வசதிகள் மற்றும் பட்டா விவரங்கள் அடங்கிய கையேடு.",
+    },
+  },
+  {
+    id: "surya-nagar-villa-blueprint",
+    name: {
+      en: "Residential Villa @ Surya Nagar 3 BHK Duplex Layout",
+      ta: "சூர்யா நகர் 3 BHK டூப்ளக்ஸ் வில்லா வடிவமைப்பு வரைபடம்",
+    },
+    project: { en: "Residential Villa @ Surya Nagar", ta: "சூர்யா நகர் குடியிருப்பு வில்லா" },
+    category: "residential",
+    type: "map",
+    fileFormat: "JPG",
+    fileSize: "2.6 MB",
+    thumbnailUrl: "/images/projects/flat-projects/surya-nagar-villa-plan.png",
+    downloadUrl: "/images/projects/flat-projects/surya-nagar-villa-plan.png",
+    description: {
+      en: "Architectural blueprint and layout of high-ceiling 3 BHK luxury duplex villa in Surya Nagar on 4.12 cents land.",
+      ta: "சூர்யா நகரில் 4.12 சென்ட் நிலத்தில் அமைந்த 3 BHK டூப்ளக்ஸ் சொகுசு வில்லா கட்டிட வரைபடம்.",
     },
   },
   {
@@ -289,6 +308,7 @@ export default function DownloadCenterClient() {
       fileSize: item.fileSize || "1.0 MB",
       thumbnailUrl: item.downloadUrl?.endsWith(".jpg") || item.downloadUrl?.endsWith(".png") || item.downloadUrl?.endsWith(".jpeg") ? item.downloadUrl : "/images/hero-poster.jpg",
       downloadUrl: item.downloadUrl,
+      brochureUrl: item.brochureUrl,
       description: {
         en: `${item.title?.en || ""} - ${item.badge || ""}`,
         ta: `${item.title?.ta || ""} - ${item.badge || ""}`,
@@ -331,14 +351,25 @@ export default function DownloadCenterClient() {
   }, [selectedCategory, selectedType, searchQuery]);
 
   const handleDownload = (item: DownloadItem) => {
-    // If it's a direct file path, trigger browser download
+    // 1. Download Layout
     const link = document.createElement("a");
     link.href = item.downloadUrl;
     link.download = `${item.id}.${item.fileFormat.toLowerCase()}`;
-    link.target = "_blank";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+
+    // 2. Download Brochure if present
+    if (item.brochureUrl) {
+      setTimeout(() => {
+        const bLink = document.createElement("a");
+        bLink.href = item.brochureUrl!;
+        bLink.setAttribute("download", "");
+        document.body.appendChild(bLink);
+        bLink.click();
+        document.body.removeChild(bLink);
+      }, 400);
+    }
   };
 
   return (
@@ -571,7 +602,7 @@ export default function DownloadCenterClient() {
 
           <div className="flex flex-col sm:flex-row items-center gap-4 shrink-0 w-full sm:w-auto">
             <a
-              href="https://wa.me/917708966452?text=Hello%20Surya%20Promoters,%20please%20send%20me%20the%20verified%20blueprint%20and%20patta%20documents%20package."
+              href="https://wa.me/917845716453?text=Hello%20Surya%20Promoters,%20please%20send%20me%20the%20verified%20blueprint%20and%20patta%20documents%20package."
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl bg-[#25D366] hover:bg-[#1EBE5B] text-white font-mono font-bold text-xs uppercase tracking-wider shadow-lg transition"

@@ -420,7 +420,7 @@ export default function ModernFeaturedProperties() {
                         <div className="flex items-center gap-2 pt-3">
                           {/* Primary Mobile Ad Action: WhatsApp Chat Button */}
                           <a
-                            href={`https://wa.me/917708966452?text=${encodeURIComponent(whatsappMsg)}`}
+                            href={`https://wa.me/917845716453?text=${encodeURIComponent(whatsappMsg)}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={(e) => e.stopPropagation()}
@@ -433,7 +433,7 @@ export default function ModernFeaturedProperties() {
 
                           {/* Quick Call Button */}
                           <a
-                            href="tel:+917708966452"
+                            href="tel:+91 78457 16453"
                             onClick={(e) => e.stopPropagation()}
                             className="h-9 w-9 flex items-center justify-center rounded-xl border border-gray-200 bg-gray-50 text-gray-700 hover:bg-[#EAB308] hover:border-[#EAB308] hover:text-[#0A0D12] transition shadow-2xs"
                             title="Call Surya Promoters"

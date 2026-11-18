@@ -11,7 +11,7 @@ export default function Footer() {
   const { language } = useLanguage();
   const { data: cmsData } = useCmsData();
   const company = cmsData?.company;
-  const phone = company?.phone || "+91 77089 66452";
+  const phone = company?.phone || "+91 78457 16453";
   const email = company?.email || "suryapromotersmdu@gmail.com";
   const address = company?.address || "120 Feet Road, Near Mattuthavani Bus Stand, K.K. Nagar Corridor, Madurai, Tamil Nadu 625020";
 

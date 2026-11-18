@@ -96,6 +96,7 @@ export interface CmsDownloadItem {
   fileType: string;
   fileSize: string;
   downloadUrl: string;
+  brochureUrl?: string;
   badge: string;
 }
 
