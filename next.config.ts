@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  outputFileTracingExcludes: {
+    "*": ["./public/**/*"],
+  },
   allowedDevOrigins: [
     "192.168.1.44",
     "192.168.1.*",
