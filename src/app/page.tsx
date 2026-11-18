@@ -24,6 +24,9 @@ import {
   CheckCircle2,
   ChevronRight,
   ChevronLeft,
+  ChevronDown,
+  Users,
+  Menu,
   X,
   Star,
   Play,
@@ -341,126 +344,42 @@ export default function HomePage() {
   const farmCount = ALL_PROJECTS.filter((p) => p.category === "farm").length;
 
   return (
-    <div className="min-h-screen bg-[#F3F4F6] text-[#0A0D12] font-sans antialiased flex flex-col selection:bg-[#EAB308] selection:text-[#0A0D12]">
+    <div className="min-h-screen bg-[#FAF8F3] text-[#0A0D12] font-sans antialiased flex selection:bg-[#EAB308] selection:text-[#0A0D12] overflow-x-hidden">
 
       {/* ------------------------------------------------------------------------- */}
-      {/* 1. TOP APP STORE WINDOW HEADER (Search & Quick Controls)                  */}
+      {/* LEFT VERTICAL APP STORE NAVIGATION BAR (Exact reference image styling)     */}
       {/* ------------------------------------------------------------------------- */}
-      <header className="sticky top-0 z-50 w-full bg-[#FFFFFF]/95 backdrop-blur-md border-b border-[#E5E7EB] shadow-xs select-none">
-        <div className="max-w-[1760px] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-
-          {/* Left Brand Identity: "S" Logo + Surya Promoters */}
-          <Link href="/" className="flex items-center  gap-1.5 sm:gap-2  shrink-0 group">
-            <div className="relative h-9 w-9 sm:h-10 sm:w-10 shrink-0 transition-transform duration-300 group-hover:scale-105">
+      <aside className="hidden md:flex md:w-56 lg:w-64 shrink-0 bg-gradient-to-b from-[#052617] via-[#083822] to-[#041D12] text-white flex-col justify-between py-6 px-3.5 select-none relative z-30 shadow-2xl border-r border-[#0A3D25]">
+        
+        {/* Top Section: Logo & Nav Links */}
+        <div className="space-y-5">
+          {/* Brand Identity: Exact Reference Image Golden Logo */}
+          <Link href="/" className="flex flex-col items-center text-center group cursor-pointer">
+            <div className="relative w-32 h-24 transition-transform duration-300 group-hover:scale-105">
               <Image
-                src="/images/surya-gold-logo.png"
-                alt="Surya Promoters Logo"
+                src="/images/reference/sidebar-logo.png"
+                alt="Surya Promoters Logo Estd 2010"
                 fill
                 priority
-                sizes="44px"
+                sizes="150px"
                 className="object-contain"
               />
             </div>
-            <div className="flex items-center -ml-2 sm:-ml-2.5">
-              <span className="font-black text-lg sm:text-xl text-[#0A0D12] group-hover:text-[#B45309] transition-colors leading-none flex items-center">
-                <span className="tracking-tighter">URYA</span>
-                <span className="ml-1.5 font-extrabold text-[#0A0D12] tracking-tight">PROMOTERS</span>
-              </span>
-              <span className="hidden sm:inline-flex ml-2 px-1.5 py-0.5 rounded-md text-[9px] font-black bg-[#FEF08A] text-[#854D0E] border border-amber-300 whitespace-nowrap">
-                ESTD. 2010
-              </span>
-            </div>
           </Link>
 
-          {/* Center: Search Bar (Microsoft Store Window Search) */}
-          <div className="hidden md:flex flex-1 max-w-xl mx-4 relative">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400 pointer-events-none" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={
-                language === "ta"
-                  ? "திட்டங்கள், இடங்கள், வணிக நிலங்களைத் தேடுங்கள்..."
-                  : "Search projects, locations, farm land, and more..."
-              }
-              className="w-full pl-10 pr-9 py-2 bg-neutral-100 hover:bg-neutral-100/80 focus:bg-white text-xs font-semibold text-neutral-800 placeholder-neutral-400 rounded-xl border border-neutral-200 focus:border-[#EAB308] focus:ring-2 focus:ring-[#EAB308]/20 outline-hidden transition-all"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 rounded-full text-neutral-400 hover:text-black cursor-pointer"
-              >
-                <X className="h-3.5 w-3.5" />
-              </button>
-            )}
-          </div>
-
-          {/* Right: Quick Controls, Language Switch & Action Buttons */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0 text-xs">
-
-            {/* IAF Veteran Trust Seal */}
-            <div className="hidden xl:flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-[#854D0E] font-bold">
-              <ShieldCheck className="h-3.5 w-3.5 text-[#B45309]" />
-              <span>16+ Yrs IAF Vet</span>
-            </div>
-
-            {/* Language Toggle */}
-            <button
-              onClick={toggleLanguage}
-              className="px-3 py-1 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-[#0A0D12] font-bold border border-neutral-200 transition-colors cursor-pointer"
-            >
-              {language === "en" ? "தமிழ்" : "English"}
-            </button>
-
-            {/* WhatsApp Direct */}
-            <a
-              href={`https://wa.me/${rawWhatsapp}?text=Hello%20Surya%20Promoters,%20I%20am%20interested%20in%20your%20Madurai%20projects.`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-bold transition-all shadow-xs cursor-pointer"
-            >
-              <MessageCircle className="h-3.5 w-3.5 fill-white" />
-              <span>WhatsApp</span>
-            </a>
-
-            {/* Call Now */}
-            <a
-              href={`tel:${phone}`}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#0A0D12] hover:bg-neutral-800 text-[#EAB308] font-bold transition-all shadow-xs cursor-pointer"
-            >
-              <Phone className="h-3.5 w-3.5 text-[#EAB308]" />
-              <span className="hidden xs:inline">{phone}</span>
-            </a>
-          </div>
-
-        </div>
-      </header>
-
-      {/* ------------------------------------------------------------------------- */}
-      {/* 2. MAIN APPLICATION STORE BODY (Left Vertical Nav + Content Window)       */}
-      {/* ------------------------------------------------------------------------- */}
-      <div className="flex-1 flex max-w-[1760px] w-full mx-auto overflow-hidden">
-
-        {/* LEFT VERTICAL APP STORE NAVIGATION BAR (Like Microsoft Store Left Rail - Desktop Only) */}
-        <aside className="hidden md:flex md:w-56 shrink-0 bg-[#FFFFFF] border-r border-[#E5E7EB] flex-col justify-between py-4 select-none">
-          <div className="space-y-1.5 px-2">
-
-            {/* Nav Item: Home */}
+          {/* Navigation Links (Match Reference Image exactly) */}
+          <div className="space-y-1.5 pt-1">
+            {/* Nav Item: Store Home */}
             <button
               onClick={() => setActiveTab("home")}
-              className={`w-full flex items-center gap-3 p-2.5 rounded-xl text-left transition-all cursor-pointer relative ${activeTab === "home"
-                  ? "bg-neutral-100 text-[#0A0D12] font-black"
-                  : "text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-semibold"
-                }`}
+              className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-2xl text-left transition-all cursor-pointer font-bold text-sm ${
+                activeTab === "home"
+                  ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
+                  : "text-[#E1ECE6] hover:bg-white/10 hover:text-white"
+              }`}
             >
-              {activeTab === "home" && (
-                <span className="absolute left-0 top-1/2 -translate-y-1/2 h-6 w-1 rounded-r-md bg-[#EAB308]" />
-              )}
-              <Home className={`h-5 w-5 shrink-0 ${activeTab === "home" ? "text-[#EAB308]" : "text-neutral-500"}`} />
-              <span className="hidden md:inline text-xs truncate">
-                {language === "ta" ? "முகப்பு" : "Store Home"}
-              </span>
+              <Home className={`h-5 w-5 shrink-0 ${activeTab === "home" ? "text-[#0A1C12]" : "text-white/80"}`} />
+              <span className="truncate">{language === "ta" ? "முகப்பு" : "Store Home"}</span>
             </button>
 
             {/* Nav Item: Our Projects */}
@@ -469,122 +388,202 @@ export default function HomePage() {
                 setActiveTab(activeTab === "projects" ? "home" : "projects");
                 setActiveCategory(null);
               }}
-              className={`w-full flex items-center gap-3 p-2.5 rounded-xl text-left transition-all cursor-pointer relative ${activeTab === "projects"
-                  ? "bg-neutral-100 text-[#0A0D12] font-black"
-                  : "text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-semibold"
-                }`}
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all cursor-pointer font-semibold text-xs sm:text-sm ${
+                activeTab === "projects"
+                  ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
+                  : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
+              }`}
             >
-              {activeTab === "projects" && (
-                <span className="absolute left-0 top-1/2 -translate-y-1/2 h-6 w-1 rounded-r-md bg-[#EAB308]" />
-              )}
-              <Building2 className={`h-5 w-5 shrink-0 ${activeTab === "projects" ? "text-[#B45309]" : "text-neutral-500"}`} />
-              <span className="hidden md:inline text-xs truncate">
-                {language === "ta" ? "திட்டங்கள்" : "Our Projects"}
-              </span>
+              <Building2 className={`h-5 w-5 shrink-0 ${activeTab === "projects" ? "text-[#0A1C12]" : "text-white/70"}`} />
+              <span className="truncate">{language === "ta" ? "திட்டங்கள்" : "Our Projects"}</span>
             </button>
 
             {/* Nav Item: Site Location */}
             <button
               onClick={() => setActiveTab(activeTab === "location" ? "home" : "location")}
-              className={`w-full flex items-center gap-3 p-2.5 rounded-xl text-left transition-all cursor-pointer relative ${activeTab === "location"
-                  ? "bg-neutral-100 text-[#0A0D12] font-black"
-                  : "text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-semibold"
-                }`}
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all cursor-pointer font-semibold text-xs sm:text-sm ${
+                activeTab === "location"
+                  ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
+                  : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
+              }`}
             >
-              {activeTab === "location" && (
-                <span className="absolute left-0 top-1/2 -translate-y-1/2 h-6 w-1 rounded-r-md bg-[#EAB308]" />
-              )}
-              <MapPin className={`h-5 w-5 shrink-0 ${activeTab === "location" ? "text-blue-600" : "text-neutral-500"}`} />
-              <span className="hidden md:inline text-xs truncate">
-                {language === "ta" ? "தள அமைவிடம்" : "Site Location"}
-              </span>
+              <MapPin className={`h-5 w-5 shrink-0 ${activeTab === "location" ? "text-[#0A1C12]" : "text-white/70"}`} />
+              <span className="truncate">{language === "ta" ? "தள அமைவிடம்" : "Site Location"}</span>
             </button>
 
-            {/* Nav Item: Gallery */}
+            {/* Nav Item: Gallery Folders */}
             <button
               onClick={() => setActiveTab(activeTab === "gallery" ? "home" : "gallery")}
-              className={`w-full flex items-center gap-3 p-2.5 rounded-xl text-left transition-all cursor-pointer relative ${activeTab === "gallery"
-                  ? "bg-neutral-100 text-[#0A0D12] font-black"
-                  : "text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-semibold"
-                }`}
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all cursor-pointer font-semibold text-xs sm:text-sm ${
+                activeTab === "gallery"
+                  ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
+                  : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
+              }`}
             >
-              {activeTab === "gallery" && (
-                <span className="absolute left-0 top-1/2 -translate-y-1/2 h-6 w-1 rounded-r-md bg-[#EAB308]" />
-              )}
-              <Camera className={`h-5 w-5 shrink-0 ${activeTab === "gallery" ? "text-purple-600" : "text-neutral-500"}`} />
-              <span className="hidden md:inline text-xs truncate">
-                {language === "ta" ? "புகைப்படங்கள் & வீடியோ" : "Gallery Folders"}
-              </span>
+              <Camera className={`h-5 w-5 shrink-0 ${activeTab === "gallery" ? "text-[#0A1C12]" : "text-white/70"}`} />
+              <span className="truncate">{language === "ta" ? "புகைப்படங்கள் & வீடியோ" : "Gallery Folders"}</span>
             </button>
 
             {/* Nav Item: About Company */}
             <button
-              onClick={() => setActiveTab(activeTab === "about" ? "home" : "about")}
-              className={`w-full flex items-center gap-3 p-2.5 rounded-xl text-left transition-all cursor-pointer relative ${activeTab === "about"
-                  ? "bg-neutral-100 text-[#0A0D12] font-black"
-                  : "text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-semibold"
-                }`}
+              onClick={() => setActiveTab("about")}
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all cursor-pointer font-semibold text-xs sm:text-sm ${
+                activeTab === "about"
+                  ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
+                  : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
+              }`}
             >
-              {activeTab === "about" && (
-                <span className="absolute left-0 top-1/2 -translate-y-1/2 h-6 w-1 rounded-r-md bg-[#EAB308]" />
-              )}
-              <ShieldCheck className={`h-5 w-5 shrink-0 ${activeTab === "about" ? "text-emerald-700" : "text-neutral-500"}`} />
-              <span className="hidden md:inline text-xs truncate">
-                {language === "ta" ? "நிறுவனம் பற்றி" : "About Company"}
-              </span>
+              <ShieldCheck className={`h-5 w-5 shrink-0 ${activeTab === "about" ? "text-[#0A1C12]" : "text-white/70"}`} />
+              <span className="truncate">{language === "ta" ? "நிறுவனம் பற்றி" : "About Company"}</span>
             </button>
 
             {/* Nav Item: Download Layout */}
             <button
-              onClick={() => setActiveTab(activeTab === "download" ? "home" : "download")}
-              className={`w-full flex items-center gap-3 p-2.5 rounded-xl text-left transition-all cursor-pointer relative ${activeTab === "download"
-                  ? "bg-neutral-100 text-[#0A0D12] font-black"
-                  : "text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-semibold"
-                }`}
+              onClick={() => setActiveTab("download")}
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all cursor-pointer font-semibold text-xs sm:text-sm ${
+                activeTab === "download"
+                  ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
+                  : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
+              }`}
             >
-              {activeTab === "download" && (
-                <span className="absolute left-0 top-1/2 -translate-y-1/2 h-6 w-1 rounded-r-md bg-[#EAB308]" />
-              )}
-
-
-              <Download className={`h-5 w-5 shrink-0 ${activeTab === "download" ? "text-amber-700" : "text-neutral-500"}`} />
-              <span className="hidden md:inline text-xs truncate">
-                {language === "ta" ? "வரைபடம் பதிவிறக்கம்" : "Download Layout"}
-              </span>
+              <Download className={`h-5 w-5 shrink-0 ${activeTab === "download" ? "text-[#0A1C12]" : "text-white/70"}`} />
+              <span className="truncate">{language === "ta" ? "வரைபடம் பதிவிறக்கம்" : "Download Layout"}</span>
             </button>
 
-            {/* Nav Item: Contact */}
+            {/* Nav Item: Contact Us */}
             <button
-              onClick={() => setActiveTab(activeTab === "contact" ? "home" : "contact")}
-              className={`w-full flex items-center gap-3 p-2.5 rounded-xl text-left transition-all cursor-pointer relative ${activeTab === "contact"
-                  ? "bg-neutral-100 text-[#0A0D12] font-black"
-                  : "text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-semibold"
-                }`}
+              onClick={() => setActiveTab("contact")}
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all cursor-pointer font-semibold text-xs sm:text-sm ${
+                activeTab === "contact"
+                  ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
+                  : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
+              }`}
             >
-              {activeTab === "contact" && (
-                <span className="absolute left-0 top-1/2 -translate-y-1/2 h-6 w-1 rounded-r-md bg-[#EAB308]" />
-              )}
-              <PhoneCall className={`h-5 w-5 shrink-0 ${activeTab === "contact" ? "text-[#B45309]" : "text-neutral-500"}`} />
-              <span className="hidden md:inline text-xs truncate">
-                {language === "ta" ? "நேரடி தொடர்பு" : "Contact Us"}
-              </span>
-            </button>
-
-          </div>
-
-          {/* Bottom Rail: Direct Communication Link */}
-          <div className="px-2 pt-3 border-t border-neutral-100 space-y-1">
-            <button
-              onClick={() => setIsEnquiryModalOpen(true)}
-              className="w-full flex items-center gap-3 p-2.5 rounded-xl text-left text-neutral-700 hover:bg-amber-50 hover:text-[#B45309] transition-colors cursor-pointer font-bold"
-            >
-              <PhoneCall className="h-5 w-5 text-[#B45309] shrink-0" />
-              <span className="hidden md:inline text-xs truncate">
-                {language === "ta" ? "நேரடி தொடர்பு" : "Direct Contact"}
-              </span>
+              <PhoneCall className={`h-5 w-5 shrink-0 ${activeTab === "contact" ? "text-[#0A1C12]" : "text-white/70"}`} />
+              <span className="truncate">{language === "ta" ? "நேரடி தொடர்பு" : "Contact Us"}</span>
             </button>
           </div>
-        </aside>
+        </div>
+
+        {/* Bottom Section: Golden Skyline Illustration & Direct Contact Card */}
+        <div className="mt-auto pt-3 space-y-3">
+          {/* Golden Architectural Skyline Line-art */}
+          <div className="relative w-full h-20 overflow-hidden opacity-85 pointer-events-none">
+            <Image
+              src="/images/reference/sidebar-skyline-v2.png"
+              alt=""
+              fill
+              className="object-contain object-bottom"
+            />
+          </div>
+
+          {/* Direct Contact Pill Card */}
+          <div className="p-2.5 rounded-2xl bg-[#092D1B]/95 border border-[#E2B755]/40 flex items-center justify-between shadow-lg">
+            <a href={`tel:${phone}`} className="flex items-center gap-2.5 min-w-0 group/call">
+              <div className="w-8 h-8 rounded-full bg-[#051F12] border border-[#E2B755]/50 flex items-center justify-center shrink-0 text-[#E5A922] group-hover/call:scale-105 transition-transform">
+                <Phone className="h-4 w-4" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-[10px] text-[#A3C2B0] font-medium leading-tight">Direct Contact</p>
+                <p className="text-xs font-bold text-white truncate leading-tight">{phone}</p>
+              </div>
+            </a>
+            <button
+              onClick={() => setActiveTab("contact")}
+              className="w-7 h-7 rounded-full bg-[#E5A922] text-[#0A1C12] flex items-center justify-center shrink-0 hover:scale-105 transition-transform cursor-pointer shadow-xs"
+              title="Contact Us"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      {/* ------------------------------------------------------------------------- */}
+      {/* RIGHT MAIN WINDOW CANVAS (Header + Dynamic Content Canvas)                */}
+      {/* ------------------------------------------------------------------------- */}
+      <div className="flex-1 flex flex-col min-w-0 bg-[#FAF8F3]">
+
+        {/* TOP APP STORE WINDOW HEADER (Search & Quick Controls) */}
+        <header className="sticky top-0 z-40 w-full bg-[#FAF8F3]/95 backdrop-blur-md px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-4 border-b border-[#EDE6D4] select-none">
+          {/* Mobile Brand Identity */}
+          <div className="flex md:hidden items-center gap-2">
+            <div className="relative h-8 w-8 shrink-0">
+              <Image src="/images/surya-gold-logo.png" alt="Logo" fill className="object-contain" />
+            </div>
+            <span className="font-extrabold text-xs text-[#0A2617] tracking-tight">SURYA PROMOTERS</span>
+          </div>
+
+          {/* Center Search Pill */}
+          <div className="flex-1 max-w-xl relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400 pointer-events-none" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && searchQuery.trim()) {
+                  setActiveTab("projects");
+                }
+              }}
+              placeholder={
+                language === "ta"
+                  ? "திட்டங்கள், இடங்கள், வணிக நிலங்களைத் தேடுங்கள்..."
+                  : "Search projects, locations, farmland, and more..."
+              }
+              className="w-full pl-11 pr-12 py-2.5 bg-white text-xs sm:text-sm font-medium text-neutral-800 placeholder-neutral-400 rounded-full border border-neutral-200/90 shadow-[0_2px_12px_rgba(0,0,0,0.04)] focus:outline-none focus:border-[#E5A922] focus:ring-2 focus:ring-[#E5A922]/20 transition-all"
+            />
+            <button
+              onClick={() => {
+                if (searchQuery.trim()) {
+                  setActiveTab("projects");
+                }
+              }}
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[#E5A922] hover:bg-[#D49818] text-[#0A1C12] flex items-center justify-center transition-all cursor-pointer shadow-xs"
+              title="Search"
+            >
+              <Search className="h-3.5 w-3.5 text-[#0A1C12]" />
+            </button>
+          </div>
+
+          {/* Right Quick Controls */}
+          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+            {/* IAF Veteran Trust Seal */}
+            <div className="hidden lg:flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F3EEDF] border border-[#DDD4C0] text-[#705820] text-xs font-bold shadow-xs">
+              <ShieldCheck className="h-3.5 w-3.5 text-[#9E731C]" />
+              <span>16+ Yrs IAF Vet</span>
+            </div>
+
+            {/* Language Toggle Dropdown Pill */}
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-neutral-200 hover:border-neutral-300 text-[#0A1C12] text-xs font-semibold shadow-xs transition-colors cursor-pointer"
+            >
+              <span>{language === "en" ? "தமிழ்" : "English"}</span>
+              <ChevronDown className="h-3.5 w-3.5 text-neutral-500" />
+            </button>
+
+            {/* WhatsApp Direct */}
+            <a
+              href={`https://wa.me/${rawWhatsapp}?text=Hello%20Surya%20Promoters,%20I%20am%20interested%20in%20your%20Madurai%20projects.`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold transition-all shadow-xs cursor-pointer"
+            >
+              <MessageCircle className="h-4 w-4 fill-white" />
+              <span className="hidden sm:inline">WhatsApp</span>
+            </a>
+
+            {/* Phone Direct */}
+            <a
+              href={`tel:${phone}`}
+              className="w-9 h-9 rounded-full bg-[#072818] hover:bg-[#0B3D26] text-[#E5A922] flex items-center justify-center transition-all shadow-xs cursor-pointer"
+              title={`Call ${phone}`}
+            >
+              <Phone className="h-4 w-4 text-[#E5A922]" />
+            </a>
+          </div>
+        </header>
 
         {/* MAIN STORE CONTENT CANVAS */}
         <main className="flex-1 overflow-y-auto p-3.5 sm:p-6 lg:p-8 space-y-6 sm:space-y-8 pb-28 md:pb-8">
@@ -596,162 +595,292 @@ export default function HomePage() {
             <div className="space-y-6 sm:space-y-8 animate-fadeIn">
 
               {/* ------------------------------------------------------------------- */}
-              {/* THE 6 MAIN APP-STORE ICONS (Apps we think you'll love row)           */}
+              {/* HERO BANNER SECTION (Exact reference image styling)                */}
               {/* ------------------------------------------------------------------- */}
-              <section className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-sm sm:text-lg font-black text-neutral-900 flex items-center gap-1.5">
-                    <span>{language === "ta" ? "பிரதான சேவைகள் & அம்சங்கள்" : "Explore Surya Promoters (6 Main Icons)"}</span>
-                    <ChevronRight className="h-4 w-4 text-neutral-400 shrink-0" />
-                  </h2>
+              <section className="relative w-full rounded-b-[40px] overflow-hidden min-h-[220px] sm:min-h-[260px] lg:min-h-[290px] px-4 sm:px-8 lg:px-10 py-6 sm:py-8 flex items-center justify-between">
+                {/* Right Luxury Villa Artwork with smooth fade to left */}
+                <div className="absolute right-0 top-0 bottom-0 w-full sm:w-[65%] lg:w-[58%] -z-10 pointer-events-none overflow-hidden">
+                  <Image
+                    src="/images/reference/hero-villa-v2.png"
+                    alt="Surya Promoters Luxury Villa Architecture"
+                    fill
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 800px"
+                    className="object-cover object-right"
+                  />
                 </div>
 
-                {/* The 6 Rounded Squircle App Tiles */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3.5">
+                {/* Left Text Content */}
+                <div className="max-w-xl z-10">
+                  <div className="flex items-center gap-2.5 mb-1.5">
+                    <p className="text-xs sm:text-sm font-bold text-[#BD8D1C] tracking-wide">
+                      {language === "ta" ? "சிறந்த நாளைய விடியலுக்கான கட்டுமானம்" : "Building a Better Tomorrow"}
+                    </p>
+                    <span className="w-8 sm:w-14 h-[1.5px] bg-[#BD8D1C]/60 rounded-full" />
+                  </div>
+                  <h1 className="text-3xl sm:text-5xl lg:text-5xl font-black text-[#0A2617] tracking-tight leading-tight">
+                    {language === "ta" ? "சூர்யா புரமோட்டர்ஸ்" : "Surya Promoters"}
+                  </h1>
+                  <p className="mt-2 text-xs sm:text-sm lg:text-base font-semibold text-[#3D4F45] max-w-md leading-relaxed">
+                    {language === "ta" ? "2010 முதல் உங்களின் நம்பிக்கைக்குரிய ரியல் எஸ்டேட் பங்குதாரர்" : "Your Trusted Real Estate Partner Since 2010"}
+                  </p>
+                </div>
+              </section>
 
-                  {/* App Tile 1: Our Projects */}
+              {/* ------------------------------------------------------------------- */}
+              {/* THE 6 MAIN APP-STORE ICONS (Explore Surya Promoters - 6 Main Icons) */}
+              {/* ------------------------------------------------------------------- */}
+              <section className="bg-white/85 backdrop-blur-xs rounded-[32px] sm:rounded-[36px] border border-[#EBE4D5] shadow-[0_8px_30px_rgba(10,40,20,0.04)] p-4 sm:p-6 lg:p-8 space-y-5">
+                
+                {/* Section Header with Green Accent Bar + Cursive Golden Motto */}
+                <div className="flex items-center justify-between pb-1">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-1.5 h-6 rounded-full bg-[#0E5934]" />
+                    <h2 className="text-base sm:text-xl font-black text-[#0A2617]">
+                      {language === "ta" ? "பிரதான சேவைகள் & அம்சங்கள் (6 முக்கிய பிரிவுகள்)" : "Explore Surya Promoters (6 Main Icons)"}
+                    </h2>
+                  </div>
+                  <div className="font-script text-base sm:text-xl text-[#BD8D1C] font-bold tracking-wide select-none">
+                    Dream • Plan • Own
+                  </div>
+                </div>
+
+                {/* The 6 Wide Landscape Cards (2 Columns x 3 Rows) */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4 lg:gap-5">
+
+                  {/* Card 1: Our Projects */}
                   <button
                     onClick={() => {
                       setActiveTab("projects");
                       setActiveCategory(null);
                     }}
-                    className="p-3.5 sm:p-4 rounded-2xl border text-left transition-all duration-300 cursor-pointer group flex flex-col justify-between bg-[#FFFFFF] hover:bg-neutral-50 border-neutral-200/80 shadow-xs hover:border-[#EAB308]/60 hover:shadow-md"
+                    className="group relative overflow-hidden rounded-3xl p-3.5 sm:p-4 text-left border border-[#F6DEC0] bg-gradient-to-r from-[#FFF8EB] via-[#FFF3DD] to-[#FDEED2] hover:shadow-md hover:border-[#EAB308]/60 transition-all duration-300 flex items-center justify-between cursor-pointer"
                   >
-                    <div className="flex items-center justify-between mb-2.5 sm:mb-3">
-                      <div className="h-11 w-11 sm:h-13 sm:w-13 rounded-2xl bg-amber-50 text-[#B45309] border border-amber-200 flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
-                        <Building2 className="h-5 w-5 sm:h-6 sm:w-6" />
+                    <div className="flex items-center gap-3 sm:gap-3.5 z-10 min-w-0 flex-1">
+                      <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#E5A922] text-white flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+                        <Building2 className="w-5 h-5 sm:w-6 sm:h-6" />
                       </div>
-                      <span className="px-1.5 sm:px-2 py-0.5 rounded-full text-[8px] sm:text-[9px] font-black bg-[#FEF08A] text-[#854D0E]">
-                        3 Types
-                      </span>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-bold text-sm sm:text-base text-[#0D2317] group-hover:text-[#B45309] transition-colors leading-tight">
+                          {language === "ta" ? "எங்கள் திட்டங்கள்" : "Our Projects"}
+                        </h3>
+                        <p className="text-[11px] sm:text-xs text-[#5D6B63] mt-0.5 leading-snug">
+                          {language === "ta" ? "வீடு, வணிகம் & பண்ணை மனைகள்" : "Residential, Commercial & Farm"}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-black text-xs sm:text-sm text-neutral-900 group-hover:text-[#B45309] transition-colors">
-                        {language === "ta" ? "எங்கள் திட்டங்கள்" : "Our Projects"}
-                      </h3>
-                      <p className="text-[9px] sm:text-[10px] text-neutral-500 mt-0.5 line-clamp-1">
-                        {language === "ta" ? "3 பிரிவுகள் · 9 தளங்கள்" : "Residential, Commercial & Farm"}
-                      </p>
+                    <div className="flex items-center gap-2 sm:gap-2.5 z-10 shrink-0 pl-1">
+                      <div className="relative w-20 sm:w-24 h-12 sm:h-14 overflow-hidden pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity">
+                        <Image
+                          src="/images/reference/card-projects-blended.png"
+                          alt=""
+                          fill
+                          className="object-contain object-right"
+                        />
+                      </div>
+                      <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#B57C17] text-white flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-xs">
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </div>
                     </div>
                   </button>
 
-                  {/* App Tile 2: Site Location */}
+                  {/* Card 2: Site Location */}
                   <button
                     onClick={() => setActiveTab("location")}
-                    className="p-3.5 sm:p-4 rounded-2xl border text-left transition-all duration-300 cursor-pointer group flex flex-col justify-between bg-[#FFFFFF] hover:bg-neutral-50 border-neutral-200/80 shadow-xs hover:border-blue-400/60 hover:shadow-md"
+                    className="group relative overflow-hidden rounded-3xl p-3.5 sm:p-4 text-left border border-[#CFECD7] bg-gradient-to-r from-[#F2FAF4] via-[#ECF7EE] to-[#E3F4E8] hover:shadow-md hover:border-emerald-500/60 transition-all duration-300 flex items-center justify-between cursor-pointer"
                   >
-                    <div className="flex items-center justify-between mb-2.5 sm:mb-3">
-                      <div className="h-11 w-11 sm:h-13 sm:w-13 rounded-2xl bg-blue-50 text-blue-600 border border-blue-200 flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
-                        <MapPin className="h-5 w-5 sm:h-6 sm:w-6" />
+                    <div className="flex items-center gap-3 sm:gap-3.5 z-10 min-w-0 flex-1">
+                      <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#0FA958] text-white flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+                        <MapPin className="w-5 h-5 sm:w-6 sm:h-6" />
                       </div>
-                      <span className="px-1.5 sm:px-2 py-0.5 rounded-full text-[8px] sm:text-[9px] font-black bg-blue-100 text-blue-700">
-                        GPS Live
-                      </span>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-bold text-sm sm:text-base text-[#0D2317] group-hover:text-emerald-700 transition-colors leading-tight">
+                          {language === "ta" ? "தள அமைவிடம்" : "Site Location"}
+                        </h3>
+                        <p className="text-[11px] sm:text-xs text-[#5D6B63] mt-0.5 leading-snug">
+                          {language === "ta" ? "3D & GPS நேரலை வரைபடங்கள்" : "3D Cadastal & GPS Maps"}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-black text-xs sm:text-sm text-neutral-900 group-hover:text-blue-600 transition-colors">
-                        {language === "ta" ? "தள அமைவிடம்" : "Site Location"}
-                      </h3>
-                      <p className="text-[9px] sm:text-[10px] text-neutral-500 mt-0.5 line-clamp-1">
-                        {language === "ta" ? "கூகிள் மேப்ஸ் & 3D வரைபடங்கள்" : "3D & GPS Maps"}
-                      </p>
+                    <div className="flex items-center gap-2 sm:gap-2.5 z-10 shrink-0 pl-1">
+                      <div className="relative w-20 sm:w-24 h-12 sm:h-14 overflow-hidden pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity">
+                        <Image
+                          src="/images/reference/card-location-blended.png"
+                          alt=""
+                          fill
+                          className="object-contain object-right"
+                        />
+                      </div>
+                      <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#084B29] text-white flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-xs">
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </div>
                     </div>
                   </button>
 
-                  {/* App Tile 3: Gallery */}
+                  {/* Card 3: Gallery */}
                   <button
                     onClick={() => setActiveTab("gallery")}
-                    className="p-3.5 sm:p-4 rounded-2xl border text-left transition-all duration-300 cursor-pointer group flex flex-col justify-between bg-[#FFFFFF] hover:bg-neutral-50 border-neutral-200/80 shadow-xs hover:border-purple-400/60 hover:shadow-md"
+                    className="group relative overflow-hidden rounded-3xl p-3.5 sm:p-4 text-left border border-[#E5CEFD] bg-gradient-to-r from-[#FAF4FF] via-[#F4EAFD] to-[#EFE2FE] hover:shadow-md hover:border-purple-400/60 transition-all duration-300 flex items-center justify-between cursor-pointer"
                   >
-                    <div className="flex items-center justify-between mb-2.5 sm:mb-3">
-                      <div className="h-11 w-11 sm:h-13 sm:w-13 rounded-2xl bg-purple-50 text-purple-600 border border-purple-200 flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
-                        <Camera className="h-5 w-5 sm:h-6 sm:w-6" />
+                    <div className="flex items-center gap-3 sm:gap-3.5 z-10 min-w-0 flex-1">
+                      <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#8722CD] text-white flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+                        <Camera className="w-5 h-5 sm:w-6 sm:h-6" />
                       </div>
-                      <span className="px-1.5 sm:px-2 py-0.5 rounded-full text-[8px] sm:text-[9px] font-black bg-purple-100 text-purple-700">
-                        HD Media
-                      </span>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-bold text-sm sm:text-base text-[#0D2317] group-hover:text-purple-700 transition-colors leading-tight">
+                          {language === "ta" ? "புகைப்படங்கள் & வீடியோ" : "Gallery"}
+                        </h3>
+                        <p className="text-[11px] sm:text-xs text-[#5D6B63] mt-0.5 leading-snug">
+                          {language === "ta" ? "வீடியோ & புகைப்பட ஆல்பங்கள்" : "Videos & Photos Folders"}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-black text-xs sm:text-sm text-neutral-900 group-hover:text-purple-600 transition-colors">
-                        {language === "ta" ? "புகைப்படங்கள் & வீடியோ" : "Gallery"}
-                      </h3>
-                      <p className="text-[9px] sm:text-[10px] text-neutral-500 mt-0.5 line-clamp-1">
-                        {language === "ta" ? "கோப்பு முறை மையம்" : "Videos & Photos Folders"}
-                      </p>
+                    <div className="flex items-center gap-2 sm:gap-2.5 z-10 shrink-0 pl-1">
+                      <div className="relative w-20 sm:w-24 h-12 sm:h-14 overflow-hidden pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity">
+                        <Image
+                          src="/images/reference/card-gallery-blended.png"
+                          alt=""
+                          fill
+                          className="object-contain object-right"
+                        />
+                      </div>
+                      <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#581395] text-white flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-xs">
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </div>
                     </div>
                   </button>
 
-                  {/* App Tile 4: About Company */}
+                  {/* Card 4: About Company */}
                   <button
                     onClick={() => setActiveTab("about")}
-                    className="p-3.5 sm:p-4 rounded-2xl border text-left transition-all duration-300 cursor-pointer group flex flex-col justify-between bg-[#FFFFFF] hover:bg-neutral-50 border-neutral-200/80 shadow-xs hover:border-emerald-500/60 hover:shadow-md"
+                    className="group relative overflow-hidden rounded-3xl p-3.5 sm:p-4 text-left border border-[#D0ECD0] bg-gradient-to-r from-[#F3FAF2] via-[#EAF6E9] to-[#E3F4E0] hover:shadow-md hover:border-emerald-500/60 transition-all duration-300 flex items-center justify-between cursor-pointer"
                   >
-                    <div className="flex items-center justify-between mb-2.5 sm:mb-3">
-                      <div className="h-11 w-11 sm:h-13 sm:w-13 rounded-2xl bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
-                        <ShieldCheck className="h-5 w-5 sm:h-6 sm:w-6" />
+                    <div className="flex items-center gap-3.5 sm:gap-4 z-10 min-w-0 flex-1">
+                      <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#24B24B] text-white flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+                        <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6" />
                       </div>
-                      <span className="px-1.5 sm:px-2 py-0.5 rounded-full text-[8px] sm:text-[9px] font-black bg-emerald-100 text-emerald-800">
-                        IAF Vet
-                      </span>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-bold text-sm sm:text-base text-[#0D2317] group-hover:text-emerald-700 transition-colors leading-tight">
+                          {language === "ta" ? "நிறுவனம் பற்றி" : "About Company"}
+                        </h3>
+                        <p className="text-[11px] sm:text-xs text-[#5D6B63] mt-0.5 leading-snug">
+                          {language === "ta" ? "நிறுவனர் & 16+ வருட பாரம்பரியம்" : "Founder & 16+ Yrs Legacy"}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-black text-xs sm:text-sm text-neutral-900 group-hover:text-emerald-700 transition-colors">
-                        {language === "ta" ? "நிறுவனம் பற்றி" : "About Company"}
-                      </h3>
-                      <p className="text-[9px] sm:text-[10px] text-neutral-500 mt-0.5 line-clamp-1">
-                        {language === "ta" ? "நிறுவனர் & 16+ வரலாறு" : "Founder & 16+ Yrs Legacy"}
-                      </p>
+                    <div className="flex items-center gap-2 sm:gap-2.5 z-10 shrink-0 pl-1">
+                      <div className="relative w-20 sm:w-24 h-12 sm:h-14 overflow-hidden pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity">
+                        <Image
+                          src="/images/reference/card-about-blended.png"
+                          alt=""
+                          fill
+                          className="object-contain object-right"
+                        />
+                      </div>
+                      <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#0C582F] text-white flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-xs">
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </div>
                     </div>
                   </button>
 
-                  {/* App Tile 5: Download Layout */}
+                  {/* Card 5: Download Layout */}
                   <button
                     onClick={() => setActiveTab("download")}
-                    className="p-3.5 sm:p-4 rounded-2xl border text-left transition-all duration-300 cursor-pointer group flex flex-col justify-between bg-[#FFFFFF] hover:bg-neutral-50 border-neutral-200/80 shadow-xs hover:border-amber-500/60 hover:shadow-md"
+                    className="group relative overflow-hidden rounded-3xl p-3.5 sm:p-4 text-left border border-[#FAD3B8] bg-gradient-to-r from-[#FFF5ED] via-[#FEEFE4] to-[#FDE6D5] hover:shadow-md hover:border-amber-500/60 transition-all duration-300 flex items-center justify-between cursor-pointer"
                   >
-                    <div className="flex items-center justify-between mb-2.5 sm:mb-3">
-                      <div className="h-11 w-11 sm:h-13 sm:w-13 rounded-2xl bg-amber-50 text-amber-700 border border-amber-200 flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
-                        <Download className="h-5 w-5 sm:h-6 sm:w-6" />
+                    <div className="flex items-center gap-3 sm:gap-3.5 z-10 min-w-0 flex-1">
+                      <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#F57C00] text-white flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+                        <Download className="w-5 h-5 sm:w-6 sm:h-6" />
                       </div>
-                      <span className="px-1.5 sm:px-2 py-0.5 rounded-full text-[8px] sm:text-[9px] font-black bg-amber-100 text-amber-800">
-                        PDF Hub
-                      </span>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-bold text-sm sm:text-base text-[#0D2317] group-hover:text-amber-700 transition-colors leading-tight">
+                          {language === "ta" ? "வரைபடம் பதிவிறக்கம்" : "Download Layout"}
+                        </h3>
+                        <p className="text-[11px] sm:text-xs text-[#5D6B63] mt-0.5 leading-snug">
+                          {language === "ta" ? "புளூபிரிண்ட், வரைபடம், PDF கையேடுகள்" : "Blueprints, Layouts & PDFs"}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-black text-xs sm:text-sm text-neutral-900 group-hover:text-amber-700 transition-colors">
-                        {language === "ta" ? "வரைபடம் பதிவிறக்கம்" : "Download Layout"}
-                      </h3>
-                      <p className="text-[9px] sm:text-[10px] text-neutral-500 mt-0.5 line-clamp-1">
-                        {language === "ta" ? "புளூபிரிண்ட், வரைபடம், கையேடுகள்" : "Blueprints, Layouts & PDFs"}
-                      </p>
+                    <div className="flex items-center gap-2 sm:gap-2.5 z-10 shrink-0 pl-1">
+                      <div className="relative w-20 sm:w-24 h-12 sm:h-14 overflow-hidden pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity">
+                        <Image
+                          src="/images/reference/card-download-blended.png"
+                          alt=""
+                          fill
+                          className="object-contain object-right"
+                        />
+                      </div>
+                      <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#B35309] text-white flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-xs">
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </div>
                     </div>
                   </button>
 
-                  {/* App Tile 6: Contact Us */}
+                  {/* Card 6: Contact Us */}
                   <button
                     onClick={() => setActiveTab("contact")}
-                    className="p-3.5 sm:p-4 rounded-2xl border text-left transition-all duration-300 cursor-pointer group flex flex-col justify-between bg-[#FFFFFF] hover:bg-neutral-50 border-neutral-200/80 shadow-xs hover:border-[#EAB308]/60 hover:shadow-md"
+                    className="group relative overflow-hidden rounded-3xl p-3.5 sm:p-4 text-left border border-[#C6EAE4] bg-gradient-to-r from-[#EDF8F6] via-[#E4F5F2] to-[#DBF1EE] hover:shadow-md hover:border-teal-500/60 transition-all duration-300 flex items-center justify-between cursor-pointer"
                   >
-                    <div className="flex items-center justify-between mb-2.5 sm:mb-3">
-                      <div className="h-11 w-11 sm:h-13 sm:w-13 rounded-2xl bg-amber-50 text-[#B45309] border border-[#EAB308] flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
-                        <PhoneCall className="h-5 w-5 sm:h-6 sm:w-6" />
+                    <div className="flex items-center gap-3 sm:gap-3.5 z-10 min-w-0 flex-1">
+                      <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#00897B] text-white flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+                        <PhoneCall className="w-5 h-5 sm:w-6 sm:h-6" />
                       </div>
-                      <span className="px-1.5 sm:px-2 py-0.5 rounded-full text-[8px] sm:text-[9px] font-black bg-[#FEF08A] text-[#854D0E]">
-                        24/7 Live
-                      </span>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-bold text-sm sm:text-base text-[#0D2317] group-hover:text-teal-700 transition-colors leading-tight">
+                          {language === "ta" ? "நேரடி தொடர்பு" : "Contact Us"}
+                        </h3>
+                        <p className="text-[11px] sm:text-xs text-[#5D6B63] mt-0.5 leading-snug">
+                          {language === "ta" ? "அழைப்பு, வாட்ஸ்அப் & அலுவலகம்" : "Phone, WhatsApp & Office"}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-black text-xs sm:text-sm text-neutral-900 group-hover:text-[#B45309] transition-colors">
-                        {language === "ta" ? "நேரடி தொடர்பு" : "Contact Us"}
-                      </h3>
-                      <p className="text-[9px] sm:text-[10px] text-neutral-500 mt-0.5 line-clamp-1">
-                        {language === "ta" ? "அழைப்பு, வாட்ஸ்அப் & அலுவலகம்" : "Phone, WhatsApp & Office"}
-                      </p>
+                    <div className="flex items-center gap-2 sm:gap-2.5 z-10 shrink-0 pl-1">
+                      <div className="relative w-20 sm:w-24 h-12 sm:h-14 overflow-hidden pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity">
+                        <Image
+                          src="/images/reference/card-contact-blended.png"
+                          alt=""
+                          fill
+                          className="object-contain object-right"
+                        />
+                      </div>
+                      <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#05483F] text-white flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-xs">
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </div>
                     </div>
                   </button>
-
                 </div>
               </section>
+
+              {/* Trust Badges Bar (Trusted Builder | Quality Assurance | Customer First) */}
+              <div className="pt-1 select-none">
+                <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs sm:text-sm font-semibold text-[#294233]">
+                  <div className="flex items-center gap-2">
+                    <Home className="h-4 w-4 text-[#BD8D1C]" />
+                    <span>{language === "ta" ? "நம்பகமான கட்டுநர்" : "Trusted Builder"}</span>
+                  </div>
+                  <span className="hidden sm:inline text-neutral-300">|</span>
+                  <div className="flex items-center gap-2">
+                    <ShieldCheck className="h-4 w-4 text-[#0E5934]" />
+                    <span>{language === "ta" ? "தர உத்தரவாதம்" : "Quality Assurance"}</span>
+                  </div>
+                  <span className="hidden sm:inline text-neutral-300">|</span>
+                  <div className="flex items-center gap-2">
+                    <Users className="h-4 w-4 text-[#BD8D1C]" />
+                    <span>{language === "ta" ? "வாடிக்கையாளர் முதன்மை" : "Customer First"}</span>
+                  </div>
+                </div>
+
+                {/* Bottom Decorative Leaves & Cityscape Artwork */}
+                <div className="relative w-full h-8 sm:h-11 overflow-hidden pointer-events-none mt-3">
+                  <Image
+                    src="/images/reference/bottom-leaves-v2.png"
+                    alt=""
+                    fill
+                    priority
+                    className="object-cover object-bottom"
+                  />
+                </div>
+              </div>
             </div>
           )}
 

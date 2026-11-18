@@ -14,6 +14,18 @@
   --color-muted: #77766f;
   --color-gold: #c6a15b;
   --color-border-subtle: #eae5dc;
+
+  --color-surya-forest: #072B1A;
+  --color-surya-forest-dark: #041B10;
+  --color-surya-forest-light: #0C452B;
+  --color-surya-gold: #E5A922;
+  --color-surya-gold-light: #F7CA54;
+  --color-surya-gold-dark: #B57C17;
+  --color-surya-ivory: #FAF8F2;
+}
+
+.font-script {
+  font-family: 'Kaushan Script', cursive, sans-serif;
 }
 
 :root {
@@ -31,66 +43,68 @@
 }
 
 html {
-  scroll-behavior: auto;
+  scroll-behavior: smooth;
 }
 
-@layer base {
-  body {
-    margin: 0;
-    background-color: #ffffff;
-    color: #292b27;
-    font-family:
-      var(--font-jakarta),
-      var(--font-inter),
-      system-ui,
-      -apple-system,
-      sans-serif;
-    overflow-x: hidden;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: var(--font-jakarta), system-ui, -apple-system, sans-serif;
-    color: inherit;
-    letter-spacing: -0.025em;
-  }
+body {
+  font-family: var(--font-sans);
+  background-color: #FAF8F3;
+  color: var(--text-primary);
+  overflow-x: hidden;
 }
 
-/* Custom minimal scrollbar */
+/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #f1ede4;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c6a15b;
-  border-radius: 9999px;
+  background: #d4caa8;
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #b5924d;
+  background: #b5a87e;
 }
 
-/* Lenis smooth scrolling rules */
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Smooth scrolling with Lenis */
 html.lenis, html.lenis body {
   height: auto;
 }
+
 .lenis.lenis-smooth {
   scroll-behavior: auto !important;
 }
+
 .lenis.lenis-smooth [data-lenis-prevent] {
   overscroll-behavior: contain;
 }
+
 .lenis.lenis-stopped {
   overflow: hidden;
 }
+
 .lenis.lenis-smooth iframe {
   pointer-events: none;
 }

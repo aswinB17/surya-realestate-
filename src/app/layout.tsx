@@ -73,6 +73,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${jakarta.variable} ${spaceMono.variable} ${inter.variable}`}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet" />
+      </head>
       <body className="min-h-screen bg-[#FFFFFF] text-[#242820] font-sans antialiased selection:bg-[#EAB308] selection:text-[#0A0D12]">
         <LanguageProvider>
           <CmsProvider>
