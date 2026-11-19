@@ -348,7 +348,7 @@ export const initialCmsData: CmsData = {
         en: "60 Cent · 130 Ft Frontage · On Madurai Airport Road · 2 KM to Mattuthavani",
         ta: "60 சென்ட் · 130 அடி முகப்பு · மதுரை ஏர்போர்ட் சாலை · மாட்டுத்தாவணிக்கு 2 கி.மீ",
       },
-      image: "/images/pandikovil.png",
+      image: "/images/pandi-kovil-commercial-land.jpg",
       blueprint: "/images/pandikovil-layout.png",
       statusBadge: { en: "60 Cent · 130 Ft Frontage", ta: "60 சென்ட் · 130 அடி முகப்பு" },
       rating: "4.9",
@@ -653,7 +653,7 @@ export const initialCmsData: CmsData = {
         en: "Adjacent to MPF International School · Contiguous Acreage",
         ta: "MPF சர்வதேச பள்ளி அருகில் · விரிவான நிலப்பரப்பு",
       },
-      image: "/images/pandikovil.png",
+      image: "/images/pandi-kovil-commercial-land.jpg",
       statusBadge: { en: "Institutional & Commercial", ta: "கல்வி & வணிக மனை" },
       rating: "4.8",
       status: "running",
@@ -722,7 +722,7 @@ export const initialCmsData: CmsData = {
         id: "pandi-kovil-videos",
         title: { en: "Pandi Kovil", ta: "பாண்டி கோவில் வணிக நிலம்" },
         count: "1 Video",
-        thumbnail: "/images/pandikovil.png",
+        thumbnail: "/images/pandi-kovil-commercial-land.jpg",
         videos: [
           {
             title: {
@@ -770,9 +770,9 @@ export const initialCmsData: CmsData = {
         id: "pandi-kovil-photos",
         title: { en: "Pandi Kovil Commercial Land", ta: "பாண்டி கோவில் வணிக நிலம்" },
         count: "2 Photos",
-        thumbnail: "/images/projects/pandi-kovil/pandi-kovil-brochure.jpg",
+        thumbnail: "/images/pandi-kovil-commercial-land.jpg",
         images: [
-          "/images/projects/pandi-kovil/pandi-kovil-brochure.jpg",
+          "/images/pandi-kovil-commercial-land.jpg",
           "/images/pandikovil-layout.png",
         ],
       },
@@ -895,8 +895,8 @@ export const initialCmsData: CmsData = {
     googleMapsEmbedUrl:
       "https://maps.google.com/maps?q=Mattuthavani%20Madurai&t=&z=14&ie=UTF8&iwloc=&output=embed",
     aboutBio: {
-      en: "Surya Promoters was established in 2010 by Indian Air Force Veteran Mr. Manickam Natarajan. Rooted in military precision, absolute honesty, and uncompromising clear titles, we have empowered over 1,000+ families and business owners across Madurai and southern Tamil Nadu to secure legal, appreciating land wealth.",
-      ta: "சூர்யா புரமோட்டர்ஸ் 2010 ஆம் ஆண்டு இந்திய விமானப்படை அதிகாரி திரு. மாணிக்கம் நடராஜன் அவர்களால் நிறுவப்பட்டது. இராணுவ ஒழுக்கம், முழுமையான வெளிப்படைத்தன்மை மற்றும் 100% தெளிவான பட்டா உத்தரவாதத்துடன் மதுரை மற்றும் தென் தமிழ்நாட்டில் 1,000 க்கும் மேற்பட்ட குடும்பங்களுக்கு நில உடமை பாதுகாப்பை வழங்கி வருகிறோம்.",
+      en: "Surya Promoters was established in 2010 by Indian Air Force Veteran Mr. Manickam Natarajan. Rooted in military precision, absolute honesty, and uncompromising clear titles, we have empowered over 500+ families and business owners across Madurai and southern Tamil Nadu to secure legal, appreciating land wealth.",
+      ta: "சூர்யா புரமோட்டர்ஸ் 2010 ஆம் ஆண்டு இந்திய விமானப்படை அதிகாரி திரு. மாணிக்கம் நடராஜன் அவர்களால் நிறுவப்பட்டது. இராணுவ ஒழுக்கம், முழுமையான வெளிப்படைத்தன்மை மற்றும் 100% தெளிவான பட்டா உத்தரவாதத்துடன் மதுரை மற்றும் தென் தமிழ்நாட்டில் 500 க்கும் மேற்பட்ட குடும்பங்களுக்கு நில உடமை பாதுகாப்பை வழங்கி வருகிறோம்.",
     },
     missionStatement: {
       en: "From Land. To Legacy. Every square foot we deliver carries 30+ years of verified parent documentation, zero legal disputes, and direct developer transparency.",
@@ -939,11 +939,11 @@ export const initialCmsData: CmsData = {
       },
       {
         value: "100%",
-        label: { en: "Verified Computer Patta", ta: "சரிபார்க்கப்பட்ட கணினி பட்டா" },
+        label: { en: "Verified Computer Document", ta: "சரிபார்க்கப்பட்ட கணினி பட்டா" },
         sub: { en: "Clear Parent Title Deeds", ta: "வில்லங்கமற்ற தூய மூலப்பத்திரம்" },
       },
       {
-        value: "1,000+",
+        value: "500+",
         label: { en: "Happy Landowner Families", ta: "மகிழ்ச்சியான நில உரிமையாளர்கள்" },
         sub: { en: "Across Madurai & Tamil Nadu", ta: "மதுரை மற்றும் தமிழகம் முழுவதும்" },
       },

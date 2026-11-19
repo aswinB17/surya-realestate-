@@ -26,8 +26,6 @@ export default function ContactPageClient() {
   const { data: cmsData } = useCmsData();
   const company = cmsData?.company;
   const phone = company?.phone || "+91 78457 16453";
-  const whatsapp = company?.whatsapp || "+91 78457 16453";
-  const rawWhatsapp = (whatsapp || "917845716453").replace(/[^0-9]/g, "");
   const email = company?.email || "suryapromotersmdu@gmail.com";
   const address = company?.address || "120 Feet Road, Near Mattuthavani Bus Stand, K.K. Nagar Corridor, Madurai, Tamil Nadu 625020";
   const mapsLink = company?.mapsLink || "https://maps.google.com/?q=Mattuthavani+Madurai";
@@ -76,16 +74,9 @@ export default function ContactPageClient() {
 
     setFormStatus("submitting");
 
-    // Simulate backend submission + WhatsApp fallback option
+    // Simulate backend submission
     setTimeout(() => {
       setFormStatus("success");
-      // Pre-fill WhatsApp message
-      const text = encodeURIComponent(
-        `Hello Surya Promoters,\n\nName: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${
-          formData.email || "N/A"
-        }\nProject: ${formData.project || "General Enquiry"}\nMessage: ${formData.message || "I would like to schedule a site visit."}`
-      );
-      // Optional: window.open(`https://wa.me/917845716453?text=${text}`, "_blank");
     }, 1200);
   };
 
@@ -149,32 +140,30 @@ export default function ContactPageClient() {
             </a>
           </div>
 
-          {/* Channel 2: WhatsApp */}
-          <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#E8E2D7] shadow-xs hover:border-[#25D366] hover:shadow-lg transition flex flex-col justify-between">
+          {/* Channel 2: Document & Legal Advisory */}
+          <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#E8E2D7] shadow-xs hover:border-[#173D2B] hover:shadow-lg transition flex flex-col justify-between">
             <div>
-              <div className="h-12 w-12 rounded-2xl bg-[#25D366]/15 flex items-center justify-center text-[#25D366] mb-4">
-                <MessageCircle className="h-6 w-6" />
+              <div className="h-12 w-12 rounded-2xl bg-[#173D2B]/10 flex items-center justify-center text-[#173D2B] mb-4">
+                <ShieldCheck className="h-6 w-6 text-[#173D2B]" />
               </div>
-              <span className="text-[11px] font-mono font-bold text-[#25D366] uppercase tracking-wider">
-                {language === "ta" ? "வாட்ஸ்அப் சாட்" : "WhatsApp Chat"}
+              <span className="text-[11px] font-mono font-bold text-[#64865A] uppercase tracking-wider">
+                {language === "ta" ? "பட்டா ஆவண சரிபார்ப்பு" : "Document & Legal Desk"}
               </span>
               <h3 className="font-display text-lg font-bold text-[#171B18] mt-1">
                 {phone}
               </h3>
               <p className="text-xs text-[#77766F] mt-1 leading-relaxed">
                 {language === "ta"
-                  ? "வரைபடங்கள், பிடிஎப் கையேடுகள் மற்றும் வீடியோக்களை வாட்ஸ்அப்பில் உடனடியாகப் பெறவும்."
-                  : "Instant PDF brochures, price lists, and layout coordinates dispatched within minutes."}
+                  ? "30 ஆண்டுகால வில்லங்க சான்றிதழ் மற்றும் கணினி பட்டா ஆவண சரிபார்ப்பு ஆலோசனை."
+                  : "30-year encumbrance search, DTCP title verification, and transparent registry guidance."}
               </p>
             </div>
             <a
-              href={`https://wa.me/${rawWhatsapp}?text=Hello%20Surya%20Promoters,%20I%20am%20interested%20in%20your%20Madurai%20projects.%20Please%20share%20details.`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#25D366] hover:bg-[#1EBE5B] text-white text-xs font-mono font-bold uppercase tracking-wider transition shadow-2xs"
+              href={`tel:${phone}`}
+              className="mt-6 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#173D2B] hover:bg-[#64865A] text-white text-xs font-mono font-bold uppercase tracking-wider transition shadow-2xs"
             >
-              <MessageCircle className="h-4 w-4" />
-              <span>{language === "ta" ? "வாட்ஸ்அப் செய்தி" : "Chat on WhatsApp"}</span>
+              <ShieldCheck className="h-4 w-4" />
+              <span>{language === "ta" ? "ஆலோசனைக்கு அழைக்க" : "Call Legal Desk"}</span>
             </a>
           </div>
 

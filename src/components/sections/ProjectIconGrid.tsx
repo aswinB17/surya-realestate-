@@ -404,19 +404,19 @@ export default function ProjectIconGrid({
   const storeUtilityApps: StoreUtilityApp[] = useMemo(
     () => [
       {
-        id: "whatsapp",
-        name: "WhatsApp Direct",
-        nameTa: "வாட்ஸ்அப் நேரடி",
-        subtitle: "Instant Price & Layout PDF",
-        subtitleTa: "உடனடி விலை & வரைபடம்",
-        actionText: "Chat",
-        actionTextTa: "அரட்டை",
-        badge: "Fast",
-        badgeColor: "bg-emerald-500",
-        icon: MessageCircle,
-        gradient: "from-[#25D366] to-[#128C7E]",
-        actionType: "whatsapp",
-        targetUrl: "https://wa.me/917845716453?text=Hello%20Surya%20Promoters,%20I%20am%20interested%20in%20your%20land%20and%20plots.",
+        id: "patta-verify",
+        name: "Patta Verification",
+        nameTa: "பட்டா சரிபார்ப்பு",
+        subtitle: "Verified Revenue Deeds",
+        subtitleTa: "சரிபார்க்கப்பட்ட ஆவணங்கள்",
+        actionText: "Verify",
+        actionTextTa: "சரிபார்க்க",
+        badge: "Govt Patta",
+        badgeColor: "bg-emerald-600",
+        icon: ShieldCheck,
+        gradient: "from-[#0E5934] to-[#06351F]",
+        actionType: "tel",
+        targetUrl: "tel:+917845716453",
       },
       {
         id: "call",
@@ -541,7 +541,7 @@ export default function ProjectIconGrid({
         name: "Pandi Kovil",
         nameTa: "பாண்டி கோவில்",
         type: "Commercial Land",
-        image: "/images/pandikovil.png",
+        image: "/images/pandi-kovil-commercial-land.jpg",
         icon: CheckCircle2,
         badge: "Commercial",
         badgeBg: "bg-blue-600 text-white",
@@ -604,13 +604,13 @@ export default function ProjectIconGrid({
   const quickChannels = useMemo(
     () => [
       {
-        id: "qc-whatsapp",
-        name: "WhatsApp Direct",
-        nameTa: "வாட்ஸ்அப்",
-        tag: "Instant Message",
-        icon: MessageCircle,
-        bg: "bg-[#25D366]",
-        url: "https://wa.me/917845716453?text=Hello%20Surya%20Promoters,%20I%20would%20like%20to%20discuss%20my%20property%20requirements.",
+        id: "qc-patta",
+        name: "Patta Verification",
+        nameTa: "பட்டா சரிபார்ப்பு",
+        tag: "Legal Title Verification",
+        icon: ShieldCheck,
+        bg: "bg-[#0E5934]",
+        url: "tel:+917845716453",
       },
       {
         id: "qc-call",
@@ -800,15 +800,13 @@ export default function ProjectIconGrid({
               <span>16+ Yrs IAF Vet</span>
             </div>
 
-            {/* Solid CTA: Discuss Your Project / WhatsApp */}
+            {/* Solid CTA: Call Helpline */}
             <a
-              href="https://wa.me/917845716453?text=Hello%20Surya%20Promoters,%20I%20would%20like%20to%20discuss%20my%20property%20requirements."
-              target="_blank"
-              rel="noopener noreferrer"
+              href="tel:+917845716453"
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#EAB308] hover:bg-[#ca9a07] text-[#0A0D12] text-xs font-extrabold uppercase tracking-wider shadow-xs transition hover:scale-105"
             >
-              <MessageCircle className="h-3.5 w-3.5 fill-[#0A0D12] text-[#0A0D12]" />
-              <span className="hidden sm:inline">{language === "ta" ? "கலந்தாலோசிக்க" : "Discuss Project"}</span>
+              <Phone className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">{language === "ta" ? "அழைக்க" : "Call Helpline"}</span>
             </a>
           </div>
 
@@ -1172,19 +1170,14 @@ export default function ProjectIconGrid({
 
                   {/* Action Buttons */}
                   <div className="pt-2 flex flex-wrap items-center gap-3">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        window.open(
-                          "https://wa.me/917845716453?text=Hello%20Surya%20Promoters,%20I%20am%20interested%20in%20Orange%20Garden%20upcoming%20project.%20Please%20share%20details.",
-                          "_blank"
-                        );
-                      }}
+                    <a
+                      href="tel:+917845716453"
+                      onClick={(e) => e.stopPropagation()}
                       className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-white text-[#B45309] hover:bg-amber-50 font-display text-sm font-extrabold shadow-md transition hover:scale-105"
                     >
-                      <MessageCircle className="h-4 w-4 fill-[#B45309]" />
+                      <Phone className="h-4 w-4 text-[#B45309]" />
                       <span>{language === "ta" ? "முன்பதிவு செய்ய" : "Early Bird Booking"}</span>
-                    </button>
+                    </a>
 
                     <button
                       onClick={(e) => {
@@ -1736,16 +1729,11 @@ export default function ProjectIconGrid({
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-                              window.open(
-                                `https://wa.me/917845716453?text=${encodeURIComponent(
-                                  `Hello Surya Promoters, please share price and details for ${project.name}.`
-                                )}`,
-                                "_blank"
-                              );
+                              window.location.href = "tel:+917845716453";
                             }}
                             className="flex-1 py-2.5 rounded-xl bg-[#EAB308] hover:bg-[#ca9a07] text-black text-xs font-extrabold uppercase transition text-center"
                           >
-                            {language === "ta" ? "விலை கேட்க" : "WhatsApp Price"}
+                            {language === "ta" ? "விலை கேட்க" : "Call for Price"}
                           </button>
                         </div>
                       </div>
@@ -1871,7 +1859,7 @@ export default function ProjectIconGrid({
                     return (
                       <div
                         key={idx}
-                        onClick={() => window.open(`https://wa.me/917845716453?text=${encodeURIComponent(item.wa)}`, "_blank")}
+                        onClick={() => { window.location.href = "tel:+917845716453"; }}
                         className="group p-5 sm:p-6 rounded-2xl bg-[#F8FAFC] hover:bg-white border border-[#E2E8F0] hover:border-[#EAB308] hover:shadow-md transition-all cursor-pointer flex items-center justify-between gap-4"
                       >
                         <div className="flex items-start gap-4">
@@ -1998,7 +1986,7 @@ export default function ProjectIconGrid({
                   { src: "/images/projects/flat-projects/1-exterior.jpg", title: "Flat Projects Exterior", location: "Madurai Residential" },
                   { src: "/images/projects/vaigai-commercial.jpg", title: "Vaigai Commercial Frontage", location: "NH-44 Outer Ring Road" },
                   { src: "/images/projects/madurai-farms/aerial-grove.jpg", title: "Madurai Farms Agro Land", location: "Agricultural Belt" },
-                  { src: "/images/pandikovil.png", title: "Pandi Kovil Commercial", location: "Pandi Kovil Junction" },
+                  { src: "/images/pandi-kovil-commercial-land.jpg", title: "Pandi Kovil Commercial", location: "Pandi Kovil Junction" },
                   { src: "/images/Riverbeltwal.png", title: "Vaigai River Belt", location: "Riverfront Development" },
                   { src: "/images/projects/madurai-farms/panoramic-view.jpg", title: "Madurai Farms Countryside Panorama", location: "Agro Farmland" },
                 ].map((photo, i) => (
@@ -2045,7 +2033,7 @@ export default function ProjectIconGrid({
                   <p className="text-sm text-[#64748B]">
                     {language === "ta"
                       ? "மனைப்பிரிவு விலைகள், மனை வரைபடங்கள் மற்றும் தளப் பார்வைக்கு எப்போது வேண்டுமானாலும் அழைக்கவும்."
-                      : "Call our direct hotline or WhatsApp us for instant layout PDFs, pricing, and free guided site visits."}
+                      : "Call our direct hotline or send an inquiry for instant layout PDFs, pricing, and free guided site visits."}
                   </p>
                 </div>
 
@@ -2065,19 +2053,17 @@ export default function ProjectIconGrid({
                   </a>
 
                   <a
-                    href="https://wa.me/917845716453?text=Hello%20Surya%20Promoters,%20I%20would%20like%20to%20know%20about%20your%20properties."
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href="mailto:suryapromotersmdu@gmail.com"
                     className="p-6 rounded-2xl bg-[#F8FAFC] hover:bg-white border border-[#E2E8F0] hover:border-emerald-500 hover:shadow-md transition-all text-center space-y-3 group"
                   >
                     <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
-                      <MessageCircle className="h-6 w-6" />
+                      <Mail className="h-6 w-6" />
                     </div>
                     <div>
-                      <span className="text-[11px] font-mono uppercase text-[#64748B] font-bold">WhatsApp Direct</span>
-                      <div className="font-display text-lg font-bold text-[#0F172A] mt-0.5">+91 78457 16453</div>
+                      <span className="text-[11px] font-mono uppercase text-[#64748B] font-bold">Official Email</span>
+                      <div className="font-display text-sm font-bold text-[#0F172A] mt-0.5 truncate">suryapromotersmdu@gmail.com</div>
                     </div>
-                    <span className="inline-block text-xs font-bold text-emerald-600">Start Instant Chat →</span>
+                    <span className="inline-block text-xs font-bold text-emerald-600">Send Email Enquiry →</span>
                   </a>
 
                   <a
@@ -2158,13 +2144,11 @@ export default function ProjectIconGrid({
                 </p>
                 <div className="pt-1">
                   <a
-                    href="https://wa.me/917845716453"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-600 text-white text-[10px] font-bold"
+                    href="tel:+917845716453"
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#0E5934] text-white text-[10px] font-bold"
                   >
-                    <MessageCircle className="h-3 w-3 fill-white" />
-                    <span>WhatsApp Help</span>
+                    <Phone className="h-3 w-3 text-[#D9A52E]" />
+                    <span>Call Helpline</span>
                   </a>
                 </div>
               </div>
@@ -2305,18 +2289,14 @@ export default function ProjectIconGrid({
               {/* Action Buttons */}
               <div className="space-y-2.5 pt-2 border-t border-[#F1F5F9]">
                 <a
-                  href={`https://wa.me/917845716453?text=${encodeURIComponent(
-                    `Hello Surya Promoters, please share price, layout plan and details for ${selectedProject.name}.`
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white py-3.5 font-display text-sm font-bold uppercase tracking-wider shadow-md transition-all hover:scale-[1.01]"
+                  href="tel:+917845716453"
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white py-3.5 font-display text-sm font-bold uppercase tracking-wider shadow-md transition-all hover:scale-[1.01]"
                 >
-                  <MessageCircle className="h-4 w-4 fill-white" />
+                  <Phone className="h-4 w-4 text-[#D9A52E]" />
                   <span>
                     {language === "ta"
-                      ? "வாட்ஸ்அப்பில் விலை விவரம் கேட்க"
-                      : "Enquire on WhatsApp (Instant Price & PDF)"}
+                      ? "விலை விவரம் அறிய அழைக்க"
+                      : "Call Helpline (Instant Price & PDF)"}
                   </span>
                 </a>
 

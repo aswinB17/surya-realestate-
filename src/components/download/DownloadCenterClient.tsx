@@ -16,7 +16,7 @@ import {
   CheckCircle2,
   ExternalLink,
   ShieldCheck,
-  MessageCircle,
+  Phone,
   Eye,
   X,
 } from "lucide-react";
@@ -595,20 +595,18 @@ export default function DownloadCenterClient() {
             </h2>
             <p className="text-xs sm:text-sm text-[#F5F4EE]/80 leading-relaxed font-sans">
               {language === "ta"
-                ? "எங்கள் இந்திய விமானப்படை அதிகாரி குழுவின் 100% சரிபார்க்கப்பட்ட வருவாய்த்துறை சான்றிதழ்கள், நில வரைபடங்கள் மற்றும் ஆவணங்களை உடனே வாட்ஸ்அப் வழியாகப் பெறுங்கள்."
-                : "Our IAF Veteran legal verification cell provides verified computerized Patta extracts, 30-year Encumbrance Certificates (EC), and high-resolution CAD layout prints directly via WhatsApp or registered courier."}
+                ? "எங்கள் இந்திய விமானப்படை அதிகாரி குழுவின் 100% சரிபார்க்கப்பட்ட வருவாய்த்துறை சான்றிதழ்கள், நில வரைபடங்கள் மற்றும் ஆவணங்களை உடனே மின்னஞ்சல் அல்லது நேரடி பதிவு தபாலில் பெறுங்கள்."
+                : "Our IAF Veteran legal verification cell provides verified computerized Patta extracts, 30-year Encumbrance Certificates (EC), and high-resolution CAD layout prints directly via email or registered courier."}
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row items-center gap-4 shrink-0 w-full sm:w-auto">
             <a
-              href="https://wa.me/917845716453?text=Hello%20Surya%20Promoters,%20please%20send%20me%20the%20verified%20blueprint%20and%20patta%20documents%20package."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl bg-[#25D366] hover:bg-[#1EBE5B] text-white font-mono font-bold text-xs uppercase tracking-wider shadow-lg transition"
+              href="tel:+917845716453"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl bg-[#173D2B] hover:bg-[#0E5934] text-white font-mono font-bold text-xs uppercase tracking-wider shadow-lg transition"
             >
-              <MessageCircle className="h-4 w-4" />
-              <span>{language === "ta" ? "வாட்ஸ்அப் ஆவணக் கோரிக்கை" : "Request on WhatsApp"}</span>
+              <Phone className="h-4 w-4 text-[#D9A52E]" />
+              <span>{language === "ta" ? "நேரடி ஆலோசனை" : "Call Helpline"}</span>
             </a>
             <Link
               href="/contact"

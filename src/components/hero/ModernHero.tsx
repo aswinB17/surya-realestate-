@@ -117,9 +117,7 @@ export default function ModernHero() {
               className="flex flex-wrap items-center gap-3.5 pt-1"
             >
               <a
-                href="https://wa.me/917845716453?text=Hello%20Surya%20Promoters,%20I%20would%20like%20to%20discuss%20my%20property%20requirements."
-                target="_blank"
-                rel="noopener noreferrer"
+                href="tel:+917845716453"
                 className="group inline-flex items-center gap-2 rounded-xl bg-[#EAB308] px-6 py-3.5 font-display text-xs sm:text-sm font-extrabold uppercase tracking-widest text-[#0A0D12] shadow-md transition-all hover:bg-[#ca9a07] hover:shadow-lg hover:scale-[1.02]"
               >
                 <span>{language === "ta" ? "கலந்தாலோசிக்க" : "Discuss Your Next Property"}</span>

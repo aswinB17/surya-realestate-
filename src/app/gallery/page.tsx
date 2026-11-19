@@ -66,7 +66,7 @@ export default function GalleryPage() {
       title: "Pandi Kovil Ring Road High-Traffic Corridor Overview",
       category: "commercial",
       duration: "01:45",
-      thumbnail: "/images/pandikovil.png",
+      thumbnail: "/images/pandi-kovil-commercial-land.jpg",
     },
     {
       src: "/videos/herosection.mp4",
@@ -175,7 +175,7 @@ export default function GalleryPage() {
       location: "Vaigai North Bank",
     },
     {
-      src: "/images/pandikovil.png",
+      src: "/images/pandi-kovil-commercial-land.jpg",
       title: "Pandi Kovil Site High-Footfall Commercial Corridor",
       category: "commercial",
       location: "Pandi Kovil Junction",

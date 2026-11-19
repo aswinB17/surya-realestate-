@@ -223,9 +223,9 @@ export const projectsData: Project[] = [
       ta: "பாண்டி கோவில், மதுரை (விமான நிலைய சாலை)",
     },
     googleMapsUrl: "https://maps.app.goo.gl/dQkYzJFQqRbJgKsC8?g_st=aw",
-    heroImage: "/images/pandikovil.png",
+    heroImage: "/images/pandi-kovil-commercial-land.jpg",
     galleryImages: [
-      "/images/pandikovil.png",
+      "/images/pandi-kovil-commercial-land.jpg",
       "/images/pandikovil-layout.png",
     ],
     videoUrl: "/videos/pandi-kovil-video.mp4",
@@ -417,9 +417,9 @@ export const projectsData: Project[] = [
       ta: "மயிலன் குண்டு, MPF பள்ளி அருகில், மதுரை, தமிழ்நாடு",
     },
     googleMapsUrl: "https://maps.google.com/?q=Mayilan+Gundu+Madurai",
-    heroImage: "/images/pandikovil.png",
+    heroImage: "/images/pandi-kovil-commercial-land.jpg",
     galleryImages: [
-      "/images/pandikovil.png",
+      "/images/pandi-kovil-commercial-land.jpg",
       "/images/projects/vaigai-commercial.jpg",
       "/images/projects/vaigai-commercial.jpg",
     ],

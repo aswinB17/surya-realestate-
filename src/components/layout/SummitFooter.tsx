@@ -86,11 +86,9 @@ export default function SummitFooter() {
               </a>
 
               <a
-                href="https://wa.me/917845716453"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-800 text-gray-300 hover:text-emerald-400 hover:bg-slate-700 transition"
-                aria-label="WhatsApp"
+                href="tel:+917845716453"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-800 text-gray-300 hover:text-[#C6A15B] hover:bg-slate-700 transition"
+                aria-label="Direct Helpline"
               >
                 <Phone className="h-4 w-4" />
               </a>

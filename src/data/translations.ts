@@ -232,7 +232,7 @@ export const translations = {
         "We arrange convenient, escorted visits to our properties around Madurai with complete documentation reviews on site.",
       form: {
         name: "Your Full Name",
-        phone: "Mobile / WhatsApp Number",
+        phone: "Mobile Phone Number",
         email: "Email Address",
         project: "Select Preferred Property",
         date: "Preferred Date",
@@ -245,7 +245,7 @@ export const translations = {
     contact: {
       badge: "GET IN TOUCH",
       title: "Start Your Land Journey Today",
-      subtitle: "Visit our Madurai office or connect with our senior advisory team directly via phone or WhatsApp.",
+      subtitle: "Visit our Madurai office or connect with our senior advisory team directly via phone or email.",
       phoneLabel: "Call Directly",
       phone: "+91 78457 16453",
       emailLabel: "Official Email",
@@ -253,7 +253,7 @@ export const translations = {
       addressLabel: "Head Office Location",
       address:
         "No. 11, Arasu Nagar, Near Rio Hospital, Pandi Kovil Ring Road, Vandiyur, Madurai – 625020, Tamil Nadu.",
-      whatsappBtn: "Chat on WhatsApp",
+      whatsappBtn: "Direct Call",
       callBtn: "Call +91 78457 16453",
       hours: "Monday – Saturday: 9:00 AM – 7:30 PM | Sunday: By Appointment",
     },
@@ -512,7 +512,7 @@ export const translations = {
     contact: {
       badge: "தொடர்பு கொள்ள",
       title: "உங்கள் நில கனவை இன்றே தொடங்குங்கள்",
-      subtitle: "எங்கள் மதுரை அலுவலகத்திற்கு வாருங்கள் அல்லது தொலைபேசி/வாட்ஸ்அப் வழியாக தொடர்புகொள்ளுங்கள்.",
+      subtitle: "எங்கள் மதுரை அலுவலகத்திற்கு வாருங்கள் அல்லது தொலைபேசி/மின்னஞ்சல் வழியாக தொடர்புகொள்ளுங்கள்.",
       phoneLabel: "நேரடி அழைப்பு",
       phone: "+91 78457 16453",
       emailLabel: "அலுவலக மின்னஞ்சல்",
@@ -520,7 +520,7 @@ export const translations = {
       addressLabel: "தலைமை அலுவலக முகவரி",
       address:
         "எண் 11, அரசு நகர், ரியோ மருத்துவமனை அருகில், பாண்டி கோவில் ரிங் ரோடு, வந்தியூர், மதுரை – 625020, தமிழ்நாடு.",
-      whatsappBtn: "வாட்ஸ்அப்பில் பேசவும்",
+      whatsappBtn: "நேரடி அழைப்பு",
       callBtn: "அழைக்க: +91 78457 16453",
       hours: "திங்கள் – சனி: காலை 9:00 – மாலை 7:30 | ஞாயிறு: முன்பதிவின் பேரில்",
     },

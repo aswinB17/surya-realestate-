@@ -374,7 +374,7 @@ export const PROJECT_DETAILS_MAP: Record<string, ProjectExtendedDetails> = {
   // ---------------------------------------------------------------------------
   "pandi-kovil": {
     galleryImages: [
-      "/images/pandikovil.png",
+      "/images/pandi-kovil-commercial-land.jpg",
       "/images/pandikovil-layout.png",
     ],
     videoUrl: "/videos/pandi-kovil-video.mp4",

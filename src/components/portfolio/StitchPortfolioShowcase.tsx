@@ -47,14 +47,11 @@ export default function StitchPortfolioShowcase() {
         `Legal Pack Requested: ${form.requestLegalPack ? "Yes" : "No"}\n` +
         `Notes: ${form.notes}`
     );
-    window.open(`https://wa.me/917845716453?text=${msg}`, "_blank");
+    window.location.href = "tel:+917845716453";
   };
 
   const handleBrochure = (projectName: string) => {
-    const msg = encodeURIComponent(
-      `Hello Surya Promoters, please share the official brochure and documentation pack for ${projectName}.`
-    );
-    window.open(`https://wa.me/917845716453?text=${msg}`, "_blank");
+    window.location.href = "tel:+917845716453";
   };
 
   return (
@@ -657,7 +654,7 @@ export default function StitchPortfolioShowcase() {
                       </div>
                       <div>
                         <label className="block text-[11px] font-mono uppercase tracking-wider text-[#77766F] mb-1">
-                          Mobile / WhatsApp Number *
+                          Mobile Phone Number *
                         </label>
                         <input
                           type="tel"
@@ -764,7 +761,7 @@ export default function StitchPortfolioShowcase() {
                       Inspection Request Registered
                     </h4>
                     <p className="mt-1 text-xs text-[#77766F]">
-                      Opening WhatsApp for immediate transit coordination.
+                      Our senior advisory team will call you shortly for transit coordination.
                     </p>
                   </div>
                 )}

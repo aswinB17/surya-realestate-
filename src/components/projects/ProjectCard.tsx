@@ -214,17 +214,15 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       {/* Bottom Mobile Ad Action Bar: Prominent Chat Icon Button + Action Icons */}
       <div className="p-4 pt-0 border-t border-gray-100/80 mt-auto">
         <div className="flex items-center gap-2 pt-3">
-          {/* Primary Mobile Ad Action: WhatsApp Chat Button */}
+          {/* Primary Action: Direct Call Button */}
           <a
-            href={`https://wa.me/917845716453?text=${encodeURIComponent(whatsappMsg)}`}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="tel:+917845716453"
             onClick={(e) => e.stopPropagation()}
-            className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white px-3.5 py-2.5 font-display text-xs font-bold uppercase tracking-wider shadow-xs hover:shadow-md hover:scale-[1.02] transition-all"
-            title="Chat on WhatsApp"
+            className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white px-3.5 py-2.5 font-display text-xs font-bold uppercase tracking-wider shadow-xs hover:shadow-md transition-all"
+            title="Call Surya Promoters"
           >
-            <MessageCircle className="h-4 w-4 fill-white text-white" />
-            <span>{language === "ta" ? "வாட்ஸ்அப் சாட்" : "Chat Now"}</span>
+            <Phone className="h-4 w-4 text-[#D9A52E]" />
+            <span>{language === "ta" ? "நேரடி அழைப்பு" : "Call Advisor"}</span>
           </a>
 
           {/* Quick Call Button */}

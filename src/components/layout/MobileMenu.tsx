@@ -106,25 +106,13 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
           {/* Bottom Fast Action Buttons */}
           <div className="p-6 border-t border-white/10 bg-[#122e20] space-y-3">
-            <div className="grid grid-cols-2 gap-3">
-              <a
-                href="tel:+91 78457 16453"
-                className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white/10 hover:bg-white/15 text-white font-mono text-xs font-bold border border-white/10 transition"
-              >
-                <Phone className="h-3.5 w-3.5 text-[#C6A66B]" />
-                <span>Call Now</span>
-              </a>
-              <a
-                href="https://wa.me/917845716453?text=Hello%20Surya%20Promoters,%20I%20am%20interested%20in%20your%20projects."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-xs shadow-xs transition"
-              >
-                <MessageSquare className="h-3.5 w-3.5 fill-white" />
-                <span>WhatsApp</span>
-              </a>
-            </div>
-           
+            <a
+              href="tel:+91 78457 16453"
+              className="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl bg-white/10 hover:bg-white/15 text-white font-mono text-xs font-bold border border-white/10 transition"
+            >
+              <Phone className="h-4 w-4 text-[#C6A66B]" />
+              <span>Call Now</span>
+            </a>
           </div>
         </motion.div>
       )}

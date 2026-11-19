@@ -101,8 +101,6 @@ export default function HomePage() {
   const servicesList = cmsData?.services?.items || [];
 
   const phone = companyInfo?.phone || "+91 77089 66452";
-  const whatsapp = companyInfo?.whatsapp || "+91 77089 66452";
-  const rawWhatsapp = (whatsapp || "917708966452").replace(/[^0-9]/g, "");
   const email = companyInfo?.email || "suryapromotersmdu@gmail.com";
   const address = companyInfo?.address || "120 Feet Road, Near Mattuthavani Bus Stand, K.K. Nagar Corridor, Madurai, Tamil Nadu 625020";
   const mapsLink = companyInfo?.mapsLink || "https://maps.google.com/?q=Mattuthavani+Madurai";
@@ -213,6 +211,7 @@ export default function HomePage() {
       };
     }
   }, [selectedProject, selectedFolderImages, selectedVideo, isEnquiryModalOpen, selectedDownloadPreview]);
+
 
   // Handler to download both layout and brochure of a card
   const handleDownloadCard = (item: CmsDownloadItem) => {
@@ -344,25 +343,28 @@ export default function HomePage() {
   const farmCount = ALL_PROJECTS.filter((p) => p.category === "farm").length;
 
   return (
-    <div className="min-h-screen bg-[#FAF8F3] text-[#0A0D12] font-sans antialiased flex selection:bg-[#EAB308] selection:text-[#0A0D12] overflow-x-hidden">
+    <div className="min-h-screen bg-[#FAF8F3] text-[#0A0D12] font-sans antialiased flex flex-col md:flex-row selection:bg-[#EAB308] selection:text-[#0A0D12] overflow-x-hidden">
 
       {/* ------------------------------------------------------------------------- */}
-      {/* LEFT VERTICAL APP STORE NAVIGATION BAR (Exact reference image styling)     */}
+      {/* LEFT VERTICAL APP STORE NAVIGATION BAR (Fixed at top: 0, left: 0)         */}
       {/* ------------------------------------------------------------------------- */}
-      <aside className="hidden md:flex md:w-56 lg:w-64 shrink-0 bg-gradient-to-b from-[#052617] via-[#083822] to-[#041D12] text-white flex-col justify-between py-6 px-3.5 select-none relative z-30 shadow-2xl border-r border-[#0A3D25]">
+      <aside
+        style={{ position: "fixed", top: 0, left: 0, height: "100vh" }}
+        className="hidden md:flex fixed top-0 left-0 z-30 md:w-56 lg:w-64 shrink-0 bg-gradient-to-b from-[#052617] via-[#083822] to-[#041D12] text-white flex-col justify-between py-3.5 lg:py-4.5 px-3.5 select-none shadow-2xl border-r border-[#0A3D25] h-screen h-[100vh] max-h-screen overflow-y-auto"
+      >
         
         {/* Top Section: Logo & Nav Links */}
-        <div className="space-y-5">
-          {/* Brand Identity: Exact Reference Image Golden Logo */}
-          <Link href="/" className="flex flex-col items-center text-center group cursor-pointer">
-            <div className="relative w-32 h-24 transition-transform duration-300 group-hover:scale-105">
+        <div className="space-y-3.5 lg:space-y-4">
+          {/* Brand Identity: Exact Reference Image Golden Logo - Significantly Enlarged (120-135px height) */}
+          <Link href="/" className="flex flex-col items-center justify-center text-center group cursor-pointer py-0.5">
+            <div className="relative w-44 lg:w-52 h-[120px] lg:h-[135px] transition-transform duration-300 group-hover:scale-105">
               <Image
                 src="/images/reference/sidebar-logo.png"
                 alt="Surya Promoters Logo Estd 2010"
                 fill
                 priority
-                sizes="150px"
-                className="object-contain"
+                sizes="(max-width: 1024px) 210px, 250px"
+                className="object-contain object-center"
               />
             </div>
           </Link>
@@ -466,13 +468,14 @@ export default function HomePage() {
         </div>
 
         {/* Bottom Section: Golden Skyline Illustration & Direct Contact Card */}
-        <div className="mt-auto pt-3 space-y-3">
-          {/* Golden Architectural Skyline Line-art */}
-          <div className="relative w-full h-20 overflow-hidden opacity-85 pointer-events-none">
+        <div className="mt-auto pt-1 space-y-2 flex flex-col items-center">
+          {/* Golden Architectural Skyline Line-art - Enlarged (88-92% width, 92-105px height) */}
+          <div className="relative w-[90%] h-[92px] lg:h-[105px] overflow-hidden opacity-95 pointer-events-none mx-auto">
             <Image
               src="/images/reference/sidebar-skyline-v2.png"
-              alt=""
+              alt="Golden Madurai Skyline"
               fill
+              sizes="(max-width: 1024px) 210px, 240px"
               className="object-contain object-bottom"
             />
           </div>
@@ -490,7 +493,7 @@ export default function HomePage() {
             </a>
             <button
               onClick={() => setActiveTab("contact")}
-              className="w-7 h-7 rounded-full bg-[#E5A922] text-[#0A1C12] flex items-center justify-center shrink-0 hover:scale-105 transition-transform cursor-pointer shadow-xs"
+              className="w-7 h-7 rounded-full bg-[#0E5934] hover:bg-[#16A34A] text-white flex items-center justify-center shrink-0 hover:scale-105 transition-transform cursor-pointer shadow-xs border border-[#E5A922]/40"
               title="Contact Us"
             >
               <ChevronRight className="h-4 w-4" />
@@ -502,21 +505,34 @@ export default function HomePage() {
       {/* ------------------------------------------------------------------------- */}
       {/* RIGHT MAIN WINDOW CANVAS (Header + Dynamic Content Canvas)                */}
       {/* ------------------------------------------------------------------------- */}
-      <div className="flex-1 flex flex-col min-w-0 bg-[#FAF8F3]">
+      <div className="flex-1 flex flex-col min-w-0 md:ml-56 lg:ml-64 bg-[#FAF8F3] relative min-h-screen">
 
         {/* TOP APP STORE WINDOW HEADER (Search & Quick Controls) */}
-        <header className="sticky top-0 z-40 w-full bg-[#FAF8F3]/95 backdrop-blur-md px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-4 border-b border-[#EDE6D4] select-none">
-          {/* Mobile Brand Identity */}
-          <div className="flex md:hidden items-center gap-2">
-            <div className="relative h-8 w-8 shrink-0">
-              <Image src="/images/surya-gold-logo.png" alt="Logo" fill className="object-contain" />
+        <header className={`${activeTab === "home" ? "absolute top-0 left-0 right-0 z-40 bg-transparent px-2.5 sm:px-5 lg:px-7 pt-2.5 sm:pt-3 pb-1" : "sticky top-0 z-40 bg-[#FAF8F3]/95 backdrop-blur-md px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3.5 border-b border-[#EDE6D4]"} w-full flex items-center justify-between gap-1.5 sm:gap-3 lg:gap-4 select-none`}>
+          {/* Far Left Header: Mobile Brand Identity OR Desktop Madurai Real Estate Location Badge (Immediately to Right of Sidebar) */}
+          <div className="flex items-center shrink-0">
+            {/* Mobile Brand Identity */}
+            <div className="flex md:hidden items-center gap-1.5 shrink-0">
+              <div className="relative h-7.5 w-7.5 sm:h-8 sm:w-8 shrink-0">
+                <Image src="/images/surya-gold-logo.png" alt="Logo" fill className="object-contain" />
+              </div>
+              <span className={`font-extrabold text-[11px] sm:text-xs tracking-tight drop-shadow-xs whitespace-nowrap hidden min-[390px]:inline-block ${
+                activeTab === "home" ? "text-white" : "text-[#0A2617]"
+              }`}>
+                SURYA PROMOTERS
+              </span>
             </div>
-            <span className="font-extrabold text-xs text-[#0A2617] tracking-tight">SURYA PROMOTERS</span>
+
+            {/* Desktop Madurai Real Estate Badge - Relocated to Far Left immediately to the RIGHT of the sidebar */}
+            <div className="hidden md:flex items-center gap-2 px-3.5 py-2 h-9 sm:h-9.5 rounded-full bg-white/92 backdrop-blur-md border border-[#E5A922]/45 text-xs font-bold text-[#0A2617] shadow-xs hover:border-[#E5A922] transition-colors shrink-0">
+              <span className="w-2 h-2 rounded-full bg-[#E5A922] shrink-0 shadow-[0_0_6px_rgba(229,169,34,0.6)] animate-pulse" />
+              <span className="whitespace-nowrap tracking-wide">{language === "ta" ? "மதுரை ரியல் எஸ்டேட்" : "Madurai Real Estate"}</span>
+            </div>
           </div>
 
           {/* Center Search Pill */}
-          <div className="flex-1 max-w-xl relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400 pointer-events-none" />
+          <div className="flex-1 min-w-[90px] max-w-xl relative">
+            <Search className="absolute left-2.5 sm:left-4 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-neutral-400 pointer-events-none" />
             <input
               type="text"
               value={searchQuery}
@@ -528,10 +544,10 @@ export default function HomePage() {
               }}
               placeholder={
                 language === "ta"
-                  ? "திட்டங்கள், இடங்கள், வணிக நிலங்களைத் தேடுங்கள்..."
-                  : "Search projects, locations, farmland, and more..."
+                  ? "திட்டங்கள், இடங்கள் தேடுங்கள்..."
+                  : "Search projects, locations..."
               }
-              className="w-full pl-11 pr-12 py-2.5 bg-white text-xs sm:text-sm font-medium text-neutral-800 placeholder-neutral-400 rounded-full border border-neutral-200/90 shadow-[0_2px_12px_rgba(0,0,0,0.04)] focus:outline-none focus:border-[#E5A922] focus:ring-2 focus:ring-[#E5A922]/20 transition-all"
+              className="w-full h-8 sm:h-9 pl-7 sm:pl-10 pr-8 sm:pr-10 bg-white/92 backdrop-blur-md text-[11px] sm:text-xs md:text-sm font-medium text-neutral-800 placeholder-neutral-400 rounded-full border border-neutral-200/90 shadow-xs focus:outline-none focus:border-[#E5A922] focus:ring-1 focus:ring-[#E5A922]/20 transition-all"
             />
             <button
               onClick={() => {
@@ -539,17 +555,17 @@ export default function HomePage() {
                   setActiveTab("projects");
                 }
               }}
-              className="absolute right-1.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[#E5A922] hover:bg-[#D49818] text-[#0A1C12] flex items-center justify-center transition-all cursor-pointer shadow-xs"
+              className="absolute right-1 top-1/2 -translate-y-1/2 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#E5A922]/40 flex items-center justify-center transition-all cursor-pointer shadow-xs shrink-0"
               title="Search"
             >
-              <Search className="h-3.5 w-3.5 text-[#0A1C12]" />
+              <Search className="h-3 w-3 text-white" />
             </button>
           </div>
 
           {/* Right Quick Controls */}
-          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 justify-end">
             {/* IAF Veteran Trust Seal */}
-            <div className="hidden lg:flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F3EEDF] border border-[#DDD4C0] text-[#705820] text-xs font-bold shadow-xs">
+            <div className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#F3EEDF]/90 backdrop-blur-md border border-[#DDD4C0] text-[#705820] text-xs font-bold shadow-xs">
               <ShieldCheck className="h-3.5 w-3.5 text-[#9E731C]" />
               <span>16+ Yrs IAF Vet</span>
             </div>
@@ -557,330 +573,438 @@ export default function HomePage() {
             {/* Language Toggle Dropdown Pill */}
             <button
               onClick={toggleLanguage}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-neutral-200 hover:border-neutral-300 text-[#0A1C12] text-xs font-semibold shadow-xs transition-colors cursor-pointer"
+              className="h-8 sm:h-9 flex items-center gap-1 px-2.5 sm:px-3 rounded-full bg-white/85 backdrop-blur-md border border-neutral-200 hover:border-neutral-300 text-[#0A1C12] text-[11px] sm:text-xs font-semibold shadow-xs transition-colors cursor-pointer shrink-0"
             >
               <span>{language === "en" ? "தமிழ்" : "English"}</span>
-              <ChevronDown className="h-3.5 w-3.5 text-neutral-500" />
+              <ChevronDown className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-neutral-500" />
             </button>
-
-            {/* WhatsApp Direct */}
-            <a
-              href={`https://wa.me/${rawWhatsapp}?text=Hello%20Surya%20Promoters,%20I%20am%20interested%20in%20your%20Madurai%20projects.`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold transition-all shadow-xs cursor-pointer"
-            >
-              <MessageCircle className="h-4 w-4 fill-white" />
-              <span className="hidden sm:inline">WhatsApp</span>
-            </a>
 
             {/* Phone Direct */}
             <a
               href={`tel:${phone}`}
-              className="w-9 h-9 rounded-full bg-[#072818] hover:bg-[#0B3D26] text-[#E5A922] flex items-center justify-center transition-all shadow-xs cursor-pointer"
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#072818] hover:bg-[#0B3D26] text-[#E5A922] flex items-center justify-center transition-all shadow-xs cursor-pointer shrink-0"
               title={`Call ${phone}`}
             >
-              <Phone className="h-4 w-4 text-[#E5A922]" />
+              <Phone className="h-3.5 w-3.5 text-[#E5A922]" />
             </a>
           </div>
         </header>
 
         {/* MAIN STORE CONTENT CANVAS */}
-        <main className="flex-1 overflow-y-auto p-3.5 sm:p-6 lg:p-8 space-y-6 sm:space-y-8 pb-28 md:pb-8">
+        <main className={`flex-1 min-w-0 ${activeTab === "home" ? "flex flex-col p-0 pb-0 justify-between" : "p-3.5 sm:p-6 lg:p-8 space-y-6 sm:space-y-8 pb-28 md:pb-8"}`}>
 
           {/* =================================================================== */}
           {/* 1. STORE HOME SCREEN (Visible ONLY when activeTab === "home")        */}
           {/* =================================================================== */}
           {activeTab === "home" && (
-            <div className="space-y-6 sm:space-y-8 animate-fadeIn">
+            <div className="flex-1 flex flex-col animate-fadeIn justify-between">
 
               {/* ------------------------------------------------------------------- */}
-              {/* HERO BANNER SECTION (Exact reference image styling)                */}
+              {/* UNIFIED HERO BANNER (Full-Width Luxury Villa Architectural Section) */}
               {/* ------------------------------------------------------------------- */}
-              <section className="relative w-full rounded-b-[40px] overflow-hidden min-h-[220px] sm:min-h-[260px] lg:min-h-[290px] px-4 sm:px-8 lg:px-10 py-6 sm:py-8 flex items-center justify-between">
-                {/* Right Luxury Villa Artwork with smooth fade to left */}
-                <div className="absolute right-0 top-0 bottom-0 w-full sm:w-[65%] lg:w-[58%] -z-10 pointer-events-none overflow-hidden">
+              <section className="relative w-full overflow-hidden shrink-0 flex items-center pt-16 sm:pt-18 md:pt-19 lg:pt-20 pb-3 sm:pb-3.5 lg:pb-4 px-4 sm:px-6 lg:px-10 h-[315px] sm:h-[335px] md:h-[35.5vh] md:min-h-[315px] md:max-h-[355px] lg:h-[36.5vh] lg:min-h-[335px] lg:max-h-[370px] xl:h-[37.5vh] xl:min-h-[355px] xl:max-h-[390px] 2xl:h-[38.5vh] 2xl:min-h-[370px] 2xl:max-h-[405px]">
+                {/* Villa Image Covering the ENTIRE Hero Section from Left (Sidebar boundary) to Right Edge, Top to Bottom */}
+                <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden -z-10">
                   <Image
-                    src="/images/reference/hero-villa-v2.png"
+                    src="/images/hero/luxury-residence-header.jpg"
                     alt="Surya Promoters Luxury Villa Architecture"
                     fill
                     priority
-                    sizes="(max-width: 1024px) 100vw, 800px"
-                    className="object-cover object-right"
+                    sizes="100vw"
+                    className="object-cover object-[right_center] sm:object-[right_25%]"
+                    style={{ filter: "brightness(1.05) contrast(1.06) saturate(1.10)" }}
+                  />
+
+                  {/* Sophisticated Transparent Ivory Gradient on Desktop */}
+                  <div
+                    className="hidden md:block absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(to right, rgba(250, 248, 243, 0.88) 0%, rgba(250, 248, 243, 0.82) 28%, rgba(250, 248, 243, 0.52) 48%, rgba(250, 248, 243, 0.18) 68%, rgba(250, 248, 243, 0) 84%)"
+                    }}
+                  />
+
+                  {/* High-Contrast Mobile Dark Gradient Overlay for Maximum Readability of White Text */}
+                  <div
+                    className="md:hidden absolute inset-0 bg-gradient-to-b from-[#061F12]/80 via-[#061F12]/60 to-[#061F12]/85"
+                  />
+
+                  {/* Subtle Top Header Soft Vignette for crystal-clear control readability */}
+                  <div
+                    className="absolute inset-x-0 top-0 h-16"
+                    style={{
+                      background: "linear-gradient(to bottom, rgba(250, 248, 243, 0.45) 0%, transparent 100%)"
+                    }}
                   />
                 </div>
 
-                {/* Left Text Content */}
-                <div className="max-w-xl z-10">
-                  <div className="flex items-center gap-2.5 mb-1.5">
-                    <p className="text-xs sm:text-sm font-bold text-[#BD8D1C] tracking-wide">
-                      {language === "ta" ? "சிறந்த நாளைய விடியலுக்கான கட்டுமானம்" : "Building a Better Tomorrow"}
-                    </p>
-                    <span className="w-8 sm:w-14 h-[1.5px] bg-[#BD8D1C]/60 rounded-full" />
+                {/* Hero Left Text Content - Centered Horizontally within Left 40-45% Area & Centered Vertically */}
+                <div className="w-full sm:w-[50%] md:w-[46%] lg:w-[43%] xl:w-[41%] flex flex-col items-center justify-center text-center z-10 px-2 sm:px-4 my-auto">
+                  <div className="flex items-center justify-center gap-2 mb-1.5 sm:mb-2 lg:mb-2.5">
+                    <span className="w-8 sm:w-12 lg:w-16 h-[1.5px] bg-[#BD8D1C]/50 rounded-full hidden sm:block" />
+                    <span className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full bg-white/95 backdrop-blur-xs border border-[#E5A922]/45 shadow-xs">
+                      <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#E5A922]" />
+                      <p className="text-[11px] sm:text-xs lg:text-[13px] font-extrabold text-[#9E731C] tracking-wide">
+                        {language === "ta" ? "சிறந்த நாளைய விடியலுக்கான கட்டுமானம்" : "Building a Better Tomorrow"}
+                      </p>
+                    </span>
+                    <span className="w-8 sm:w-12 lg:w-16 h-[1.5px] bg-[#BD8D1C]/50 rounded-full hidden sm:block" />
                   </div>
-                  <h1 className="text-3xl sm:text-5xl lg:text-5xl font-black text-[#0A2617] tracking-tight leading-tight">
+                  <h1 className="text-2xl sm:text-3xl md:text-[38px] lg:text-[44px] xl:text-[48px] font-black text-white md:text-[#0A2617] tracking-tight leading-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)] md:drop-shadow-xs">
                     {language === "ta" ? "சூர்யா புரமோட்டர்ஸ்" : "Surya Promoters"}
                   </h1>
-                  <p className="mt-2 text-xs sm:text-sm lg:text-base font-semibold text-[#3D4F45] max-w-md leading-relaxed">
+                  <p className="mt-1 sm:mt-1.5 lg:mt-2 text-xs sm:text-sm lg:text-[15px] font-bold text-[#F1F1E8] md:text-[#2C4035] max-w-sm sm:max-w-md leading-relaxed drop-shadow-[0_1px_6px_rgba(0,0,0,0.6)] md:drop-shadow-xs">
                     {language === "ta" ? "2010 முதல் உங்களின் நம்பிக்கைக்குரிய ரியல் எஸ்டேட் பங்குதாரர்" : "Your Trusted Real Estate Partner Since 2010"}
                   </p>
                 </div>
-              </section>
 
-              {/* ------------------------------------------------------------------- */}
-              {/* THE 6 MAIN APP-STORE ICONS (Explore Surya Promoters - 6 Main Icons) */}
-              {/* ------------------------------------------------------------------- */}
-              <section className="bg-white/85 backdrop-blur-xs rounded-[32px] sm:rounded-[36px] border border-[#EBE4D5] shadow-[0_8px_30px_rgba(10,40,20,0.04)] p-4 sm:p-6 lg:p-8 space-y-5">
-                
-                {/* Section Header with Green Accent Bar + Cursive Golden Motto */}
-                <div className="flex items-center justify-between pb-1">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-1.5 h-6 rounded-full bg-[#0E5934]" />
-                    <h2 className="text-base sm:text-xl font-black text-[#0A2617]">
-                      {language === "ta" ? "பிரதான சேவைகள் & அம்சங்கள் (6 முக்கிய பிரிவுகள்)" : "Explore Surya Promoters (6 Main Icons)"}
-                    </h2>
-                  </div>
-                  <div className="font-script text-base sm:text-xl text-[#BD8D1C] font-bold tracking-wide select-none">
-                    Dream • Plan • Own
-                  </div>
-                </div>
-
-                {/* The 6 Wide Landscape Cards (2 Columns x 3 Rows) */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4 lg:gap-5">
-
-                  {/* Card 1: Our Projects */}
-                  <button
-                    onClick={() => {
-                      setActiveTab("projects");
-                      setActiveCategory(null);
-                    }}
-                    className="group relative overflow-hidden rounded-3xl p-3.5 sm:p-4 text-left border border-[#F6DEC0] bg-gradient-to-r from-[#FFF8EB] via-[#FFF3DD] to-[#FDEED2] hover:shadow-md hover:border-[#EAB308]/60 transition-all duration-300 flex items-center justify-between cursor-pointer"
-                  >
-                    <div className="flex items-center gap-3 sm:gap-3.5 z-10 min-w-0 flex-1">
-                      <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#E5A922] text-white flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-                        <Building2 className="w-5 h-5 sm:w-6 sm:h-6" />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <h3 className="font-bold text-sm sm:text-base text-[#0D2317] group-hover:text-[#B45309] transition-colors leading-tight">
-                          {language === "ta" ? "எங்கள் திட்டங்கள்" : "Our Projects"}
-                        </h3>
-                        <p className="text-[11px] sm:text-xs text-[#5D6B63] mt-0.5 leading-snug">
-                          {language === "ta" ? "வீடு, வணிகம் & பண்ணை மனைகள்" : "Residential, Commercial & Farm"}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 sm:gap-2.5 z-10 shrink-0 pl-1">
-                      <div className="relative w-20 sm:w-24 h-12 sm:h-14 overflow-hidden pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity">
-                        <Image
-                          src="/images/reference/card-projects-blended.png"
-                          alt=""
-                          fill
-                          className="object-contain object-right"
-                        />
-                      </div>
-                      <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#B57C17] text-white flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-xs">
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </div>
-                    </div>
-                  </button>
-
-                  {/* Card 2: Site Location */}
-                  <button
-                    onClick={() => setActiveTab("location")}
-                    className="group relative overflow-hidden rounded-3xl p-3.5 sm:p-4 text-left border border-[#CFECD7] bg-gradient-to-r from-[#F2FAF4] via-[#ECF7EE] to-[#E3F4E8] hover:shadow-md hover:border-emerald-500/60 transition-all duration-300 flex items-center justify-between cursor-pointer"
-                  >
-                    <div className="flex items-center gap-3 sm:gap-3.5 z-10 min-w-0 flex-1">
-                      <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#0FA958] text-white flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-                        <MapPin className="w-5 h-5 sm:w-6 sm:h-6" />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <h3 className="font-bold text-sm sm:text-base text-[#0D2317] group-hover:text-emerald-700 transition-colors leading-tight">
-                          {language === "ta" ? "தள அமைவிடம்" : "Site Location"}
-                        </h3>
-                        <p className="text-[11px] sm:text-xs text-[#5D6B63] mt-0.5 leading-snug">
-                          {language === "ta" ? "3D & GPS நேரலை வரைபடங்கள்" : "3D Cadastal & GPS Maps"}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 sm:gap-2.5 z-10 shrink-0 pl-1">
-                      <div className="relative w-20 sm:w-24 h-12 sm:h-14 overflow-hidden pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity">
-                        <Image
-                          src="/images/reference/card-location-blended.png"
-                          alt=""
-                          fill
-                          className="object-contain object-right"
-                        />
-                      </div>
-                      <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#084B29] text-white flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-xs">
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </div>
-                    </div>
-                  </button>
-
-                  {/* Card 3: Gallery */}
-                  <button
-                    onClick={() => setActiveTab("gallery")}
-                    className="group relative overflow-hidden rounded-3xl p-3.5 sm:p-4 text-left border border-[#E5CEFD] bg-gradient-to-r from-[#FAF4FF] via-[#F4EAFD] to-[#EFE2FE] hover:shadow-md hover:border-purple-400/60 transition-all duration-300 flex items-center justify-between cursor-pointer"
-                  >
-                    <div className="flex items-center gap-3 sm:gap-3.5 z-10 min-w-0 flex-1">
-                      <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#8722CD] text-white flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-                        <Camera className="w-5 h-5 sm:w-6 sm:h-6" />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <h3 className="font-bold text-sm sm:text-base text-[#0D2317] group-hover:text-purple-700 transition-colors leading-tight">
-                          {language === "ta" ? "புகைப்படங்கள் & வீடியோ" : "Gallery"}
-                        </h3>
-                        <p className="text-[11px] sm:text-xs text-[#5D6B63] mt-0.5 leading-snug">
-                          {language === "ta" ? "வீடியோ & புகைப்பட ஆல்பங்கள்" : "Videos & Photos Folders"}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 sm:gap-2.5 z-10 shrink-0 pl-1">
-                      <div className="relative w-20 sm:w-24 h-12 sm:h-14 overflow-hidden pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity">
-                        <Image
-                          src="/images/reference/card-gallery-blended.png"
-                          alt=""
-                          fill
-                          className="object-contain object-right"
-                        />
-                      </div>
-                      <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#581395] text-white flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-xs">
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </div>
-                    </div>
-                  </button>
-
-                  {/* Card 4: About Company */}
-                  <button
-                    onClick={() => setActiveTab("about")}
-                    className="group relative overflow-hidden rounded-3xl p-3.5 sm:p-4 text-left border border-[#D0ECD0] bg-gradient-to-r from-[#F3FAF2] via-[#EAF6E9] to-[#E3F4E0] hover:shadow-md hover:border-emerald-500/60 transition-all duration-300 flex items-center justify-between cursor-pointer"
-                  >
-                    <div className="flex items-center gap-3.5 sm:gap-4 z-10 min-w-0 flex-1">
-                      <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#24B24B] text-white flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-                        <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6" />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <h3 className="font-bold text-sm sm:text-base text-[#0D2317] group-hover:text-emerald-700 transition-colors leading-tight">
-                          {language === "ta" ? "நிறுவனம் பற்றி" : "About Company"}
-                        </h3>
-                        <p className="text-[11px] sm:text-xs text-[#5D6B63] mt-0.5 leading-snug">
-                          {language === "ta" ? "நிறுவனர் & 16+ வருட பாரம்பரியம்" : "Founder & 16+ Yrs Legacy"}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 sm:gap-2.5 z-10 shrink-0 pl-1">
-                      <div className="relative w-20 sm:w-24 h-12 sm:h-14 overflow-hidden pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity">
-                        <Image
-                          src="/images/reference/card-about-blended.png"
-                          alt=""
-                          fill
-                          className="object-contain object-right"
-                        />
-                      </div>
-                      <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#0C582F] text-white flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-xs">
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </div>
-                    </div>
-                  </button>
-
-                  {/* Card 5: Download Layout */}
-                  <button
-                    onClick={() => setActiveTab("download")}
-                    className="group relative overflow-hidden rounded-3xl p-3.5 sm:p-4 text-left border border-[#FAD3B8] bg-gradient-to-r from-[#FFF5ED] via-[#FEEFE4] to-[#FDE6D5] hover:shadow-md hover:border-amber-500/60 transition-all duration-300 flex items-center justify-between cursor-pointer"
-                  >
-                    <div className="flex items-center gap-3 sm:gap-3.5 z-10 min-w-0 flex-1">
-                      <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#F57C00] text-white flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-                        <Download className="w-5 h-5 sm:w-6 sm:h-6" />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <h3 className="font-bold text-sm sm:text-base text-[#0D2317] group-hover:text-amber-700 transition-colors leading-tight">
-                          {language === "ta" ? "வரைபடம் பதிவிறக்கம்" : "Download Layout"}
-                        </h3>
-                        <p className="text-[11px] sm:text-xs text-[#5D6B63] mt-0.5 leading-snug">
-                          {language === "ta" ? "புளூபிரிண்ட், வரைபடம், PDF கையேடுகள்" : "Blueprints, Layouts & PDFs"}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 sm:gap-2.5 z-10 shrink-0 pl-1">
-                      <div className="relative w-20 sm:w-24 h-12 sm:h-14 overflow-hidden pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity">
-                        <Image
-                          src="/images/reference/card-download-blended.png"
-                          alt=""
-                          fill
-                          className="object-contain object-right"
-                        />
-                      </div>
-                      <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#B35309] text-white flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-xs">
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </div>
-                    </div>
-                  </button>
-
-                  {/* Card 6: Contact Us */}
-                  <button
-                    onClick={() => setActiveTab("contact")}
-                    className="group relative overflow-hidden rounded-3xl p-3.5 sm:p-4 text-left border border-[#C6EAE4] bg-gradient-to-r from-[#EDF8F6] via-[#E4F5F2] to-[#DBF1EE] hover:shadow-md hover:border-teal-500/60 transition-all duration-300 flex items-center justify-between cursor-pointer"
-                  >
-                    <div className="flex items-center gap-3 sm:gap-3.5 z-10 min-w-0 flex-1">
-                      <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#00897B] text-white flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-                        <PhoneCall className="w-5 h-5 sm:w-6 sm:h-6" />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <h3 className="font-bold text-sm sm:text-base text-[#0D2317] group-hover:text-teal-700 transition-colors leading-tight">
-                          {language === "ta" ? "நேரடி தொடர்பு" : "Contact Us"}
-                        </h3>
-                        <p className="text-[11px] sm:text-xs text-[#5D6B63] mt-0.5 leading-snug">
-                          {language === "ta" ? "அழைப்பு, வாட்ஸ்அப் & அலுவலகம்" : "Phone, WhatsApp & Office"}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 sm:gap-2.5 z-10 shrink-0 pl-1">
-                      <div className="relative w-20 sm:w-24 h-12 sm:h-14 overflow-hidden pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity">
-                        <Image
-                          src="/images/reference/card-contact-blended.png"
-                          alt=""
-                          fill
-                          className="object-contain object-right"
-                        />
-                      </div>
-                      <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#05483F] text-white flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-xs">
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </div>
-                    </div>
-                  </button>
+                {/* Golden and Forest-Green Decorative Accent Border along the Bottom Edge - No Solid Ivory Fill */}
+                <div className="absolute bottom-0 left-0 right-0 h-3.5 sm:h-4 pointer-events-none overflow-hidden z-10">
+                  <svg viewBox="0 0 1200 16" preserveAspectRatio="none" className="w-full h-full">
+                    <path d="M0,2 C300,14 900,14 1200,2" fill="none" stroke="#0E5934" strokeWidth="1.5" strokeOpacity="0.45" />
+                    <path d="M0,0 C300,12 900,12 1200,0" fill="none" stroke="#E5A922" strokeWidth="2" strokeOpacity="0.85" />
+                  </svg>
                 </div>
               </section>
 
-              {/* Trust Badges Bar (Trusted Builder | Quality Assurance | Customer First) */}
-              <div className="pt-1 select-none">
-                <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs sm:text-sm font-semibold text-[#294233]">
-                  <div className="flex items-center gap-2">
-                    <Home className="h-4 w-4 text-[#BD8D1C]" />
+              {/* Middle Section: Navigation Cards Container + Trust Badges Bar */}
+              <div className="flex-1 flex flex-col justify-center min-h-0 py-1 sm:py-1.5 lg:py-2">
+                {/* Navigation Cards Container */}
+                <div className="px-3.5 sm:px-6 lg:px-8 relative z-20 min-h-0">
+                  <section className="bg-white/85 backdrop-blur-xs rounded-[18px] lg:rounded-[22px] border border-[#EBE4D5] shadow-[0_4px_20px_rgba(10,40,20,0.04)] p-1.5 sm:p-2 lg:p-2.5 flex flex-col justify-between">
+                  
+                  {/* Section Header with Green Accent Bar + Cursive Golden Motto */}
+                  <div className="flex items-center justify-between pb-1 sm:pb-1.5 px-0.5">
+                    <div className="flex items-center gap-2">
+                      <span className="w-1.5 h-3.5 sm:h-4.5 rounded-full bg-[#0E5934]" />
+                      <h2 className="text-xs sm:text-sm lg:text-[15px] font-black text-[#0A2617] tracking-tight">
+                        {language === "ta" ? "பிரதான சேவைகள் & அம்சங்கள் (6 முக்கிய பிரிவுகள்)" : "Explore Surya Promoters (6 Main Icons)"}
+                      </h2>
+                    </div>
+                    <div className="font-script text-xs sm:text-sm lg:text-[15px] text-[#BD8D1C] font-bold tracking-wide select-none">
+                      Dream • Plan • Own
+                    </div>
+                  </div>
+
+                  {/* The 6 Wide Landscape Cards (2 Columns x 3 Rows) */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5 sm:gap-2 lg:gap-2.5 xl:gap-3">
+
+                    {/* Card 1: Our Projects (Champagne gold fading into warm cream) */}
+                    <button
+                      onClick={() => {
+                        setActiveTab("projects");
+                        setActiveCategory(null);
+                      }}
+                      className="clean-interactive-card group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#E8CCA0] bg-gradient-to-r from-[#FBF4E6] via-[#F7EBD0] to-[#F0DEC0] shadow-[0_3px_14px_rgba(205,140,25,0.08)] hover:shadow-[0_10px_28px_rgba(205,140,25,0.20)] hover:border-[#DDA843] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
+                    >
+                      {/* Background Photographic Image on Right with Natural Gradient Blend (50-55% width) */}
+                      <div className="absolute right-0 top-0 bottom-0 w-[50%] sm:w-[52%] lg:w-[54%] xl:w-[55%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
+                        <Image
+                          src="/images/cards/card-projects-luxury.jpg"
+                          alt="Our Projects"
+                          fill
+                          sizes="(max-width: 768px) 55vw, 450px"
+                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
+                        />
+                        {/* Smooth Pastel Gradient Blend */}
+                        <div
+                          className="absolute inset-0"
+                          style={{
+                            background: "linear-gradient(to right, #F7EBD0 0%, rgba(247, 235, 208, 0.88) 14%, rgba(247, 235, 208, 0.35) 30%, rgba(247, 235, 208, 0) 50%)"
+                          }}
+                        />
+                      </div>
+
+                      {/* Left: Prominent Circular Gradient Icon, Title & Description */}
+                      <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[50%] sm:max-w-[48%] lg:max-w-[46%]">
+                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#F5B731] via-[#E5A922] to-[#BD7B0C] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(205,140,25,0.25)] group-hover:scale-108 transition-transform duration-300">
+                          <Building2 className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
+                        </div>
+                        <div className="min-w-0">
+                          <h3 className="font-black text-[12.5px] sm:text-[13.5px] md:text-[12.5px] lg:text-[14px] xl:text-[15px] text-[#0D2317] group-hover:text-[#9A6206] transition-colors leading-tight line-clamp-1">
+                            {language === "ta" ? "எங்கள் திட்டங்கள்" : "Our Projects"}
+                          </h3>
+                          <p className="text-[10px] sm:text-[11px] md:text-[10px] lg:text-[11px] xl:text-[12px] text-[#4A5750] font-semibold mt-0.5 leading-snug line-clamp-1">
+                            {language === "ta" ? "வீடு, வணிகம் & பண்ணை மனைகள்" : "Residential, Commercial & Farm"}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Right: Elegant Circular Arrow Button */}
+                      <div className="relative z-10 shrink-0">
+                        <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-0.5 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
+                          <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.6]" />
+                        </div>
+                      </div>
+                    </button>
+
+                    {/* Card 2: Site Location (Fresh mint green fading into pale green) */}
+                    <button
+                      onClick={() => setActiveTab("location")}
+                      className="clean-interactive-card group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#A8DCB7] bg-gradient-to-r from-[#EAF7EE] via-[#DCF2E4] to-[#CEEBD7] shadow-[0_3px_14px_rgba(16,140,60,0.08)] hover:shadow-[0_10px_28px_rgba(16,140,60,0.20)] hover:border-[#22C55E] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
+                    >
+                      {/* Background Photographic Image on Right with Natural Gradient Blend (50-55% width) */}
+                      <div className="absolute right-0 top-0 bottom-0 w-[50%] sm:w-[52%] lg:w-[54%] xl:w-[55%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
+                        <Image
+                          src="/images/cards/card-location-cadastral.jpg"
+                          alt="Site Location"
+                          fill
+                          sizes="(max-width: 768px) 55vw, 450px"
+                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
+                        />
+                        {/* Smooth Pastel Gradient Blend */}
+                        <div
+                          className="absolute inset-0"
+                          style={{
+                            background: "linear-gradient(to right, #DCF2E4 0%, rgba(220, 242, 228, 0.88) 14%, rgba(220, 242, 228, 0.35) 30%, rgba(220, 242, 228, 0) 50%)"
+                          }}
+                        />
+                      </div>
+
+                      {/* Left: Prominent Circular Gradient Icon, Title & Description */}
+                      <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[50%] sm:max-w-[48%] lg:max-w-[46%]">
+                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#22C55E] via-[#16A34A] to-[#15803D] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(22,163,74,0.25)] group-hover:scale-108 transition-transform duration-300">
+                          <MapPin className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
+                        </div>
+                        <div className="min-w-0">
+                          <h3 className="font-black text-[12.5px] sm:text-[13.5px] md:text-[12.5px] lg:text-[14px] xl:text-[15px] text-[#0D2317] group-hover:text-[#15803D] transition-colors leading-tight line-clamp-1">
+                            {language === "ta" ? "தள அமைவிடம்" : "Site Location"}
+                          </h3>
+                          <p className="text-[10px] sm:text-[11px] md:text-[10px] lg:text-[11px] xl:text-[12px] text-[#4A5750] font-semibold mt-0.5 leading-snug line-clamp-1">
+                            {language === "ta" ? "3D & GPS நேரலை வரைபடங்கள்" : "3D Cadastral & GPS Maps"}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Right: Elegant Circular Arrow Button */}
+                      <div className="relative z-10 shrink-0">
+                        <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#15803D] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-0.5 transition-all duration-300 shadow-[0_2px_8px_rgba(21,128,61,0.35)]">
+                          <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.6]" />
+                        </div>
+                      </div>
+                    </button>
+
+                    {/* Card 3: Gallery (Lavender fading into soft purple) */}
+                    <button
+                      onClick={() => setActiveTab("gallery")}
+                      className="clean-interactive-card group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#CFB8ED] bg-gradient-to-r from-[#F5EFFB] via-[#EBE0F7] to-[#DFCFF2] shadow-[0_3px_14px_rgba(147,51,234,0.08)] hover:shadow-[0_10px_28px_rgba(147,51,234,0.20)] hover:border-[#A855F7] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
+                    >
+                      {/* Background Photographic Image on Right with Natural Gradient Blend (50-55% width) */}
+                      <div className="absolute right-0 top-0 bottom-0 w-[50%] sm:w-[52%] lg:w-[54%] xl:w-[55%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
+                        <Image
+                          src="/images/cards/card-gallery-photos.jpg"
+                          alt="Gallery"
+                          fill
+                          sizes="(max-width: 768px) 55vw, 450px"
+                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
+                        />
+                        {/* Smooth Pastel Gradient Blend */}
+                        <div
+                          className="absolute inset-0"
+                          style={{
+                            background: "linear-gradient(to right, #EBE0F7 0%, rgba(235, 224, 247, 0.88) 14%, rgba(235, 224, 247, 0.35) 30%, rgba(220, 242, 228, 0) 50%)"
+                          }}
+                        />
+                      </div>
+
+                      {/* Left: Prominent Circular Gradient Icon, Title & Description */}
+                      <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[50%] sm:max-w-[48%] lg:max-w-[46%]">
+                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#A855F7] via-[#9333EA] to-[#6B21A8] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(147,51,234,0.25)] group-hover:scale-108 transition-transform duration-300">
+                          <Camera className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
+                        </div>
+                        <div className="min-w-0">
+                          <h3 className="font-black text-[12.5px] sm:text-[13.5px] md:text-[12.5px] lg:text-[14px] xl:text-[15px] text-[#0D2317] group-hover:text-[#7E22CE] transition-colors leading-tight line-clamp-1">
+                            {language === "ta" ? "புகைப்படங்கள் & வீடியோ" : "Gallery"}
+                          </h3>
+                          <p className="text-[10px] sm:text-[11px] md:text-[10px] lg:text-[11px] xl:text-[12px] text-[#4A5750] font-semibold mt-0.5 leading-snug line-clamp-1">
+                            {language === "ta" ? "வீடியோ & புகைப்பட ஆல்பங்கள்" : "Videos & Photos Folders"}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Right: Elegant Circular Arrow Button */}
+                      <div className="relative z-10 shrink-0">
+                        <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-0.5 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
+                          <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.6]" />
+                        </div>
+                      </div>
+                    </button>
+
+                    {/* Card 4: About Company (Light sage green fading into forest green tones) */}
+                    <button
+                      onClick={() => setActiveTab("about")}
+                      className="clean-interactive-card group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#AFD1B9] bg-gradient-to-r from-[#EEF5F0] via-[#E0ECE3] to-[#CFE2D4] shadow-[0_3px_14px_rgba(14,89,52,0.08)] hover:shadow-[0_10px_28px_rgba(14,89,52,0.20)] hover:border-[#16A34A] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
+                    >
+                      {/* Background Photographic Image on Right with Natural Gradient Blend (50-55% width) */}
+                      <div className="absolute right-0 top-0 bottom-0 w-[50%] sm:w-[52%] lg:w-[54%] xl:w-[55%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
+                        <Image
+                          src="/images/cards/card-about-handshake.jpg"
+                          alt="About Company"
+                          fill
+                          sizes="(max-width: 768px) 55vw, 450px"
+                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
+                        />
+                        {/* Smooth Pastel Gradient Blend */}
+                        <div
+                          className="absolute inset-0"
+                          style={{
+                            background: "linear-gradient(to right, #E0ECE3 0%, rgba(224, 236, 227, 0.88) 14%, rgba(224, 236, 227, 0.35) 30%, rgba(224, 236, 227, 0) 50%)"
+                          }}
+                        />
+                      </div>
+
+                      {/* Left: Prominent Circular Gradient Icon, Title & Description */}
+                      <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[50%] sm:max-w-[48%] lg:max-w-[46%]">
+                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#16A34A] via-[#0E5934] to-[#083D22] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(14,89,52,0.25)] group-hover:scale-108 transition-transform duration-300">
+                          <ShieldCheck className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
+                        </div>
+                        <div className="min-w-0">
+                          <h3 className="font-black text-[12.5px] sm:text-[13.5px] md:text-[12.5px] lg:text-[14px] xl:text-[15px] text-[#0D2317] group-hover:text-[#0E5934] transition-colors leading-tight line-clamp-1">
+                            {language === "ta" ? "நிறுவனம் பற்றி" : "About Company"}
+                          </h3>
+                          <p className="text-[10px] sm:text-[11px] md:text-[10px] lg:text-[11px] xl:text-[12px] text-[#4A5750] font-semibold mt-0.5 leading-snug line-clamp-1">
+                            {language === "ta" ? "நிறுவனர் & 16+ வருட பாரம்பரியம்" : "Founder & 16+ Yrs Legacy"}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Right: Elegant Circular Arrow Button */}
+                      <div className="relative z-10 shrink-0">
+                        <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-0.5 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
+                          <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.6]" />
+                        </div>
+                      </div>
+                    </button>
+
+                    {/* Card 5: Download Layout (Warm peach fading into champagne cream) */}
+                    <button
+                      onClick={() => setActiveTab("download")}
+                      className="clean-interactive-card group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#F5BE9B] bg-gradient-to-r from-[#FDF2E8] via-[#FCE4D4] to-[#F7D4BE] shadow-[0_3px_14px_rgba(234,88,12,0.08)] hover:shadow-[0_10px_28px_rgba(234,88,12,0.20)] hover:border-[#EA580C] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
+                    >
+                      {/* Background Photographic Image on Right with Natural Gradient Blend (50-55% width) */}
+                      <div className="absolute right-0 top-0 bottom-0 w-[50%] sm:w-[52%] lg:w-[54%] xl:w-[55%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
+                        <Image
+                          src="/images/cards/card-download-blueprint.jpg"
+                          alt="Download Layout"
+                          fill
+                          sizes="(max-width: 768px) 55vw, 450px"
+                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
+                        />
+                        {/* Smooth Pastel Gradient Blend */}
+                        <div
+                          className="absolute inset-0"
+                          style={{
+                            background: "linear-gradient(to right, #FCE4D4 0%, rgba(252, 228, 212, 0.88) 14%, rgba(252, 228, 212, 0.35) 30%, rgba(252, 228, 212, 0) 50%)"
+                          }}
+                        />
+                      </div>
+
+                      {/* Left: Prominent Circular Gradient Icon, Title & Description */}
+                      <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[50%] sm:max-w-[48%] lg:max-w-[46%]">
+                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#FB923C] via-[#EA580C] to-[#C2410C] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(234,88,12,0.25)] group-hover:scale-108 transition-transform duration-300">
+                          <Download className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
+                        </div>
+                        <div className="min-w-0">
+                          <h3 className="font-black text-[12.5px] sm:text-[13.5px] md:text-[12.5px] lg:text-[14px] xl:text-[15px] text-[#0D2317] group-hover:text-[#C2410C] transition-colors leading-tight line-clamp-1">
+                            {language === "ta" ? "வரைபடம் பதிவிறக்கம்" : "Download Layout"}
+                          </h3>
+                          <p className="text-[10px] sm:text-[11px] md:text-[10px] lg:text-[11px] xl:text-[12px] text-[#4A5750] font-semibold mt-0.5 leading-snug line-clamp-1">
+                            {language === "ta" ? "புளூபிரிண்ட், வரைபடம், PDF கையேடுகள்" : "Blueprints, Layouts & PDFs"}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Right: Elegant Circular Arrow Button */}
+                      <div className="relative z-10 shrink-0">
+                        <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-0.5 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
+                          <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.6]" />
+                        </div>
+                      </div>
+                    </button>
+
+                    {/* Card 6: Contact Us (Soft aqua fading into teal) */}
+                    <button
+                      onClick={() => setActiveTab("contact")}
+                      className="clean-interactive-card group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#9FD4D3] bg-gradient-to-r from-[#ECF7F7] via-[#DAEFEF] to-[#C5E5E5] shadow-[0_3px_14px_rgba(13,148,136,0.08)] hover:shadow-[0_10px_28px_rgba(13,148,136,0.20)] hover:border-[#0D9488] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
+                    >
+                      {/* Background Photographic Image on Right with Natural Gradient Blend (50-55% width) */}
+                      <div className="absolute right-0 top-0 bottom-0 w-[50%] sm:w-[52%] lg:w-[54%] xl:w-[55%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
+                        <Image
+                          src="/images/cards/card-contact-support.jpg"
+                          alt="Contact Us"
+                          fill
+                          sizes="(max-width: 768px) 55vw, 450px"
+                          className="object-cover object-[center_20%] transition-transform duration-500 ease-out group-hover:scale-108"
+                        />
+                        {/* Smooth Pastel Gradient Blend */}
+                        <div
+                          className="absolute inset-0"
+                          style={{
+                            background: "linear-gradient(to right, #DAEFEF 0%, rgba(218, 239, 239, 0.88) 14%, rgba(218, 239, 239, 0.35) 30%, rgba(218, 239, 239, 0) 50%)"
+                          }}
+                        />
+                      </div>
+
+                      {/* Left: Prominent Circular Gradient Icon, Title & Description */}
+                      <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[50%] sm:max-w-[48%] lg:max-w-[46%]">
+                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#14B8A6] via-[#0D9488] to-[#0F766E] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(13,148,136,0.25)] group-hover:scale-108 transition-transform duration-300">
+                          <PhoneCall className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
+                        </div>
+                        <div className="min-w-0">
+                          <h3 className="font-black text-[12.5px] sm:text-[13.5px] md:text-[12.5px] lg:text-[14px] xl:text-[15px] text-[#0D2317] group-hover:text-[#0F766E] transition-colors leading-tight line-clamp-1">
+                            {language === "ta" ? "நேரடி தொடர்பு" : "Contact Us"}
+                          </h3>
+                          <p className="text-[10px] sm:text-[11px] md:text-[10px] lg:text-[11px] xl:text-[12px] text-[#4A5750] font-semibold mt-0.5 leading-snug line-clamp-1">
+                            {language === "ta" ? "அழைப்பு & தலைமை அலுவலகம்" : "Direct Helpline & Madurai HQ"}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Right: Elegant Circular Arrow Button */}
+                      <div className="relative z-10 shrink-0">
+                        <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-0.5 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
+                          <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.6]" />
+                        </div>
+                      </div>
+                    </button>
+                  </div>
+                </section>
+              </div>
+
+              {/* Trust Badges Bar immediately below the six-card container with balanced spacing */}
+              <div className="shrink-0 pt-2 sm:pt-2.5 lg:pt-3 pb-0.5 select-none z-20">
+                <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 lg:gap-8 text-[10.5px] sm:text-xs lg:text-[12px] font-bold text-[#294233]">
+                  <div className="flex items-center gap-1.5">
+                    <Home className="h-3.5 w-3.5 text-[#BD8D1C]" />
                     <span>{language === "ta" ? "நம்பகமான கட்டுநர்" : "Trusted Builder"}</span>
                   </div>
                   <span className="hidden sm:inline text-neutral-300">|</span>
-                  <div className="flex items-center gap-2">
-                    <ShieldCheck className="h-4 w-4 text-[#0E5934]" />
+                  <div className="flex items-center gap-1.5">
+                    <ShieldCheck className="h-3.5 w-3.5 text-[#0E5934]" />
                     <span>{language === "ta" ? "தர உத்தரவாதம்" : "Quality Assurance"}</span>
                   </div>
                   <span className="hidden sm:inline text-neutral-300">|</span>
-                  <div className="flex items-center gap-2">
-                    <Users className="h-4 w-4 text-[#BD8D1C]" />
+                  <div className="flex items-center gap-1.5">
+                    <Users className="h-3.5 w-3.5 text-[#BD8D1C]" />
                     <span>{language === "ta" ? "வாடிக்கையாளர் முதன்மை" : "Customer First"}</span>
                   </div>
                 </div>
-
-                {/* Bottom Decorative Leaves & Cityscape Artwork */}
-                <div className="relative w-full h-8 sm:h-11 overflow-hidden pointer-events-none mt-3">
-                  <Image
-                    src="/images/reference/bottom-leaves-v2.png"
-                    alt=""
-                    fill
-                    priority
-                    className="object-cover object-bottom"
-                  />
-                </div>
               </div>
+            </div>
+
+            {/* Full-Width Bottom Decorative Landscape & City Skyline Artwork */}
+            <div className="relative w-full h-7 sm:h-7.5 lg:h-8.5 xl:h-9 overflow-hidden pointer-events-none select-none shrink-0 mt-auto">
+              <Image
+                src="/images/reference/bottom-leaves-v2.png"
+                alt="Madurai Cityscape & Landscape"
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 1400px"
+                className="object-cover object-bottom"
+              />
+              {/* Natural smooth blend into ivory canvas at the top edge */}
+              <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-b from-[#FAF8F3] via-[#FAF8F3]/60 to-transparent pointer-events-none" />
+            </div>
             </div>
           )}
 
@@ -896,28 +1020,28 @@ export default function HomePage() {
                 /* ----------------------------------------------------------------- */
                 <div className="space-y-6">
                   {/* Back to Home & Section Title Header */}
-                  <div className="flex items-center justify-between p-4 bg-white rounded-2xl border border-neutral-200/80 shadow-xs">
+                  <div className="flex items-center justify-between p-4 bg-white rounded-2xl border border-neutral-200/90 shadow-xs">
                     <div className="flex items-center gap-3">
                       <button
                         onClick={() => setActiveTab("home")}
-                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-900 text-xs font-bold transition-all hover:scale-105 cursor-pointer shadow-xs"
+                        className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-black transition-all hover:scale-105 cursor-pointer shadow-xs"
                       >
-                        <ArrowLeft className="h-4 w-4" />
+                        <ArrowLeft className="h-4 w-4 text-[#E5A922]" />
                         <span>{language === "ta" ? "முகப்புக்கு திரும்புக" : "Back to Home"}</span>
                       </button>
                       <div className="h-4 w-px bg-neutral-200 hidden sm:block" />
                       <div>
-                        <h3 className="text-sm sm:text-base font-black text-neutral-900 leading-tight">
+                        <h3 className="text-sm sm:text-base font-black text-[#06351F] leading-tight">
                           {language === "ta" ? "எங்கள் திட்டங்கள் (முக்கிய பிரிவுகள்)" : "Our Projects (Property Categories)"}
                         </h3>
                         <p className="text-[11px] text-neutral-500 hidden sm:block">
-                          {language === "ta" ? "பிரிவை கிளிக் செய்து அந்த பிரிவின் திட்டங்களை தனி பக்கத்தில் காண்க" : "Click any category below to navigate to its dedicated project cards"}
+                          {language === "ta" ? "பிரிவை கிளிக் செய்து அந்த பிரிவின் திட்டங்களை தனி பக்கத்தில் காண்க" : "Click any category below to navigate to its dedicated project portfolio"}
                         </p>
                       </div>
                     </div>
                     <button
                       onClick={() => setActiveTab("home")}
-                      className="h-9 w-9 rounded-full bg-red-600 hover:bg-red-700 text-white border border-white/80 flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-md"
+                      className="h-9 w-9 rounded-full bg-[#06351F] hover:bg-[#092B1C] text-[#D9A52E] border border-[#D9A52E]/40 flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-md"
                       title="Close section and return to Home"
                     >
                       <X className="h-4 w-4 stroke-[2.5]" />
@@ -925,75 +1049,156 @@ export default function HomePage() {
                   </div>
 
                   {/* 3 Categories Main Hub Box */}
-                  <div className="bg-white rounded-3xl p-5 sm:p-7 border border-neutral-200/80 shadow-xs space-y-5">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-neutral-100 pb-3">
+                  <div className="bg-white rounded-3xl p-5 sm:p-7 border border-neutral-200/90 shadow-xs space-y-6">
+                    {/* Header Banner */}
+                    <div className="bg-gradient-to-r from-[#06351F] via-[#092B1C] to-[#03210E] text-white rounded-2xl p-5 sm:p-6 border border-[#D9A52E]/30 shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                       <div>
-                        <span className="text-[10px] font-black uppercase text-[#B45309] tracking-wider block mb-0.5">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D9A52E]/20 text-[#D9A52E] border border-[#D9A52E]/30 text-[10px] font-black uppercase tracking-wider mb-2">
+                          <Sparkles className="h-3 w-3" />
                           {language === "ta" ? "படி 1: திட்ட பிரிவை தேர்ந்தெடுக்கவும்" : "Step 1: Choose Property Category"}
                         </span>
-                        <h3 className="text-xl sm:text-2xl font-black text-neutral-900">
-                          {language === "ta"
-                            ? "எங்கள் திட்டப் பிரிவுகள்"
-                            : "Our Property Categories"}
+                        <h3 className="text-xl sm:text-2xl font-black text-white">
+                          {language === "ta" ? "எங்கள் திட்டப் பிரிவுகள்" : "Our Property Categories"}
                         </h3>
-                        <p className="text-xs text-neutral-500 mt-0.5">
-                          {language === "ta" ? "கீழே உள்ள பிரிவை கிளிக் செய்யவும் — திட்டங்கள் புதிய பக்கத்தில் திறக்கும்" : "Click a category card to open that category's dedicated project page"}
+                        <p className="text-xs text-neutral-300 mt-1 max-w-xl">
+                          {language === "ta"
+                            ? "மதுரையின் சிறந்த வளர்ச்சி மண்டலங்களில் DTCP & RERA அங்கீகரிக்கப்பட்ட மனைப்பிரிவுகள் மற்றும் பண்ணை நிலங்கள்."
+                            : "Explore certified DTCP & RERA approved villa plots, commercial highway frontage, and managed agro acreage across Madurai."}
                         </p>
                       </div>
-                      <span className="text-xs font-bold text-neutral-500 bg-neutral-100 px-3.5 py-1.5 rounded-full w-fit">
-                        {ALL_PROJECTS.length} Total Developments
-                      </span>
+                      <div className="shrink-0 flex items-center gap-2">
+                        <span className="text-xs font-black text-[#D9A52E] bg-white/10 px-4 py-2 rounded-xl border border-[#D9A52E]/30">
+                          {ALL_PROJECTS.length} Total Developments
+                        </span>
+                      </div>
                     </div>
 
-                    {/* Categories Box / Icons Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {/* 3 Luxury Category Selection Cards */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                       {categoriesList.map((cat, idx) => {
                         const count = ALL_PROJECTS.filter((p) => p.category === cat.id).length;
                         const IconComp = getPageCategoryIcon(cat.icon);
                         const catNum = String(idx + 1).padStart(2, "0");
 
+                        // Photographic and metadata mapping for luxury presentation
+                        const catMeta = cat.id === "residential"
+                          ? {
+                              image: "/images/cards/card-projects-luxury.jpg",
+                              tag: "DTCP & RERA Approved",
+                              tagTa: "DTCP & RERA அங்கீகரிக்கப்பட்டது",
+                              perks: ["3 BHK Luxury Duplex Villas", "Premium Gated Communities", "Ready-to-Build Plots"],
+                              perksTa: ["3 BHK டூப்ளக்ஸ் வில்லாக்கள்", "கேட்டட் கம்யூனிட்டி", "உடனடி கட்டுமான மனைகள்"],
+                            }
+                          : cat.id === "commercial"
+                          ? {
+                              image: "/images/generated/commercial-anna-nagar.jpg",
+                              tag: "High-Exposure Corridors",
+                              tagTa: "தேசிய நெடுஞ்சாலை பெருநிலங்கள்",
+                              perks: ["NH-44 & Ring Road Access", "High Commercial Footfall", "Maximum Appreciation"],
+                              perksTa: ["NH-44 & ரிங் ரோடு இணைப்பு", "வணிக பெருமதிப்பு", "அதிக வளர்ச்சி சாத்தியம்"],
+                            }
+                          : {
+                              image: "/images/projects/madurai-farms/panoramic-view.jpg",
+                              tag: "Managed Agro Acreage",
+                              tagTa: "இயற்கை பண்ணை நிலங்கள்",
+                              perks: ["Abundant Ground Water", "Teak & Fruit Plantations", "Gated Boundary & Security"],
+                              perksTa: ["வற்றாத நிலத்தடி நீர்", "பழ மர தோட்டங்கள்", "வேலி & தார் சாலை வசதி"],
+                            };
+
                         return (
-                          <button
+                          <div
                             key={cat.id}
                             onClick={() => setActiveCategory(cat.id)}
-                            className="p-5 sm:p-6 rounded-2xl border text-left transition-all duration-300 cursor-pointer flex flex-col justify-between group relative overflow-hidden bg-white hover:bg-amber-50/40 text-neutral-900 border-neutral-200 shadow-xs hover:shadow-lg hover:border-[#EAB308] hover:-translate-y-0.5"
+                            className="bg-white rounded-[22px] border border-neutral-200/90 hover:border-[#D9A52E] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden group cursor-pointer"
                           >
-                            <div className="flex items-start justify-between mb-3">
-                              <div className="h-14 w-14 rounded-2xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-105 shadow-xs bg-amber-50 text-[#B45309] border border-amber-200">
-                                <IconComp className="h-7 w-7" />
-                              </div>
-                              <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-100 text-[#B45309]">
-                                {count} {count === 1 ? "Project" : "Projects"}
-                              </span>
-                            </div>
-
                             <div>
-                              <span className="text-[10px] font-black uppercase tracking-widest block text-neutral-400 mb-1">
-                                Category {catNum}
-                              </span>
-                              <h4 className="text-base sm:text-lg font-black leading-snug group-hover:text-[#B45309] transition-colors">
-                                {idx + 1}. {cat.name[language] || cat.name.en}
-                              </h4>
-                              <p className="text-xs mt-1.5 leading-relaxed text-neutral-500 line-clamp-2">
-                                {cat.description?.[language] || cat.description?.en || `${count} Projects available`}
-                              </p>
+                              {/* Top Photographic Cover with Gradient Overlay */}
+                              <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-neutral-900">
+                                <Image
+                                  src={catMeta.image}
+                                  alt={cat.name.en}
+                                  fill
+                                  sizes="(max-width: 768px) 100vw, 33vw"
+                                  className="object-cover transition-transform duration-700 group-hover:scale-108"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/30" />
+
+                                {/* Top Badges */}
+                                <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
+                                  <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-[#06351F]/90 text-[#D9A52E] border border-[#D9A52E]/40 backdrop-blur-md">
+                                    Category {catNum}
+                                  </span>
+                                  <span className="px-3 py-1 rounded-full text-[11px] font-black bg-[#D9A52E] text-[#06351F] shadow-md">
+                                    {count} {count === 1 ? "Project" : "Projects"}
+                                  </span>
+                                </div>
+
+                                {/* Floating Icon & Tag on Image Bottom */}
+                                <div className="absolute bottom-3 left-3 right-3 flex items-center gap-2.5 z-10">
+                                  <div className="h-11 w-11 rounded-xl bg-white/95 text-[#06351F] border border-[#D9A52E]/40 flex items-center justify-center shrink-0 shadow-lg group-hover:bg-[#D9A52E] group-hover:text-[#06351F] transition-colors">
+                                    <IconComp className="h-5 w-5 stroke-[2.2]" />
+                                  </div>
+                                  <div className="min-w-0">
+                                    <span className="text-[10px] font-bold text-[#D9A52E] uppercase tracking-wider block drop-shadow-sm truncate">
+                                      {language === "ta" ? catMeta.tagTa : catMeta.tag}
+                                    </span>
+                                    <span className="text-white text-xs font-semibold drop-shadow-md block truncate">
+                                      {cat.description?.[language] || cat.description?.en}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Card Content */}
+                              <div className="p-5">
+                                <h4 className="text-lg font-black text-[#06351F] group-hover:text-[#BD8D1C] transition-colors mb-2">
+                                  {idx + 1}. {cat.name[language] || cat.name.en}
+                                </h4>
+                                <p className="text-xs text-neutral-600 leading-relaxed mb-4 line-clamp-2">
+                                  {cat.description?.[language] || cat.description?.en}
+                                </p>
+
+                                {/* 3 Feature Bullets */}
+                                <div className="space-y-1.5 pt-3 border-t border-neutral-100 mb-2">
+                                  {(language === "ta" ? catMeta.perksTa : catMeta.perks).map((perk, pIdx) => (
+                                    <div key={pIdx} className="flex items-center gap-2 text-[11px] text-neutral-700 font-medium">
+                                      <CheckCircle2 className="h-3.5 w-3.5 text-[#D9A52E] shrink-0" />
+                                      <span className="truncate">{perk}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
                             </div>
 
-                            <div className="mt-4 pt-3 border-t border-neutral-100 flex items-center justify-between text-xs font-bold text-[#B45309]">
-                              <span>{language === "ta" ? "கார்டுகளை காண கிளிக் செய்க" : "Click to View Cards"}</span>
-                              <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                            {/* Bottom Action Button */}
+                            <div className="p-5 pt-0">
+                              <div className="w-full py-2.5 px-4 rounded-xl bg-[#06351F] group-hover:bg-[#0E5934] text-white font-black text-xs flex items-center justify-between transition-all duration-300 shadow-xs">
+                                <span>{language === "ta" ? "திட்டங்களை காண்க" : "Explore Category"}</span>
+                                <div className="h-6 w-6 rounded-full bg-white/20 group-hover:bg-white/30 flex items-center justify-center transition-colors">
+                                  <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 text-white" />
+                                </div>
+                              </div>
                             </div>
-                          </button>
+                          </div>
                         );
                       })}
                     </div>
 
                     {/* Direct Contact strip */}
-                    <div className="pt-3 border-t border-neutral-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-neutral-500">
+                    <div className="pt-4 border-t border-neutral-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-neutral-600 bg-[#FAF8F3] p-4 rounded-2xl border border-neutral-200/80">
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-neutral-700">{language === "ta" ? "நேரடி ஆலோசனை:" : "Direct Assistance:"}</span>
-                        <a href={`tel:${phone}`} className="font-mono font-bold text-neutral-900 hover:text-[#B45309]">
+                        <span className="font-bold text-[#06351F]">{language === "ta" ? "நேரடி ஆலோசனை:" : "Direct Assistance:"}</span>
+                        <a href={`tel:${phone}`} className="font-mono font-black text-[#06351F] hover:text-[#D9A52E] transition-colors">
                           {phone}
+                        </a>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <a
+                          href={`tel:${phone}`}
+                          className="font-bold text-[#06351F] hover:text-[#0E5934] flex items-center gap-1.5"
+                        >
+                          <Phone className="h-3.5 w-3.5 text-[#D9A52E]" />
+                          <span>{language === "ta" ? "நேரடி ஆலோசனை" : "Call Helpline"}</span>
                         </a>
                       </div>
                     </div>
@@ -1005,14 +1210,14 @@ export default function HomePage() {
                 /* ----------------------------------------------------------------- */
                 <div className="space-y-6">
                   {/* Back to Categories Navigation Header */}
-                  <div className="bg-white rounded-2xl p-4 sm:p-5 border border-neutral-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="bg-white rounded-2xl p-4 sm:p-5 border border-neutral-200/90 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
                       {/* Back to Categories Button */}
                       <button
                         onClick={() => setActiveCategory(null)}
-                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0A0D12] hover:bg-neutral-800 text-white text-xs sm:text-sm font-black transition-all hover:scale-105 cursor-pointer shadow-md"
+                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white text-xs sm:text-sm font-black transition-all hover:scale-105 cursor-pointer shadow-md border border-[#0E5934]"
                       >
-                        <ArrowLeft className="h-4 w-4 text-[#EAB308]" />
+                        <ArrowLeft className="h-4 w-4 text-[#E5A922]" />
                         <span>{language === "ta" ? "அனைத்து பிரிவுகளுக்கும் திரும்புக" : "Back to Categories"}</span>
                       </button>
 
@@ -1021,9 +1226,9 @@ export default function HomePage() {
                           setActiveTab("home");
                           setActiveCategory(null);
                         }}
-                        className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-700 text-xs font-semibold transition-all cursor-pointer"
+                        className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white text-xs font-bold transition-all cursor-pointer border border-[#0E5934] shadow-xs"
                       >
-                        <Home className="h-3.5 w-3.5" />
+                        <Home className="h-3.5 w-3.5 text-[#E5A922]" />
                         <span>{language === "ta" ? "முகப்பு" : "Home"}</span>
                       </button>
 
@@ -1033,7 +1238,7 @@ export default function HomePage() {
                       <div className="text-xs text-neutral-500 font-medium hidden sm:flex items-center gap-1.5">
                         <span>Our Projects</span>
                         <span>/</span>
-                        <span className="font-bold text-neutral-900">
+                        <span className="font-black text-[#06351F]">
                           {currentCategoryObj
                             ? currentCategoryObj.name[language] || currentCategoryObj.name.en
                             : activeCategory}
@@ -1052,8 +1257,8 @@ export default function HomePage() {
                             onClick={() => setActiveCategory(cat.id)}
                             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
                               isCatActive
-                                ? "bg-[#0A0D12] text-[#EAB308] shadow-xs font-black ring-1 ring-[#EAB308]"
-                                : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
+                                ? "bg-[#06351F] text-white shadow-xs font-black ring-2 ring-[#0E5934]"
+                                : "bg-emerald-50/70 text-[#06351F] hover:bg-emerald-100/90 border border-emerald-200/80"
                             }`}
                           >
                             {idx + 1}. {cat.name[language] || cat.name.en} ({pCount})
@@ -1064,10 +1269,10 @@ export default function HomePage() {
                   </div>
 
                   {/* Category Page Title Banner */}
-                  <div className="bg-gradient-to-r from-[#0A0D12] via-[#111827] to-[#1F2937] text-white rounded-3xl p-5 sm:p-7 shadow-lg border border-neutral-800">
+                  <div className="bg-gradient-to-r from-[#06351F] via-[#092B1C] to-[#03210E] text-white rounded-3xl p-5 sm:p-7 shadow-lg border border-[#D9A52E]/30">
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                       <div>
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-[#EAB308] text-xs font-bold mb-2">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D9A52E]/20 text-[#D9A52E] border border-[#D9A52E]/30 text-xs font-bold mb-2">
                           <Sparkles className="h-3.5 w-3.5" />
                           <span>
                             {language === "ta" ? "பிரிவு:" : "Category:"} {currentCategoryObj ? (currentCategoryObj.name[language] || currentCategoryObj.name.en) : activeCategory}
@@ -1099,10 +1304,10 @@ export default function HomePage() {
                       <div
                         key={project.id}
                         onClick={() => setSelectedProject(project)}
-                        className="bg-white rounded-3xl overflow-hidden border border-neutral-200 shadow-xs hover:shadow-xl hover:border-[#EAB308]/60 transition-all duration-300 flex flex-col group cursor-pointer"
+                        className="bg-white rounded-[22px] overflow-hidden border border-neutral-200/90 shadow-sm hover:shadow-xl hover:border-[#D9A52E]/70 transition-all duration-300 flex flex-col group cursor-pointer"
                       >
                         {/* Card Thumbnail */}
-                        <div className="relative h-56 w-full overflow-hidden bg-neutral-900 group/cardimg">
+                        <div className="relative h-60 w-full overflow-hidden bg-neutral-900 group/cardimg">
                           <Image
                             src={currentCardImage}
                             alt={project.name.en}
@@ -1125,7 +1330,7 @@ export default function HomePage() {
                                   }));
                                 }}
                                 aria-label="Previous image"
-                                className="absolute left-2.5 top-1/2 -translate-y-1/2 z-20 h-9 w-9 rounded-full bg-black/65 hover:bg-[#EAB308] text-white hover:text-[#0A0D12] border border-white/20 hover:border-[#EAB308] flex items-center justify-center backdrop-blur-md shadow-lg transition-all hover:scale-110 active:scale-95 cursor-pointer pointer-events-auto opacity-80 sm:opacity-0 sm:group-hover/cardimg:opacity-100"
+                                className="absolute left-2.5 top-1/2 -translate-y-1/2 z-20 h-9 w-9 rounded-full bg-black/65 hover:bg-[#D9A52E] text-white hover:text-[#06351F] border border-white/20 hover:border-[#D9A52E] flex items-center justify-center backdrop-blur-md shadow-lg transition-all hover:scale-110 active:scale-95 cursor-pointer pointer-events-auto opacity-80 sm:opacity-0 sm:group-hover/cardimg:opacity-100"
                                 title="Previous image"
                               >
                                 <ChevronLeft className="h-5 w-5 stroke-[2.5]" />
@@ -1140,12 +1345,12 @@ export default function HomePage() {
                                   }));
                                 }}
                                 aria-label="Next image"
-                                className="absolute right-2.5 top-1/2 -translate-y-1/2 z-20 h-9 w-9 rounded-full bg-black/65 hover:bg-[#EAB308] text-white hover:text-[#0A0D12] border border-white/20 hover:border-[#EAB308] flex items-center justify-center backdrop-blur-md shadow-lg transition-all hover:scale-110 active:scale-95 cursor-pointer pointer-events-auto opacity-80 sm:opacity-0 sm:group-hover/cardimg:opacity-100"
+                                className="absolute right-2.5 top-1/2 -translate-y-1/2 z-20 h-9 w-9 rounded-full bg-black/65 hover:bg-[#D9A52E] text-white hover:text-[#06351F] border border-white/20 hover:border-[#D9A52E] flex items-center justify-center backdrop-blur-md shadow-lg transition-all hover:scale-110 active:scale-95 cursor-pointer pointer-events-auto opacity-80 sm:opacity-0 sm:group-hover/cardimg:opacity-100"
                                 title="Next image"
                               >
                                 <ChevronRight className="h-5 w-5 stroke-[2.5]" />
                               </button>
-                              <div className="absolute bottom-2 right-2 z-20 px-2 py-0.5 rounded-full bg-black/70 backdrop-blur-md text-[10px] font-mono font-bold text-white/90 border border-white/10 pointer-events-none">
+                              <div className="absolute bottom-2 right-2 z-20 px-2.5 py-0.5 rounded-full bg-black/70 backdrop-blur-md text-[10px] font-mono font-bold text-white/90 border border-white/10 pointer-events-none">
                                 {(cardImgIndex % cardGallery.length) + 1} / {cardGallery.length}
                               </div>
                             </>
@@ -1175,7 +1380,7 @@ export default function HomePage() {
                               </span>
                             ) : null}
 
-                            <div className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#0A0D12]/90 text-[#EAB308] border border-[#EAB308]/40">
+                            <div className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#06351F]/90 text-[#D9A52E] border border-[#D9A52E]/40 backdrop-blur-md">
                               {project.statusBadge[language]}
                             </div>
                           </div>
@@ -1187,24 +1392,24 @@ export default function HomePage() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 onClick={(e) => e.stopPropagation()}
-                                className="px-2.5 py-0.5 rounded-full text-[9px] font-black bg-[#0A0D12]/95 hover:bg-[#EAB308] text-[#EAB308] hover:text-[#0A0D12] border border-[#EAB308]/60 flex items-center gap-1 shadow-md transition-all hover:scale-105 cursor-pointer pointer-events-auto"
+                                className="px-2.5 py-0.5 rounded-full text-[9px] font-black bg-[#06351F]/95 hover:bg-[#D9A52E] text-[#D9A52E] hover:text-[#06351F] border border-[#D9A52E]/60 flex items-center gap-1 shadow-md transition-all hover:scale-105 cursor-pointer pointer-events-auto"
                                 title="2D/3D views"
                               >
                                 <Compass className="h-3 w-3" />
                                 <span>2D/3D views ↗</span>
                               </a>
                             )}
-                            <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase bg-white/90 text-[#0A0D12] pointer-events-none">
+                            <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase bg-white/95 text-[#06351F] pointer-events-none">
                               {project.subcategoryLabel[language]}
                             </span>
                           </div>
 
                           <div className="absolute bottom-3 left-3 right-3 text-white pointer-events-none">
-                            <h3 className="text-base font-black leading-tight drop-shadow-md group-hover:text-[#EAB308] transition-colors">
+                            <h3 className="text-base font-black leading-tight drop-shadow-md group-hover:text-[#D9A52E] transition-colors">
                               {project.name[language]}
                             </h3>
                             <div className="flex items-center gap-1.5 text-xs text-neutral-300 mt-0.5">
-                              <MapPin className="h-3 w-3 text-[#EAB308] shrink-0" />
+                              <MapPin className="h-3 w-3 text-[#D9A52E] shrink-0" />
                               <span className="line-clamp-1">{project.location[language]}</span>
                             </div>
                           </div>
@@ -1235,23 +1440,22 @@ export default function HomePage() {
                                   e.stopPropagation();
                                   setSelectedProject(project);
                                 }}
-                                className="w-full py-2 px-3 rounded-xl bg-neutral-100 group-hover:bg-[#0A0D12] text-neutral-900 group-hover:text-white text-xs font-bold transition-all text-center cursor-pointer"
+                                className="w-full py-2 px-3 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white text-xs font-bold transition-all text-center cursor-pointer shadow-xs"
                               >
                                 {language === "ta" ? "முழு விவரம்" : "Project Details"}
                               </button>
 
-                              <a
-                                href={`https://wa.me/${rawWhatsapp}?text=Hello%20Surya%20Promoters,%20I%20want%20details%20for%20${encodeURIComponent(
-                                  project.name.en
-                                )}.`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                onClick={(e) => e.stopPropagation()}
-                                className="w-full py-2 px-3 rounded-xl bg-[#EAB308] hover:bg-[#CA8A04] text-[#0A0D12] text-xs font-black transition-all flex items-center justify-center gap-1 cursor-pointer"
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setSelectedProject(project);
+                                  setIsEnquiryModalOpen(true);
+                                }}
+                                className="w-full py-2 px-3 rounded-xl bg-[#0E5934] hover:bg-[#06351F] text-white text-xs font-black transition-all flex items-center justify-center gap-1 cursor-pointer shadow-xs border border-[#0E5934]"
                               >
-                                <MessageCircle className="h-3.5 w-3.5" />
+                                <Sparkles className="h-3.5 w-3.5 text-[#D9A52E]" />
                                 <span>{language === "ta" ? "விசாரிக்க" : "Enquire"}</span>
-                              </a>
+                              </button>
                             </div>
 
                             {/* Direct Mapbhoomi Layout Button */}
@@ -1261,9 +1465,9 @@ export default function HomePage() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 onClick={(e) => e.stopPropagation()}
-                                className="w-full py-2 px-3 rounded-xl bg-[#0A0D12] hover:bg-neutral-800 text-[#EAB308] hover:text-white border border-[#EAB308]/50 text-xs font-black transition-all flex items-center justify-center gap-1.5 shadow-sm group/mb cursor-pointer"
+                                className="w-full py-2 px-3 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-black transition-all flex items-center justify-center gap-1.5 shadow-sm group/mb cursor-pointer"
                               >
-                                <Compass className="h-3.5 w-3.5 text-[#EAB308] group-hover/mb:rotate-45 transition-transform shrink-0" />
+                                <Compass className="h-3.5 w-3.5 text-[#E5A922] group-hover/mb:rotate-45 transition-transform shrink-0" />
                                 <span>{language === "ta" ? "2D/3D views (வரைபடம் ↗)" : "2D/3D views ↗"}</span>
                               </a>
                             )}
@@ -1281,9 +1485,9 @@ export default function HomePage() {
                         setActiveCategory(null);
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                       }}
-                      className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-white hover:bg-neutral-50 text-neutral-900 border border-neutral-300 shadow-sm hover:shadow-md text-xs sm:text-sm font-bold transition-all cursor-pointer hover:border-[#EAB308]"
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] shadow-sm hover:shadow-md text-xs sm:text-sm font-black transition-all cursor-pointer"
                     >
-                      <ArrowLeft className="h-4 w-4 text-[#B45309]" />
+                      <ArrowLeft className="h-4 w-4 text-[#E5A922]" />
                       <span>{language === "ta" ? "← அனைத்து பிரிவுகளுக்கும் திரும்புக" : "← Back to All Categories"}</span>
                     </button>
                   </div>
@@ -1296,107 +1500,120 @@ export default function HomePage() {
           {/* TAB 2: LOCATION (All Project Maps in Card Style)                    */}
           {/* ------------------------------------------------------------------- */}
           {activeTab === "location" && (
-            <section className="space-y-5 animate-fadeIn pt-1">
+            <section className="space-y-6 animate-fadeIn pt-1">
               {/* Back to Home Header */}
-              <div className="flex items-center justify-between p-3.5 sm:p-4 bg-white rounded-2xl border border-neutral-200/80 shadow-xs">
+              <div className="flex items-center justify-between p-4 bg-white rounded-2xl border border-neutral-200/90 shadow-xs">
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => setActiveTab("home")}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-bold transition-colors cursor-pointer"
+                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-black transition-all hover:scale-105 cursor-pointer shadow-xs"
                   >
-                    <ChevronLeft className="h-4 w-4" />
+                    <ArrowLeft className="h-4 w-4 text-[#E5A922]" />
                     <span>{language === "ta" ? "முகப்புக்கு திரும்புக" : "Back to Home"}</span>
                   </button>
                   <div className="h-4 w-px bg-neutral-200 hidden sm:block" />
-                  <h3 className="text-sm font-black text-neutral-900 leading-tight">
-                    {language === "ta" ? "திட்டங்களின் அமைவிடம் (Google Maps)" : "All Project Map Locations (Google Maps)"}
-                  </h3>
+                  <div>
+                    <h3 className="text-sm sm:text-base font-black text-[#06351F] leading-tight">
+                      {language === "ta" ? "திட்டங்களின் அமைவிடம் (Google Maps & 2D/3D)" : "All Project Map Locations & Geolocation"}
+                    </h3>
+                    <p className="text-[11px] text-neutral-500 hidden sm:block">
+                      {language === "ta" ? "நேரடி ஜிபிஎஸ் வழிகாட்டுதல் மற்றும் கள மனை வரைபடங்கள்" : "Direct GPS coordinates, travel distances, and interactive layouts"}
+                    </p>
+                  </div>
                 </div>
                 <button
                   onClick={() => setActiveTab("home")}
-                  className="p-1.5 rounded-xl hover:bg-neutral-100 text-neutral-400 hover:text-neutral-800 transition-colors cursor-pointer"
+                  className="h-9 w-9 rounded-full bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#E5A922]/40 flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-md"
                   title="Close section"
                 >
-                  <X className="h-4 w-4" />
+                  <X className="h-4 w-4 stroke-[2.5]" />
                 </button>
               </div>
 
-              <div className="bg-white rounded-3xl p-5 sm:p-6 border border-neutral-200/80 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+              {/* Geolocation Hub Banner */}
+              <div className="bg-gradient-to-r from-[#06351F] via-[#092B1C] to-[#03210E] text-white rounded-3xl p-6 sm:p-7 border border-[#D9A52E]/30 shadow-md flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="max-w-xl">
-                  <span className="text-[10px] font-black uppercase text-blue-600 tracking-wider block mb-1">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D9A52E]/20 text-[#D9A52E] border border-[#D9A52E]/30 text-[10px] font-black uppercase tracking-wider mb-2">
+                    <Compass className="h-3 w-3" />
                     Geolocation & 2D/3D Hub
                   </span>
-                  <h3 className="text-xl font-black text-neutral-900 mb-1">
+                  <h3 className="text-xl sm:text-2xl font-black text-white mb-1.5">
                     {language === "ta" ? "அனைத்து திட்டங்களின் அமைவிடம் & 2D/3D வரைபடங்கள்" : "All Project Map Locations & 2D/3D Views"}
                   </h3>
-                  <p className="text-xs text-neutral-600">
+                  <p className="text-xs text-neutral-300 leading-relaxed">
                     {language === "ta"
-                      ? "மதுரையின் முக்கிய தேசிய நெடுஞ்சாலைகள், ரிங் ரோடு மற்றும் நேரடி 2D/3D மனை வரைபடங்களை பார்வையிடவும்."
-                      : "Directly navigate to each development along Madurai's NH-44, Ring Road, and interactive 2D/3D layouts."}
+                      ? "மதுரையின் முக்கிய தேசிய நெடுஞ்சாலைகள் (NH-44), ரிங் ரோடு மற்றும் நேரடி 2D/3D மனை வரைபடங்களை உடனடியாக பார்வையிடவும்."
+                      : "Directly navigate to each development along Madurai's NH-44, Ring Road, and interactive 2D/3D layout plans with live Google Maps routing."}
                   </p>
                 </div>
                 <a
                   href="https://mapbhoomi.com/l/surya-promoters"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#0A0D12] text-[#EAB308] hover:bg-neutral-800 text-xs font-black transition-all border border-[#EAB308]/40 shadow-md shrink-0 w-fit"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white text-xs font-black transition-all border border-[#0E5934] shadow-lg shrink-0 w-fit hover:scale-105"
                 >
-                  <Compass className="h-4 w-4 text-[#EAB308]" />
+                  <Compass className="h-4 w-4 text-[#E5A922]" />
                   <span>{language === "ta" ? "2D/3D நேரடி தளம் ↗" : "Surya Promoters 2D/3D Views ↗"}</span>
                 </a>
               </div>
 
               {/* Cards Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {ALL_PROJECTS.map((project) => (
                   <div
                     key={project.id}
                     onClick={() => setSelectedProject(project)}
-                    className="bg-white rounded-3xl p-4 border border-neutral-200 shadow-xs hover:shadow-md hover:border-[#EAB308]/60 transition-all flex flex-col justify-between cursor-pointer group"
+                    className="bg-white rounded-[22px] p-5 border border-neutral-200/90 shadow-sm hover:shadow-xl hover:border-[#D9A52E]/70 transition-all flex flex-col justify-between cursor-pointer group"
                   >
                     <div>
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className="relative h-13 w-13 rounded-xl overflow-hidden shrink-0 border border-neutral-200">
+                      {/* Top Header with Thumbnail & Titles */}
+                      <div className="flex items-center gap-3.5 mb-4">
+                        <div className="relative h-16 w-16 sm:h-18 sm:w-18 rounded-2xl overflow-hidden shrink-0 border border-[#D9A52E]/30 bg-neutral-900 shadow-sm">
                           <Image
                             src={project.image}
                             alt={project.name.en}
                             fill
-                            sizes="52px"
-                            className="object-cover transition-transform duration-300 group-hover:scale-105"
+                            sizes="72px"
+                            className="object-cover transition-transform duration-500 group-hover:scale-108"
                           />
                         </div>
-                        <div>
-                          <span className="px-2 py-0.2 rounded-md text-[9px] font-black uppercase bg-blue-50 text-blue-700">
+                        <div className="min-w-0">
+                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-[#06351F]/10 text-[#06351F] border border-[#D9A52E]/30 inline-block mb-1">
                             {project.categoryLabel[language]}
                           </span>
-                          <h4 className="font-black text-neutral-900 group-hover:text-[#B45309] text-sm mt-0.5 leading-snug transition-colors">
+                          <h4 className="font-black text-[#06351F] group-hover:text-[#BD8D1C] text-base leading-snug transition-colors truncate">
                             {project.name[language]}
                           </h4>
+                          <span className="text-[11px] text-neutral-500 font-semibold block truncate">
+                            {project.subcategoryLabel[language]}
+                          </span>
                         </div>
                       </div>
 
-                      <div className="bg-neutral-50 rounded-xl p-3 mb-3 border border-neutral-100 space-y-1.5 text-xs">
-                        <div className="flex items-start gap-1.5 text-neutral-700">
-                          <MapPin className="h-3.5 w-3.5 text-[#B45309] shrink-0 mt-0.5" />
-                          <span className="font-semibold">{project.location[language]}</span>
+                      {/* Distance & Landmark Box */}
+                      <div className="bg-[#FAF8F3] rounded-2xl p-3.5 mb-4 border border-amber-200/50 space-y-2 text-xs">
+                        <div className="flex items-start gap-2 text-[#06351F]">
+                          <MapPin className="h-4 w-4 text-[#D9A52E] shrink-0 mt-0.5" />
+                          <span className="font-bold leading-tight">{project.location[language]}</span>
                         </div>
-                        <div className="flex items-start gap-1.5 text-[11px] text-neutral-500">
-                          <Navigation className="h-3 w-3 text-blue-600 shrink-0 mt-0.5" />
-                          <span>{project.distanceInfo[language]}</span>
+                        <div className="flex items-start gap-2 text-neutral-600 text-[11px]">
+                          <Navigation className="h-3.5 w-3.5 text-blue-600 shrink-0 mt-0.5" />
+                          <span className="leading-tight">{project.distanceInfo[language]}</span>
                         </div>
                       </div>
                     </div>
 
-                    <div className="space-y-1.5">
+                    {/* Action Buttons */}
+                    <div className="space-y-2 pt-2 border-t border-neutral-100">
                       {project.mapbhoomiUrl && (
                         <a
                           href={project.mapbhoomiUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}
-                          className="w-full py-2 px-3 rounded-xl bg-[#0A0D12] hover:bg-neutral-800 text-[#EAB308] border border-[#EAB308]/40 text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+                          className="w-full py-2 px-3 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
                         >
-                          <Compass className="h-3.5 w-3.5 text-[#EAB308]" />
+                          <Compass className="h-3.5 w-3.5 text-[#E5A922]" />
                           <span>{language === "ta" ? "2D/3D நேரடி வரைபடம் ↗" : "2D/3D views ↗"}</span>
                         </a>
                       )}
@@ -1406,9 +1623,9 @@ export default function HomePage() {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="w-full py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                        className="w-full py-2.5 px-3 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs hover:shadow-md border border-[#0E5934]"
                       >
-                        <Navigation className="h-3 w-3" />
+                        <Navigation className="h-3.5 w-3.5 text-[#E5A922]" />
                         <span>{language === "ta" ? "கூகிள் மேப்ஸில் திறக்க" : "Open in Google Maps"}</span>
                         <ExternalLink className="h-3 w-3" />
                       </a>
@@ -1418,7 +1635,7 @@ export default function HomePage() {
                           e.stopPropagation();
                           setSelectedProject(project);
                         }}
-                        className="w-full py-1.5 px-3 rounded-xl bg-neutral-100 group-hover:bg-neutral-900 group-hover:text-white text-neutral-800 text-xs font-bold transition-all text-center cursor-pointer"
+                        className="w-full py-2 px-3 rounded-xl bg-[#0E5934] hover:bg-[#06351F] text-white text-xs font-bold transition-all text-center cursor-pointer shadow-xs"
                       >
                         {language === "ta" ? "திட்டத்தின் குறிப்புகள்" : "View Overview"}
                       </button>
@@ -1435,96 +1652,115 @@ export default function HomePage() {
           {activeTab === "gallery" && (
             <section className="space-y-6 animate-fadeIn pt-1">
               {/* Back to Home Header */}
-              <div className="flex items-center justify-between p-3.5 sm:p-4 bg-white rounded-2xl border border-neutral-200/80 shadow-xs">
+              <div className="flex items-center justify-between p-4 bg-white rounded-2xl border border-neutral-200/90 shadow-xs">
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => setActiveTab("home")}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-bold transition-colors cursor-pointer"
+                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-black transition-all hover:scale-105 cursor-pointer shadow-xs"
                   >
-                    <ChevronLeft className="h-4 w-4" />
+                    <ArrowLeft className="h-4 w-4 text-[#D9A52E]" />
                     <span>{language === "ta" ? "முகப்புக்கு திரும்புக" : "Back to Home"}</span>
                   </button>
                   <div className="h-4 w-px bg-neutral-200 hidden sm:block" />
-                  <h3 className="text-sm font-black text-neutral-900 leading-tight">
-                    {language === "ta" ? "புகைப்படங்கள் & வீடியோ மையம்" : "Photo & Video Gallery"}
-                  </h3>
+                  <div>
+                    <h3 className="text-sm sm:text-base font-black text-[#06351F] leading-tight">
+                      {language === "ta" ? "புகைப்படங்கள் & வீடியோ மையம்" : "Photo & Video Multimedia Center"}
+                    </h3>
+                    <p className="text-[11px] text-neutral-500 hidden sm:block">
+                      {language === "ta" ? "4K ட்ரோன் வீடியோக்கள் மற்றும் தளம் சார்ந்த புகைப்படங்கள்" : "4K aerial drone reels and certified site progress photography"}
+                    </p>
+                  </div>
                 </div>
                 <button
                   onClick={() => setActiveTab("home")}
-                  className="p-1.5 rounded-xl hover:bg-neutral-100 text-neutral-400 hover:text-neutral-800 transition-colors cursor-pointer"
+                  className="h-9 w-9 rounded-full bg-[#06351F] hover:bg-[#092B1C] text-[#D9A52E] border border-[#D9A52E]/40 flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-md"
                   title="Close section"
                 >
-                  <X className="h-4 w-4" />
+                  <X className="h-4 w-4 stroke-[2.5]" />
                 </button>
               </div>
 
-              <div className="bg-white rounded-3xl p-5 sm:p-6 border border-neutral-200/80 shadow-xs">
-                <span className="text-[10px] font-black uppercase text-purple-600 tracking-wider block mb-1">
-                  Multimedia Center
+              {/* Multimedia Banner */}
+              <div className="bg-gradient-to-r from-[#06351F] via-[#092B1C] to-[#03210E] text-white rounded-3xl p-6 sm:p-7 border border-[#D9A52E]/30 shadow-md">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D9A52E]/20 text-[#D9A52E] border border-[#D9A52E]/30 text-[10px] font-black uppercase tracking-wider mb-2">
+                  <Play className="h-3 w-3 fill-[#D9A52E]" />
+                  4K Drone & Site Media Center
                 </span>
-                <h3 className="text-xl font-black text-neutral-900 mb-1">
+                <h3 className="text-xl sm:text-2xl font-black text-white mb-1.5">
                   {language === "ta" ? "கோப்பு முறை புகைப்பட & வீடியோ மையம்" : "Folder-Style Media Gallery"}
                 </h3>
-                <p className="text-xs text-neutral-600">
+                <p className="text-xs text-neutral-300 leading-relaxed max-w-2xl">
                   {language === "ta"
-                    ? "ட்ரோன் வீடியோக்கள் மற்றும் தள புகைப்படங்கள் கோப்பு வடிவில் ஏற்பாடு செய்யப்பட்டுள்ளன."
-                    : "4K aerial drone videos and high-resolution site photos organized by project folders."}
+                    ? "ஆரஞ்ச் கார்டன், வைகை எலைட் மற்றும் மதுரை பார்ம்ஸ் உள்ளிட்ட திட்டங்களின் 4K ட்ரோன் வீடியோக்கள் மற்றும் தள புகைப்படங்கள்."
+                    : "Experience 4K cinematic drone walkthroughs, ground level construction updates, and high-resolution layout photography organized cleanly into project folders."}
                 </p>
               </div>
 
               {/* Videos Folders */}
-              <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <Folder className="h-4 w-4 text-purple-600" />
-                  <h4 className="text-sm font-black text-neutral-900">
-                    {language === "ta" ? "1. வீடியோ கோப்புகள்" : "1. Video Folders"}
-                  </h4>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <div className="h-8 w-8 rounded-xl bg-[#06351F] text-[#D9A52E] border border-[#D9A52E]/40 flex items-center justify-center shadow-xs">
+                      <Play className="h-4 w-4 fill-[#D9A52E]" />
+                    </div>
+                    <h4 className="text-base font-black text-[#06351F]">
+                      {language === "ta" ? "1. வீடியோ கோப்புகள் (4K ரீல்ஸ்)" : "1. Video Folders (4K Drone Reels)"}
+                    </h4>
+                  </div>
+                  <span className="text-xs font-bold text-neutral-500">
+                    {GALLERY_VIDEO_FOLDERS.length} Collections
+                  </span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                   {GALLERY_VIDEO_FOLDERS.map((folder) => (
                     <div
                       key={folder.id}
-                      className="bg-white rounded-3xl p-4 border border-neutral-200 shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
+                      className="bg-white rounded-[22px] p-5 border border-neutral-200/90 shadow-sm hover:shadow-xl hover:border-[#D9A52E]/70 transition-all flex flex-col justify-between group"
                     >
                       <div>
-                        <div className="flex items-center justify-between mb-2.5">
-                          <span className="px-2.5 py-0.5 rounded-lg bg-purple-50 text-purple-700 text-[10px] font-bold border border-purple-200 flex items-center gap-1">
-                            <Folder className="h-3 w-3 fill-purple-700" />
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="px-2.5 py-1 rounded-full bg-[#06351F]/10 text-[#06351F] border border-[#D9A52E]/30 text-[10px] font-black uppercase flex items-center gap-1.5">
+                            <Folder className="h-3 w-3 fill-[#06351F]" />
                             {folder.count}
                           </span>
-                          <span className="text-[10px] font-bold text-neutral-400">4K Reel</span>
+                          <span className="text-[10px] font-black uppercase text-[#D9A52E] bg-[#06351F] px-2.5 py-0.5 rounded-full border border-[#D9A52E]/30">
+                            4K Reel
+                          </span>
                         </div>
 
+                        {/* Video Thumbnail with Centered Play Button */}
                         <div
                           onClick={() => setSelectedVideo({ title: folder.videos[0].title[language], duration: folder.videos[0].duration, url: folder.videos[0].url })}
-                          className="relative h-40 w-full rounded-2xl overflow-hidden mb-3 bg-neutral-900 group cursor-pointer"
+                          className="relative h-44 w-full rounded-2xl overflow-hidden mb-3 bg-neutral-900 group/vid cursor-pointer shadow-inner"
                         >
                           <Image
                             src={folder.thumbnail}
                             alt={folder.title.en}
                             fill
-                            sizes="300px"
-                            className="object-cover opacity-85 group-hover:scale-105 transition-transform duration-500"
+                            sizes="340px"
+                            className="object-cover opacity-90 group-hover/vid:scale-108 transition-transform duration-500"
                           />
-                          <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-                            <div className="h-10 w-10 rounded-full bg-white text-purple-700 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
-                              <Play className="h-4 w-4 fill-purple-700 ml-0.5" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-center justify-center">
+                            <div className="h-13 w-13 rounded-full bg-[#0E5934] text-white flex items-center justify-center shadow-xl group-hover/vid:scale-115 transition-transform duration-300 border border-[#D9A52E]/40">
+                              <Play className="h-5 w-5 fill-white ml-0.5" />
                             </div>
                           </div>
                         </div>
 
-                        <h5 className="font-extrabold text-neutral-900 text-sm mb-2">{folder.title[language]}</h5>
+                        <h5 className="font-black text-[#06351F] text-base mb-2 group-hover:text-[#BD8D1C] transition-colors">
+                          {folder.title[language]}
+                        </h5>
 
-                        <div className="space-y-1 mb-3">
+                        <div className="space-y-1 mb-4 bg-[#FAF8F3] p-2.5 rounded-xl border border-neutral-100">
                           {folder.videos.map((vid, idx) => (
                             <button
                               key={idx}
                               onClick={() => setSelectedVideo({ title: vid.title[language], duration: vid.duration, url: vid.url })}
-                              className="w-full text-left flex items-center justify-between p-1.5 rounded-lg hover:bg-neutral-50 text-[11px] text-neutral-700 cursor-pointer"
+                              className="w-full text-left flex items-center justify-between p-1.5 rounded-lg hover:bg-white text-[11px] text-neutral-700 cursor-pointer transition-colors"
                             >
-                              <span className="font-semibold truncate">▶ {vid.title[language]}</span>
-                              <span className="text-[9px] text-neutral-400 font-mono ml-2 shrink-0">{vid.duration}</span>
+                              <span className="font-bold text-[#06351F] truncate">▶ {vid.title[language]}</span>
+                              <span className="text-[10px] text-neutral-400 font-mono ml-2 shrink-0">{vid.duration}</span>
                             </button>
                           ))}
                         </div>
@@ -1532,10 +1768,10 @@ export default function HomePage() {
 
                       <button
                         onClick={() => setSelectedVideo({ title: folder.videos[0].title[language], duration: folder.videos[0].duration, url: folder.videos[0].url })}
-                        className="w-full py-2 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-700 font-bold text-xs transition-colors flex items-center justify-center gap-1 cursor-pointer"
+                        className="w-full py-2.5 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white font-black text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs border border-[#0E5934]"
                       >
-                        <Play className="h-3.5 w-3.5 fill-purple-700" />
-                        <span>{language === "ta" ? "வீடியோ பார்க்க" : "Play"}</span>
+                        <Play className="h-3.5 w-3.5 fill-[#D9A52E]" />
+                        <span>{language === "ta" ? "வீடியோ பார்க்க" : "Play Reel"}</span>
                       </button>
                     </div>
                   ))}
@@ -1543,27 +1779,36 @@ export default function HomePage() {
               </div>
 
               {/* Image Folders */}
-              <div className="space-y-3 pt-4 border-t border-neutral-200">
-                <div className="flex items-center gap-2">
-                  <Folder className="h-4 w-4 text-[#B45309]" />
-                  <h4 className="text-sm font-black text-neutral-900">
-                    {language === "ta" ? "2. புகைப்பட கோப்புகள்" : "2. Image Folders"}
-                  </h4>
+              <div className="space-y-4 pt-4 border-t border-neutral-200">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <div className="h-8 w-8 rounded-xl bg-[#06351F] text-[#D9A52E] border border-[#D9A52E]/40 flex items-center justify-center shadow-xs">
+                      <Camera className="h-4 w-4" />
+                    </div>
+                    <h4 className="text-base font-black text-[#06351F]">
+                      {language === "ta" ? "2. புகைப்பட கோப்புகள் (தளப் படங்கள்)" : "2. Image Folders (Site Photography)"}
+                    </h4>
+                  </div>
+                  <span className="text-xs font-bold text-neutral-500">
+                    {GALLERY_IMAGE_FOLDERS.length} Folders
+                  </span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                   {GALLERY_IMAGE_FOLDERS.map((folder) => (
                     <div
                       key={folder.id}
-                      className="bg-white rounded-3xl p-4 border border-neutral-200 shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
+                      className="bg-white rounded-[22px] p-5 border border-neutral-200/90 shadow-sm hover:shadow-xl hover:border-[#D9A52E]/70 transition-all flex flex-col justify-between group"
                     >
                       <div>
-                        <div className="flex items-center justify-between mb-2.5">
-                          <span className="px-2.5 py-0.5 rounded-lg bg-amber-50 text-[#B45309] text-[10px] font-bold border border-amber-200 flex items-center gap-1">
-                            <Folder className="h-3 w-3 fill-[#B45309]" />
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="px-2.5 py-1 rounded-full bg-[#06351F]/10 text-[#06351F] border border-[#D9A52E]/30 text-[10px] font-black uppercase flex items-center gap-1.5">
+                            <Folder className="h-3 w-3 fill-[#06351F]" />
                             {folder.count}
                           </span>
-                          <span className="text-[10px] font-bold text-neutral-400">HD Photos</span>
+                          <span className="text-[10px] font-black uppercase text-[#06351F] bg-[#D9A52E] px-2.5 py-0.5 rounded-full shadow-xs">
+                            HD Photos
+                          </span>
                         </div>
 
                         <div
@@ -1571,20 +1816,22 @@ export default function HomePage() {
                             setSelectedFolderImages({ title: folder.title[language], images: folder.images });
                             setActiveFolderImageIndex(null);
                           }}
-                          className="relative h-40 w-full rounded-2xl overflow-hidden mb-3 bg-neutral-900 cursor-pointer group shadow-inner"
+                          className="relative h-44 w-full rounded-2xl overflow-hidden mb-3 bg-neutral-900 cursor-pointer group/img shadow-inner"
                         >
                           <Image
                             src={folder.thumbnail}
                             alt={folder.title.en}
                             fill
-                            sizes="300px"
-                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                            sizes="340px"
+                            className="object-cover group-hover/img:scale-108 transition-transform duration-500"
                           />
-                          <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent group-hover/img:opacity-80 transition-opacity" />
                         </div>
 
-                        <h5 className="font-extrabold text-neutral-900 text-sm mb-1">{folder.title[language]}</h5>
-                        <p className="text-[11px] text-neutral-500 mb-3">High-resolution site photography</p>
+                        <h5 className="font-black text-[#06351F] text-base mb-1 group-hover:text-[#BD8D1C] transition-colors">
+                          {folder.title[language]}
+                        </h5>
+                        <p className="text-xs text-neutral-500 mb-4">High-resolution architectural & site photography</p>
                       </div>
 
                       <button
@@ -1592,9 +1839,9 @@ export default function HomePage() {
                           setSelectedFolderImages({ title: folder.title[language], images: folder.images });
                           setActiveFolderImageIndex(null);
                         }}
-                        className="w-full py-2 rounded-xl bg-neutral-100 hover:bg-[#0A0D12] text-neutral-900 hover:text-white font-bold text-xs transition-colors flex items-center justify-center gap-1 cursor-pointer"
+                        className="w-full py-2.5 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white font-black text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs border border-[#0E5934]"
                       >
-                        <Camera className="h-3.5 w-3.5" />
+                        <Camera className="h-3.5 w-3.5 text-[#D9A52E]" />
                         <span>{language === "ta" ? "புகைப்படங்கள் பார்க்க" : "View Photo Folder"}</span>
                       </button>
                     </div>
@@ -1611,83 +1858,143 @@ export default function HomePage() {
           {activeTab === "about" && (
             <section className="space-y-6 animate-fadeIn pt-1">
               {/* Back to Home Header */}
-              <div className="flex items-center justify-between p-3.5 sm:p-4 bg-white rounded-2xl border border-neutral-200/80 shadow-xs">
+              <div className="flex items-center justify-between p-4 bg-white rounded-2xl border border-neutral-200/90 shadow-xs">
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => setActiveTab("home")}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-bold transition-colors cursor-pointer"
+                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-black transition-all hover:scale-105 cursor-pointer shadow-xs"
                   >
-                    <ChevronLeft className="h-4 w-4" />
+                    <ArrowLeft className="h-4 w-4 text-[#D9A52E]" />
                     <span>{language === "ta" ? "முகப்புக்கு திரும்புக" : "Back to Home"}</span>
                   </button>
                   <div className="h-4 w-px bg-neutral-200 hidden sm:block" />
-                  <h3 className="text-sm font-black text-neutral-900 leading-tight">
-                    {language === "ta" ? "எங்களைப் பற்றி (About Surya Promoters)" : "About Surya Promoters (Founder & Legacy)"}
-                  </h3>
+                  <div>
+                    <h3 className="text-sm sm:text-base font-black text-[#06351F] leading-tight">
+                      {language === "ta" ? "எங்களைப் பற்றி (நிறுவனர் & பாரம்பரியம்)" : "About Surya Promoters (Founder & Legacy)"}
+                    </h3>
+                    <p className="text-[11px] text-neutral-500 hidden sm:block">
+                      {language === "ta" ? "இந்திய விமானப்படை ஒழுங்குமுறை, நேர்மை மற்றும் 16 ஆண்டுகால நம்பிக்கை" : "16+ years of military discipline, zero legal disputes, and transparent land acquisition"}
+                    </p>
+                  </div>
                 </div>
                 <button
                   onClick={() => setActiveTab("home")}
-                  className="p-1.5 rounded-xl hover:bg-neutral-100 text-neutral-400 hover:text-neutral-800 transition-colors cursor-pointer"
+                  className="h-9 w-9 rounded-full bg-[#06351F] hover:bg-[#092B1C] text-[#D9A52E] border border-[#D9A52E]/40 flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-md"
                   title="Close section"
                 >
-                  <X className="h-4 w-4" />
+                  <X className="h-4 w-4 stroke-[2.5]" />
                 </button>
               </div>
 
               {/* Founder Profile Banner */}
-              <div className="bg-[#0A0D12] text-white rounded-3xl p-6 sm:p-8 border border-neutral-800 shadow-sm flex flex-col md:flex-row items-center gap-6">
-                <div className="relative h-44 w-44 rounded-2xl overflow-hidden shrink-0 border-2 border-[#EAB308] bg-white/10 shadow-lg">
+              <div className="bg-gradient-to-r from-[#06351F] via-[#092B1C] to-[#03210E] text-white rounded-3xl p-6 sm:p-9 border border-[#D9A52E]/30 shadow-xl flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+                {/* Founder Photo */}
+                <div className="relative h-48 w-48 sm:h-56 sm:w-56 rounded-2xl overflow-hidden shrink-0 border-2 border-[#D9A52E] bg-white/10 shadow-2xl group">
                   <Image
                     src="/images/founder/founder.png"
-                    alt="Mr. Manickam Natarajan - Founder & Director"
+                    alt="Mr. Manickam Natarajan - Founder & Managing Director"
                     fill
-                    sizes="176px"
-                    className="object-cover"
+                    sizes="(max-width: 768px) 192px, 224px"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute bottom-1 left-1 right-1 py-0.5 rounded-md bg-[#0A0D12]/90 text-[9px] font-black text-center text-[#EAB308]">
-                    IAF VETERAN
+                  <div className="absolute bottom-2 left-2 right-2 py-1 rounded-lg bg-[#06351F]/95 text-[10px] font-black text-center text-[#D9A52E] border border-[#D9A52E]/40 backdrop-blur-md shadow-md uppercase tracking-wider">
+                    16+ Yrs IAF Veteran
                   </div>
                 </div>
 
+                {/* Founder Details */}
                 <div className="flex-1 text-center md:text-left">
-                  <span className="px-2.5 py-0.5 rounded-full bg-[#EAB308]/20 text-[#EAB308] text-[10px] font-black uppercase tracking-wider mb-2 inline-block">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D9A52E]/20 text-[#D9A52E] border border-[#D9A52E]/30 text-[10px] font-black uppercase tracking-wider mb-2.5">
+                    <Sparkles className="h-3 w-3" />
                     Founder & Managing Director
                   </span>
-                  <h3 className="text-2xl font-black text-white mb-1">
+                  <h3 className="text-2xl sm:text-3xl font-black text-white mb-1.5">
                     {language === "ta" ? "திரு. மாணிக்கம் நடராஜன்" : "Mr. Manickam Natarajan"}
                   </h3>
-                  <p className="text-xs font-semibold text-amber-300 mb-3">
+                  <p className="text-xs sm:text-sm font-bold text-[#D9A52E] mb-3">
                     Indian Air Force Veteran · Established Surya Promoters in 2010
                   </p>
-                  <p className="text-xs text-neutral-300 leading-relaxed max-w-xl">
+                  <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed max-w-2xl">
                     {language === "ta"
-                      ? "விமானப்படை ஒழுங்குமுறை, நேர்மை மற்றும் வெளிப்படைத்தன்மையுடன் 2010 ஆம் ஆண்டு தொடங்கப்பட்டது. ஒவ்வொரு மனைக்கும் 100% தெளிவான கணினி பட்டா உறுதி செய்யப்படுகிறது."
-                      : "Founded in 2010 on principles of military precision, unyielding honesty, and zero-compromise on legal due diligence. Every land parcel carries verified 30-year parent documentation."}
+                      ? "இந்திய விமானப்படை ஒழுங்குமுறை, நேர்மை மற்றும் வெளிப்படைத்தன்மையுடன் 2010 ஆம் ஆண்டு தொடங்கப்பட்டது. ஒவ்வொரு மனைக்கும் 30 ஆண்டுகால மூல ஆவணங்கள் சரிபார்க்கப்பட்டு 100% தெளிவான கணினி ஆவணம் உறுதி செய்யப்படுகிறது."
+                      : "Founded in 2010 on principles of military precision, unyielding honesty, and zero-compromise legal due diligence. Every single plot carries verified 30-year parent documentation, immediate computer document, and guaranteed road connectivity across Madurai."}
                   </p>
+
+                  <div className="mt-4 pt-4 border-t border-white/10 flex flex-wrap items-center justify-center md:justify-start gap-4 text-xs text-neutral-300">
+                    <div className="flex items-center gap-1.5">
+                      <ShieldCheck className="h-4 w-4 text-[#D9A52E]" />
+                      <span className="font-semibold">{language === "ta" ? "100% சட்டப்பூர்வ ஆவணம்" : "100% Verified Document"}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+                      <span className="font-semibold">{language === "ta" ? "DTCP & RERA அங்கீகாரம்" : "DTCP & RERA Approved"}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* Metrics */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="bg-white rounded-2xl p-4 border border-neutral-200 text-center">
-                  <span className="text-3xl font-black text-[#B45309]">16+</span>
-                  <p className="text-xs font-bold text-neutral-800 mt-0.5">Years Experience</p>
-                  <p className="text-[10px] text-neutral-400">Since 2010</p>
+              {/* 4 Metrics Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div className="bg-white rounded-[22px] p-5 border border-neutral-200/90 shadow-sm hover:shadow-md hover:border-[#D9A52E]/60 text-center transition-all">
+                  <span className="text-3xl sm:text-4xl font-black text-[#D9A52E] block">16+</span>
+                  <p className="text-xs font-black text-[#06351F] mt-1">Years Experience</p>
+                  <p className="text-[10px] text-neutral-400 mt-0.5">Established Since 2010</p>
                 </div>
-                <div className="bg-white rounded-2xl p-4 border border-neutral-200 text-center">
-                  <span className="text-3xl font-black text-[#0A0D12]">1000+</span>
-                  <p className="text-xs font-bold text-neutral-800 mt-0.5">Happy Families</p>
-                  <p className="text-[10px] text-neutral-400">Settled in Tamil Nadu</p>
+                <div className="bg-white rounded-[22px] p-5 border border-neutral-200/90 shadow-sm hover:shadow-md hover:border-[#D9A52E]/60 text-center transition-all">
+                  <span className="text-3xl sm:text-4xl font-black text-[#06351F] block">500+</span>
+                  <p className="text-xs font-black text-[#06351F] mt-1">Happy Families</p>
+                  <p className="text-[10px] text-neutral-400 mt-0.5">Settled in Tamil Nadu</p>
                 </div>
-                <div className="bg-white rounded-2xl p-4 border border-neutral-200 text-center">
-                  <span className="text-3xl font-black text-emerald-700">100%</span>
-                  <p className="text-xs font-bold text-neutral-800 mt-0.5">Clear Patta</p>
-                  <p className="text-[10px] text-neutral-400">Zero disputes</p>
+                <div className="bg-white rounded-[22px] p-5 border border-neutral-200/90 shadow-sm hover:shadow-md hover:border-[#D9A52E]/60 text-center transition-all">
+                  <span className="text-3xl sm:text-4xl font-black text-emerald-700 block">100%</span>
+                  <p className="text-xs font-black text-[#06351F] mt-1">Clear Document</p>
+                  <p className="text-[10px] text-neutral-400 mt-0.5">Zero Legal Disputes</p>
                 </div>
-                <div className="bg-white rounded-2xl p-4 border border-neutral-200 text-center">
-                  <span className="text-3xl font-black text-[#EAB308]">4.9 ★</span>
-                  <p className="text-xs font-bold text-neutral-800 mt-0.5">Client Rating</p>
-                  <p className="text-[10px] text-neutral-400">Verified Reviews</p>
+                <div className="bg-white rounded-[22px] p-5 border border-neutral-200/90 shadow-sm hover:shadow-md hover:border-[#D9A52E]/60 text-center transition-all">
+                  <span className="text-3xl sm:text-4xl font-black text-[#D9A52E] block">4.9 ★</span>
+                  <p className="text-xs font-black text-[#06351F] mt-1">Client Rating</p>
+                  <p className="text-[10px] text-neutral-400 mt-0.5">Verified Customer Trust</p>
+                </div>
+              </div>
+
+              {/* 4 Core Pillars / Trust Guarantees */}
+              <div className="bg-white rounded-3xl p-6 sm:p-7 border border-neutral-200/90 shadow-sm space-y-4">
+                <div className="flex items-center gap-2 border-b border-neutral-100 pb-3">
+                  <ShieldCheck className="h-5 w-5 text-[#D9A52E]" />
+                  <h4 className="text-base font-black text-[#06351F]">
+                    {language === "ta" ? "சூர்யா புரமோட்டர்ஸ் — நம்பகத்தன்மையின் நான்கு தூண்கள்" : "Surya Promoters — Four Pillars of Trust"}
+                  </h4>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="bg-[#FAF8F3] p-4 rounded-2xl border border-neutral-200/80 space-y-1.5">
+                    <span className="text-[10px] font-black uppercase text-[#D9A52E] tracking-wider block">Pillar 01</span>
+                    <h5 className="font-black text-[#06351F] text-sm">Military Precision</h5>
+                    <p className="text-[11px] text-neutral-600 leading-relaxed">
+                      Guided by IAF discipline with rigorous paperwork vetting and total accountability.
+                    </p>
+                  </div>
+                  <div className="bg-[#FAF8F3] p-4 rounded-2xl border border-neutral-200/80 space-y-1.5">
+                    <span className="text-[10px] font-black uppercase text-[#D9A52E] tracking-wider block">Pillar 02</span>
+                    <h5 className="font-black text-[#06351F] text-sm">100% Clear Computer Document</h5>
+                    <p className="text-[11px] text-neutral-600 leading-relaxed">
+                      30-year parent title deed verification, DTCP/RERA approvals, and zero boundary disputes.
+                    </p>
+                  </div>
+                  <div className="bg-[#FAF8F3] p-4 rounded-2xl border border-neutral-200/80 space-y-1.5">
+                    <span className="text-[10px] font-black uppercase text-[#D9A52E] tracking-wider block">Pillar 03</span>
+                    <h5 className="font-black text-[#06351F] text-sm">Prime Growth Corridors</h5>
+                    <p className="text-[11px] text-neutral-600 leading-relaxed">
+                      Plots situated exclusively along Madurai's NH-44, Ring Road, and upcoming infrastructure.
+                    </p>
+                  </div>
+                  <div className="bg-[#FAF8F3] p-4 rounded-2xl border border-neutral-200/80 space-y-1.5">
+                    <span className="text-[10px] font-black uppercase text-[#D9A52E] tracking-wider block">Pillar 04</span>
+                    <h5 className="font-black text-[#06351F] text-sm">Transparent Registration</h5>
+                    <p className="text-[11px] text-neutral-600 leading-relaxed">
+                      Honest pricing, zero hidden brokerage, and end-to-end registration assistance.
+                    </p>
+                  </div>
                 </div>
               </div>
 
@@ -1698,98 +2005,107 @@ export default function HomePage() {
           {/* TAB 5: DOWNLOAD MAP (Blueprints, Layout Maps, Brochures)            */}
           {/* ------------------------------------------------------------------- */}
           {activeTab === "download" && (
-            <section className="space-y-5 animate-fadeIn pt-1">
+            <section className="space-y-6 animate-fadeIn pt-1">
               {/* Back to Home Header */}
-              <div className="flex items-center justify-between p-3.5 sm:p-4 bg-white rounded-2xl border border-neutral-200/80 shadow-xs">
+              <div className="flex items-center justify-between p-4 bg-white rounded-2xl border border-neutral-200/90 shadow-xs">
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => setActiveTab("home")}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-bold transition-colors cursor-pointer"
+                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-black transition-all hover:scale-105 cursor-pointer shadow-xs"
                   >
-                    <ChevronLeft className="h-4 w-4" />
+                    <ArrowLeft className="h-4 w-4 text-[#D9A52E]" />
                     <span>{language === "ta" ? "முகப்புக்கு திரும்புக" : "Back to Home"}</span>
                   </button>
                   <div className="h-4 w-px bg-neutral-200 hidden sm:block" />
-                  <h3 className="text-sm font-black text-neutral-900 leading-tight">
-                    {language === "ta" ? "பதிவிறக்க மையம் (Downloads Hub)" : "Download Map & Resources Hub"}
-                  </h3>
+                  <div>
+                    <h3 className="text-sm sm:text-base font-black text-[#06351F] leading-tight">
+                      {language === "ta" ? "பதிவிறக்க மையம் (கள வரைபடங்கள் & கையேடுகள்)" : "Download Map & Resources Hub"}
+                    </h3>
+                    <p className="text-[11px] text-neutral-500 hidden sm:block">
+                      {language === "ta" ? "அங்கீகரிக்கப்பட்ட மனை வரைபடங்கள், CAD ப்ளான் மற்றும் தகவல் கையேடுகள்" : "Official DTCP approved layout maps, CAD blueprints, and project brochures"}
+                    </p>
+                  </div>
                 </div>
                 <button
                   onClick={() => setActiveTab("home")}
-                  className="p-1.5 rounded-xl hover:bg-neutral-100 text-neutral-400 hover:text-neutral-800 transition-colors cursor-pointer"
+                  className="h-9 w-9 rounded-full bg-[#06351F] hover:bg-[#092B1C] text-[#D9A52E] border border-[#D9A52E]/40 flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-md"
                   title="Close section"
                 >
-                  <X className="h-4 w-4" />
+                  <X className="h-4 w-4 stroke-[2.5]" />
                 </button>
               </div>
 
-              <div className="bg-white rounded-3xl p-5 sm:p-6 border border-neutral-200/80 shadow-xs">
-                <span className="text-[10px] font-black uppercase text-amber-700 tracking-wider block mb-1">
-                  Downloads Hub
+              {/* Downloads Hub Banner */}
+              <div className="bg-gradient-to-r from-[#06351F] via-[#092B1C] to-[#03210E] text-white rounded-3xl p-6 sm:p-7 border border-[#D9A52E]/30 shadow-md">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D9A52E]/20 text-[#D9A52E] border border-[#D9A52E]/30 text-[10px] font-black uppercase tracking-wider mb-2">
+                  <Download className="h-3 w-3" />
+                  Official CAD & Blueprint Repository
                 </span>
-                <h3 className="text-xl font-black text-neutral-900 mb-1">
+                <h3 className="text-xl sm:text-2xl font-black text-white mb-1.5">
                   {language === "ta" ? "வரைபடம், புளூபிரிண்ட் & கையேடுகள் பதிவிறக்கம்" : "Download Project Maps & Resources"}
                 </h3>
-                <p className="text-xs text-neutral-600">
+                <p className="text-xs text-neutral-300 leading-relaxed max-w-2xl">
                   {language === "ta"
-                    ? "ஆரஞ்ச் கார்டன், வைகை எலைட் உள்ளிட்ட அனைத்து திட்டங்களின் கள வரைபடம், கையேடுகள் மற்றும் வீடியோக்களை பதிவிறக்குங்கள்."
-                    : "Download high-resolution layout maps, blueprints, project brochures, and video reels directly."}
+                    ? "ஆரஞ்ச் கார்டன், வைகை எலைட் உள்ளிட்ட அனைத்து திட்டங்களின் கள வரைபடம், சட்ட ஆவண சுருக்கம் மற்றும் கையேடுகளை பதிவிறக்குங்கள்."
+                    : "Direct one-click access to high-resolution CAD layout maps, plot dimension blueprints, DTCP approvals, and verified brochures directly on your device."}
                 </p>
               </div>
 
               {toastMessage && (
-                <div className="p-3.5 rounded-2xl bg-[#0A0D12] text-[#EAB308] border border-[#EAB308]/40 shadow-lg flex items-center justify-between text-xs font-bold">
+                <div className="p-4 rounded-2xl bg-[#06351F] text-[#D9A52E] border border-[#D9A52E]/40 shadow-lg flex items-center justify-between text-xs font-bold">
                   <span>✓ {toastMessage}</span>
-                  <button onClick={() => setToastMessage(null)} className="text-white">✕</button>
+                  <button onClick={() => setToastMessage(null)} className="text-white hover:text-[#D9A52E] cursor-pointer">✕</button>
                 </div>
               )}
 
               {/* Downloads Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {DOWNLOAD_ITEMS.map((item) => (
                   <div
                     key={item.id}
-                    className="bg-white rounded-3xl p-4 sm:p-5 border border-neutral-200 shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
+                    className="bg-white rounded-[22px] p-5 sm:p-6 border border-neutral-200/90 shadow-sm hover:shadow-xl hover:border-[#D9A52E]/70 transition-all flex flex-col justify-between group"
                   >
                     <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center gap-1.5 flex-wrap">
-                          <span className="px-2 py-0.5 rounded-md text-[9px] font-black uppercase bg-amber-50 text-[#854D0E]">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase bg-[#06351F]/10 text-[#06351F] border border-[#D9A52E]/30">
                             {item.category[language]}
                           </span>
                           {item.brochureUrl && (
-                            <span className="px-2 py-0.5 rounded-md text-[9px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60">
+                            <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
                               {language === "ta" ? "வரைபடம் + கையேடு" : "Layout + Brochure"}
                             </span>
                           )}
                         </div>
-                        <span className="text-xs font-mono text-neutral-400">{item.fileSize}</span>
+                        <span className="text-xs font-mono font-bold text-neutral-400 bg-neutral-100 px-2.5 py-0.5 rounded-full">{item.fileSize}</span>
                       </div>
-                      <h4 className="font-extrabold text-neutral-900 text-sm mb-1">{item.title[language]}</h4>
-                      <div className="flex items-center gap-1.5 text-xs text-neutral-500 mb-4">
-                        <FileText className="h-3.5 w-3.5 text-[#B45309]" />
+                      <h4 className="font-black text-[#06351F] text-base mb-1.5 group-hover:text-[#BD8D1C] transition-colors">
+                        {item.title[language]}
+                      </h4>
+                      <div className="flex items-center gap-2 text-xs text-neutral-500 mb-5">
+                        <FileText className="h-4 w-4 text-[#D9A52E]" />
                         <span>{item.fileType}</span>
                         <span>·</span>
-                        <span className="text-emerald-700 font-semibold">{item.badge}</span>
+                        <span className="text-emerald-700 font-bold">{item.badge}</span>
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-2 gap-2.5 pt-3 border-t border-neutral-100">
                       <button
                         onClick={() => handleDownloadCard(item)}
-                        className="py-2 px-3 rounded-xl bg-[#0A0D12] hover:bg-neutral-800 text-white font-bold text-xs transition-colors flex items-center justify-center gap-1 cursor-pointer"
+                        className="py-2.5 px-3 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white font-black text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs border border-[#0E5934]"
                         title={language === "ta" ? "வரைபடம் மற்றும் கையேடு இரண்டையும் பதிவிறக்கவும்" : "Download both Layout Map and Brochure"}
                       >
-                        <Download className="h-3.5 w-3.5 text-[#EAB308]" />
-                        <span>{language === "ta" ? "பதிவிறக்க (இரு கோப்புகள்)" : "Download Both"}</span>
+                        <Download className="h-4 w-4 text-[#D9A52E]" />
+                        <span>{language === "ta" ? "பதிவிறக்க" : "Download Both"}</span>
                       </button>
 
                       <button
                         onClick={() => setSelectedDownloadPreview({ item, activeTab: "layout" })}
-                        className="py-2 px-3 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-800 font-bold text-xs transition-colors flex items-center justify-center gap-1 cursor-pointer"
+                        className="py-2.5 px-3 rounded-xl bg-[#0E5934] hover:bg-[#06351F] text-white font-black text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs border border-[#0E5934]"
                         title={language === "ta" ? "வரைபடம் மற்றும் கையேட்டை முன்னோட்டம் பார்க்க" : "Preview Layout & Brochure"}
                       >
-                        <ExternalLink className="h-3.5 w-3.5" />
+                        <ExternalLink className="h-4 w-4 text-[#D9A52E]" />
                         <span>{language === "ta" ? "முன்னோட்டம்" : "Preview"}</span>
                       </button>
                     </div>
@@ -1805,46 +2121,54 @@ export default function HomePage() {
           {activeTab === "contact" && (
             <section className="space-y-6 animate-fadeIn pt-1">
               {/* Back to Home Header */}
-              <div className="flex items-center justify-between p-3.5 sm:p-4 bg-white rounded-2xl border border-neutral-200/80 shadow-xs">
+              <div className="flex items-center justify-between p-4 bg-white rounded-2xl border border-neutral-200/90 shadow-xs">
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => setActiveTab("home")}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-bold transition-colors cursor-pointer"
+                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-black transition-all hover:scale-105 cursor-pointer shadow-xs"
                   >
-                    <ChevronLeft className="h-4 w-4" />
+                    <ArrowLeft className="h-4 w-4 text-[#D9A52E]" />
                     <span>{language === "ta" ? "முகப்புக்கு திரும்புக" : "Back to Home"}</span>
                   </button>
                   <div className="h-4 w-px bg-neutral-200 hidden sm:block" />
-                  <h3 className="text-sm font-black text-neutral-900 leading-tight">
-                    {language === "ta" ? "நேரடி தொடர்பு மையம் (Contact Us)" : "Direct Communication Channels & Contact"}
-                  </h3>
+                  <div>
+                    <h3 className="text-sm sm:text-base font-black text-[#06351F] leading-tight">
+                      {language === "ta" ? "நேரடி தொடர்பு மையம் (Contact Us)" : "Direct Communication Channels & Contact"}
+                    </h3>
+                    <p className="text-[11px] text-neutral-500 hidden sm:block">
+                      {language === "ta" ? "நில ஆலோசகருடன் நேரடி உரையாடல் மற்றும் தலைமை அலுவலக விவரங்கள்" : "Direct land advisory helpline, corporate email, and Madurai headquarters"}
+                    </p>
+                  </div>
                 </div>
                 <button
                   onClick={() => setActiveTab("home")}
-                  className="p-1.5 rounded-xl hover:bg-neutral-100 text-neutral-400 hover:text-neutral-800 transition-colors cursor-pointer"
+                  className="h-9 w-9 rounded-full bg-[#06351F] hover:bg-[#092B1C] text-[#D9A52E] border border-[#D9A52E]/40 flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-md"
                   title="Close section"
                 >
-                  <X className="h-4 w-4" />
+                  <X className="h-4 w-4 stroke-[2.5]" />
                 </button>
               </div>
 
               {/* Contact Top Banner */}
-              <div className="bg-[#0A0D12] text-white rounded-3xl p-6 sm:p-8 border border-neutral-800 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="bg-gradient-to-r from-[#06351F] via-[#092B1C] to-[#03210E] text-white rounded-3xl p-6 sm:p-8 border border-[#D9A52E]/30 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
                 <div className="max-w-xl">
-
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D9A52E]/20 text-[#D9A52E] border border-[#D9A52E]/30 text-[10px] font-black uppercase tracking-wider mb-2">
+                    <Sparkles className="h-3 w-3" />
+                    Direct Owner & Advisory Access
+                  </span>
                   <h2 className="text-2xl sm:text-3xl font-black mb-2">
                     {language === "ta" ? "எங்களை நேரடியாக தொடர்பு கொள்ளவும்" : "Direct Communication Channels"}
                   </h2>
                   <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed">
                     {language === "ta"
-                      ? "மதுரையின் சிறந்த குடியிருப்பு, வணிகம் மற்றும் பண்ணை நிலங்களுக்கான நேரடி ஆலோசனை மற்றும் களப் பார்வை முன்பதிவு."
-                      : "Connect directly with our veteran land advisory team for certified computer patta verification, free site inspection cabs, and transparent pricing."}
+                      ? "மதுரையின் சிறந்த குடியிருப்பு, வணிகம் மற்றும் பண்ணை நிலங்களுக்கான நேரடி ஆலோசனை, 30 ஆண்டுகால பட்டா சரிபார்ப்பு மற்றும் இலவச களப் பார்வை ஏற்பாடு."
+                      : "Connect directly with our veteran land advisory team for certified computer document verification, complimentary site inspection cabs, and transparent pricing."}
                   </p>
                 </div>
-                <div className="shrink-0 flex flex-col items-center sm:items-end gap-2 text-center sm:text-right">
-                  <span className="text-xs text-neutral-400 font-semibold">{language === "ta" ? "அலுவலக நேரம்:" : "Office Hours:"}</span>
-                  <span className="text-sm font-black text-[#EAB308]">8:30 AM – 8:30 PM (7 Days a Week)</span>
-                  <span className="text-[11px] text-emerald-400 font-bold flex items-center gap-1">
+                <div className="shrink-0 flex flex-col items-center sm:items-end gap-2 text-center sm:text-right bg-white/5 p-4 rounded-2xl border border-white/10">
+                  <span className="text-xs text-neutral-300 font-semibold">{language === "ta" ? "அலுவலக நேரம்:" : "Office Hours:"}</span>
+                  <span className="text-sm font-black text-[#D9A52E]">8:30 AM – 8:30 PM (7 Days a Week)</span>
+                  <span className="text-[11px] text-emerald-400 font-bold flex items-center gap-1.5">
                     <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
                     Site Visits Available Every Day
                   </span>
@@ -1852,120 +2176,120 @@ export default function HomePage() {
               </div>
 
               {/* 4 Interactive Channels Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
 
                 {/* 1. Phone Call */}
-                <div className="bg-white rounded-3xl p-5 border border-neutral-200/90 shadow-xs hover:border-[#EAB308]/80 hover:shadow-md transition-all flex flex-col justify-between group">
+                <div className="bg-white rounded-[22px] p-5 border border-neutral-200/90 shadow-sm hover:border-[#D9A52E] hover:shadow-xl transition-all flex flex-col justify-between group">
                   <div>
-                    <div className="h-12 w-12 rounded-xl bg-amber-50 text-[#B45309] border border-amber-200 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                      <Phone className="h-6 w-6 text-[#B45309]" />
+                    <div className="h-12 w-12 rounded-xl bg-[#06351F] text-[#D9A52E] border border-[#D9A52E]/40 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform shadow-xs">
+                      <Phone className="h-5 w-5 text-[#D9A52E]" />
                     </div>
-                    <span className="text-[10px] font-black uppercase tracking-wider text-[#B45309] block mb-0.5">
-                      {language === "ta" ? "தொலைபேசி அழைப்பு" : "Direct Call"}
+                    <span className="text-[10px] font-black uppercase tracking-wider text-[#06351F] block mb-0.5">
+                      {language === "ta" ? "தொலைபேசி அழைப்பு" : "Direct Helpline"}
                     </span>
-                    <h4 className="text-base font-black text-neutral-900 mb-1">{phone}</h4>
-                    <p className="text-xs text-neutral-500 mb-4">
+                    <h4 className="text-base font-black text-[#06351F] mb-1">{phone}</h4>
+                    <p className="text-xs text-neutral-500 mb-4 leading-relaxed">
                       {language === "ta" ? "நில ஆலோசகருடன் உடனே பேச நேரடி அழைப்பு." : "Speak directly with our senior land acquisition specialist."}
                     </p>
                   </div>
                   <a
                     href={`tel:${phone}`}
-                    className="w-full py-2.5 px-3 rounded-xl bg-[#0A0D12] hover:bg-neutral-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-xs"
+                    className="w-full py-2.5 px-3 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white font-black text-xs flex items-center justify-center gap-1.5 transition-colors shadow-xs border border-[#0E5934]"
                   >
-                    <PhoneCall className="h-3.5 w-3.5 text-[#EAB308]" />
+                    <PhoneCall className="h-3.5 w-3.5 text-[#D9A52E]" />
                     <span>{language === "ta" ? "அழைக்க" : "Call Now"}</span>
                   </a>
                 </div>
 
-                {/* 2. WhatsApp Business */}
-                <div className="bg-white rounded-3xl p-5 border border-neutral-200/90 shadow-xs hover:border-emerald-500/80 hover:shadow-md transition-all flex flex-col justify-between group">
+                {/* 2. Document & Legal Title Advisory */}
+                <div className="bg-white rounded-[22px] p-5 border border-neutral-200/90 shadow-sm hover:border-[#D9A52E] hover:shadow-xl transition-all flex flex-col justify-between group">
                   <div>
-                    <div className="h-12 w-12 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                      <MessageCircle className="h-6 w-6 text-emerald-600 fill-emerald-100" />
+                    <div className="h-12 w-12 rounded-xl bg-[#06351F] text-[#D9A52E] border border-[#D9A52E]/40 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform shadow-xs">
+                      <ShieldCheck className="h-5 w-5 text-[#D9A52E]" />
                     </div>
-                    <span className="text-[10px] font-black uppercase tracking-wider text-emerald-700 block mb-0.5">
-                      {language === "ta" ? "வாட்ஸ்அப் அரட்டை" : "WhatsApp Chat"}
+                    <span className="text-[10px] font-black uppercase tracking-wider text-[#06351F] block mb-0.5">
+                      {language === "ta" ? "பட்டா ஆவண சரிபார்ப்பு" : "Document & Legal Advisory"}
                     </span>
-                    <h4 className="text-base font-black text-neutral-900 mb-1">WhatsApp Official</h4>
-                    <p className="text-xs text-neutral-500 mb-4">
-                      {language === "ta" ? "மனை வரைபடங்கள், விலை பட்டியல் மற்றும் வீடியோ பெற." : "Instant layout blueprints, pricing quotes, and video reels."}
+                    <h4 className="text-base font-black text-[#06351F] mb-1">
+                      {language === "ta" ? "சட்ட ஆவண சரிபார்ப்பு" : "Legal Title Desk"}
+                    </h4>
+                    <p className="text-xs text-neutral-500 mb-4 leading-relaxed">
+                      {language === "ta" ? "30 ஆண்டுகால வில்லங்க சான்றிதழ் மற்றும் கணினி பட்டா ஆலோசனை." : "30-year encumbrance search, DTCP approval & computer document verification."}
                     </p>
                   </div>
                   <a
-                    href={`https://wa.me/${rawWhatsapp}?text=Hello%20Surya%20Promoters,%20I%20am%20interested%20in%20your%20Madurai%20projects.`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-2.5 px-3 rounded-xl bg-[#25D366] hover:bg-[#20BD5A] text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-xs"
+                    href={`tel:${phone}`}
+                    className="w-full py-2.5 px-3 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white font-black text-xs flex items-center justify-center gap-1.5 transition-colors shadow-xs border border-[#0E5934]"
                   >
-                    <MessageCircle className="h-3.5 w-3.5 fill-white" />
-                    <span>{language === "ta" ? "வாட்ஸ்அப் தொடர்பு" : "Chat on WhatsApp"}</span>
+                    <ShieldCheck className="h-3.5 w-3.5 text-[#D9A52E]" />
+                    <span>{language === "ta" ? "ஆலோசனைக்கு அழைக்க" : "Call Legal Desk"}</span>
                   </a>
                 </div>
 
                 {/* 3. Corporate Email */}
-                <div className="bg-white rounded-3xl p-5 border border-neutral-200/90 shadow-xs hover:border-blue-500/80 hover:shadow-md transition-all flex flex-col justify-between group">
+                <div className="bg-white rounded-[22px] p-5 border border-neutral-200/90 shadow-sm hover:border-blue-500 hover:shadow-xl transition-all flex flex-col justify-between group">
                   <div>
-                    <div className="h-12 w-12 rounded-xl bg-blue-50 text-blue-700 border border-blue-200 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                      <Mail className="h-6 w-6 text-blue-600" />
+                    <div className="h-12 w-12 rounded-xl bg-blue-50 text-blue-700 border border-blue-200 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform shadow-xs">
+                      <Mail className="h-5 w-5 text-blue-600" />
                     </div>
                     <span className="text-[10px] font-black uppercase tracking-wider text-blue-700 block mb-0.5">
                       {language === "ta" ? "மின்னஞ்சல்" : "Official Email"}
                     </span>
                     <h4 className="text-base font-black text-neutral-900 mb-1 truncate">{email}</h4>
-                    <p className="text-xs text-neutral-500 mb-4">
+                    <p className="text-xs text-neutral-500 mb-4 leading-relaxed">
                       {language === "ta" ? "கார்ப்பரேட் கோரிக்கைகள் மற்றும் கூட்டாண்மை விசாரணை." : "Send corporate inquiries, deeds verification, or proposals."}
                     </p>
                   </div>
                   <a
                     href={`mailto:${email}`}
-                    className="w-full py-2.5 px-3 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-900 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors border border-neutral-300"
+                    className="w-full py-2.5 px-3 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white font-black text-xs flex items-center justify-center gap-1.5 transition-colors border border-[#0E5934] shadow-xs"
                   >
-                    <Mail className="h-3.5 w-3.5 text-blue-600" />
+                    <Mail className="h-3.5 w-3.5 text-[#D9A52E]" />
                     <span>{language === "ta" ? "மின்னஞ்சல் அனுப்ப" : "Send Email"}</span>
                   </a>
                 </div>
 
                 {/* 4. Book Free Site Inspection Cab */}
-                <div className="bg-white rounded-3xl p-5 border border-neutral-200/90 shadow-xs hover:border-[#EAB308]/80 hover:shadow-md transition-all flex flex-col justify-between group">
+                <div className="bg-white rounded-[22px] p-5 border border-neutral-200/90 shadow-sm hover:border-[#D9A52E] hover:shadow-xl transition-all flex flex-col justify-between group">
                   <div>
-                    <div className="h-12 w-12 rounded-xl bg-amber-50 text-[#854D0E] border border-amber-200 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                      <FileCheck className="h-6 w-6 text-[#EAB308]" />
+                    <div className="h-12 w-12 rounded-xl bg-amber-50 text-[#854D0E] border border-amber-200 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform shadow-xs">
+                      <Sparkles className="h-5 w-5 text-[#D9A52E]" />
                     </div>
                     <span className="text-[10px] font-black uppercase tracking-wider text-[#854D0E] block mb-0.5">
-                      {language === "ta" ? "களப் பார்வை முன்பதிவு" : "Site Visit & Booking"}
+                      {language === "ta" ? "களப் பார்வை முன்பதிவு" : "Free Site Visit"}
                     </span>
-                    <h4 className="text-base font-black text-neutral-900 mb-1">{language === "ta" ? "இலவச வாகன வசதி" : "Enquiry"}</h4>
-                    <p className="text-xs text-neutral-500 mb-4">
-                      {language === "ta" ? "குடும்பத்துடன் இடத்தை நேரில் பார்வையிட இலவச ஏற்பாடு." : "Complimentary pick-up & drop cab across Madurai."}
+                    <h4 className="text-base font-black text-neutral-900 mb-1">{language === "ta" ? "இலவச வாகன வசதி" : "Inspection Cab"}</h4>
+                    <p className="text-xs text-neutral-500 mb-4 leading-relaxed">
+                      {language === "ta" ? "குடும்பத்துடன் இடத்தை நேரில் பார்வையிட இலவச வாகன ஏற்பாடு." : "Complimentary pick-up & drop cab across Madurai."}
                     </p>
                   </div>
                   <button
                     onClick={() => setIsEnquiryModalOpen(true)}
-                    className="w-full py-2.5 px-3 rounded-xl bg-[#EAB308] hover:bg-[#CA8A04] text-[#0A0D12] font-black text-xs flex items-center justify-center gap-1.5 transition-colors shadow-xs cursor-pointer"
+                    className="w-full py-2.5 px-3 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white font-black text-xs flex items-center justify-center gap-1.5 transition-colors shadow-xs cursor-pointer border border-[#0E5934]"
                   >
-                    <Sparkles className="h-3.5 w-3.5" />
+                    <Sparkles className="h-3.5 w-3.5 text-[#D9A52E]" />
                     <span>{language === "ta" ? "முன்பதிவு படிவம்" : "Book Site Inspection"}</span>
                   </button>
                 </div>
 
               </div>
 
-              {/* Head Office Information & Map Link (Buttons Aligned to Right Side) */}
-              <div className="bg-white rounded-3xl p-6 sm:p-8 border border-neutral-200/90 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-6">
+              {/* Head Office Information & Map Link */}
+              <div className="bg-white rounded-3xl p-6 sm:p-8 border border-neutral-200/90 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div className="max-w-2xl">
                   <div className="flex items-center gap-2 mb-2">
-                    <Building className="h-5 w-5 text-[#B45309]" />
-                    <span className="text-xs font-black uppercase tracking-wider text-[#B45309]">
+                    <Building className="h-5 w-5 text-[#D9A52E]" />
+                    <span className="text-xs font-black uppercase tracking-wider text-[#06351F]">
                       {language === "ta" ? "தலைமை அலுவலகம்" : "Corporate Headquarters"}
                     </span>
                   </div>
-                  <h3 className="text-xl font-black text-neutral-900 mb-2">
-                    SURYA PROMOTERS · MADURAI
+                  <h3 className="text-xl font-black text-[#06351F] mb-2">
+                    SURYA PROMOTERS · MADURAI CORPORATE HQ
                   </h3>
                   <div className="space-y-2 text-xs text-neutral-600">
                     <div className="flex items-start gap-2">
-                      <MapPin className="h-4 w-4 text-[#B45309] shrink-0 mt-0.5" />
-                      <span>{address}</span>
+                      <MapPin className="h-4 w-4 text-[#D9A52E] shrink-0 mt-0.5" />
+                      <span className="font-medium">{address}</span>
                     </div>
                     <div className="flex items-center gap-2 text-neutral-700 font-semibold">
                       <Clock className="h-4 w-4 text-emerald-600 shrink-0" />
@@ -1975,14 +2299,14 @@ export default function HomePage() {
                 </div>
 
                 {/* Right Aligned Action Buttons */}
-                <div className="shrink-0 flex flex-wrap sm:flex-nowrap items-center md:justify-end gap-2.5">
+                <div className="shrink-0 flex flex-wrap sm:flex-nowrap items-center md:justify-end gap-3">
                   <a
                     href={mapsLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-2.5 rounded-xl bg-[#0A0D12] hover:bg-neutral-800 text-white font-bold text-xs inline-flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
+                    className="px-5 py-3 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] font-black text-xs inline-flex items-center gap-2 transition-all cursor-pointer shadow-md hover:scale-105"
                   >
-                    <Navigation className="h-3.5 w-3.5 text-[#EAB308]" />
+                    <Navigation className="h-4 w-4 text-[#D9A52E]" />
                     <span>{language === "ta" ? "கூகிள் மேப்ஸ் வழித்தடம்" : "Open in Google Maps"}</span>
                   </a>
                 </div>
@@ -1997,79 +2321,96 @@ export default function HomePage() {
       {/* ------------------------------------------------------------------------- */}
       {/* MOBILE BOTTOM APP NAVIGATION DOCK (Play Store / Mobile App Style)         */}
       {/* ------------------------------------------------------------------------- */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#FFFFFF]/95 backdrop-blur-xl border-t border-neutral-200/90 shadow-2xl px-2 py-1.5 flex items-center justify-around">
-        {/* Home */}
-        <button
-          onClick={() => setActiveTab("home")}
-          className={`flex flex-col items-center justify-center py-1 px-3 rounded-xl transition-all cursor-pointer ${activeTab === "home" ? "text-[#0A0D12] font-black" : "text-neutral-500 font-medium"
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#FFFFFF]/95 backdrop-blur-xl border-t border-neutral-200/90 shadow-2xl px-1.5 py-1.5">
+        <div className="grid grid-cols-5 items-center w-full max-w-md mx-auto">
+          {/* Home */}
+          <button
+            onClick={() => setActiveTab("home")}
+            className={`w-full flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all cursor-pointer select-none ${
+              activeTab === "home" ? "text-[#06351F] font-black" : "text-neutral-500 font-medium hover:text-[#06351F]"
             }`}
-        >
-          <div className={`p-1.5 rounded-xl transition-colors ${activeTab === "home" ? "bg-[#EAB308] text-[#0A0D12] shadow-xs" : "text-neutral-500"}`}>
-            <Home className="h-4.5 w-4.5" />
-          </div>
-          <span className="text-[10px] mt-0.5 leading-none">
-            {language === "ta" ? "முகப்பு" : "Home"}
-          </span>
-        </button>
+          >
+            <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors shrink-0 ${
+              activeTab === "home" ? "bg-[#06351F] text-[#D9A52E] shadow-xs" : "text-neutral-500"
+            }`}>
+              <Home className="h-4.5 w-4.5 shrink-0" />
+            </div>
+            <span className="text-[10px] font-semibold mt-1 leading-none text-center truncate w-full block">
+              {language === "ta" ? "முகப்பு" : "Home"}
+            </span>
+          </button>
 
-        {/* Our Projects */}
-        <button
-          onClick={() => {
-            setActiveTab("projects");
-            setActiveCategory(null);
-          }}
-          className={`flex flex-col items-center justify-center py-1 px-3 rounded-xl transition-all cursor-pointer ${activeTab === "projects" ? "text-[#0A0D12] font-black" : "text-neutral-500 font-medium"
+          {/* Our Projects */}
+          <button
+            onClick={() => {
+              setActiveTab("projects");
+              setActiveCategory(null);
+            }}
+            className={`w-full flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all cursor-pointer select-none ${
+              activeTab === "projects" ? "text-[#06351F] font-black" : "text-neutral-500 font-medium hover:text-[#06351F]"
             }`}
-        >
-          <div className={`p-1.5 rounded-xl transition-colors ${activeTab === "projects" ? "bg-[#EAB308] text-[#0A0D12] shadow-xs" : "text-neutral-500"}`}>
-            <Building2 className="h-4.5 w-4.5" />
-          </div>
-          <span className="text-[10px] mt-0.5 leading-none">
-            {language === "ta" ? "திட்டங்கள்" : "Projects"}
-          </span>
-        </button>
+          >
+            <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors shrink-0 ${
+              activeTab === "projects" ? "bg-[#06351F] text-[#D9A52E] shadow-xs" : "text-neutral-500"
+            }`}>
+              <Building2 className="h-4.5 w-4.5 shrink-0" />
+            </div>
+            <span className="text-[10px] font-semibold mt-1 leading-none text-center truncate w-full block">
+              {language === "ta" ? "திட்டங்கள்" : "Projects"}
+            </span>
+          </button>
 
-        {/* Site Location */}
-        <button
-          onClick={() => setActiveTab("location")}
-          className={`flex flex-col items-center justify-center py-1 px-2 rounded-xl transition-all cursor-pointer ${activeTab === "location" ? "text-blue-600 font-black" : "text-neutral-500 font-medium"
+          {/* Site Location */}
+          <button
+            onClick={() => setActiveTab("location")}
+            className={`w-full flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all cursor-pointer select-none ${
+              activeTab === "location" ? "text-[#06351F] font-black" : "text-neutral-500 font-medium hover:text-[#06351F]"
             }`}
-        >
-          <div className={`p-1.5 rounded-xl transition-colors ${activeTab === "location" ? "bg-blue-600 text-white shadow-xs" : "text-neutral-500"}`}>
-            <MapPin className="h-4 w-4" />
-          </div>
-          <span className="text-[9px] mt-0.5 leading-none">
-            {language === "ta" ? "அமைவிடம்" : "Site Location"}
-          </span>
-        </button>
+          >
+            <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors shrink-0 ${
+              activeTab === "location" ? "bg-[#06351F] text-[#D9A52E] shadow-xs" : "text-neutral-500"
+            }`}>
+              <MapPin className="h-4.5 w-4.5 shrink-0" />
+            </div>
+            <span className="text-[10px] font-semibold mt-1 leading-none text-center truncate w-full block">
+              {language === "ta" ? "அமைவிடம்" : "Location"}
+            </span>
+          </button>
 
-        {/* Download Layout */}
-        <button
-          onClick={() => setActiveTab("download")}
-          className={`flex flex-col items-center justify-center py-1 px-2 rounded-xl transition-all cursor-pointer ${activeTab === "download" ? "text-amber-700 font-black" : "text-neutral-500 font-medium"
+          {/* Download Layout */}
+          <button
+            onClick={() => setActiveTab("download")}
+            className={`w-full flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all cursor-pointer select-none ${
+              activeTab === "download" ? "text-[#06351F] font-black" : "text-neutral-500 font-medium hover:text-[#06351F]"
             }`}
-        >
-          <div className={`p-1.5 rounded-xl transition-colors ${activeTab === "download" ? "bg-amber-600 text-white shadow-xs" : "text-neutral-500"}`}>
-            <Download className="h-4 w-4" />
-          </div>
-          <span className="text-[9px] mt-0.5 leading-none">
-            {language === "ta" ? "வரைபடம்" : "Layout"}
-          </span>
-        </button>
+          >
+            <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors shrink-0 ${
+              activeTab === "download" ? "bg-[#06351F] text-[#D9A52E] shadow-xs" : "text-neutral-500"
+            }`}>
+              <Download className="h-4.5 w-4.5 shrink-0" />
+            </div>
+            <span className="text-[10px] font-semibold mt-1 leading-none text-center truncate w-full block">
+              {language === "ta" ? "வரைபடம்" : "Layout"}
+            </span>
+          </button>
 
-        {/* Contact */}
-        <button
-          onClick={() => setActiveTab("contact")}
-          className={`flex flex-col items-center justify-center py-1 px-2 rounded-xl transition-all cursor-pointer ${activeTab === "contact" ? "text-[#B45309] font-black" : "text-neutral-500 font-medium"
+          {/* Contact */}
+          <button
+            onClick={() => setActiveTab("contact")}
+            className={`w-full flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all cursor-pointer select-none ${
+              activeTab === "contact" ? "text-[#06351F] font-black" : "text-neutral-500 font-medium hover:text-[#06351F]"
             }`}
-        >
-          <div className={`p-1.5 rounded-xl transition-colors ${activeTab === "contact" ? "bg-[#0A0D12] text-[#EAB308] shadow-xs" : "text-neutral-500"}`}>
-            <PhoneCall className="h-4 w-4" />
-          </div>
-          <span className="text-[9px] mt-0.5 leading-none">
-            {language === "ta" ? "தொடர்பு" : "Contact"}
-          </span>
-        </button>
+          >
+            <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors shrink-0 ${
+              activeTab === "contact" ? "bg-[#06351F] text-[#D9A52E] shadow-xs" : "text-neutral-500"
+            }`}>
+              <PhoneCall className="h-4.5 w-4.5 shrink-0" />
+            </div>
+            <span className="text-[10px] font-semibold mt-1 leading-none text-center truncate w-full block">
+              {language === "ta" ? "தொடர்பு" : "Contact"}
+            </span>
+          </button>
+        </div>
       </nav>
 
       {/* ------------------------------------------------------------------------- */}
@@ -2182,7 +2523,7 @@ export default function HomePage() {
                             type="button"
                             onClick={handlePrevImage}
                             aria-label="Previous image"
-                            className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 z-20 h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-black/65 hover:bg-[#EAB308] text-white hover:text-[#0A0D12] border border-white/30 hover:border-[#EAB308] flex items-center justify-center backdrop-blur-md shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer pointer-events-auto"
+                            className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 z-20 h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-black/65 hover:bg-[#06351F] text-white hover:text-[#D9A52E] border border-white/30 hover:border-[#0E5934] flex items-center justify-center backdrop-blur-md shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer pointer-events-auto"
                             title="Previous image (←)"
                           >
                             <ChevronLeft className="h-6 w-6 sm:h-7 sm:w-7 stroke-[2.5]" />
@@ -2192,7 +2533,7 @@ export default function HomePage() {
                             type="button"
                             onClick={handleNextImage}
                             aria-label="Next image"
-                            className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 z-20 h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-black/65 hover:bg-[#EAB308] text-white hover:text-[#0A0D12] border border-white/30 hover:border-[#EAB308] flex items-center justify-center backdrop-blur-md shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer pointer-events-auto"
+                            className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 z-20 h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-black/65 hover:bg-[#06351F] text-white hover:text-[#D9A52E] border border-white/30 hover:border-[#0E5934] flex items-center justify-center backdrop-blur-md shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer pointer-events-auto"
                             title="Next image (→)"
                           >
                             <ChevronRight className="h-6 w-6 sm:h-7 sm:w-7 stroke-[2.5]" />
@@ -2203,7 +2544,7 @@ export default function HomePage() {
                       {/* Top Badges & Media Switcher */}
                       <div className="absolute top-3 left-3 right-14 flex items-center justify-between gap-2 z-10 pointer-events-auto">
                         <div className="flex flex-wrap items-center gap-1.5">
-                          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-black bg-[#EAB308] text-[#0A0D12]">
+                          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-black bg-[#06351F] text-white border border-[#0E5934]">
                             {selectedProject.categoryLabel[language]}
                           </span>
                           <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-black/70 text-white backdrop-blur-md">
@@ -2216,7 +2557,7 @@ export default function HomePage() {
                             <button
                               onClick={() => setModalMediaMode("photos")}
                               className={`px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all cursor-pointer ${modalMediaMode === "photos"
-                                  ? "bg-[#EAB308] text-[#0A0D12]"
+                                  ? "bg-[#06351F] text-white border border-[#0E5934]"
                                   : "text-white/80 hover:text-white"
                                 }`}
                             >
@@ -2225,7 +2566,7 @@ export default function HomePage() {
                             <button
                               onClick={() => setModalMediaMode("video")}
                               className={`px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider flex items-center gap-1 transition-all cursor-pointer ${modalMediaMode === "video"
-                                  ? "bg-[#EAB308] text-[#0A0D12]"
+                                  ? "bg-[#06351F] text-white border border-[#0E5934]"
                                   : "text-white/80 hover:text-white"
                                 }`}
                             >
@@ -2270,7 +2611,7 @@ export default function HomePage() {
                               setModalMediaMode("photos");
                             }}
                             className={`relative h-14 w-20 sm:h-16 sm:w-24 rounded-xl overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${modalMediaMode === "photos" && activeImage === thumb
-                                ? "border-[#EAB308] scale-105 shadow-md ring-2 ring-[#EAB308]/40"
+                                ? "border-[#0E5934] scale-105 shadow-md ring-2 ring-[#0E5934]/40"
                                 : "border-neutral-200 opacity-70 hover:opacity-100 hover:border-neutral-400"
                               }`}
                           >
@@ -2283,10 +2624,10 @@ export default function HomePage() {
 
                   {/* 2. LIVE 2D/3D LAYOUT LINK */}
                   {selectedProject.mapbhoomiUrl && (
-                    <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-[#0A0D12] via-[#111827] to-[#1F2937] text-white border border-[#EAB308]/40 shadow-lg flex flex-col sm:flex-row sm:items-center justify-between gap-3.5">
+                    <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-[#06351F] via-[#092B1C] to-[#041D12] text-white border border-[#0E5934]/50 shadow-lg flex flex-col sm:flex-row sm:items-center justify-between gap-3.5">
                       <div className="flex items-start sm:items-center gap-3">
-                        <div className="h-11 w-11 rounded-2xl bg-[#EAB308] text-[#0A0D12] flex items-center justify-center font-black text-sm shrink-0 shadow-md">
-                          <Compass className="h-6 w-6" />
+                        <div className="h-11 w-11 rounded-2xl bg-[#0E5934] text-white flex items-center justify-center font-black text-sm shrink-0 shadow-md border border-[#D9A52E]/30">
+                          <Compass className="h-6 w-6 text-[#D9A52E]" />
                         </div>
                         <div>
                           <div className="flex items-center gap-2">
@@ -2306,9 +2647,9 @@ export default function HomePage() {
                         href={selectedProject.mapbhoomiUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-5 py-2.5 rounded-xl bg-[#EAB308] hover:bg-[#CA8A04] text-[#0A0D12] font-black text-xs transition-all flex items-center justify-center gap-1.5 shrink-0 shadow-md hover:scale-105 cursor-pointer"
+                        className="px-5 py-2.5 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] font-black text-xs transition-all flex items-center justify-center gap-1.5 shrink-0 shadow-md hover:scale-105 cursor-pointer"
                       >
-                        <Navigation className="h-3.5 w-3.5" />
+                        <Navigation className="h-3.5 w-3.5 text-[#D9A52E]" />
                         <span>2D/3D views ↗</span>
                       </a>
                     </div>
@@ -2322,7 +2663,7 @@ export default function HomePage() {
                         const container = document.getElementById("project-modal-scroll-container");
                         if (container) container.scrollTo({ top: 0, behavior: "smooth" });
                       }}
-                      className="py-2 px-4 sm:px-5 rounded-xl text-xs font-black bg-[#0A0D12] text-[#EAB308] shadow-xs cursor-pointer hover:bg-neutral-900 transition-colors"
+                      className="py-2 px-4 sm:px-5 rounded-xl text-xs font-black bg-[#06351F] text-white border border-[#0E5934] shadow-xs cursor-pointer hover:bg-[#0E5934] transition-colors"
                     >
                       {language === "ta" ? "கண்ணோட்டம்" : "Overview & Specs"}
                     </button>
@@ -2790,9 +3131,9 @@ export default function HomePage() {
                             <a
                               href={activeBlueprintSrc}
                               download
-                              className="text-xs font-bold text-neutral-600 hover:text-neutral-900 flex items-center gap-1 cursor-pointer px-2.5 py-1 rounded-lg bg-neutral-100 hover:bg-neutral-200 transition-colors"
+                              className="text-xs font-bold text-white flex items-center gap-1 cursor-pointer px-2.5 py-1 rounded-lg bg-[#06351F] hover:bg-[#0E5934] transition-colors border border-[#0E5934]"
                             >
-                              <Download className="h-3 w-3" />
+                              <Download className="h-3 w-3 text-[#D9A52E]" />
                               <span>{language === "ta" ? "பதிவிறக்கு" : "Download"}</span>
                             </a>
                           </div>
@@ -2834,7 +3175,7 @@ export default function HomePage() {
                                 onClick={() => setModalActiveBlueprintIndex(bpIdx)}
                                 className={`p-2 rounded-xl border-2 transition-all cursor-pointer flex items-center gap-2.5 text-left ${
                                   modalActiveBlueprintIndex === bpIdx
-                                    ? "border-[#EAB308] bg-amber-500/10 shadow-xs"
+                                    ? "border-[#0E5934] bg-emerald-50 shadow-xs"
                                     : "border-neutral-200 hover:border-neutral-300 bg-white"
                                 }`}
                               >
@@ -2842,7 +3183,7 @@ export default function HomePage() {
                                   <Image src={bp.image} alt={bp.title.en} fill className="object-contain" sizes="80px" />
                                 </div>
                                 <div className="min-w-0 flex-1">
-                                  <span className="text-[10px] font-black uppercase text-amber-700 block">
+                                  <span className="text-[10px] font-black uppercase text-[#06351F] block">
                                     {language === "ta" ? `வரைபடம் 0${bpIdx + 1}` : `Plan 0${bpIdx + 1}`}
                                   </span>
                                   <span className="text-xs font-bold text-neutral-900 truncate block">
@@ -3029,9 +3370,9 @@ export default function HomePage() {
                       href={selectedProject.mapsUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 sm:flex-none px-3.5 py-2.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-900 font-bold text-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                      className="flex-1 sm:flex-none px-3.5 py-2.5 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] font-bold text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
                     >
-                      <Navigation className="h-3.5 w-3.5 text-blue-600" />
+                      <Navigation className="h-3.5 w-3.5 text-[#D9A52E]" />
                       <span>{language === "ta" ? "கூகிள் மேப்ஸ்" : "Google Maps"}</span>
                     </a>
 
@@ -3040,9 +3381,9 @@ export default function HomePage() {
                         href={selectedProject.mapbhoomiUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 sm:flex-none px-3.5 py-2.5 rounded-xl bg-[#0A0D12] hover:bg-neutral-800 text-[#EAB308] border border-[#EAB308]/50 font-black text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+                        className="flex-1 sm:flex-none px-3.5 py-2.5 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] font-black text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
                       >
-                        <Compass className="h-3.5 w-3.5 text-[#EAB308]" />
+                        <Compass className="h-3.5 w-3.5 text-[#D9A52E]" />
                         <span>2D/3D views ↗</span>
                       </a>
                     )}
@@ -3051,23 +3392,21 @@ export default function HomePage() {
                   <div className="flex items-center gap-2 w-full sm:w-auto">
                     <a
                       href={`tel:${phone}`}
-                      className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-[#0A0D12] text-white hover:bg-neutral-800 font-bold text-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                      className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-[#06351F] text-white hover:bg-[#0E5934] border border-[#0E5934] font-bold text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
                     >
-                      <Phone className="h-3.5 w-3.5 text-[#EAB308]" />
+                      <Phone className="h-3.5 w-3.5 text-[#D9A52E]" />
                       <span>{language === "ta" ? "நேரடி அழைப்பு" : "Call Advisor"}</span>
                     </a>
 
-                    <a
-                      href={`https://wa.me/${rawWhatsapp}?text=Hello%20Surya%20Promoters,%20I%20am%20interested%20in%20${encodeURIComponent(
-                        selectedProject.name.en
-                      )}.`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs cursor-pointer"
+                    <button
+                      onClick={() => {
+                        setIsEnquiryModalOpen(true);
+                      }}
+                      className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs cursor-pointer"
                     >
-                      <MessageCircle className="h-3.5 w-3.5 fill-white" />
-                      <span>WhatsApp</span>
-                    </a>
+                      <Sparkles className="h-3.5 w-3.5 text-[#D9A52E]" />
+                      <span>{language === "ta" ? "விசாரணை படிவம்" : "Enquire for Price"}</span>
+                    </button>
                   </div>
                 </div>
               </motion.div>
@@ -3204,7 +3543,7 @@ export default function HomePage() {
                   );
                 }}
                 aria-label="Previous image"
-                className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-70 h-11 w-11 sm:h-14 sm:w-14 rounded-full bg-black/70 hover:bg-[#EAB308] text-white hover:text-[#0A0D12] border border-white/20 hover:border-[#EAB308] flex items-center justify-center backdrop-blur-md shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer"
+                className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-70 h-11 w-11 sm:h-14 sm:w-14 rounded-full bg-black/70 hover:bg-[#06351F] text-white hover:text-[#D9A52E] border border-white/20 hover:border-[#0E5934] flex items-center justify-center backdrop-blur-md shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer"
                 title="Previous image (←)"
               >
                 <ChevronLeft className="h-7 w-7 sm:h-8 sm:w-8 stroke-[2.5]" />
@@ -3222,7 +3561,7 @@ export default function HomePage() {
                   );
                 }}
                 aria-label="Next image"
-                className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-70 h-11 w-11 sm:h-14 sm:w-14 rounded-full bg-black/70 hover:bg-[#EAB308] text-white hover:text-[#0A0D12] border border-white/20 hover:border-[#EAB308] flex items-center justify-center backdrop-blur-md shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer"
+                className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-70 h-11 w-11 sm:h-14 sm:w-14 rounded-full bg-black/70 hover:bg-[#06351F] text-white hover:text-[#D9A52E] border border-white/20 hover:border-[#0E5934] flex items-center justify-center backdrop-blur-md shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer"
                 title="Next image (→)"
               >
                 <ChevronRight className="h-7 w-7 sm:h-8 sm:w-8 stroke-[2.5]" />
@@ -3262,7 +3601,7 @@ export default function HomePage() {
                     onClick={() => setActiveFolderImageIndex(tIdx)}
                     className={`relative h-12 w-16 sm:h-14 sm:w-20 rounded-xl overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${
                       activeFolderImageIndex === tIdx
-                        ? "border-[#EAB308] scale-105 shadow-md ring-2 ring-[#EAB308]/40"
+                        ? "border-[#0E5934] scale-105 shadow-md ring-2 ring-[#0E5934]/40"
                         : "border-white/20 opacity-60 hover:opacity-100 hover:border-white/50"
                     }`}
                   >
@@ -3318,31 +3657,27 @@ export default function HomePage() {
                   <div className="flex items-center justify-between text-xs text-neutral-400">
                     <span className="font-mono">Duration: {selectedVideo.duration}</span>
                     <a
-                      href={`https://wa.me/${rawWhatsapp}?text=Hello%20Surya%20Promoters,%20I%20am%20interested%20in%20${encodeURIComponent(selectedVideo.title)}.`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-3 py-1.5 rounded-xl bg-[#25D366] text-white font-bold text-xs flex items-center gap-1.5 hover:bg-[#20ba5a] transition"
+                      href={`tel:${phone}`}
+                      className="px-3.5 py-1.5 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white font-bold text-xs flex items-center gap-1.5 border border-[#0E5934] transition"
                     >
-                      <MessageCircle className="h-3.5 w-3.5 fill-white" />
-                      <span>Inquire on WhatsApp</span>
+                      <Phone className="h-3.5 w-3.5 text-[#D9A52E]" />
+                      <span>{language === "ta" ? "அழைக்க" : "Call Advisor"}</span>
                     </a>
                   </div>
                 </div>
               ) : (
                 <div className="h-64 sm:h-80 w-full rounded-2xl bg-neutral-950 flex flex-col items-center justify-center p-6 text-center border border-neutral-800">
-                  <div className="h-14 w-14 rounded-full bg-[#EAB308] text-[#0A0D12] flex items-center justify-center mb-3">
-                    <Play className="h-6 w-6 fill-[#0A0D12] ml-0.5" />
+                  <div className="h-14 w-14 rounded-full bg-[#0E5934] text-white flex items-center justify-center mb-3 border border-[#D9A52E]/40 shadow-lg">
+                    <Play className="h-6 w-6 fill-white ml-0.5" />
                   </div>
                   <h4 className="text-sm font-bold text-white mb-1">{selectedVideo.title}</h4>
                   <p className="text-xs text-neutral-400 mb-4">4K drone footage stream available on request</p>
                   <a
-                    href={`https://wa.me/${rawWhatsapp}?text=Hello%20Surya%20Promoters,%20please%20send%20full%20project%20video.`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2 rounded-xl bg-[#25D366] text-white font-bold text-xs flex items-center gap-1.5"
+                    href={`tel:${phone}`}
+                    className="px-4 py-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white font-bold text-xs flex items-center gap-1.5 border border-[#0E5934]"
                   >
-                    <MessageCircle className="h-4 w-4 fill-white" />
-                    <span>Request Full Video on WhatsApp</span>
+                    <Phone className="h-4 w-4 text-[#D9A52E]" />
+                    <span>{language === "ta" ? "வீடியோ கோர அழைக்க" : "Call for Full 4K Video"}</span>
                   </a>
                 </div>
               )}
@@ -3409,11 +3744,11 @@ export default function HomePage() {
                       }
                       className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                         selectedDownloadPreview.activeTab === "layout"
-                          ? "bg-white text-neutral-900 shadow-xs"
-                          : "text-neutral-500 hover:text-neutral-800"
+                          ? "bg-[#06351F] text-white shadow-xs"
+                          : "text-neutral-600 hover:text-neutral-900"
                       }`}
                     >
-                      <Map className="h-4 w-4 text-[#B45309]" />
+                      <Map className="h-4 w-4 text-[#D9A52E]" />
                       <span>{language === "ta" ? "மனை வரைபடம் (Layout Map)" : "Layout Map / Blueprint"}</span>
                     </button>
                     <button
@@ -3425,11 +3760,11 @@ export default function HomePage() {
                       }
                       className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                         selectedDownloadPreview.activeTab === "brochure"
-                          ? "bg-white text-neutral-900 shadow-xs"
-                          : "text-neutral-500 hover:text-neutral-800"
+                          ? "bg-[#06351F] text-white shadow-xs"
+                          : "text-neutral-600 hover:text-neutral-900"
                       }`}
                     >
-                      <FileText className="h-4 w-4 text-[#B45309]" />
+                      <FileText className="h-4 w-4 text-[#D9A52E]" />
                       <span>{language === "ta" ? "திட்ட கையேடு (Project Brochure)" : "Official Project Brochure"}</span>
                     </button>
                   </div>
@@ -3462,9 +3797,9 @@ export default function HomePage() {
                 <div className="flex items-center gap-2 w-full sm:w-auto">
                   <button
                     onClick={() => handleDownloadCard(selectedDownloadPreview.item)}
-                    className="flex-1 sm:flex-none py-2.5 px-5 rounded-xl bg-[#0A0D12] hover:bg-neutral-800 text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                    className="flex-1 sm:flex-none py-2.5 px-5 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-md"
                   >
-                    <Download className="h-4 w-4 text-[#EAB308]" />
+                    <Download className="h-4 w-4 text-[#D9A52E]" />
                     <span>
                       {selectedDownloadPreview.item.brochureUrl
                         ? language === "ta"
@@ -3484,10 +3819,10 @@ export default function HomePage() {
                     }
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="py-2.5 px-3 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-800 font-bold text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                    className="py-2.5 px-3 rounded-xl bg-[#0E5934] hover:bg-[#06351F] text-white border border-[#0E5934] font-bold text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
                     title={language === "ta" ? "புதிய தாவலில் திறக்கவும்" : "Open Original in New Tab"}
                   >
-                    <ExternalLink className="h-4 w-4" />
+                    <ExternalLink className="h-4 w-4 text-[#D9A52E]" />
                     <span className="hidden sm:inline">{language === "ta" ? "முழுத்திரை" : "Full Screen"}</span>
                   </a>
                 </div>
@@ -3567,9 +3902,9 @@ export default function HomePage() {
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-2.5 rounded-xl bg-[#0A0D12] hover:bg-neutral-800 text-white font-black text-xs transition-colors flex items-center justify-center gap-1.5 shadow-md cursor-pointer mt-3"
+                  className="w-full py-2.5 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white font-black text-xs transition-colors flex items-center justify-center gap-1.5 shadow-md cursor-pointer mt-3 border border-[#0E5934]"
                 >
-                  <CheckCircle2 className="h-4 w-4 text-[#EAB308]" />
+                  <CheckCircle2 className="h-4 w-4 text-[#D9A52E]" />
                   <span>Submit Quick Enquiry</span>
                 </button>
               </form>

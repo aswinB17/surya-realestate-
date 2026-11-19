@@ -59,7 +59,7 @@ export default function ContactSection() {
                     >
                       +91 78457 16453
                     </a>
-                    <span className="text-xs text-[#77766F]">Direct Phone & WhatsApp</span>
+                    <span className="text-xs text-[#77766F]">Direct Phone Helpline</span>
                   </div>
                 </div>
               </div>

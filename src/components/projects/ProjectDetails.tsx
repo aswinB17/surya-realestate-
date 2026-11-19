@@ -111,10 +111,7 @@ export default function ProjectDetails({ project: initialProject }: ProjectDetai
   };
 
   const handleBrochureDownload = () => {
-    const text = encodeURIComponent(
-      `Hello Surya Promoters, please share the official brochure and documentation pack for ${project.title.en}.`
-    );
-    window.open(`https://wa.me/917845716453?text=${text}`, "_blank");
+    window.location.href = "tel:+917845716453";
   };
 
   return (
@@ -922,31 +919,13 @@ export default function ProjectDetails({ project: initialProject }: ProjectDetai
 
               {/* Action Buttons */}
               <div className="mt-6 space-y-3">
-                {isCompleted ? (
-                  <a
-                    href={`https://wa.me/917845716453?text=${encodeURIComponent(
-                      `Hello Surya Promoters, I saw your completed project ${project.title.en} and would like to inquire about similar upcoming developments.`
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#242820] py-3.5 text-xs font-semibold uppercase tracking-wider text-white shadow-xs transition hover:bg-black"
-                  >
-                    <CheckCircle2 className="h-4 w-4 text-[#C6A15B]" />
-                    <span>Inquire Similar Developments</span>
-                  </a>
-                ) : (
-                  <a
-                    href={`https://wa.me/917845716453?text=${encodeURIComponent(
-                      `Hello Surya Promoters, I am interested in ${project.title.en} (${project.location.en}). Please share price and details.`
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#C6A15B] py-3.5 text-xs font-semibold uppercase tracking-wider text-white shadow-xs transition hover:bg-[#b5924d]"
-                  >
-                    <MessageSquare className="h-4 w-4" />
-                    <span>Inquire via WhatsApp</span>
-                  </a>
-                )}
+                <a
+                  href="tel:+917845716453"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] py-3.5 text-xs font-semibold uppercase tracking-wider text-white shadow-xs transition"
+                >
+                  <Phone className="h-4 w-4 text-[#D9A52E]" />
+                  <span>{isCompleted ? "Call for Similar Developments" : "Call Direct Advisory"}</span>
+                </a>
 
                 {project.mapBhoomiUrl && (
                   <a

@@ -21,11 +21,6 @@ export default function SiteVisitSection() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitted(true);
-
-    const text = encodeURIComponent(
-      `Site Visit Request:\nName: ${formData.name}\nPhone: ${formData.phone}\nProject: ${formData.project}\nDate: ${formData.date}\nNotes: ${formData.message}`
-    );
-    window.open(`https://wa.me/917845716453?text=${text}`, "_blank");
   };
 
   return (
@@ -186,12 +181,10 @@ export default function SiteVisitSection() {
                     </p>
                     <div className="mt-6 flex justify-center gap-3">
                       <a
-                        href="https://wa.me/917845716453"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href="tel:+917845716453"
                         className="rounded-full bg-[#C6A15B] px-6 py-2.5 text-xs font-semibold text-white"
                       >
-                        Message Directly on WhatsApp
+                        Call Direct Helpline
                       </a>
                     </div>
                   </div>

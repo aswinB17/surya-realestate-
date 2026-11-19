@@ -30,8 +30,8 @@ export default function AboutPage() {
     ? cmsData.stats.items
     : [
         { value: "16+ Yrs", label: { en: "Military-Grade Due Diligence", ta: "இராணுவ ஒழுங்குமுறை ஆய்வு" }, sub: { en: "Established in 2010", ta: "2010 முதல்" } },
-        { value: "100%", label: { en: "Verified Computer Patta", ta: "சரிபார்க்கப்பட்ட பட்டா" }, sub: { en: "Clear Title Deeds", ta: "தெளிவான பத்திரம்" } },
-        { value: "1,000+", label: { en: "Happy Landowner Families", ta: "மகிழ்ச்சியான வாடிக்கையாளர்கள்" }, sub: { en: "Across Tamil Nadu", ta: "தமிழகம் முழுவதும்" } },
+        { value: "100%", label: { en: "Verified Computer Document", ta: "சரிபார்க்கப்பட்ட ஆவணம்" }, sub: { en: "Clear Title Deeds", ta: "தெளிவான பத்திரம்" } },
+        { value: "500+", label: { en: "Happy Landowner Families", ta: "மகிழ்ச்சியான வாடிக்கையாளர்கள்" }, sub: { en: "Across Tamil Nadu", ta: "தமிழகம் முழுவதும்" } },
         { value: "Zero", label: { en: "Legal Disputes Since Inception", ta: "சட்ட சிக்கல்கள் இல்லாத வரலாறு" }, sub: { en: "Defense Standard", ta: "பாதுகாப்பு தரம்" } },
       ]
   ).map((item) => ({
@@ -46,8 +46,8 @@ export default function AboutPage() {
       desc: "Every plot demarcation, revenue survey marker, and registration deed adheres to the highest level of administrative integrity instilled through Indian Air Force service.",
     },
     {
-      title: "2. 100% Computer Patta Guarantee",
-      desc: "We sell only legally unassailable land with verified parent documents spanning 30+ years, zero encumbrance, and immediate individual patta transfer.",
+      title: "2. 100% Computer Document Guarantee",
+      desc: "We sell only legally unassailable land with verified parent documents spanning 30+ years, zero encumbrance, and immediate individual document transfer.",
     },
     {
       title: "3. Direct Developer Connectivity",
@@ -61,7 +61,7 @@ export default function AboutPage() {
 
   const testimonials = [
     {
-      quote: "Buying commercial land on the Outer Ring Road with Surya Promoters was the smoothest property transaction I've ever made. The patta and documentation were 100% verified.",
+      quote: "Buying commercial land on the Outer Ring Road with Surya Promoters was the smoothest property transaction I've ever made. The document and documentation were 100% verified.",
       name: "Er. K. Senthil Kumar",
       location: "Madurai Entrepreneur",
       project: "Vaigai Elite Garden",
@@ -73,7 +73,7 @@ export default function AboutPage() {
       project: "Madurai Farms & Fruits",
     },
     {
-      quote: "Mr. Manickam Natarajan's Air Force background reflects in every single interaction. True to their word, the patta was transferred directly into my name within 15 days.",
+      quote: "Mr. Manickam Natarajan's Air Force background reflects in every single interaction. True to their word, the document was transferred directly into my name within 15 days.",
       name: "Thiru. S. Arumugam",
       location: "Retd. State Officer, Madurai",
       project: "Surya Green Enclave",
@@ -128,7 +128,7 @@ export default function AboutPage() {
               Surya Promoters was established in 2010 in Madurai, Tamil Nadu, with a straightforward yet revolutionary mission in real estate: to eradicate title ambiguities, middleman markups, and boundary conflicts from the land-buying experience.
             </p>
             <p className="text-sm text-gray-600 leading-relaxed">
-              Over the past 16+ years, Surya Promoters has earned the unshakable trust of over 1,000+ landowner families, entrepreneurs, and institutions. Every acre we acquire undergoes exhaustive 30-year revenue vetting, encumbrance scrutiny, and physical boundary demarcation with surveyed stones before reaching the market.
+              Over the past 16+ years, Surya Promoters has earned the unshakable trust of over 500+ landowner families, entrepreneurs, and institutions. Every acre we acquire undergoes exhaustive 30-year revenue vetting, encumbrance scrutiny, and physical boundary demarcation with surveyed stones before reaching the market.
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-3">
@@ -138,7 +138,7 @@ export default function AboutPage() {
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-[#E8E2D7] text-xs font-mono font-bold text-[#173D2B]">
                 <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                <span>Immediate Individual Patta</span>
+                <span>Immediate Individual Document</span>
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-[#E8E2D7] text-xs font-mono font-bold text-[#173D2B]">
                 <CheckCircle2 className="h-4 w-4 text-emerald-600" />
@@ -225,7 +225,7 @@ export default function AboutPage() {
                 <div className="p-5 rounded-2xl bg-[#F5F4EE] border border-[#E8E2D7]">
                   <h4 className="font-display text-base font-bold text-[#173D2B]">Our Vision</h4>
                   <p className="mt-1.5 text-xs text-gray-600 leading-relaxed">
-                    To be Southern Tamil Nadu's most respected real estate firm, synonymous with rock-solid patta documentation and transparent promoter ethics.
+                    To be Southern Tamil Nadu's most respected real estate firm, synonymous with rock-solid document and transparent promoter ethics.
                   </p>
                 </div>
               </div>

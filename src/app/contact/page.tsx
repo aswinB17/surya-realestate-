@@ -6,7 +6,7 @@ import ContactPageClient from "@/components/contact/ContactPageClient";
 export const metadata: Metadata = {
   title: "Contact Us | Office Location, Direct Hotline & Enquiries | Surya Promoters",
   description:
-    "Direct contact channels for Surya Promoters Madurai: Call +91 78457 16453, WhatsApp chat, email, or visit our office near Mattuthavani Bus Stand. Book site visits for plots, commercial land & farm orchards.",
+    "Direct contact channels for Surya Promoters Madurai: Call +91 78457 16453, email, or visit our office near Mattuthavani Bus Stand. Book site visits for plots, commercial land & farm orchards.",
   openGraph: {
     title: "Contact Surya Promoters Madurai - Direct Hotline & Office",
     description:
