@@ -102,7 +102,7 @@ export default function ContactSection() {
                       No. 11, Arasu Nagar, Near Rio Hospital, Pandi Kovil Ring Road, Vandiyur, Madurai – 625020, Tamil Nadu.
                     </p>
                     <a
-                      href="https://goo.gl/maps/reSXDDNmSNzkve699?g_st=aw"
+                      href="https://www.google.com/maps?q=9.9253208,78.1702385&z=17&hl=en"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium uppercase text-[#C6A15B] hover:underline"
@@ -129,7 +129,7 @@ export default function ContactSection() {
               <div className="relative h-full min-h-[380px] md:min-h-[440px] w-full overflow-hidden rounded-2xl border border-[#E8E2D7] shadow-xs bg-[#F8F5EF]">
                 <iframe
                   title="Surya Promoters Madurai Location"
-                  src="https://maps.google.com/maps?q=Surya%20Promoters%20Pandi%20Kovil%20Ring%20Road%20Madurai&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                  src="https://maps.google.com/maps?q=9.9253208,78.1702385&hl=en&z=17&output=embed"
                   width="100%"
                   height="100%"
                   className="absolute inset-0 w-full h-full"

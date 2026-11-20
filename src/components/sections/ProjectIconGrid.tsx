@@ -301,7 +301,7 @@ export default function ProjectIconGrid({
         ],
         gradient: "from-blue-600 via-indigo-600 to-sky-700",
         icon: Home,
-        googleMapsUrl: "https://maps.google.com/?q=Madurai+Residential+Apartments",
+        googleMapsUrl: "https://maps.app.goo.gl/ky2jGFwFY7TU7TnJ7?g_st=iw",
         specs: [
           { icon: Home, label: "Gated Community", labelTa: "பாதுகாப்பான வளாகம்" },
           { icon: Sparkles, label: "Modern Amenities", labelTa: "நவீன வசதிகள்" },
@@ -476,7 +476,7 @@ export default function ProjectIconGrid({
         icon: MapPin,
         gradient: "from-red-500 to-rose-600",
         actionType: "external",
-        targetUrl: "https://maps.google.com/?q=Surya+Promoters+Madurai",
+        targetUrl: "https://www.google.com/maps?q=9.9253208,78.1702385&z=17&hl=en",
       },
       {
         id: "legal-patta",
@@ -637,7 +637,7 @@ export default function ProjectIconGrid({
         tag: "Madurai Office",
         icon: MapPin,
         bg: "bg-[#EA4335]",
-        url: "https://maps.google.com/?q=Surya+Promoters+Madurai",
+        url: "https://www.google.com/maps?q=9.9253208,78.1702385&z=17&hl=en",
       },
       {
         id: "qc-email",
@@ -2067,7 +2067,7 @@ export default function ProjectIconGrid({
                   </a>
 
                   <a
-                    href="https://maps.google.com/?q=Surya+Promoters+Madurai"
+                    href="https://www.google.com/maps?q=9.9253208,78.1702385&z=17&hl=en"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-6 rounded-2xl bg-[#F8FAFC] hover:bg-white border border-[#E2E8F0] hover:border-amber-500 hover:shadow-md transition-all text-center space-y-3 group"

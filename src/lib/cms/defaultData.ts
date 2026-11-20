@@ -891,9 +891,8 @@ export const initialCmsData: CmsData = {
     email: "suryapromotersmdu@gmail.com",
     address:
       "120 Feet Road, Near Mattuthavani Bus Stand, K.K. Nagar Corridor, Madurai, Tamil Nadu 625020",
-    mapsLink: "https://maps.google.com/?q=Mattuthavani+Madurai",
-    googleMapsEmbedUrl:
-      "https://maps.google.com/maps?q=Mattuthavani%20Madurai&t=&z=14&ie=UTF8&iwloc=&output=embed",
+    mapsLink: "https://www.google.com/maps?q=9.9253208,78.1702385&z=17&hl=en",
+    googleMapsEmbedUrl: "https://maps.google.com/maps?q=9.9253208,78.1702385&hl=en&z=17&output=embed",
     aboutBio: {
       en: "Surya Promoters was established in 2010 by Indian Air Force Veteran Mr. Manickam Natarajan. Rooted in military precision, absolute honesty, and uncompromising clear titles, we have empowered over 500+ families and business owners across Madurai and southern Tamil Nadu to secure legal, appreciating land wealth.",
       ta: "சூர்யா புரமோட்டர்ஸ் 2010 ஆம் ஆண்டு இந்திய விமானப்படை அதிகாரி திரு. மாணிக்கம் நடராஜன் அவர்களால் நிறுவப்பட்டது. இராணுவ ஒழுக்கம், முழுமையான வெளிப்படைத்தன்மை மற்றும் 100% தெளிவான பட்டா உத்தரவாதத்துடன் மதுரை மற்றும் தென் தமிழ்நாட்டில் 500 க்கும் மேற்பட்ட குடும்பங்களுக்கு நில உடமை பாதுகாப்பை வழங்கி வருகிறோம்.",

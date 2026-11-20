@@ -110,6 +110,9 @@ export interface CmsCompany {
   address: string;
   mapsLink: string;
   googleMapsEmbedUrl?: string;
+  instagramUrl?: string;
+  instagramImage?: string;
+  instagramHandle?: string;
   aboutBio: LocalizedText;
   missionStatement: LocalizedText;
 }

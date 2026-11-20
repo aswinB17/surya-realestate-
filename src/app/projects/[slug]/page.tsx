@@ -24,7 +24,7 @@ function mapCmsProjectToProject(p: CmsProject, fallback?: Project): Project {
     subcategory: p.subcategory || fallback?.subcategory,
     subcategoryLabel: p.subcategoryLabel || fallback?.subcategoryLabel,
     location: p.location || fallback?.location || { en: "Madurai", ta: "மதுரை" },
-    googleMapsUrl: (p as any).googleMapsUrl || fallback?.googleMapsUrl || `https://maps.google.com/?q=${encodeURIComponent(p.location?.en || "Madurai")}`,
+    googleMapsUrl: p.mapsUrl || (p as any).googleMapsUrl || fallback?.googleMapsUrl || `https://maps.google.com/?q=${encodeURIComponent(p.location?.en || "Madurai")}`,
     photographyReferenceUrl: (p as any).photographyReferenceUrl || fallback?.photographyReferenceUrl,
     mapBhoomiUrl: p.mapbhoomiUrl || fallback?.mapBhoomiUrl,
     brochureUrl: p.brochureUrl || fallback?.brochureUrl,

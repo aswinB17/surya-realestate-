@@ -64,7 +64,7 @@ export default function ProjectDetails({ project: initialProject }: ProjectDetai
       subcategory: liveCms.subcategory || initialProject.subcategory,
       subcategoryLabel: liveCms.subcategoryLabel || initialProject.subcategoryLabel,
       location: liveCms.location || initialProject.location,
-      googleMapsUrl: (liveCms as any).googleMapsUrl || initialProject.googleMapsUrl,
+      googleMapsUrl: (liveCms as any).mapsUrl || (liveCms as any).googleMapsUrl || initialProject.googleMapsUrl,
       mapBhoomiUrl: liveCms.mapbhoomiUrl || initialProject.mapBhoomiUrl,
       brochureUrl: liveCms.brochureUrl || initialProject.brochureUrl,
       heroImage: liveCms.image || initialProject.heroImage,

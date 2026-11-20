@@ -103,7 +103,8 @@ export default function HomePage() {
   const phone = companyInfo?.phone || "+91 77089 66452";
   const email = companyInfo?.email || "suryapromotersmdu@gmail.com";
   const address = companyInfo?.address || "120 Feet Road, Near Mattuthavani Bus Stand, K.K. Nagar Corridor, Madurai, Tamil Nadu 625020";
-  const mapsLink = companyInfo?.mapsLink || "https://maps.google.com/?q=Mattuthavani+Madurai";
+  const mapsLink = companyInfo?.mapsLink || "https://www.google.com/maps?q=9.9253208,78.1702385&z=17&hl=en";
+  const instagramUrl = (companyInfo as any)?.instagramUrl || "https://www.instagram.com/surya_promoters_madurai?cnvx=cTNuOGhsZ21kM203";
 
   // Navigation State: Which of the 5 Main Icons / Sections is Active
   // 'home' | 'projects' | 'location' | 'gallery' | 'about' | 'download'
@@ -111,6 +112,39 @@ export default function HomePage() {
 
   // In "Our Projects": Which Category is Active
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+
+  // Tab History tracking for seamless Back Arrow navigation
+  const [tabHistory, setTabHistory] = useState<Array<"home" | "projects" | "location" | "gallery" | "about" | "download" | "contact">>([ "home" ]);
+
+  useEffect(() => {
+    setTabHistory((prev) => {
+      if (prev.length > 0 && prev[prev.length - 1] === activeTab) {
+        return prev;
+      }
+      return [...prev, activeTab];
+    });
+  }, [activeTab]);
+
+  const handleGoBack = () => {
+    if (activeTab === "projects" && activeCategory !== null) {
+      setActiveCategory(null);
+      if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    if (tabHistory.length > 1) {
+      const updatedHistory = tabHistory.slice(0, -1);
+      const prevTab = updatedHistory[updatedHistory.length - 1];
+      setTabHistory(updatedHistory);
+      setActiveTab(prevTab || "home");
+      if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (typeof window !== "undefined" && window.history.length > 1 && document.referrer) {
+      window.history.back();
+    } else {
+      setActiveTab("home");
+      if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   // Dynamic Categories from CMS
   const categoriesList: CmsCategory[] = useMemo<CmsCategory[]>(() => {
@@ -1019,32 +1053,16 @@ export default function HomePage() {
                 /* SCREEN A: 3 CATEGORY SELECTION CARDS ONLY (No project cards below) */
                 /* ----------------------------------------------------------------- */
                 <div className="space-y-6">
-                  {/* Back to Home & Section Title Header */}
-                  <div className="flex items-center justify-between p-4 bg-white rounded-2xl border border-neutral-200/90 shadow-xs">
-                    <div className="flex items-center gap-3">
-                      <button
-                        onClick={() => setActiveTab("home")}
-                        className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-black transition-all hover:scale-105 cursor-pointer shadow-xs"
-                      >
-                        <ArrowLeft className="h-4 w-4 text-[#E5A922]" />
-                        <span>{language === "ta" ? "முகப்புக்கு திரும்புக" : "Back to Home"}</span>
-                      </button>
-                      <div className="h-4 w-px bg-neutral-200 hidden sm:block" />
-                      <div>
-                        <h3 className="text-sm sm:text-base font-black text-[#06351F] leading-tight">
-                          {language === "ta" ? "எங்கள் திட்டங்கள் (முக்கிய பிரிவுகள்)" : "Our Projects (Property Categories)"}
-                        </h3>
-                        <p className="text-[11px] text-neutral-500 hidden sm:block">
-                          {language === "ta" ? "பிரிவை கிளிக் செய்து அந்த பிரிவின் திட்டங்களை தனி பக்கத்தில் காண்க" : "Click any category below to navigate to its dedicated project portfolio"}
-                        </p>
-                      </div>
-                    </div>
+                  {/* Top-Left Back Arrow Navigation */}
+                  <div className="flex items-center">
                     <button
-                      onClick={() => setActiveTab("home")}
-                      className="h-9 w-9 rounded-full bg-[#06351F] hover:bg-[#092B1C] text-[#D9A52E] border border-[#D9A52E]/40 flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-md"
-                      title="Close section and return to Home"
+                      onClick={handleGoBack}
+                      className="group inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-bold transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-xs"
+                      aria-label={language === "ta" ? "முந்தைய பக்கத்திற்கு திரும்புக" : "Back"}
+                      title={language === "ta" ? "முந்தைய பக்கத்திற்கு திரும்புக" : "Back"}
                     >
-                      <X className="h-4 w-4 stroke-[2.5]" />
+                      <ArrowLeft className="h-4 w-4 text-[#D9A52E] group-hover:-translate-x-1 transition-transform" />
+                      <span>{language === "ta" ? "பின்செல்" : "Back"}</span>
                     </button>
                   </div>
 
@@ -1209,42 +1227,17 @@ export default function HomePage() {
                 /* SCREEN B: DEDICATED CATEGORY PROJECTS VIEW (Cards ONLY, no hub)   */
                 /* ----------------------------------------------------------------- */
                 <div className="space-y-6">
-                  {/* Back to Categories Navigation Header */}
-                  <div className="bg-white rounded-2xl p-4 sm:p-5 border border-neutral-200/90 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-                      {/* Back to Categories Button */}
-                      <button
-                        onClick={() => setActiveCategory(null)}
-                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white text-xs sm:text-sm font-black transition-all hover:scale-105 cursor-pointer shadow-md border border-[#0E5934]"
-                      >
-                        <ArrowLeft className="h-4 w-4 text-[#E5A922]" />
-                        <span>{language === "ta" ? "அனைத்து பிரிவுகளுக்கும் திரும்புக" : "Back to Categories"}</span>
-                      </button>
-
-                      <button
-                        onClick={() => {
-                          setActiveTab("home");
-                          setActiveCategory(null);
-                        }}
-                        className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white text-xs font-bold transition-all cursor-pointer border border-[#0E5934] shadow-xs"
-                      >
-                        <Home className="h-3.5 w-3.5 text-[#E5A922]" />
-                        <span>{language === "ta" ? "முகப்பு" : "Home"}</span>
-                      </button>
-
-                      <div className="h-4 w-px bg-neutral-200 hidden md:block" />
-
-                      {/* Breadcrumb */}
-                      <div className="text-xs text-neutral-500 font-medium hidden sm:flex items-center gap-1.5">
-                        <span>Our Projects</span>
-                        <span>/</span>
-                        <span className="font-black text-[#06351F]">
-                          {currentCategoryObj
-                            ? currentCategoryObj.name[language] || currentCategoryObj.name.en
-                            : activeCategory}
-                        </span>
-                      </div>
-                    </div>
+                  {/* Top-Left Back Arrow Navigation & Category Switcher */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <button
+                      onClick={handleGoBack}
+                      className="group self-start inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-bold transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-xs"
+                      aria-label={language === "ta" ? "முந்தைய பக்கத்திற்கு திரும்புக" : "Back"}
+                      title={language === "ta" ? "முந்தைய பக்கத்திற்கு திரும்புக" : "Back"}
+                    >
+                      <ArrowLeft className="h-4 w-4 text-[#D9A52E] group-hover:-translate-x-1 transition-transform" />
+                      <span>{language === "ta" ? "பின்செல்" : "Back"}</span>
+                    </button>
 
                     {/* Category Switcher Pills */}
                     <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
@@ -1258,7 +1251,7 @@ export default function HomePage() {
                             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
                               isCatActive
                                 ? "bg-[#06351F] text-white shadow-xs font-black ring-2 ring-[#0E5934]"
-                                : "bg-emerald-50/70 text-[#06351F] hover:bg-emerald-100/90 border border-emerald-200/80"
+                                : "bg-white text-[#06351F] hover:bg-emerald-50 border border-neutral-200/90 shadow-2xs"
                             }`}
                           >
                             {idx + 1}. {cat.name[language] || cat.name.en} ({pCount})
@@ -1501,32 +1494,16 @@ export default function HomePage() {
           {/* ------------------------------------------------------------------- */}
           {activeTab === "location" && (
             <section className="space-y-6 animate-fadeIn pt-1">
-              {/* Back to Home Header */}
-              <div className="flex items-center justify-between p-4 bg-white rounded-2xl border border-neutral-200/90 shadow-xs">
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setActiveTab("home")}
-                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-black transition-all hover:scale-105 cursor-pointer shadow-xs"
-                  >
-                    <ArrowLeft className="h-4 w-4 text-[#E5A922]" />
-                    <span>{language === "ta" ? "முகப்புக்கு திரும்புக" : "Back to Home"}</span>
-                  </button>
-                  <div className="h-4 w-px bg-neutral-200 hidden sm:block" />
-                  <div>
-                    <h3 className="text-sm sm:text-base font-black text-[#06351F] leading-tight">
-                      {language === "ta" ? "திட்டங்களின் அமைவிடம் (Google Maps & 2D/3D)" : "All Project Map Locations & Geolocation"}
-                    </h3>
-                    <p className="text-[11px] text-neutral-500 hidden sm:block">
-                      {language === "ta" ? "நேரடி ஜிபிஎஸ் வழிகாட்டுதல் மற்றும் கள மனை வரைபடங்கள்" : "Direct GPS coordinates, travel distances, and interactive layouts"}
-                    </p>
-                  </div>
-                </div>
+              {/* Top-Left Back Arrow Navigation */}
+              <div className="flex items-center">
                 <button
-                  onClick={() => setActiveTab("home")}
-                  className="h-9 w-9 rounded-full bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#E5A922]/40 flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-md"
-                  title="Close section"
+                  onClick={handleGoBack}
+                  className="group inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-bold transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-xs"
+                  aria-label={language === "ta" ? "முந்தைய பக்கத்திற்கு திரும்புக" : "Back"}
+                  title={language === "ta" ? "முந்தைய பக்கத்திற்கு திரும்புக" : "Back"}
                 >
-                  <X className="h-4 w-4 stroke-[2.5]" />
+                  <ArrowLeft className="h-4 w-4 text-[#D9A52E] group-hover:-translate-x-1 transition-transform" />
+                  <span>{language === "ta" ? "பின்செல்" : "Back"}</span>
                 </button>
               </div>
 
@@ -1651,32 +1628,16 @@ export default function HomePage() {
           {/* ------------------------------------------------------------------- */}
           {activeTab === "gallery" && (
             <section className="space-y-6 animate-fadeIn pt-1">
-              {/* Back to Home Header */}
-              <div className="flex items-center justify-between p-4 bg-white rounded-2xl border border-neutral-200/90 shadow-xs">
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setActiveTab("home")}
-                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-black transition-all hover:scale-105 cursor-pointer shadow-xs"
-                  >
-                    <ArrowLeft className="h-4 w-4 text-[#D9A52E]" />
-                    <span>{language === "ta" ? "முகப்புக்கு திரும்புக" : "Back to Home"}</span>
-                  </button>
-                  <div className="h-4 w-px bg-neutral-200 hidden sm:block" />
-                  <div>
-                    <h3 className="text-sm sm:text-base font-black text-[#06351F] leading-tight">
-                      {language === "ta" ? "புகைப்படங்கள் & வீடியோ மையம்" : "Photo & Video Multimedia Center"}
-                    </h3>
-                    <p className="text-[11px] text-neutral-500 hidden sm:block">
-                      {language === "ta" ? "4K ட்ரோன் வீடியோக்கள் மற்றும் தளம் சார்ந்த புகைப்படங்கள்" : "4K aerial drone reels and certified site progress photography"}
-                    </p>
-                  </div>
-                </div>
+              {/* Top-Left Back Arrow Navigation */}
+              <div className="flex items-center">
                 <button
-                  onClick={() => setActiveTab("home")}
-                  className="h-9 w-9 rounded-full bg-[#06351F] hover:bg-[#092B1C] text-[#D9A52E] border border-[#D9A52E]/40 flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-md"
-                  title="Close section"
+                  onClick={handleGoBack}
+                  className="group inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-bold transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-xs"
+                  aria-label={language === "ta" ? "முந்தைய பக்கத்திற்கு திரும்புக" : "Back"}
+                  title={language === "ta" ? "முந்தைய பக்கத்திற்கு திரும்புக" : "Back"}
                 >
-                  <X className="h-4 w-4 stroke-[2.5]" />
+                  <ArrowLeft className="h-4 w-4 text-[#D9A52E] group-hover:-translate-x-1 transition-transform" />
+                  <span>{language === "ta" ? "பின்செல்" : "Back"}</span>
                 </button>
               </div>
 
@@ -1857,32 +1818,16 @@ export default function HomePage() {
           {/* ------------------------------------------------------------------- */}
           {activeTab === "about" && (
             <section className="space-y-6 animate-fadeIn pt-1">
-              {/* Back to Home Header */}
-              <div className="flex items-center justify-between p-4 bg-white rounded-2xl border border-neutral-200/90 shadow-xs">
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setActiveTab("home")}
-                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-black transition-all hover:scale-105 cursor-pointer shadow-xs"
-                  >
-                    <ArrowLeft className="h-4 w-4 text-[#D9A52E]" />
-                    <span>{language === "ta" ? "முகப்புக்கு திரும்புக" : "Back to Home"}</span>
-                  </button>
-                  <div className="h-4 w-px bg-neutral-200 hidden sm:block" />
-                  <div>
-                    <h3 className="text-sm sm:text-base font-black text-[#06351F] leading-tight">
-                      {language === "ta" ? "எங்களைப் பற்றி (நிறுவனர் & பாரம்பரியம்)" : "About Surya Promoters (Founder & Legacy)"}
-                    </h3>
-                    <p className="text-[11px] text-neutral-500 hidden sm:block">
-                      {language === "ta" ? "இந்திய விமானப்படை ஒழுங்குமுறை, நேர்மை மற்றும் 16 ஆண்டுகால நம்பிக்கை" : "16+ years of military discipline, zero legal disputes, and transparent land acquisition"}
-                    </p>
-                  </div>
-                </div>
+              {/* Top-Left Back Arrow Navigation */}
+              <div className="flex items-center">
                 <button
-                  onClick={() => setActiveTab("home")}
-                  className="h-9 w-9 rounded-full bg-[#06351F] hover:bg-[#092B1C] text-[#D9A52E] border border-[#D9A52E]/40 flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-md"
-                  title="Close section"
+                  onClick={handleGoBack}
+                  className="group inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-bold transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-xs"
+                  aria-label={language === "ta" ? "முந்தைய பக்கத்திற்கு திரும்புக" : "Back"}
+                  title={language === "ta" ? "முந்தைய பக்கத்திற்கு திரும்புக" : "Back"}
                 >
-                  <X className="h-4 w-4 stroke-[2.5]" />
+                  <ArrowLeft className="h-4 w-4 text-[#D9A52E] group-hover:-translate-x-1 transition-transform" />
+                  <span>{language === "ta" ? "பின்செல்" : "Back"}</span>
                 </button>
               </div>
 
@@ -2006,32 +1951,16 @@ export default function HomePage() {
           {/* ------------------------------------------------------------------- */}
           {activeTab === "download" && (
             <section className="space-y-6 animate-fadeIn pt-1">
-              {/* Back to Home Header */}
-              <div className="flex items-center justify-between p-4 bg-white rounded-2xl border border-neutral-200/90 shadow-xs">
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setActiveTab("home")}
-                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-black transition-all hover:scale-105 cursor-pointer shadow-xs"
-                  >
-                    <ArrowLeft className="h-4 w-4 text-[#D9A52E]" />
-                    <span>{language === "ta" ? "முகப்புக்கு திரும்புக" : "Back to Home"}</span>
-                  </button>
-                  <div className="h-4 w-px bg-neutral-200 hidden sm:block" />
-                  <div>
-                    <h3 className="text-sm sm:text-base font-black text-[#06351F] leading-tight">
-                      {language === "ta" ? "பதிவிறக்க மையம் (கள வரைபடங்கள் & கையேடுகள்)" : "Download Map & Resources Hub"}
-                    </h3>
-                    <p className="text-[11px] text-neutral-500 hidden sm:block">
-                      {language === "ta" ? "அங்கீகரிக்கப்பட்ட மனை வரைபடங்கள், CAD ப்ளான் மற்றும் தகவல் கையேடுகள்" : "Official DTCP approved layout maps, CAD blueprints, and project brochures"}
-                    </p>
-                  </div>
-                </div>
+              {/* Top-Left Back Arrow Navigation */}
+              <div className="flex items-center">
                 <button
-                  onClick={() => setActiveTab("home")}
-                  className="h-9 w-9 rounded-full bg-[#06351F] hover:bg-[#092B1C] text-[#D9A52E] border border-[#D9A52E]/40 flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-md"
-                  title="Close section"
+                  onClick={handleGoBack}
+                  className="group inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-bold transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-xs"
+                  aria-label={language === "ta" ? "முந்தைய பக்கத்திற்கு திரும்புக" : "Back"}
+                  title={language === "ta" ? "முந்தைய பக்கத்திற்கு திரும்புக" : "Back"}
                 >
-                  <X className="h-4 w-4 stroke-[2.5]" />
+                  <ArrowLeft className="h-4 w-4 text-[#D9A52E] group-hover:-translate-x-1 transition-transform" />
+                  <span>{language === "ta" ? "பின்செல்" : "Back"}</span>
                 </button>
               </div>
 
@@ -2120,32 +2049,16 @@ export default function HomePage() {
           {/* =================================================================== */}
           {activeTab === "contact" && (
             <section className="space-y-6 animate-fadeIn pt-1">
-              {/* Back to Home Header */}
-              <div className="flex items-center justify-between p-4 bg-white rounded-2xl border border-neutral-200/90 shadow-xs">
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setActiveTab("home")}
-                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-black transition-all hover:scale-105 cursor-pointer shadow-xs"
-                  >
-                    <ArrowLeft className="h-4 w-4 text-[#D9A52E]" />
-                    <span>{language === "ta" ? "முகப்புக்கு திரும்புக" : "Back to Home"}</span>
-                  </button>
-                  <div className="h-4 w-px bg-neutral-200 hidden sm:block" />
-                  <div>
-                    <h3 className="text-sm sm:text-base font-black text-[#06351F] leading-tight">
-                      {language === "ta" ? "நேரடி தொடர்பு மையம் (Contact Us)" : "Direct Communication Channels & Contact"}
-                    </h3>
-                    <p className="text-[11px] text-neutral-500 hidden sm:block">
-                      {language === "ta" ? "நில ஆலோசகருடன் நேரடி உரையாடல் மற்றும் தலைமை அலுவலக விவரங்கள்" : "Direct land advisory helpline, corporate email, and Madurai headquarters"}
-                    </p>
-                  </div>
-                </div>
+              {/* Top-Left Back Arrow Navigation */}
+              <div className="flex items-center">
                 <button
-                  onClick={() => setActiveTab("home")}
-                  className="h-9 w-9 rounded-full bg-[#06351F] hover:bg-[#092B1C] text-[#D9A52E] border border-[#D9A52E]/40 flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-md"
-                  title="Close section"
+                  onClick={handleGoBack}
+                  className="group inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-bold transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-xs"
+                  aria-label={language === "ta" ? "முந்தைய பக்கத்திற்கு திரும்புக" : "Back"}
+                  title={language === "ta" ? "முந்தைய பக்கத்திற்கு திரும்புக" : "Back"}
                 >
-                  <X className="h-4 w-4 stroke-[2.5]" />
+                  <ArrowLeft className="h-4 w-4 text-[#D9A52E] group-hover:-translate-x-1 transition-transform" />
+                  <span>{language === "ta" ? "பின்செல்" : "Back"}</span>
                 </button>
               </div>
 
@@ -2298,8 +2211,21 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* Right Aligned Action Buttons */}
+                {/* Right Aligned Action Buttons: Official Instagram Link + Google Maps */}
                 <div className="shrink-0 flex flex-wrap sm:flex-nowrap items-center md:justify-end gap-3">
+                  <a
+                    href={instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-5 py-3 rounded-xl bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] hover:opacity-95 text-white font-black text-xs inline-flex items-center gap-2 transition-all cursor-pointer shadow-md hover:scale-105 border border-white/20 group"
+                    title="Follow Surya Promoters on Instagram"
+                  >
+                    <svg className="h-4 w-4 fill-white shrink-0 group-hover:rotate-6 transition-transform" viewBox="0 0 24 24">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                    <span>{language === "ta" ? "இன்ஸ்டாகிராம்" : "Instagram"}</span>
+                    <ExternalLink className="h-3.5 w-3.5 text-white/90" />
+                  </a>
                   <a
                     href={mapsLink}
                     target="_blank"
@@ -3028,9 +2954,9 @@ export default function HomePage() {
                             : selectedProject.id === "vaigai-elite"
                               ? "https://maps.google.com/maps?q=9.859703,78.221955&hl=en&z=15&output=embed"
                               : selectedProject.id === "vaigai-river"
-                              ? "https://maps.google.com/maps?q=Vandiyur,+Madurai,+Tamil+Nadu&hl=en&z=15&output=embed"
+                              ? "https://maps.google.com/maps?q=9.905039,78.165845&hl=en&z=16&output=embed"
                               : selectedProject.id === "pandi-kovil"
-                              ? "https://maps.google.com/maps?q=Pandi+Kovil,+Madurai,+Tamil+Nadu&hl=en&z=15&output=embed"
+                              ? "https://maps.google.com/maps?q=9.934271,78.166845&hl=en&z=16&output=embed"
                             : selectedProject.id === "madurai-farms"
                               ? "https://maps.google.com/maps?q=9.669621,78.209693&hl=en&z=15&output=embed"
                               : `https://maps.google.com/maps?q=${encodeURIComponent(

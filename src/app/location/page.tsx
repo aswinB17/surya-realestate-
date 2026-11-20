@@ -98,10 +98,10 @@ export default function LocationPage() {
             const projectCategoryLabel = anyProj.categoryLabel || { en: project.category, ta: project.category };
 
             const Icon = project.category === "farm" ? TreePine : project.category === "residential" ? Home : Building2;
-            const googleMapsSearchUrl = anyProj.mapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+            const googleMapsSearchUrl = anyProj.mapsUrl || project.googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
               `${projectTitle.en} ${projectLocation.en}`
             )}`;
-            const directionsUrl = anyProj.mapsUrl || `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+            const directionsUrl = anyProj.mapsUrl || project.googleMapsUrl || `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
               `${projectTitle.en} ${projectLocation.en}`
             )}`;
 
@@ -165,7 +165,7 @@ export default function LocationPage() {
                   <div className="pt-4 border-t border-[#F1F5F9] space-y-2.5">
                     <div className="grid grid-cols-2 gap-2">
                       <a
-                        href={project.googleMapsUrl || googleMapsSearchUrl}
+                        href={project.googleMapsUrl || anyProj.mapsUrl || googleMapsSearchUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-[#E2E8F0] bg-[#F8F9FA] hover:bg-white py-2 px-3 text-xs font-bold text-[#0F172A] transition shadow-2xs text-center"
