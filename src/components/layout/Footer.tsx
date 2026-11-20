@@ -22,24 +22,13 @@ export default function Footer() {
           
           {/* Brand & IAF Heritage */}
           <div className="lg:col-span-4 space-y-5">
-            <Link href="/" className="inline-flex items-center gap-3.5">
-              <div className="relative h-12 w-12 shrink-0 rounded-2xl overflow-hidden border-2 border-[#EAB308] bg-white p-1">
-                <Image
-                  src="/images/surya-gold-logo.png"
-                  alt="Surya Promoters Logo"
-                  fill
-                  sizes="48px"
-                  className="object-contain"
-                />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-display text-xl font-extrabold tracking-wider text-white">
-                  SURYA PROMOTERS
-                </span>
-                <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-[#C6A66B] font-bold">
-                  ESTD. 2010 · MADURAI
-                </span>
-              </div>
+            <Link href="/" className="inline-flex flex-col group">
+              <span className="font-display text-xl font-extrabold tracking-wider text-[#D9A52E] uppercase group-hover:text-[#F1E4C3] transition-colors leading-tight">
+                SURYA PROMOTERS
+              </span>
+              <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-[#F1E4C3]/80 font-bold">
+                ESTD. 2010 · MADURAI
+              </span>
             </Link>
 
             <p className="text-sm leading-relaxed text-gray-300 max-w-sm">
@@ -82,15 +71,15 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:text-[#C6A66B] transition-colors flex items-center gap-2">
-                  <ArrowRight className="h-3 w-3 text-[#C6A66B]" />
-                  <span>{language === "ta" ? "எங்களைப் பற்றி" : "About Surya Promoters"}</span>
-                </Link>
-              </li>
-              <li>
                 <Link href="/download" className="hover:text-[#C6A66B] transition-colors flex items-center gap-2">
                   <ArrowRight className="h-3 w-3 text-[#C6A66B]" />
                   <span>{language === "ta" ? "வரைபடங்கள் பதிவிறக்கம்" : "Download Center (Maps & Brochures)"}</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="hover:text-[#C6A66B] transition-colors flex items-center gap-2">
+                  <ArrowRight className="h-3 w-3 text-[#C6A66B]" />
+                  <span>{language === "ta" ? "எங்களைப் பற்றி" : "About Surya Promoters"}</span>
                 </Link>
               </li>
             </ul>

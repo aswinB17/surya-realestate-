@@ -23,8 +23,8 @@ export default function Navbar() {
     { href: "/projects", labelEn: "Our Projects", labelTa: "திட்டங்கள்" },
     { href: "/location", labelEn: "Location", labelTa: "இருப்பிடம்" },
     { href: "/gallery", labelEn: "Gallery", labelTa: "புகைப்படங்கள்" },
-    { href: "/about", labelEn: "About", labelTa: "எங்களைப் பற்றி" },
     { href: "/download", labelEn: "Download", labelTa: "பதிவிறக்கம்" },
+    { href: "/about", labelEn: "About", labelTa: "எங்களைப் பற்றி" },
   ];
 
   return (
@@ -45,24 +45,33 @@ export default function Navbar() {
               <Menu className="h-6 w-6" />
             </button>
 
-            <Link href="/" className="flex items-center shrink-0 group">
-              <div className="relative h-9 w-9 sm:h-10 sm:w-10 shrink-0 transition-transform duration-300 group-hover:scale-105">
-                <Image
-                  src="/images/surya-gold-logo.png"
-                  alt="Surya Promoters Logo"
-                  fill
-                  priority
-                  sizes="44px"
-                  className="object-contain"
-                />
-              </div>
-              <div className="flex flex-col -ml-2 sm:-ml-2.5">
-                <span className="font-display text-sm sm:text-base font-extrabold tracking-tight text-[#173D2B] group-hover:text-[#64865A] transition-colors">
-                  URYA PROMOTERS
+            <Link href="/" className="flex items-center gap-2.5 shrink-0">
+              <div className="flex flex-col">
+                <div className="flex items-center whitespace-nowrap">
+                  <span className="relative inline-flex items-center justify-center w-7 h-7 sm:w-7.5 sm:h-7.5 shrink-0 -mr-1">
+                    <Image
+                      src="/images/surya-gold-logo.png"
+                      alt="S"
+                      fill
+                      priority
+                      sizes="32px"
+                      className="object-contain"
+                    />
+                  </span>
+                  <span className="font-display text-lg sm:text-xl font-black tracking-[0.12em] text-[#D9A52E] leading-none uppercase">
+                    URYA
+                  </span>
+                </div>
+                <span className="font-display text-[9.5px] sm:text-[10.5px] font-extrabold tracking-[0.32em] text-[#0A2617] uppercase leading-none mt-1 text-center pl-1">
+                  PROMOTERS
                 </span>
-                <span className="hidden sm:inline-block text-[10px] font-mono text-[#64865A] tracking-wider uppercase font-semibold">
-                  {language === "ta" ? "மதுரை மனைப்பிரிவுகள் & நில மேம்பாடு · 2010" : "LAND & PROPERTY DEVELOPERS · MADURAI · ESTD. 2010"}
-                </span>
+                <div className="flex items-center gap-1.5 mt-1 justify-center">
+                  <span className="h-[1px] w-3.5 bg-[#D9A52E]/40" />
+                  <span className="text-[9px] sm:text-[10px] font-mono tracking-[0.2em] uppercase text-[#64865A] font-bold">
+                    ESTD. 2010 · MADURAI
+                  </span>
+                  <span className="h-[1px] w-3.5 bg-[#D9A52E]/40" />
+                </div>
               </div>
             </Link>
           </div>

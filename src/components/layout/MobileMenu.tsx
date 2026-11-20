@@ -20,8 +20,8 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     { label: language === "ta" ? "திட்டங்கள்" : "Our Projects", href: "/projects", icon: Building2 },
     { label: language === "ta" ? "இருப்பிடம்" : "Location", href: "/location", icon: MapPin },
     { label: language === "ta" ? "புகைப்படங்கள்" : "Gallery", href: "/gallery", icon: Camera },
-    { label: language === "ta" ? "எங்களைப் பற்றி" : "About", href: "/about", icon: Info },
     { label: language === "ta" ? "பதிவிறக்கம்" : "Download", href: "/download", icon: Download },
+    { label: language === "ta" ? "எங்களைப் பற்றி" : "About", href: "/about", icon: Info },
     { label: language === "ta" ? "தொடர்புக்கு" : "Contact", href: "/contact", icon: Phone },
   ];
 
@@ -37,23 +37,31 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         >
           {/* Header */}
           <div className="flex items-center justify-between border-b border-white/10 px-6 py-5 bg-[#122e20]">
-            <div className="flex items-center gap-3">
-              <div className="relative h-11 w-11 shrink-0 rounded-2xl overflow-hidden border-2 border-[#EAB308] bg-white p-1">
-                <Image
-                  src="/images/surya-gold-logo.png"
-                  alt="Surya Promoters Logo"
-                  fill
-                  sizes="40px"
-                  className="object-contain"
-                />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-display text-base font-extrabold tracking-wider text-white">
-                  SURYA PROMOTERS
+            <div className="flex flex-col">
+              <div className="flex items-center whitespace-nowrap">
+                <span className="relative inline-flex items-center justify-center w-7 h-7 shrink-0 -mr-1">
+                  <Image
+                    src="/images/surya-gold-logo.png"
+                    alt="S"
+                    fill
+                    priority
+                    sizes="32px"
+                    className="object-contain"
+                  />
                 </span>
-                <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-[#C6A66B] font-bold">
+                <span className="font-display text-lg font-black tracking-[0.12em] text-[#D9A52E] uppercase leading-none">
+                  URYA
+                </span>
+              </div>
+              <span className="font-display text-[10px] font-extrabold tracking-[0.32em] text-[#F1E4C3] uppercase leading-none mt-1 text-center pl-1">
+                PROMOTERS
+              </span>
+              <div className="flex items-center gap-1.5 mt-1.5 justify-center">
+                <span className="h-[1px] w-3.5 bg-[#D9A52E]/40" />
+                <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-[#F1E4C3]/80 font-bold">
                   ESTD. 2010 · MADURAI
                 </span>
+                <span className="h-[1px] w-3.5 bg-[#D9A52E]/40" />
               </div>
             </div>
 

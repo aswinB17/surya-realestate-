@@ -104,7 +104,7 @@ export default function HomePage() {
   const email = companyInfo?.email || "suryapromotersmdu@gmail.com";
   const address = companyInfo?.address || "120 Feet Road, Near Mattuthavani Bus Stand, K.K. Nagar Corridor, Madurai, Tamil Nadu 625020";
   const mapsLink = companyInfo?.mapsLink || "https://www.google.com/maps?q=9.9253208,78.1702385&z=17&hl=en";
-  const instagramUrl = (companyInfo as any)?.instagramUrl || "https://www.instagram.com/surya_promoters_madurai?cnvx=cTNuOGhsZ21kM203";
+  const instagramUrl = (companyInfo as any)?.instagramUrl || "https://www.instagram.com/surya_promoters_madurai";
 
   // Navigation State: Which of the 5 Main Icons / Sections is Active
   // 'home' | 'projects' | 'location' | 'gallery' | 'about' | 'download'
@@ -114,6 +114,9 @@ export default function HomePage() {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
   // Tab History tracking for seamless Back Arrow navigation
+    // Mobile Collapsible Navigation Drawer State
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   const [tabHistory, setTabHistory] = useState<Array<"home" | "projects" | "location" | "gallery" | "about" | "download" | "contact">>([ "home" ]);
 
   useEffect(() => {
@@ -389,19 +392,48 @@ export default function HomePage() {
         
         {/* Top Section: Logo & Nav Links */}
         <div className="space-y-3.5 lg:space-y-4">
-          {/* Brand Identity: Exact Reference Image Golden Logo - Significantly Enlarged (120-135px height) */}
-          <Link href="/" className="flex flex-col items-center justify-center text-center group cursor-pointer py-0.5">
-            <div className="relative w-44 lg:w-52 h-[120px] lg:h-[135px] transition-transform duration-300 group-hover:scale-105">
-              <Image
-                src="/images/reference/sidebar-logo.png"
-                alt="Surya Promoters Logo Estd 2010"
-                fill
-                priority
-                sizes="(max-width: 1024px) 210px, 250px"
-                className="object-contain object-center"
-              />
+          {/* Brand Identity: Ornate S Logo + SURYA PROMOTERS 2-Line Stack (Fixed, No Hover Reaction) */}
+          <button
+            onClick={() => {
+              setActiveTab("home");
+              if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            className="flex flex-col items-center justify-center text-center pt-2 pb-1 lg:pt-3 lg:pb-1.5 px-2 select-none w-full outline-none focus:outline-none cursor-default"
+            title="Surya Promoters Estd. 2010"
+          >
+            <div className="flex flex-col items-center">
+              {/* Line 1: Golden S Logo and URYA on the same horizontal line */}
+              <div className="flex items-center justify-center whitespace-nowrap">
+                <span className="relative inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9 xl:w-9.5 xl:h-9.5 shrink-0 -mr-1">
+                  <Image
+                    src="/images/surya-gold-logo.png"
+                    alt="S"
+                    fill
+                    priority
+                    sizes="40px"
+                    className="object-contain"
+                  />
+                </span>
+                <span className="font-display text-xl sm:text-2xl lg:text-[25px] xl:text-[27px] font-black tracking-[0.12em] text-[#D9A52E] uppercase leading-none drop-shadow-sm">
+                  URYA
+                </span>
+              </div>
+
+              {/* Line 2: PROMOTERS directly below SURYA */}
+              <span className="font-display text-[11px] sm:text-xs lg:text-[13px] xl:text-[14px] font-extrabold tracking-[0.32em] text-[#F1E4C3] uppercase leading-none mt-1.5 text-center pl-1">
+                PROMOTERS
+              </span>
+
+              {/* Line 3: ESTD. 2010 centered underneath */}
+              <div className="flex items-center gap-2 w-full justify-center mt-2 lg:mt-2.5">
+                <span className="h-[1px] w-5 sm:w-6 bg-[#D9A52E]/40" />
+                <span className="font-mono text-[9px] lg:text-[10px] xl:text-[11px] font-bold tracking-[0.25em] uppercase text-[#F1E4C3]/80 whitespace-nowrap">
+                  ESTD. 2010
+                </span>
+                <span className="h-[1px] w-5 sm:w-6 bg-[#D9A52E]/40" />
+              </div>
             </div>
-          </Link>
+          </button>
 
           {/* Navigation Links (Match Reference Image exactly) */}
           <div className="space-y-1.5 pt-1">
@@ -460,19 +492,6 @@ export default function HomePage() {
               <span className="truncate">{language === "ta" ? "புகைப்படங்கள் & வீடியோ" : "Gallery Folders"}</span>
             </button>
 
-            {/* Nav Item: About Company */}
-            <button
-              onClick={() => setActiveTab("about")}
-              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all cursor-pointer font-semibold text-xs sm:text-sm ${
-                activeTab === "about"
-                  ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
-                  : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
-              }`}
-            >
-              <ShieldCheck className={`h-5 w-5 shrink-0 ${activeTab === "about" ? "text-[#0A1C12]" : "text-white/70"}`} />
-              <span className="truncate">{language === "ta" ? "நிறுவனம் பற்றி" : "About Company"}</span>
-            </button>
-
             {/* Nav Item: Download Layout */}
             <button
               onClick={() => setActiveTab("download")}
@@ -484,6 +503,19 @@ export default function HomePage() {
             >
               <Download className={`h-5 w-5 shrink-0 ${activeTab === "download" ? "text-[#0A1C12]" : "text-white/70"}`} />
               <span className="truncate">{language === "ta" ? "வரைபடம் பதிவிறக்கம்" : "Download Layout"}</span>
+            </button>
+
+            {/* Nav Item: About Company */}
+            <button
+              onClick={() => setActiveTab("about")}
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all cursor-pointer font-semibold text-xs sm:text-sm ${
+                activeTab === "about"
+                  ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
+                  : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
+              }`}
+            >
+              <ShieldCheck className={`h-5 w-5 shrink-0 ${activeTab === "about" ? "text-[#0A1C12]" : "text-white/70"}`} />
+              <span className="truncate">{language === "ta" ? "நிறுவனம் பற்றி" : "About Company"}</span>
             </button>
 
             {/* Nav Item: Contact Us */}
@@ -514,24 +546,17 @@ export default function HomePage() {
             />
           </div>
 
-          {/* Direct Contact Pill Card */}
-          <div className="p-2.5 rounded-2xl bg-[#092D1B]/95 border border-[#E2B755]/40 flex items-center justify-between shadow-lg">
-            <a href={`tel:${phone}`} className="flex items-center gap-2.5 min-w-0 group/call">
+          {/* Direct Contact Pill Card (Arrow button removed globally) */}
+          <div className="p-2.5 rounded-2xl bg-[#092D1B]/95 border border-[#E2B755]/40 flex items-center shadow-lg w-full">
+            <a href={`tel:${phone}`} className="flex items-center gap-2.5 min-w-0 w-full group/call" title={`Call ${phone}`}>
               <div className="w-8 h-8 rounded-full bg-[#051F12] border border-[#E2B755]/50 flex items-center justify-center shrink-0 text-[#E5A922] group-hover/call:scale-105 transition-transform">
                 <Phone className="h-4 w-4" />
               </div>
-              <div className="min-w-0">
+              <div className="min-w-0 flex-1">
                 <p className="text-[10px] text-[#A3C2B0] font-medium leading-tight">Direct Contact</p>
                 <p className="text-xs font-bold text-white truncate leading-tight">{phone}</p>
               </div>
             </a>
-            <button
-              onClick={() => setActiveTab("contact")}
-              className="w-7 h-7 rounded-full bg-[#0E5934] hover:bg-[#16A34A] text-white flex items-center justify-center shrink-0 hover:scale-105 transition-transform cursor-pointer shadow-xs border border-[#E5A922]/40"
-              title="Contact Us"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </button>
           </div>
         </div>
       </aside>
@@ -545,16 +570,38 @@ export default function HomePage() {
         <header className={`${activeTab === "home" ? "absolute top-0 left-0 right-0 z-40 bg-transparent px-2.5 sm:px-5 lg:px-7 pt-2.5 sm:pt-3 pb-1" : "sticky top-0 z-40 bg-[#FAF8F3]/95 backdrop-blur-md px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3.5 border-b border-[#EDE6D4]"} w-full flex items-center justify-between gap-1.5 sm:gap-3 lg:gap-4 select-none`}>
           {/* Far Left Header: Mobile Brand Identity OR Desktop Madurai Real Estate Location Badge (Immediately to Right of Sidebar) */}
           <div className="flex items-center shrink-0">
-            {/* Mobile Brand Identity */}
-            <div className="flex md:hidden items-center gap-1.5 shrink-0">
-              <div className="relative h-7.5 w-7.5 sm:h-8 sm:w-8 shrink-0">
-                <Image src="/images/surya-gold-logo.png" alt="Logo" fill className="object-contain" />
-              </div>
-              <span className={`font-extrabold text-[11px] sm:text-xs tracking-tight drop-shadow-xs whitespace-nowrap hidden min-[390px]:inline-block ${
-                activeTab === "home" ? "text-white" : "text-[#0A2617]"
-              }`}>
-                SURYA PROMOTERS
-              </span>
+            {/* Mobile Brand Identity & Hamburger Menu Toggle */}
+            <div className="flex md:hidden items-center gap-2 shrink-0">
+              <button
+                onClick={() => setIsMobileMenuOpen(true)}
+                className={`p-1.5 sm:p-2 rounded-xl border transition-all cursor-pointer shadow-2xs flex items-center justify-center ${
+                  activeTab === "home"
+                    ? "bg-[#06351F]/85 text-[#D9A52E] border-[#D9A52E]/40 hover:bg-[#06351F]"
+                    : "bg-white/95 text-[#06351F] border-neutral-200 hover:bg-neutral-100"
+                }`}
+                aria-label="Open Navigation Menu"
+                title="Menu"
+              >
+                <Menu className="h-4.5 w-4.5 sm:h-5 sm:w-5" />
+              </button>
+              <button
+                onClick={() => {
+                  setActiveTab("home");
+                  if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                className="flex flex-col text-left cursor-pointer"
+              >
+                <span className={`font-display font-extrabold text-[11px] sm:text-xs tracking-wider uppercase leading-tight ${
+                  activeTab === "home" ? "text-[#D9A52E] drop-shadow-sm" : "text-[#06351F]"
+                }`}>
+                  SURYA PROMOTERS
+                </span>
+                <span className={`font-mono text-[8px] sm:text-[9px] tracking-[0.2em] uppercase font-bold leading-none ${
+                  activeTab === "home" ? "text-white/85" : "text-neutral-500"
+                }`}>
+                  ESTD. 2010
+                </span>
+              </button>
             </div>
 
             {/* Desktop Madurai Real Estate Badge - Relocated to Far Left immediately to the RIGHT of the sidebar */}
@@ -625,87 +672,96 @@ export default function HomePage() {
         </header>
 
         {/* MAIN STORE CONTENT CANVAS */}
-        <main className={`flex-1 min-w-0 ${activeTab === "home" ? "flex flex-col p-0 pb-0 justify-between" : "p-3.5 sm:p-6 lg:p-8 space-y-6 sm:space-y-8 pb-28 md:pb-8"}`}>
+        <main className={`flex-1 min-w-0 ${activeTab === "home" ? "flex flex-col p-0 pb-20 md:pb-0 justify-between" : "p-3.5 sm:p-6 lg:p-8 space-y-6 sm:space-y-8 pb-24 md:pb-8"}`}>
 
           {/* =================================================================== */}
           {/* 1. STORE HOME SCREEN (Visible ONLY when activeTab === "home")        */}
           {/* =================================================================== */}
           {activeTab === "home" && (
-            <div className="flex-1 flex flex-col animate-fadeIn justify-between">
+            <div className="flex-1 flex flex-col animate-fadeIn">
 
               {/* ------------------------------------------------------------------- */}
               {/* UNIFIED HERO BANNER (Full-Width Luxury Villa Architectural Section) */}
               {/* ------------------------------------------------------------------- */}
-              <section className="relative w-full overflow-hidden shrink-0 flex items-center pt-16 sm:pt-18 md:pt-19 lg:pt-20 pb-3 sm:pb-3.5 lg:pb-4 px-4 sm:px-6 lg:px-10 h-[315px] sm:h-[335px] md:h-[35.5vh] md:min-h-[315px] md:max-h-[355px] lg:h-[36.5vh] lg:min-h-[335px] lg:max-h-[370px] xl:h-[37.5vh] xl:min-h-[355px] xl:max-h-[390px] 2xl:h-[38.5vh] 2xl:min-h-[370px] 2xl:max-h-[405px]">
-                {/* Villa Image Covering the ENTIRE Hero Section from Left (Sidebar boundary) to Right Edge, Top to Bottom */}
+              <section className="relative w-full overflow-hidden shrink-0 flex items-center pt-16 sm:pt-18 md:pt-20 lg:pt-22 pb-8 sm:pb-10 md:pb-12 lg:pb-14 px-4 sm:px-6 lg:px-10 min-h-[300px] sm:min-h-[330px] md:min-h-[360px] lg:min-h-[390px] xl:min-h-[415px]">
+                {/* Villa Image Covering the Section - Full Width, Uncropped Architecture */}
                 <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden -z-10">
                   <Image
-                    src="/images/hero/luxury-residence-header.jpg"
+                    src="/images/hero/modern-villa-header.jpg"
                     alt="Surya Promoters Luxury Villa Architecture"
                     fill
                     priority
                     sizes="100vw"
-                    className="object-cover object-[right_center] sm:object-[right_25%]"
-                    style={{ filter: "brightness(1.05) contrast(1.06) saturate(1.10)" }}
+                    className="object-cover object-[right_top] sm:object-[right_top]"
+                    style={{ filter: "brightness(1.05) contrast(1.06) saturate(1.08)" }}
                   />
 
-                  {/* Sophisticated Transparent Ivory Gradient on Desktop */}
+                  {/* Translucent Subtle Cream Gradient on Left: Image Remains Visible Behind Text */}
                   <div
-                    className="hidden md:block absolute inset-0"
+                    className="hidden md:block absolute inset-0 pointer-events-none"
                     style={{
                       background:
-                        "linear-gradient(to right, rgba(250, 248, 243, 0.88) 0%, rgba(250, 248, 243, 0.82) 28%, rgba(250, 248, 243, 0.52) 48%, rgba(250, 248, 243, 0.18) 68%, rgba(250, 248, 243, 0) 84%)"
+                        "linear-gradient(to right, rgba(250, 248, 243, 0.72) 0%, rgba(250, 248, 243, 0.65) 22%, rgba(250, 248, 243, 0.35) 44%, rgba(250, 248, 243, 0.08) 60%, transparent 72%)"
                     }}
                   />
 
-                  {/* High-Contrast Mobile Dark Gradient Overlay for Maximum Readability of White Text */}
+                  {/* Subtle Clean Bottom Edge Transition */}
                   <div
-                    className="md:hidden absolute inset-0 bg-gradient-to-b from-[#061F12]/80 via-[#061F12]/60 to-[#061F12]/85"
+                    className="absolute inset-x-0 bottom-0 h-6 sm:h-8 pointer-events-none"
+                    style={{
+                      background:
+                        "linear-gradient(to top, rgba(250, 248, 243, 0.75) 0%, transparent 100%)"
+                    }}
                   />
 
-                  {/* Subtle Top Header Soft Vignette for crystal-clear control readability */}
+                  {/* Mobile Translucent Overlay for Text Readability on Small Screens */}
                   <div
-                    className="absolute inset-x-0 top-0 h-16"
+                    className="md:hidden absolute inset-0 bg-gradient-to-r from-[#FAF8F3]/85 via-[#FAF8F3]/70 to-[#FAF8F3]/30 pointer-events-none"
+                  />
+
+                  {/* Subtle Top Header Soft Vignette for Search Controls Readability */}
+                  <div
+                    className="absolute inset-x-0 top-0 h-14 pointer-events-none"
                     style={{
-                      background: "linear-gradient(to bottom, rgba(250, 248, 243, 0.45) 0%, transparent 100%)"
+                      background: "linear-gradient(to bottom, rgba(250, 248, 243, 0.35) 0%, transparent 100%)"
                     }}
                   />
                 </div>
 
-                {/* Hero Left Text Content - Centered Horizontally within Left 40-45% Area & Centered Vertically */}
-                <div className="w-full sm:w-[50%] md:w-[46%] lg:w-[43%] xl:w-[41%] flex flex-col items-center justify-center text-center z-10 px-2 sm:px-4 my-auto">
-                  <div className="flex items-center justify-center gap-2 mb-1.5 sm:mb-2 lg:mb-2.5">
-                    <span className="w-8 sm:w-12 lg:w-16 h-[1.5px] bg-[#BD8D1C]/50 rounded-full hidden sm:block" />
-                    <span className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full bg-white/95 backdrop-blur-xs border border-[#E5A922]/45 shadow-xs">
+                {/* Hero Left Text Content - Positioned Elegantly on the Left Side */}
+                <div className="w-full sm:w-[55%] md:w-[50%] lg:w-[46%] xl:w-[42%] flex flex-col items-start justify-center text-left z-10 pl-2 sm:pl-4 md:pl-6 lg:pl-10 xl:pl-12 pr-4">
+                  <div className="flex items-center gap-2 mb-2 sm:mb-2.5 lg:mb-3">
+                    <span className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full bg-white/92 backdrop-blur-sm border border-[#E5A922]/50 shadow-xs">
                       <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#E5A922]" />
                       <p className="text-[11px] sm:text-xs lg:text-[13px] font-extrabold text-[#9E731C] tracking-wide">
                         {language === "ta" ? "சிறந்த நாளைய விடியலுக்கான கட்டுமானம்" : "Building a Better Tomorrow"}
                       </p>
                     </span>
-                    <span className="w-8 sm:w-12 lg:w-16 h-[1.5px] bg-[#BD8D1C]/50 rounded-full hidden sm:block" />
                   </div>
-                  <h1 className="text-2xl sm:text-3xl md:text-[38px] lg:text-[44px] xl:text-[48px] font-black text-white md:text-[#0A2617] tracking-tight leading-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)] md:drop-shadow-xs">
+                  <h1 className="text-2xl sm:text-3xl md:text-[38px] lg:text-[44px] xl:text-[48px] font-black text-[#0A2617] tracking-tight leading-tight drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">
                     {language === "ta" ? "சூர்யா புரமோட்டர்ஸ்" : "Surya Promoters"}
                   </h1>
-                  <p className="mt-1 sm:mt-1.5 lg:mt-2 text-xs sm:text-sm lg:text-[15px] font-bold text-[#F1F1E8] md:text-[#2C4035] max-w-sm sm:max-w-md leading-relaxed drop-shadow-[0_1px_6px_rgba(0,0,0,0.6)] md:drop-shadow-xs">
+                  <p className="mt-1.5 sm:mt-2 lg:mt-2.5 text-xs sm:text-sm lg:text-[15px] xl:text-base font-bold text-[#1E3A2B] max-w-sm sm:max-w-md lg:max-w-lg leading-relaxed drop-shadow-[0_1px_2px_rgba(255,255,255,0.7)]">
                     {language === "ta" ? "2010 முதல் உங்களின் நம்பிக்கைக்குரிய ரியல் எஸ்டேட் பங்குதாரர்" : "Your Trusted Real Estate Partner Since 2010"}
                   </p>
                 </div>
-
-                {/* Golden and Forest-Green Decorative Accent Border along the Bottom Edge - No Solid Ivory Fill */}
-                <div className="absolute bottom-0 left-0 right-0 h-3.5 sm:h-4 pointer-events-none overflow-hidden z-10">
-                  <svg viewBox="0 0 1200 16" preserveAspectRatio="none" className="w-full h-full">
-                    <path d="M0,2 C300,14 900,14 1200,2" fill="none" stroke="#0E5934" strokeWidth="1.5" strokeOpacity="0.45" />
-                    <path d="M0,0 C300,12 900,12 1200,0" fill="none" stroke="#E5A922" strokeWidth="2" strokeOpacity="0.85" />
-                  </svg>
-                </div>
               </section>
 
+              {/* Elegant Green and Gold Separation Line between Hero Header and Six Cards */}
+              <div className="relative z-20 px-3.5 sm:px-6 lg:px-8 pt-1.5 sm:pt-2 pointer-events-none">
+                <div className="flex flex-col items-center gap-[2px] w-full">
+                  {/* Deep Forest Green Gradient Stroke */}
+                  <div className="w-full h-[1.5px] bg-gradient-to-r from-transparent via-[#0E5934] to-transparent rounded-full opacity-85" />
+                  {/* Surya Royal Gold Line */}
+                  <div className="w-[85%] sm:w-[75%] h-[1.5px] bg-gradient-to-r from-transparent via-[#E5A922] to-transparent rounded-full shadow-[0_0_8px_rgba(229,169,34,0.4)]" />
+                </div>
+              </div>
+
               {/* Middle Section: Navigation Cards Container + Trust Badges Bar */}
-              <div className="flex-1 flex flex-col justify-center min-h-0 py-1 sm:py-1.5 lg:py-2">
+              <div className="relative z-20 px-3.5 sm:px-6 lg:px-8 pt-1.5 sm:pt-2 pb-4 sm:pb-6">
                 {/* Navigation Cards Container */}
-                <div className="px-3.5 sm:px-6 lg:px-8 relative z-20 min-h-0">
-                  <section className="bg-white/85 backdrop-blur-xs rounded-[18px] lg:rounded-[22px] border border-[#EBE4D5] shadow-[0_4px_20px_rgba(10,40,20,0.04)] p-1.5 sm:p-2 lg:p-2.5 flex flex-col justify-between">
+                <div className="relative z-20 min-h-0">
+                  <section className="bg-white/92 backdrop-blur-sm rounded-[18px] lg:rounded-[22px] border border-[#EBE4D5] shadow-[0_8px_30px_rgba(10,40,20,0.05)] p-2 sm:p-2.5 lg:p-3 flex flex-col justify-between">
                   
                   {/* Section Header with Green Accent Bar + Cursive Golden Motto */}
                   <div className="flex items-center justify-between pb-1 sm:pb-1.5 px-0.5">
@@ -731,26 +787,26 @@ export default function HomePage() {
                       }}
                       className="clean-interactive-card group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#E8CCA0] bg-gradient-to-r from-[#FBF4E6] via-[#F7EBD0] to-[#F0DEC0] shadow-[0_3px_14px_rgba(205,140,25,0.08)] hover:shadow-[0_10px_28px_rgba(205,140,25,0.20)] hover:border-[#DDA843] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
                     >
-                      {/* Background Photographic Image on Right with Natural Gradient Blend (50-55% width) */}
-                      <div className="absolute right-0 top-0 bottom-0 w-[50%] sm:w-[52%] lg:w-[54%] xl:w-[55%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
+                      {/* Background Photographic Image on Right with Natural Gradient Blend */}
+                      <div className="absolute right-0 top-0 bottom-0 w-[34%] sm:w-[36%] md:w-[36%] lg:w-[38%] xl:w-[40%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
                         <Image
                           src="/images/cards/card-projects-luxury.jpg"
                           alt="Our Projects"
                           fill
-                          sizes="(max-width: 768px) 55vw, 450px"
-                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
+                          sizes="(max-width: 768px) 40vw, 320px"
+                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
                         />
-                        {/* Smooth Pastel Gradient Blend */}
+                        {/* Soft Natural Gradient Transition towards text */}
                         <div
                           className="absolute inset-0"
                           style={{
-                            background: "linear-gradient(to right, #F7EBD0 0%, rgba(247, 235, 208, 0.88) 14%, rgba(247, 235, 208, 0.35) 30%, rgba(247, 235, 208, 0) 50%)"
+                            background: "linear-gradient(to right, #F7EBD0 0%, rgba(247, 235, 208, 0.90) 12%, rgba(247, 235, 208, 0.20) 40%, transparent 70%)"
                           }}
                         />
                       </div>
 
                       {/* Left: Prominent Circular Gradient Icon, Title & Description */}
-                      <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[50%] sm:max-w-[48%] lg:max-w-[46%]">
+                      <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[62%] sm:max-w-[60%] lg:max-w-[58%]">
                         <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#F5B731] via-[#E5A922] to-[#BD7B0C] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(205,140,25,0.25)] group-hover:scale-108 transition-transform duration-300">
                           <Building2 className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
                         </div>
@@ -777,28 +833,35 @@ export default function HomePage() {
                       onClick={() => setActiveTab("location")}
                       className="clean-interactive-card group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#A8DCB7] bg-gradient-to-r from-[#EAF7EE] via-[#DCF2E4] to-[#CEEBD7] shadow-[0_3px_14px_rgba(16,140,60,0.08)] hover:shadow-[0_10px_28px_rgba(16,140,60,0.20)] hover:border-[#22C55E] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
                     >
-                      {/* Background Photographic Image on Right with Natural Gradient Blend (50-55% width) */}
-                      <div className="absolute right-0 top-0 bottom-0 w-[50%] sm:w-[52%] lg:w-[54%] xl:w-[55%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
+                      {/* Background Photographic Image on Right with Natural Gradient Blend */}
+                      <div className="absolute right-0 top-0 bottom-0 w-[34%] sm:w-[36%] md:w-[36%] lg:w-[38%] xl:w-[40%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
                         <Image
                           src="/images/cards/card-location-cadastral.jpg"
                           alt="Site Location"
                           fill
-                          sizes="(max-width: 768px) 55vw, 450px"
-                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
+                          sizes="(max-width: 768px) 40vw, 320px"
+                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
                         />
-                        {/* Smooth Pastel Gradient Blend */}
+                        {/* Soft Natural Gradient Transition towards text */}
                         <div
                           className="absolute inset-0"
                           style={{
-                            background: "linear-gradient(to right, #DCF2E4 0%, rgba(220, 242, 228, 0.88) 14%, rgba(220, 242, 228, 0.35) 30%, rgba(220, 242, 228, 0) 50%)"
+                            background: "linear-gradient(to right, #DCF2E4 0%, rgba(220, 242, 228, 0.90) 12%, rgba(220, 242, 228, 0.20) 40%, transparent 70%)"
                           }}
                         />
                       </div>
 
                       {/* Left: Prominent Circular Gradient Icon, Title & Description */}
-                      <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[50%] sm:max-w-[48%] lg:max-w-[46%]">
-                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#22C55E] via-[#16A34A] to-[#15803D] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(22,163,74,0.25)] group-hover:scale-108 transition-transform duration-300">
-                          <MapPin className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
+                      <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[62%] sm:max-w-[60%] lg:max-w-[58%]">
+                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(173,18,26,0.30)] group-hover:scale-108 transition-transform duration-300 overflow-hidden relative">
+                          <Image
+                            src="/images/site-location-icon.png"
+                            alt="Site Location"
+                            fill
+                            sizes="(max-width: 640px) 40px, (max-width: 1024px) 44px, 48px"
+                            className="object-cover"
+                            priority
+                          />
                         </div>
                         <div className="min-w-0">
                           <h3 className="font-black text-[12.5px] sm:text-[13.5px] md:text-[12.5px] lg:text-[14px] xl:text-[15px] text-[#0D2317] group-hover:text-[#15803D] transition-colors leading-tight line-clamp-1">
@@ -823,26 +886,26 @@ export default function HomePage() {
                       onClick={() => setActiveTab("gallery")}
                       className="clean-interactive-card group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#CFB8ED] bg-gradient-to-r from-[#F5EFFB] via-[#EBE0F7] to-[#DFCFF2] shadow-[0_3px_14px_rgba(147,51,234,0.08)] hover:shadow-[0_10px_28px_rgba(147,51,234,0.20)] hover:border-[#A855F7] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
                     >
-                      {/* Background Photographic Image on Right with Natural Gradient Blend (50-55% width) */}
-                      <div className="absolute right-0 top-0 bottom-0 w-[50%] sm:w-[52%] lg:w-[54%] xl:w-[55%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
+                      {/* Background Photographic Image on Right with Natural Gradient Blend */}
+                      <div className="absolute right-0 top-0 bottom-0 w-[34%] sm:w-[36%] md:w-[36%] lg:w-[38%] xl:w-[40%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
                         <Image
                           src="/images/cards/card-gallery-photos.jpg"
                           alt="Gallery"
                           fill
-                          sizes="(max-width: 768px) 55vw, 450px"
-                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
+                          sizes="(max-width: 768px) 40vw, 320px"
+                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
                         />
-                        {/* Smooth Pastel Gradient Blend */}
+                        {/* Soft Natural Gradient Transition towards text */}
                         <div
                           className="absolute inset-0"
                           style={{
-                            background: "linear-gradient(to right, #EBE0F7 0%, rgba(235, 224, 247, 0.88) 14%, rgba(235, 224, 247, 0.35) 30%, rgba(220, 242, 228, 0) 50%)"
+                            background: "linear-gradient(to right, #EBE0F7 0%, rgba(235, 224, 247, 0.90) 12%, rgba(235, 224, 247, 0.20) 40%, transparent 70%)"
                           }}
                         />
                       </div>
 
                       {/* Left: Prominent Circular Gradient Icon, Title & Description */}
-                      <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[50%] sm:max-w-[48%] lg:max-w-[46%]">
+                      <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[62%] sm:max-w-[60%] lg:max-w-[58%]">
                         <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#A855F7] via-[#9333EA] to-[#6B21A8] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(147,51,234,0.25)] group-hover:scale-108 transition-transform duration-300">
                           <Camera className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
                         </div>
@@ -869,26 +932,26 @@ export default function HomePage() {
                       onClick={() => setActiveTab("about")}
                       className="clean-interactive-card group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#AFD1B9] bg-gradient-to-r from-[#EEF5F0] via-[#E0ECE3] to-[#CFE2D4] shadow-[0_3px_14px_rgba(14,89,52,0.08)] hover:shadow-[0_10px_28px_rgba(14,89,52,0.20)] hover:border-[#16A34A] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
                     >
-                      {/* Background Photographic Image on Right with Natural Gradient Blend (50-55% width) */}
-                      <div className="absolute right-0 top-0 bottom-0 w-[50%] sm:w-[52%] lg:w-[54%] xl:w-[55%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
+                      {/* Background Photographic Image on Right with Natural Gradient Blend */}
+                      <div className="absolute right-0 top-0 bottom-0 w-[34%] sm:w-[36%] md:w-[36%] lg:w-[38%] xl:w-[40%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
                         <Image
                           src="/images/cards/card-about-handshake.jpg"
                           alt="About Company"
                           fill
-                          sizes="(max-width: 768px) 55vw, 450px"
-                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
+                          sizes="(max-width: 768px) 40vw, 320px"
+                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
                         />
-                        {/* Smooth Pastel Gradient Blend */}
+                        {/* Soft Natural Gradient Transition towards text */}
                         <div
                           className="absolute inset-0"
                           style={{
-                            background: "linear-gradient(to right, #E0ECE3 0%, rgba(224, 236, 227, 0.88) 14%, rgba(224, 236, 227, 0.35) 30%, rgba(224, 236, 227, 0) 50%)"
+                            background: "linear-gradient(to right, #E0ECE3 0%, rgba(224, 236, 227, 0.90) 12%, rgba(224, 236, 227, 0.20) 40%, transparent 70%)"
                           }}
                         />
                       </div>
 
                       {/* Left: Prominent Circular Gradient Icon, Title & Description */}
-                      <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[50%] sm:max-w-[48%] lg:max-w-[46%]">
+                      <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[62%] sm:max-w-[60%] lg:max-w-[58%]">
                         <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#16A34A] via-[#0E5934] to-[#083D22] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(14,89,52,0.25)] group-hover:scale-108 transition-transform duration-300">
                           <ShieldCheck className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
                         </div>
@@ -915,26 +978,26 @@ export default function HomePage() {
                       onClick={() => setActiveTab("download")}
                       className="clean-interactive-card group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#F5BE9B] bg-gradient-to-r from-[#FDF2E8] via-[#FCE4D4] to-[#F7D4BE] shadow-[0_3px_14px_rgba(234,88,12,0.08)] hover:shadow-[0_10px_28px_rgba(234,88,12,0.20)] hover:border-[#EA580C] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
                     >
-                      {/* Background Photographic Image on Right with Natural Gradient Blend (50-55% width) */}
-                      <div className="absolute right-0 top-0 bottom-0 w-[50%] sm:w-[52%] lg:w-[54%] xl:w-[55%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
+                      {/* Background Photographic Image on Right with Natural Gradient Blend */}
+                      <div className="absolute right-0 top-0 bottom-0 w-[34%] sm:w-[36%] md:w-[36%] lg:w-[38%] xl:w-[40%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
                         <Image
                           src="/images/cards/card-download-blueprint.jpg"
                           alt="Download Layout"
                           fill
-                          sizes="(max-width: 768px) 55vw, 450px"
-                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
+                          sizes="(max-width: 768px) 40vw, 320px"
+                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
                         />
-                        {/* Smooth Pastel Gradient Blend */}
+                        {/* Soft Natural Gradient Transition towards text */}
                         <div
                           className="absolute inset-0"
                           style={{
-                            background: "linear-gradient(to right, #FCE4D4 0%, rgba(252, 228, 212, 0.88) 14%, rgba(252, 228, 212, 0.35) 30%, rgba(252, 228, 212, 0) 50%)"
+                            background: "linear-gradient(to right, #FCE4D4 0%, rgba(252, 228, 212, 0.90) 12%, rgba(252, 228, 212, 0.20) 40%, transparent 70%)"
                           }}
                         />
                       </div>
 
                       {/* Left: Prominent Circular Gradient Icon, Title & Description */}
-                      <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[50%] sm:max-w-[48%] lg:max-w-[46%]">
+                      <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[62%] sm:max-w-[60%] lg:max-w-[58%]">
                         <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#FB923C] via-[#EA580C] to-[#C2410C] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(234,88,12,0.25)] group-hover:scale-108 transition-transform duration-300">
                           <Download className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
                         </div>
@@ -961,26 +1024,26 @@ export default function HomePage() {
                       onClick={() => setActiveTab("contact")}
                       className="clean-interactive-card group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#9FD4D3] bg-gradient-to-r from-[#ECF7F7] via-[#DAEFEF] to-[#C5E5E5] shadow-[0_3px_14px_rgba(13,148,136,0.08)] hover:shadow-[0_10px_28px_rgba(13,148,136,0.20)] hover:border-[#0D9488] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
                     >
-                      {/* Background Photographic Image on Right with Natural Gradient Blend (50-55% width) */}
-                      <div className="absolute right-0 top-0 bottom-0 w-[50%] sm:w-[52%] lg:w-[54%] xl:w-[55%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
+                      {/* Background Photographic Image on Right with Natural Gradient Blend */}
+                      <div className="absolute right-0 top-0 bottom-0 w-[34%] sm:w-[36%] md:w-[36%] lg:w-[38%] xl:w-[40%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
                         <Image
                           src="/images/cards/card-contact-support.jpg"
                           alt="Contact Us"
                           fill
-                          sizes="(max-width: 768px) 55vw, 450px"
-                          className="object-cover object-[center_20%] transition-transform duration-500 ease-out group-hover:scale-108"
+                          sizes="(max-width: 768px) 40vw, 320px"
+                          className="object-cover object-[center_20%] transition-transform duration-500 ease-out group-hover:scale-105"
                         />
-                        {/* Smooth Pastel Gradient Blend */}
+                        {/* Soft Natural Gradient Transition towards text */}
                         <div
                           className="absolute inset-0"
                           style={{
-                            background: "linear-gradient(to right, #DAEFEF 0%, rgba(218, 239, 239, 0.88) 14%, rgba(218, 239, 239, 0.35) 30%, rgba(218, 239, 239, 0) 50%)"
+                            background: "linear-gradient(to right, #DAEFEF 0%, rgba(218, 239, 239, 0.90) 12%, rgba(218, 239, 239, 0.20) 40%, transparent 70%)"
                           }}
                         />
                       </div>
 
                       {/* Left: Prominent Circular Gradient Icon, Title & Description */}
-                      <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[50%] sm:max-w-[48%] lg:max-w-[46%]">
+                      <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[62%] sm:max-w-[60%] lg:max-w-[58%]">
                         <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#14B8A6] via-[#0D9488] to-[#0F766E] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(13,148,136,0.25)] group-hover:scale-108 transition-transform duration-300">
                           <PhoneCall className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
                         </div>
@@ -1069,12 +1132,8 @@ export default function HomePage() {
                   {/* 3 Categories Main Hub Box */}
                   <div className="bg-white rounded-3xl p-5 sm:p-7 border border-neutral-200/90 shadow-xs space-y-6">
                     {/* Header Banner */}
-                    <div className="bg-gradient-to-r from-[#06351F] via-[#092B1C] to-[#03210E] text-white rounded-2xl p-5 sm:p-6 border border-[#D9A52E]/30 shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="bg-gradient-to-r from-[#06351F] via-[#092B1C] to-[#03210E] text-white rounded-2xl p-5 sm:p-6 border border-[#D9A52E]/30 shadow-md">
                       <div>
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D9A52E]/20 text-[#D9A52E] border border-[#D9A52E]/30 text-[10px] font-black uppercase tracking-wider mb-2">
-                          <Sparkles className="h-3 w-3" />
-                          {language === "ta" ? "படி 1: திட்ட பிரிவை தேர்ந்தெடுக்கவும்" : "Step 1: Choose Property Category"}
-                        </span>
                         <h3 className="text-xl sm:text-2xl font-black text-white">
                           {language === "ta" ? "எங்கள் திட்டப் பிரிவுகள்" : "Our Property Categories"}
                         </h3>
@@ -1083,11 +1142,6 @@ export default function HomePage() {
                             ? "மதுரையின் சிறந்த வளர்ச்சி மண்டலங்களில் DTCP & RERA அங்கீகரிக்கப்பட்ட மனைப்பிரிவுகள் மற்றும் பண்ணை நிலங்கள்."
                             : "Explore certified DTCP & RERA approved villa plots, commercial highway frontage, and managed agro acreage across Madurai."}
                         </p>
-                      </div>
-                      <div className="shrink-0 flex items-center gap-2">
-                        <span className="text-xs font-black text-[#D9A52E] bg-white/10 px-4 py-2 rounded-xl border border-[#D9A52E]/30">
-                          {ALL_PROJECTS.length} Total Developments
-                        </span>
                       </div>
                     </div>
 
@@ -1200,25 +1254,6 @@ export default function HomePage() {
                           </div>
                         );
                       })}
-                    </div>
-
-                    {/* Direct Contact strip */}
-                    <div className="pt-4 border-t border-neutral-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-neutral-600 bg-[#FAF8F3] p-4 rounded-2xl border border-neutral-200/80">
-                      <div className="flex items-center gap-2">
-                        <span className="font-bold text-[#06351F]">{language === "ta" ? "நேரடி ஆலோசனை:" : "Direct Assistance:"}</span>
-                        <a href={`tel:${phone}`} className="font-mono font-black text-[#06351F] hover:text-[#D9A52E] transition-colors">
-                          {phone}
-                        </a>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <a
-                          href={`tel:${phone}`}
-                          className="font-bold text-[#06351F] hover:text-[#0E5934] flex items-center gap-1.5"
-                        >
-                          <Phone className="h-3.5 w-3.5 text-[#D9A52E]" />
-                          <span>{language === "ta" ? "நேரடி ஆலோசனை" : "Call Helpline"}</span>
-                        </a>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -1481,7 +1516,7 @@ export default function HomePage() {
                       className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] shadow-sm hover:shadow-md text-xs sm:text-sm font-black transition-all cursor-pointer"
                     >
                       <ArrowLeft className="h-4 w-4 text-[#E5A922]" />
-                      <span>{language === "ta" ? "← அனைத்து பிரிவுகளுக்கும் திரும்புக" : "← Back to All Categories"}</span>
+                      <span>{language === "ta" ? "அனைத்து பிரிவுகளுக்கும் திரும்புக" : "Back to All Categories"}</span>
                     </button>
                   </div>
                 </div>
@@ -2338,6 +2373,125 @@ export default function HomePage() {
           </button>
         </div>
       </nav>
+
+      
+      {/* ------------------------------------------------------------------------- */}
+      {/* MOBILE COLLAPSIBLE NAVIGATION DRAWER (Sidebar collapsed for mobile/tablet) */}
+      {/* ------------------------------------------------------------------------- */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <>
+            {/* Backdrop Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="fixed inset-0 z-50 bg-black/65 backdrop-blur-xs md:hidden"
+            />
+
+            {/* Slide-out Drawer Panel */}
+            <motion.aside
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "spring", damping: 26, stiffness: 260 }}
+              className="fixed top-0 left-0 bottom-0 z-50 w-72 max-w-[85vw] bg-gradient-to-b from-[#052617] via-[#083822] to-[#041D12] text-white flex flex-col justify-between py-4 px-4 select-none shadow-2xl md:hidden overflow-y-auto"
+            >
+              {/* Drawer Header: Clean Brand Identity & Close Button */}
+              <div className="flex items-center justify-between pb-3.5 border-b border-white/10">
+                <div className="flex flex-col items-start">
+                  <div className="flex items-center whitespace-nowrap">
+                    <span className="relative inline-flex items-center justify-center w-7 h-7 shrink-0 -mr-1">
+                      <Image
+                        src="/images/surya-gold-logo.png"
+                        alt="S"
+                        fill
+                        priority
+                        sizes="32px"
+                        className="object-contain"
+                      />
+                    </span>
+                    <span className="font-display text-lg font-black tracking-[0.12em] text-[#D9A52E] uppercase leading-none drop-shadow-sm">
+                      URYA
+                    </span>
+                  </div>
+                  <span className="font-display text-[10px] font-extrabold tracking-[0.32em] text-[#F1E4C3] uppercase leading-none mt-1 text-center pl-1">
+                    PROMOTERS
+                  </span>
+                  <div className="flex items-center gap-1.5 mt-1.5 w-full justify-center">
+                    <span className="h-[1px] w-4 bg-[#D9A52E]/40" />
+                    <span className="font-mono text-[9px] font-bold tracking-[0.22em] uppercase text-[#F1E4C3]/80 whitespace-nowrap">
+                      ESTD. 2010
+                    </span>
+                    <span className="h-[1px] w-4 bg-[#D9A52E]/40" />
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-[#D9A52E] flex items-center justify-center transition-all cursor-pointer"
+                  aria-label="Close menu"
+                  title="Close menu"
+                >
+                  <X className="h-4 w-4 stroke-[2.5]" />
+                </button>
+              </div>
+
+              {/* Drawer Navigation Links */}
+              <div className="space-y-1.5 py-4 flex-1">
+                {[
+                  { id: "home", label: language === "ta" ? "முகப்பு" : "Store Home", icon: Home },
+                  { id: "projects", label: language === "ta" ? "எங்கள் திட்டங்கள்" : "Our Projects", icon: Building2 },
+                  { id: "location", label: language === "ta" ? "தள அமைவிடம்" : "Site Location", icon: MapPin },
+                  { id: "gallery", label: language === "ta" ? "புகைப்படங்கள் & வீடியோ" : "Gallery Folders", icon: Camera },
+                  { id: "download", label: language === "ta" ? "வரைபடம் பதிவிறக்கம்" : "Download Layout", icon: Download },
+                  { id: "about", label: language === "ta" ? "எங்களைப் பற்றி" : "About Company", icon: Info },
+                  { id: "contact", label: language === "ta" ? "நேரடி தொடர்பு" : "Contact Us", icon: PhoneCall },
+                ].map((item) => {
+                  const Icon = item.icon;
+                  const isActive = activeTab === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => {
+                        setActiveTab(item.id as any);
+                        if (item.id === "projects") setActiveCategory(null);
+                        setIsMobileMenuOpen(false);
+                        if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
+                      className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-left transition-all cursor-pointer font-bold text-xs ${
+                        isActive
+                          ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] shadow-sm font-black"
+                          : "text-[#E1ECE6] hover:bg-white/10 hover:text-white"
+                      }`}
+                    >
+                      <Icon className={`h-4.5 w-4.5 shrink-0 ${isActive ? "text-[#0A1C12]" : "text-[#D9A52E]"}`} />
+                      <span className="truncate">{item.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Drawer Bottom Direct Contact Pill Card (No arrow button!) */}
+              <div className="pt-3 border-t border-white/10">
+                <div className="p-2.5 rounded-2xl bg-[#092D1B]/95 border border-[#E2B755]/40 flex items-center shadow-lg w-full">
+                  <a href={`tel:${phone}`} className="flex items-center gap-2.5 min-w-0 w-full group/call" title={`Call ${phone}`}>
+                    <div className="w-8 h-8 rounded-full bg-[#051F12] border border-[#E2B755]/50 flex items-center justify-center shrink-0 text-[#E5A922] group-hover/call:scale-105 transition-transform">
+                      <Phone className="h-4 w-4" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[10px] text-[#A3C2B0] font-medium leading-tight">Direct Contact</p>
+                      <p className="text-xs font-bold text-white truncate leading-tight">{phone}</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* ------------------------------------------------------------------------- */}
       {/* 3. INDIVIDUAL PROJECT DETAILS MODAL                                       */}

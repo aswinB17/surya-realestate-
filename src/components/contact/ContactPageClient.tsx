@@ -29,7 +29,7 @@ export default function ContactPageClient() {
   const email = company?.email || "suryapromotersmdu@gmail.com";
   const address = company?.address || "120 Feet Road, Near Mattuthavani Bus Stand, K.K. Nagar Corridor, Madurai, Tamil Nadu 625020";
   const mapsLink = company?.mapsLink || "https://www.google.com/maps?q=9.9253208,78.1702385&z=17&hl=en";
-  const instagramUrl = (company as any)?.instagramUrl || "https://www.instagram.com/surya_promoters_madurai?cnvx=cTNuOGhsZ21kM203";
+  const instagramUrl = (company as any)?.instagramUrl || "https://www.instagram.com/surya_promoters_madurai";
   const instagramImage = (company as any)?.instagramImage || "/images/instagram-promo.jpg";
   const instagramHandle = (company as any)?.instagramHandle || "@surya_promoters_madurai";
 

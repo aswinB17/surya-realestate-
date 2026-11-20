@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 600" width="100%" height="100%" fill="none">
+  <defs>
+    <!-- Rich 3D gradient for the pin matching reference -->
+    <linearGradient id="redPinGradient" x1="25%" y1="5%" x2="75%" y2="95%">
+      <stop offset="0%" stop-color="#E31B23" />
+      <stop offset="35%" stop-color="#D1151D" />
+      <stop offset="70%" stop-color="#9E0B0F" />
+      <stop offset="100%" stop-color="#6B0205" />
+    </linearGradient>
+    <!-- Gradient for the ground elliptical ring -->
+    <linearGradient id="redRingGradient" x1="15%" y1="10%" x2="85%" y2="90%">
+      <stop offset="0%" stop-color="#E31B23" />
+      <stop offset="40%" stop-color="#B50E13" />
+      <stop offset="100%" stop-color="#700306" />
+    </linearGradient>
+  </defs>
+
+  <!-- Ground Elliptical Base Ring -->
+  <path
+    d="M 260 469
+       C 348 469 419 493 419 522
+       C 419 551 348 575 260 575
+       C 172 575 101 551 101 522
+       C 101 493 172 469 260 469 Z
+       M 260 484
+       C 181 484 117 501 117 522
+       C 117 543 181 560 260 560
+       C 339 560 403 543 403 522
+       C 403 501 339 484 260 484 Z"
+    fill="url(#redRingGradient)"
+    fill-rule="evenodd"
+  />
+
+  <!-- Red Location Pin with Inner Circular Cutout -->
+  <path
+    d="M 260 535
+       L 112.1 260.7
+       A 168 168 0 1 1 407.9 260.7
+       Z
+       M 260 83
+       A 98 98 0 1 0 260 279
+       A 98 98 0 1 0 260 83
+       Z"
+    fill="url(#redPinGradient)"
+    fill-rule="evenodd"
+  />
+</svg>
