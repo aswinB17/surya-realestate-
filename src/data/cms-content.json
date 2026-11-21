@@ -246,7 +246,11 @@
             "ta": "₹1.67 கோடி (பேசலாம்)"
           }
         }
-      ]
+      ],
+      "priceNumeric": 16700000,
+      "bhk": 3,
+      "propertyType": "Villa",
+      "createdAt": "2024-01-15T00:00:00Z"
     },
     {
       "id": "vaigai-elite",
@@ -374,7 +378,11 @@
             "ta": "ஷோரூம் / கிடங்கு / பங்க்"
           }
         }
-      ]
+      ],
+      "priceNumeric": 28000000,
+      "bhk": null,
+      "propertyType": "Commercial Plot",
+      "createdAt": "2024-03-05T00:00:00Z"
     },
     {
       "id": "vaigai-river",
@@ -523,7 +531,11 @@
             "ta": "சந்தை விலையை விட மிகக் குறைந்த விலை"
           }
         }
-      ]
+      ],
+      "priceNumeric": 9500000,
+      "bhk": null,
+      "propertyType": "Commercial Plot",
+      "createdAt": "2024-03-20T00:00:00Z"
     },
     {
       "id": "pandi-kovil",
@@ -668,7 +680,11 @@
             "ta": "தெளிவான வில்லங்கமற்ற பட்டா"
           }
         }
-      ]
+      ],
+      "priceNumeric": 18500000,
+      "bhk": null,
+      "propertyType": "Commercial Plot",
+      "createdAt": "2024-04-12T00:00:00Z"
     },
     {
       "id": "madurai-farms",
@@ -799,7 +815,260 @@
             "ta": "முழுமையான பராமரிப்பு உண்டு"
           }
         }
-      ]
+      ],
+      "priceNumeric": 3500000,
+      "bhk": null,
+      "propertyType": "Agricultural Land",
+      "createdAt": "2024-05-18T00:00:00Z"
+    },
+    {
+      "id": "plot-projects",
+      "slug": "plot-projects",
+      "name": {
+        "en": "Surya Green Enclave DTCP Plots",
+        "ta": "சூர்யா கிரீன் என்கிளேவ் DTCP வீட்டுமனைகள்"
+      },
+      "category": "residential",
+      "categoryLabel": {
+        "en": "Residential",
+        "ta": "குடியிருப்பு"
+      },
+      "subcategory": "plot",
+      "subcategoryLabel": {
+        "en": "Villa Plot",
+        "ta": "வீட்டுமனை"
+      },
+      "location": {
+        "en": "Near Ring Road, Madurai",
+        "ta": "ரிங் ரோடு அருகில், மதுரை"
+      },
+      "distanceInfo": {
+        "en": "DTCP & RERA Approved · Ready to Build · Clear Titles",
+        "ta": "DTCP & RERA அங்கீகாரம் · உடனடி வீடு கட்டலாம் · தெளிவான பட்டா"
+      },
+      "image": "/images/projects/flat-projects/1-exterior.jpg",
+      "galleryImages": [
+        "/images/projects/flat-projects/1-exterior.jpg",
+        "/images/projects/surya-green-enclave-blueprint.jpg"
+      ],
+      "blueprint": "/images/projects/surya-green-enclave-blueprint.jpg",
+      "statusBadge": {
+        "en": "DTCP & RERA Approved",
+        "ta": "DTCP & RERA அனுமதி"
+      },
+      "rating": "4.8",
+      "status": "running",
+      "description": {
+        "en": "Premium DTCP and RERA approved gated community residential villa plots strategically situated with immediate motorable connectivity to Madurai's Outer Ring Road.",
+        "ta": "மதுரை வெளிவட்ட சாலையுடன் நேரடி இணைப்பு கொண்ட DTCP மற்றும் RERA அனுமதி பெற்ற பிரீமியம் வீட்டுமனைகள்."
+      },
+      "highlights": {
+        "en": [
+          "100% DTCP and RERA Sanctioned Layout",
+          "Broad 30 & 40 Feet Bitumen Tar Roads with Street Lighting",
+          "Abundant Sweet Potable Groundwater Table",
+          "Immediate Individual Computer Patta Registration"
+        ],
+        "ta": [
+          "100% DTCP மற்றும் RERA அனுமதி பெற்ற மனைப்பிரிவு",
+          "30 மற்றும் 40 அடி அகலமான தார் சாலைகள் & தெருவிளக்குகள்",
+          "வற்றாத சுத்தமான நிலத்தடி குடிநீர் வளம்",
+          "உடனடி தனி பட்டா பெயர் மாற்றம் & பத்திரப் பதிவு"
+        ]
+      },
+      "mapsUrl": "https://maps.google.com/?q=Madurai+Ring+Road",
+      "specs": [
+        {
+          "label": {
+            "en": "Plot Sizes",
+            "ta": "மனை அளவுகள்"
+          },
+          "value": {
+            "en": "600 to 2400 Sq.Ft",
+            "ta": "600 முதல் 2400 ச.அடி"
+          }
+        },
+        {
+          "label": {
+            "en": "Approval",
+            "ta": "அங்கீகாரம்"
+          },
+          "value": {
+            "en": "DTCP & RERA Approved",
+            "ta": "DTCP & RERA அனுமதி"
+          }
+        },
+        {
+          "label": {
+            "en": "Road Width",
+            "ta": "சாலை அகலம்"
+          },
+          "value": {
+            "en": "30 & 40 Ft Tar Roads",
+            "ta": "30 & 40 அடி தார் சாலை"
+          }
+        }
+      ],
+      "priceNumeric": 2500000,
+      "bhk": null,
+      "propertyType": "Residential Plot",
+      "createdAt": "2024-02-10T00:00:00Z"
+    },
+    {
+      "id": "commercial-building-anna-nagar",
+      "slug": "commercial-building-anna-nagar",
+      "name": {
+        "en": "Commercial Building – Anna Nagar",
+        "ta": "அண்ணா நகர் வணிக கட்டிடம் & நிலம்"
+      },
+      "category": "commercial",
+      "categoryLabel": {
+        "en": "Commercial",
+        "ta": "வணிகம்"
+      },
+      "subcategory": "comm-building",
+      "subcategoryLabel": {
+        "en": "Commercial Building",
+        "ta": "வணிக கட்டிடம்"
+      },
+      "location": {
+        "en": "80 Feet Road, Anna Nagar, Madurai",
+        "ta": "80 அடி ரோடு, அண்ணா நகர், மதுரை"
+      },
+      "distanceInfo": {
+        "en": "High Rental Yield · Direct 80 Ft Road Frontage",
+        "ta": "அதிக வாடகை வருவாய் · 80 அடி நேரடி முகப்பு"
+      },
+      "image": "/images/projects/vaigai-commercial.jpg",
+      "statusBadge": {
+        "en": "Prime City Commercial",
+        "ta": "நகர மைய வணிக சொத்து"
+      },
+      "rating": "4.9",
+      "status": "running",
+      "description": {
+        "en": "High-yield commercial building and plot in the heart of Anna Nagar, Madurai's premier commercial and financial district with maximum rental demand.",
+        "ta": "மதுரையின் முன்னணி வணிக மையமான அண்ணா நகரில் அமைந்துள்ள அதிக வாடகை வருவாய் தரும் முதன்மை வணிக சொத்து."
+      },
+      "highlights": {
+        "en": [
+          "Unrivaled central city prestige in Anna Nagar 80 Feet Road sector",
+          "High rental yield with immediate tenancy potential",
+          "Dedicated multi-car parking and broad pedestrian pavement",
+          "100% verified urban municipal title with zero encumbrance"
+        ],
+        "ta": [
+          "அண்ணா நகர் 80 அடி ரோட்டின் முக்கிய வணிக மையம்",
+          "உடனடி வாடகை வருமானம் தரும் சிறப்பான கட்டமைப்பு",
+          "பிரத்யேக கார் பார்க்கிங் மற்றும் நடைபாதை வசதி",
+          "100% வில்லங்கமற்ற தூய மூலப்பத்திரங்கள்"
+        ]
+      },
+      "mapsUrl": "https://maps.google.com/?q=Anna+Nagar+Madurai",
+      "specs": [
+        {
+          "label": {
+            "en": "Location",
+            "ta": "அமைவிடம்"
+          },
+          "value": {
+            "en": "Anna Nagar 80 Ft Road",
+            "ta": "அண்ணா நகர் 80 அடி ரோடு"
+          }
+        },
+        {
+          "label": {
+            "en": "Suitability",
+            "ta": "பயன்பாடு"
+          },
+          "value": {
+            "en": "Banks / Showrooms / IT Offices",
+            "ta": "வங்கிகள் / ஷோரூம்கள் / ஐடி"
+          }
+        }
+      ],
+      "priceNumeric": 25000000,
+      "bhk": null,
+      "propertyType": "Commercial Plot",
+      "createdAt": "2024-05-01T00:00:00Z"
+    },
+    {
+      "id": "mayilan-gundu-site-mpf-school",
+      "slug": "mayilan-gundu-site-mpf-school",
+      "name": {
+        "en": "Mayilan Gundu Site – MPF School",
+        "ta": "மயிலன் குண்டு – MPF பள்ளி அருகிலான நிலம்"
+      },
+      "category": "commercial",
+      "categoryLabel": {
+        "en": "Commercial",
+        "ta": "வணிகம்"
+      },
+      "subcategory": "comm-land",
+      "subcategoryLabel": {
+        "en": "Commercial Land",
+        "ta": "வணிக நிலம்"
+      },
+      "location": {
+        "en": "Mayilan Gundu, Near MPF School, Madurai",
+        "ta": "மயிலன் குண்டு, MPF பள்ளி அருகில், மதுரை"
+      },
+      "distanceInfo": {
+        "en": "Adjacent to MPF International School · Contiguous Acreage",
+        "ta": "MPF சர்வதேச பள்ளி அருகில் · விரிவான நிலப்பரப்பு"
+      },
+      "image": "/images/pandi-kovil-commercial-land.jpg",
+      "statusBadge": {
+        "en": "Institutional & Commercial",
+        "ta": "கல்வி & வணிக மனை"
+      },
+      "rating": "4.8",
+      "status": "running",
+      "description": {
+        "en": "Expansive commercial and institutional land parcel bordering the prestigious MPF International School campus, suitable for academies, hostelling, and student amenities.",
+        "ta": "MPF சர்வதேச பள்ளிக்கு மிக அருகில் அமைந்துள்ள விரிவான நிலப்பரப்பு. கல்வி நிறுவனங்கள், விடுதிகள் மற்றும் வணிக திட்டங்களுக்கு மிகவும் சிறந்தது."
+      },
+      "highlights": {
+        "en": [
+          "Directly adjacent to MPF International School corridor",
+          "High student and parental visibility with broad motorable road access",
+          "Excellent for school expansion, athletic training grounds, or educational foundations",
+          "Clear revenue computer patta with immediate sale registry"
+        ],
+        "ta": [
+          "MPF சர்வதேச பள்ளியை ஒட்டிய முதன்மை வழித்தடம்",
+          "அகலமான தார் சாலை வசதியுடன் கூடிய அமைவிடம்",
+          "பள்ளிகள், கல்லூரிகள் மற்றும் விளையாட்டு மையங்களுக்கு ஏற்றது",
+          "100% தெளிவான கணினி பட்டா & உடனடி பதிவு"
+        ]
+      },
+      "mapsUrl": "https://maps.google.com/?q=Mayilan+Gundu+Madurai",
+      "specs": [
+        {
+          "label": {
+            "en": "Zoning",
+            "ta": "வகைப்பாடு"
+          },
+          "value": {
+            "en": "Institutional & Commercial",
+            "ta": "கல்வி & வணிக மண்டலம்"
+          }
+        },
+        {
+          "label": {
+            "en": "Accessibility",
+            "ta": "சாலை"
+          },
+          "value": {
+            "en": "Tar Road Frontage",
+            "ta": "தார் சாலை முகப்பு"
+          }
+        }
+      ],
+      "priceNumeric": 14000000,
+      "bhk": null,
+      "propertyType": "Commercial Plot",
+      "createdAt": "2024-06-01T00:00:00Z"
     }
   ],
   "gallery": {
@@ -1030,6 +1299,7 @@
     "mapsLink": "https://www.google.com/maps?q=9.9253208,78.1702385&z=17&hl=en",
     "googleMapsEmbedUrl": "https://maps.google.com/maps?q=9.9253208,78.1702385&hl=en&z=17&output=embed",
     "instagramUrl": "https://www.instagram.com/surya_promoters_madurai",
+    "facebookUrl": "https://www.facebook.com/share/1GoBJ8tdMS/",
     "instagramImage": "/images/instagram-promo.jpg",
     "instagramHandle": "@surya_promoters_madurai",
     "aboutBio": {

@@ -155,3 +155,113 @@ button:active {
   outline: none;
 }
 
+/* ------------------------------------------------------------------------- */
+/* Luxury Real Estate Custom Animations                                      */
+/* ------------------------------------------------------------------------- */
+
+/* Slow Ken Burns Zoom Effect for Hero Architectural Villa */
+@keyframes heroSlowZoom {
+  0% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.045) translate3d(-0.4%, -0.4%, 0);
+  }
+  100% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}
+
+.animate-heroSlowZoom {
+  animation: heroSlowZoom 22s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* Hero Content Entrances */
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-heroBadgeFadeUp {
+  animation: heroFadeUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.05s backwards;
+}
+
+.animate-heroFadeUp {
+  animation: heroFadeUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards;
+}
+
+.animate-heroSubtitleFadeUp {
+  animation: heroFadeUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.25s backwards;
+}
+
+/* Staggered Card Entrances */
+@keyframes cardSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-card-1 {
+  animation: cardSlideUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.06s backwards;
+}
+.animate-card-2 {
+  animation: cardSlideUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.12s backwards;
+}
+.animate-card-3 {
+  animation: cardSlideUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.18s backwards;
+}
+.animate-card-4 {
+  animation: cardSlideUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.24s backwards;
+}
+.animate-card-5 {
+  animation: cardSlideUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.30s backwards;
+}
+.animate-card-6 {
+  animation: cardSlideUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.36s backwards;
+}
+
+/* Subtle Lift & Glow for Cards & Buttons */
+.smooth-hover-lift {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.smooth-hover-lift:hover {
+  transform: translateY(-3px);
+}
+
+/* Accessible Interactive Button Micro-Interactions */
+.btn-micro {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease;
+}
+.btn-micro:hover {
+  transform: translateY(-1px);
+}
+.btn-micro:active {
+  transform: scale(0.97);
+}
+
+/* ------------------------------------------------------------------------- */
+/* Accessibility: Respect User's Reduced-Motion Setting                      */
+/* ------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+

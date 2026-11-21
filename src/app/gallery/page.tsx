@@ -301,16 +301,16 @@ export default function GalleryPage() {
             {filteredImages.map((img, idx) => (
               <div
                 key={idx}
-                className="group relative aspect-[4/3] rounded-3xl overflow-hidden bg-[#0A0D12] border border-[#E8E2D7] shadow-sm hover:shadow-xl transition-all duration-300"
+                className="group relative aspect-[4/3] rounded-3xl overflow-hidden bg-[#0A0D12] border border-[#E8E2D7] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 ease-out"
               >
                 <Image
                   src={img.src}
                   alt={img.title}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent opacity-85 group-hover:opacity-95 transition-opacity" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent opacity-85 group-hover:opacity-95 transition-opacity duration-300" />
 
                 {/* Overlaid Details */}
                 <div className="absolute bottom-4 left-4 right-4 text-white">
@@ -323,10 +323,10 @@ export default function GalleryPage() {
                 </div>
 
                 {/* Hover Actions: Lightbox Zoom & Download */}
-                <div className="absolute top-4 right-4 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="absolute top-4 right-4 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   <button
                     onClick={() => setActiveImage(img.src)}
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-black/80 transition cursor-pointer"
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-black/80 hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer"
                     title="Enlarge in Lightbox"
                   >
                     <ZoomIn className="h-4 w-4" />
@@ -334,7 +334,7 @@ export default function GalleryPage() {
                   <a
                     href={img.src}
                     download
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-black/80 transition"
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-black/80 hover:scale-110 active:scale-95 transition-all duration-200"
                     title="Download High-Res Image"
                   >
                     <Download className="h-4 w-4 text-[#C6A66B]" />
@@ -375,7 +375,7 @@ export default function GalleryPage() {
             {filteredVideos.map((vid, idx) => (
               <div
                 key={idx}
-                className="group flex flex-col rounded-3xl bg-white border border-[#E8E2D7] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
+                className="group flex flex-col rounded-3xl bg-white border border-[#E8E2D7] overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 ease-out"
               >
                 {/* Video Container with Custom Player Preview */}
                 <div
@@ -386,10 +386,10 @@ export default function GalleryPage() {
                     src={vid.thumbnail}
                     alt={vid.title}
                     fill
-                    className="object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
+                    className="object-cover opacity-80 group-hover:scale-108 transition-transform duration-700 ease-out"
                   />
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#173D2B] text-[#C6A66B] shadow-2xl group-hover:scale-110 transition-transform">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#173D2B] text-[#C6A66B] shadow-2xl group-hover:scale-110 transition-transform duration-300 ease-out">
                       <Play className="h-6 w-6 fill-[#C6A66B] ml-1" />
                     </div>
                   </div>
@@ -403,14 +403,14 @@ export default function GalleryPage() {
                     <span className="font-mono text-[10px] text-[#64865A] font-bold uppercase block">
                       {vid.category}
                     </span>
-                    <h3 className="font-display text-base font-bold text-[#171B18] mt-0.5">
+                    <h3 className="font-display text-base font-bold text-[#171B18] mt-0.5 group-hover:text-[#0E5934] transition-colors">
                       {vid.title}
                     </h3>
                   </div>
 
                   <button
                     onClick={() => setActiveVideo(vid.src)}
-                    className="shrink-0 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#173D2B] hover:bg-[#122e20] text-white text-xs font-bold transition cursor-pointer"
+                    className="shrink-0 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#173D2B] hover:bg-[#122e20] hover:scale-105 active:scale-95 text-white text-xs font-bold transition-all duration-200 cursor-pointer shadow-xs"
                   >
                     <Play className="h-3 w-3 fill-white" />
                     <span>Play</span>

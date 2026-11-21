@@ -111,6 +111,7 @@ export interface CmsCompany {
   mapsLink: string;
   googleMapsEmbedUrl?: string;
   instagramUrl?: string;
+  facebookUrl?: string;
   instagramImage?: string;
   instagramHandle?: string;
   aboutBio: LocalizedText;

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -62,6 +62,7 @@ import {
   Clock,
 } from "lucide-react";
 import { PROJECT_DETAILS_MAP } from "@/data/projectDetailsExtra";
+import BottomLandscape from "@/components/layout/BottomLandscape";
 
 // Project Data Model for Surya Promoters App-Store Experience
 interface AppProject {
@@ -105,6 +106,14 @@ export default function HomePage() {
   const address = companyInfo?.address || "120 Feet Road, Near Mattuthavani Bus Stand, K.K. Nagar Corridor, Madurai, Tamil Nadu 625020";
   const mapsLink = companyInfo?.mapsLink || "https://www.google.com/maps?q=9.9253208,78.1702385&z=17&hl=en";
   const instagramUrl = (companyInfo as any)?.instagramUrl || "https://www.instagram.com/surya_promoters_madurai";
+  const facebookUrl = (companyInfo as any)?.facebookUrl || "https://www.facebook.com/share/1GoBJ8tdMS/";
+  const companyWhatsapp = companyInfo?.whatsapp || "+91 78457 16453";
+  const rawWhatsapp = companyWhatsapp.replace(/[^0-9]/g, "") || "917845716453";
+  const whatsappUrl = `https://wa.me/${rawWhatsapp}?text=${encodeURIComponent(
+    language === "ta"
+      ? "வணக்கம் சூர்யா புரமோட்டர்ஸ், உங்கள் மனை திட்டங்கள் குறித்த விவரங்களை அறிய விரும்புகிறேன்."
+      : "Hello Surya Promoters, I am interested in your Madurai projects. Please share details."
+  )}`;
 
   // Navigation State: Which of the 5 Main Icons / Sections is Active
   // 'home' | 'projects' | 'location' | 'gallery' | 'about' | 'download'
@@ -129,6 +138,13 @@ export default function HomePage() {
   }, [activeTab]);
 
   const handleGoBack = () => {
+    if (activeTab === "projects" && searchQuery.trim() !== "") {
+      setSearchQuery("");
+      setActiveCategory(null);
+      if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
     if (activeTab === "projects" && activeCategory !== null) {
       setActiveCategory(null);
       if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
@@ -214,8 +230,31 @@ export default function HomePage() {
     }
   };
 
-  // Search input query
+  // Search input & autocomplete state
   const [searchQuery, setSearchQuery] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+
+  // Close search dropdown on click/touch outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      if (
+        searchContainerRef.current &&
+        !searchContainerRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+        setHighlightedIndex(-1);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, []);
 
   // Modals & Popups
   const [selectedProject, setSelectedProject] = useState<AppProject | null>(null);
@@ -365,10 +404,269 @@ export default function HomePage() {
         searchQuery.trim() === "" ||
         p.name.en.toLowerCase().includes(searchQuery.toLowerCase()) ||
         p.name.ta.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.location.en.toLowerCase().includes(searchQuery.toLowerCase());
+        p.location.en.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.location.ta.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesCategory && matchesSearch;
     })
     : [];
+
+  // Matching projects for search across ALL categories
+  const searchMatchingProjects = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return [];
+    return ALL_PROJECTS.filter((p) => {
+      const nameEn = (p.name?.en || "").toLowerCase();
+      const nameTa = (p.name?.ta || "").toLowerCase();
+      const locEn = (p.location?.en || "").toLowerCase();
+      const locTa = (p.location?.ta || "").toLowerCase();
+      return (
+        nameEn.includes(q) ||
+        nameTa.includes(q) ||
+        locEn.includes(q) ||
+        locTa.includes(q)
+      );
+    });
+  }, [ALL_PROJECTS, searchQuery]);
+
+  // Autocomplete suggestions: computed dynamically when query length is at least 5
+  const autocompleteSuggestions = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (q.length < 5) return [];
+    return ALL_PROJECTS.filter((p) => {
+      const nameEn = (p.name?.en || "").toLowerCase();
+      const nameTa = (p.name?.ta || "").toLowerCase();
+      const locEn = (p.location?.en || "").toLowerCase();
+      const locTa = (p.location?.ta || "").toLowerCase();
+      return (
+        nameEn.includes(q) ||
+        nameTa.includes(q) ||
+        locEn.includes(q) ||
+        locTa.includes(q)
+      );
+    });
+  }, [ALL_PROJECTS, searchQuery]);
+
+  const handleSelectSuggestion = (project: AppProject) => {
+    setSelectedProject(project);
+    setActiveTab("projects");
+    setActiveCategory(null);
+    setIsDropdownOpen(false);
+    setHighlightedIndex(-1);
+  };
+
+  const highlightMatch = (text: string, query: string) => {
+    const q = query.trim();
+    if (!q || !text) return text;
+    const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const regex = new RegExp(`(${escaped})`, "gi");
+    const parts = text.split(regex);
+    return parts.map((part, idx) =>
+      part.toLowerCase() === q.toLowerCase() ? (
+        <mark
+          key={idx}
+          className="bg-[#FEF08A] text-[#06351F] font-black rounded-xs px-0.5"
+        >
+          {part}
+        </mark>
+      ) : (
+        <React.Fragment key={idx}>{part}</React.Fragment>
+      )
+    );
+  };
+
+  const handleSearchSubmit = () => {
+    if (searchQuery.trim()) {
+      setIsDropdownOpen(false);
+      setHighlightedIndex(-1);
+      setActiveTab("projects");
+      setActiveCategory(null);
+    }
+  };
+
+  const renderProjectCard = (project: AppProject) => {
+    const projectExtra = PROJECT_DETAILS_MAP[project.id];
+    const cardGallery = projectExtra?.galleryImages && projectExtra.galleryImages.length > 0
+      ? projectExtra.galleryImages
+      : [project.image];
+    const cardImgIndex = cardImageIndices[project.id] ?? 0;
+    const currentCardImage = cardGallery[cardImgIndex % cardGallery.length] || project.image;
+
+    return (
+      <div
+        key={project.id}
+        onClick={() => setSelectedProject(project)}
+        className="bg-white rounded-[22px] overflow-hidden border border-neutral-200/90 shadow-sm hover:shadow-xl hover:border-[#D9A52E]/70 transition-all duration-300 flex flex-col group cursor-pointer"
+      >
+        {/* Card Thumbnail */}
+        <div className="relative h-60 w-full overflow-hidden bg-neutral-900 group/cardimg">
+          <Image
+            src={currentCardImage}
+            alt={project.name.en}
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-105 pointer-events-none"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
+
+          {/* Next / Previous Arrows on Card */}
+          {cardGallery.length > 1 && (
+            <>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCardImageIndices((prev) => ({
+                    ...prev,
+                    [project.id]: (cardImgIndex - 1 + cardGallery.length) % cardGallery.length,
+                  }));
+                }}
+                aria-label="Previous image"
+                className="absolute left-2.5 top-1/2 -translate-y-1/2 z-20 h-9 w-9 rounded-full bg-black/65 hover:bg-[#D9A52E] text-white hover:text-[#06351F] border border-white/20 hover:border-[#D9A52E] flex items-center justify-center backdrop-blur-md shadow-lg transition-all hover:scale-110 active:scale-95 cursor-pointer pointer-events-auto opacity-80 sm:opacity-0 sm:group-hover/cardimg:opacity-100"
+                title="Previous image"
+              >
+                <ChevronLeft className="h-5 w-5 stroke-[2.5]" />
+              </button>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCardImageIndices((prev) => ({
+                    ...prev,
+                    [project.id]: (cardImgIndex + 1) % cardGallery.length,
+                  }));
+                }}
+                aria-label="Next image"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 z-20 h-9 w-9 rounded-full bg-black/65 hover:bg-[#D9A52E] text-white hover:text-[#06351F] border border-white/20 hover:border-[#D9A52E] flex items-center justify-center backdrop-blur-md shadow-lg transition-all hover:scale-110 active:scale-95 cursor-pointer pointer-events-auto opacity-80 sm:opacity-0 sm:group-hover/cardimg:opacity-100"
+                title="Next image"
+              >
+                <ChevronRight className="h-5 w-5 stroke-[2.5]" />
+              </button>
+              <div className="absolute bottom-2 right-2 z-20 px-2.5 py-0.5 rounded-full bg-black/70 backdrop-blur-md text-[10px] font-mono font-bold text-white/90 border border-white/10 pointer-events-none">
+                {(cardImgIndex % cardGallery.length) + 1} / {cardGallery.length}
+              </div>
+            </>
+          )}
+
+          {/* Sold Out Visual Watermark Overlay */}
+          {(project as any).status === "sold" && (
+            <div className="absolute inset-0 bg-black/40 backdrop-grayscale-[30%] flex items-center justify-center pointer-events-none z-10">
+              <span className="px-4 py-1.5 rounded-xl bg-rose-600/95 text-white font-black text-xs uppercase tracking-widest border border-rose-300 shadow-xl rotate-[-6deg]">
+                {language === "ta" ? "100% விற்பனையானது" : "100% SOLD OUT"}
+              </span>
+            </div>
+          )}
+
+          <div className="absolute top-3 left-3 flex items-center gap-1.5 z-20 pointer-events-none">
+            {(project as any).status === "sold" ? (
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-rose-600 text-white shadow-md uppercase tracking-wider border border-rose-400">
+                {language === "ta" ? "விற்பனையானது" : "SOLD OUT"}
+              </span>
+            ) : (project as any).status === "upcoming" ? (
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-amber-500 text-black shadow-md uppercase tracking-wider border border-amber-300">
+                {language === "ta" ? "வரவிருக்கும் திட்டம்" : "UPCOMING"}
+              </span>
+            ) : (project as any).status === "completed" ? (
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-blue-600 text-white shadow-md uppercase tracking-wider border border-blue-400">
+                {language === "ta" ? "நிறைவடைந்தது" : "COMPLETED"}
+              </span>
+            ) : null}
+
+            <div className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#06351F]/90 text-[#D9A52E] border border-[#D9A52E]/40 backdrop-blur-md">
+              {project.statusBadge[language]}
+            </div>
+          </div>
+
+          <div className="absolute top-3 right-3 flex items-center gap-1.5 z-10">
+            {project.mapbhoomiUrl && (
+              <a
+                href={project.mapbhoomiUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="px-2.5 py-0.5 rounded-full text-[9px] font-black bg-[#06351F]/95 hover:bg-[#D9A52E] text-[#D9A52E] hover:text-[#06351F] border border-[#D9A52E]/60 flex items-center gap-1 shadow-md transition-all hover:scale-105 cursor-pointer pointer-events-auto"
+                title="2D/3D views"
+              >
+                <Compass className="h-3 w-3" />
+                <span>2D/3D views ↗</span>
+              </a>
+            )}
+            <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase bg-white/95 text-[#06351F] pointer-events-none">
+              {project.subcategoryLabel[language]}
+            </span>
+          </div>
+
+          <div className="absolute bottom-3 left-3 right-3 text-white pointer-events-none">
+            <h3 className="text-base font-black leading-tight drop-shadow-md group-hover:text-[#D9A52E] transition-colors">
+              {project.name[language]}
+            </h3>
+            <div className="flex items-center gap-1.5 text-xs text-neutral-300 mt-0.5">
+              <MapPin className="h-3 w-3 text-[#D9A52E] shrink-0" />
+              <span className="line-clamp-1">{project.location[language]}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Card Body */}
+        <div className="p-4 flex-1 flex flex-col justify-between">
+          <div>
+            <p className="text-xs text-neutral-600 line-clamp-2 leading-relaxed mb-3">
+              {project.description[language]}
+            </p>
+
+            <div className="space-y-1 mb-4 pb-3 border-b border-neutral-100">
+              {project.highlights[language].slice(0, 2).map((h, i) => (
+                <div key={i} className="flex items-center gap-1.5 text-[11px] text-neutral-700 font-medium">
+                  <CheckCircle2 className="h-3 w-3 text-emerald-600 shrink-0" />
+                  <span className="line-clamp-1">{h}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="space-y-2">
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedProject(project);
+                }}
+                className="w-full py-2 px-3 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white text-xs font-bold transition-all text-center cursor-pointer shadow-xs"
+              >
+                {language === "ta" ? "முழு விவரம்" : "Project Details"}
+              </button>
+
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedProject(project);
+                  setIsEnquiryModalOpen(true);
+                }}
+                className="w-full py-2 px-3 rounded-xl bg-[#0E5934] hover:bg-[#06351F] text-white text-xs font-black transition-all flex items-center justify-center gap-1 cursor-pointer shadow-xs border border-[#0E5934]"
+              >
+                <Sparkles className="h-3.5 w-3.5 text-[#D9A52E]" />
+                <span>{language === "ta" ? "விசாரிக்க" : "Enquire"}</span>
+              </button>
+            </div>
+
+            {/* Direct Mapbhoomi Layout Button */}
+            {project.mapbhoomiUrl && (
+              <a
+                href={project.mapbhoomiUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="w-full py-2 px-3 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-black transition-all flex items-center justify-center gap-1.5 shadow-sm group/mb cursor-pointer"
+              >
+                <Compass className="h-3.5 w-3.5 text-[#E5A922] group-hover/mb:rotate-45 transition-transform shrink-0" />
+                <span>{language === "ta" ? "2D/3D views (வரைபடம் ↗)" : "2D/3D views ↗"}</span>
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   const triggerToast = (msg: string) => {
     setToastMessage(msg);
@@ -440,13 +738,13 @@ export default function HomePage() {
             {/* Nav Item: Store Home */}
             <button
               onClick={() => setActiveTab("home")}
-              className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-2xl text-left transition-all cursor-pointer font-bold text-sm ${
+              className={`group w-full flex items-center gap-3 px-3.5 py-3 rounded-2xl text-left transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] cursor-pointer font-bold text-sm ${
                 activeTab === "home"
                   ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
                   : "text-[#E1ECE6] hover:bg-white/10 hover:text-white"
               }`}
             >
-              <Home className={`h-5 w-5 shrink-0 ${activeTab === "home" ? "text-[#0A1C12]" : "text-white/80"}`} />
+              <Home className={`h-5 w-5 shrink-0 group-hover:scale-110 transition-transform duration-200 ease-out ${activeTab === "home" ? "text-[#0A1C12]" : "text-white/80"}`} />
               <span className="truncate">{language === "ta" ? "முகப்பு" : "Store Home"}</span>
             </button>
 
@@ -456,78 +754,78 @@ export default function HomePage() {
                 setActiveTab(activeTab === "projects" ? "home" : "projects");
                 setActiveCategory(null);
               }}
-              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all cursor-pointer font-semibold text-xs sm:text-sm ${
+              className={`group w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] cursor-pointer font-semibold text-xs sm:text-sm ${
                 activeTab === "projects"
                   ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
                   : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
               }`}
             >
-              <Building2 className={`h-5 w-5 shrink-0 ${activeTab === "projects" ? "text-[#0A1C12]" : "text-white/70"}`} />
+              <Building2 className={`h-5 w-5 shrink-0 group-hover:scale-110 transition-transform duration-200 ease-out ${activeTab === "projects" ? "text-[#0A1C12]" : "text-white/70"}`} />
               <span className="truncate">{language === "ta" ? "திட்டங்கள்" : "Our Projects"}</span>
             </button>
 
             {/* Nav Item: Site Location */}
             <button
               onClick={() => setActiveTab(activeTab === "location" ? "home" : "location")}
-              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all cursor-pointer font-semibold text-xs sm:text-sm ${
+              className={`group w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] cursor-pointer font-semibold text-xs sm:text-sm ${
                 activeTab === "location"
                   ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
                   : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
               }`}
             >
-              <MapPin className={`h-5 w-5 shrink-0 ${activeTab === "location" ? "text-[#0A1C12]" : "text-white/70"}`} />
+              <MapPin className={`h-5 w-5 shrink-0 group-hover:scale-110 transition-transform duration-200 ease-out ${activeTab === "location" ? "text-[#0A1C12]" : "text-white/70"}`} />
               <span className="truncate">{language === "ta" ? "தள அமைவிடம்" : "Site Location"}</span>
             </button>
 
             {/* Nav Item: Gallery Folders */}
             <button
               onClick={() => setActiveTab(activeTab === "gallery" ? "home" : "gallery")}
-              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all cursor-pointer font-semibold text-xs sm:text-sm ${
+              className={`group w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] cursor-pointer font-semibold text-xs sm:text-sm ${
                 activeTab === "gallery"
                   ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
                   : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
               }`}
             >
-              <Camera className={`h-5 w-5 shrink-0 ${activeTab === "gallery" ? "text-[#0A1C12]" : "text-white/70"}`} />
+              <Camera className={`h-5 w-5 shrink-0 group-hover:scale-110 transition-transform duration-200 ease-out ${activeTab === "gallery" ? "text-[#0A1C12]" : "text-white/70"}`} />
               <span className="truncate">{language === "ta" ? "புகைப்படங்கள் & வீடியோ" : "Gallery Folders"}</span>
             </button>
 
             {/* Nav Item: Download Layout */}
             <button
               onClick={() => setActiveTab("download")}
-              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all cursor-pointer font-semibold text-xs sm:text-sm ${
+              className={`group w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] cursor-pointer font-semibold text-xs sm:text-sm ${
                 activeTab === "download"
                   ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
                   : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
               }`}
             >
-              <Download className={`h-5 w-5 shrink-0 ${activeTab === "download" ? "text-[#0A1C12]" : "text-white/70"}`} />
+              <Download className={`h-5 w-5 shrink-0 group-hover:scale-110 transition-transform duration-200 ease-out ${activeTab === "download" ? "text-[#0A1C12]" : "text-white/70"}`} />
               <span className="truncate">{language === "ta" ? "வரைபடம் பதிவிறக்கம்" : "Download Layout"}</span>
             </button>
 
             {/* Nav Item: About Company */}
             <button
               onClick={() => setActiveTab("about")}
-              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all cursor-pointer font-semibold text-xs sm:text-sm ${
+              className={`group w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] cursor-pointer font-semibold text-xs sm:text-sm ${
                 activeTab === "about"
                   ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
                   : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
               }`}
             >
-              <ShieldCheck className={`h-5 w-5 shrink-0 ${activeTab === "about" ? "text-[#0A1C12]" : "text-white/70"}`} />
+              <ShieldCheck className={`h-5 w-5 shrink-0 group-hover:scale-110 transition-transform duration-200 ease-out ${activeTab === "about" ? "text-[#0A1C12]" : "text-white/70"}`} />
               <span className="truncate">{language === "ta" ? "நிறுவனம் பற்றி" : "About Company"}</span>
             </button>
 
             {/* Nav Item: Contact Us */}
             <button
               onClick={() => setActiveTab("contact")}
-              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all cursor-pointer font-semibold text-xs sm:text-sm ${
+              className={`group w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] cursor-pointer font-semibold text-xs sm:text-sm ${
                 activeTab === "contact"
                   ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
                   : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
               }`}
             >
-              <PhoneCall className={`h-5 w-5 shrink-0 ${activeTab === "contact" ? "text-[#0A1C12]" : "text-white/70"}`} />
+              <PhoneCall className={`h-5 w-5 shrink-0 group-hover:scale-110 transition-transform duration-200 ease-out ${activeTab === "contact" ? "text-[#0A1C12]" : "text-white/70"}`} />
               <span className="truncate">{language === "ta" ? "நேரடி தொடர்பு" : "Contact Us"}</span>
             </button>
           </div>
@@ -567,7 +865,7 @@ export default function HomePage() {
       <div className="flex-1 flex flex-col min-w-0 md:ml-56 lg:ml-64 bg-[#FAF8F3] relative min-h-screen">
 
         {/* TOP APP STORE WINDOW HEADER (Search & Quick Controls) */}
-        <header className={`${activeTab === "home" ? "absolute top-0 left-0 right-0 z-40 bg-transparent px-2.5 sm:px-5 lg:px-7 pt-2.5 sm:pt-3 pb-1" : "sticky top-0 z-40 bg-[#FAF8F3]/95 backdrop-blur-md px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3.5 border-b border-[#EDE6D4]"} w-full flex items-center justify-between gap-1.5 sm:gap-3 lg:gap-4 select-none`}>
+        <header className={`${activeTab === "home" ? "absolute top-0 left-0 right-0 z-40 bg-transparent px-2.5 sm:px-5 lg:px-7 pt-2.5 sm:pt-3 pb-1" : "sticky top-0 z-40 bg-gradient-to-r from-[#052617] via-[#083822] to-[#041D12] px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3.5 border-b border-[#0A3D25] shadow-lg backdrop-blur-md"} w-full flex items-center justify-between gap-1.5 sm:gap-3 lg:gap-4 select-none`}>
           {/* Far Left Header: Mobile Brand Identity OR Desktop Madurai Real Estate Location Badge (Immediately to Right of Sidebar) */}
           <div className="flex items-center shrink-0">
             {/* Mobile Brand Identity & Hamburger Menu Toggle */}
@@ -577,7 +875,7 @@ export default function HomePage() {
                 className={`p-1.5 sm:p-2 rounded-xl border transition-all cursor-pointer shadow-2xs flex items-center justify-center ${
                   activeTab === "home"
                     ? "bg-[#06351F]/85 text-[#D9A52E] border-[#D9A52E]/40 hover:bg-[#06351F]"
-                    : "bg-white/95 text-[#06351F] border-neutral-200 hover:bg-neutral-100"
+                    : "bg-[#092D1B] text-[#D9A52E] border-[#E2B755]/40 hover:bg-[#0E4228]"
                 }`}
                 aria-label="Open Navigation Menu"
                 title="Menu"
@@ -591,13 +889,11 @@ export default function HomePage() {
                 }}
                 className="flex flex-col text-left cursor-pointer"
               >
-                <span className={`font-display font-extrabold text-[11px] sm:text-xs tracking-wider uppercase leading-tight ${
-                  activeTab === "home" ? "text-[#D9A52E] drop-shadow-sm" : "text-[#06351F]"
-                }`}>
+                <span className="font-display font-extrabold text-[11px] sm:text-xs tracking-wider uppercase leading-tight text-[#D9A52E] drop-shadow-sm">
                   SURYA PROMOTERS
                 </span>
                 <span className={`font-mono text-[8px] sm:text-[9px] tracking-[0.2em] uppercase font-bold leading-none ${
-                  activeTab === "home" ? "text-white/85" : "text-neutral-500"
+                  activeTab === "home" ? "text-white/85" : "text-[#F1E4C3]/80"
                 }`}>
                   ESTD. 2010
                 </span>
@@ -605,22 +901,77 @@ export default function HomePage() {
             </div>
 
             {/* Desktop Madurai Real Estate Badge - Relocated to Far Left immediately to the RIGHT of the sidebar */}
-            <div className="hidden md:flex items-center gap-2 px-3.5 py-2 h-9 sm:h-9.5 rounded-full bg-white/92 backdrop-blur-md border border-[#E5A922]/45 text-xs font-bold text-[#0A2617] shadow-xs hover:border-[#E5A922] transition-colors shrink-0">
+            <div className="hidden md:flex items-center gap-2 px-3.5 py-2 h-9 sm:h-9.5 rounded-full bg-white/95 backdrop-blur-md border border-[#E5A922]/50 text-xs font-bold text-[#0A2617] shadow-xs hover:border-[#E5A922] transition-colors shrink-0">
               <span className="w-2 h-2 rounded-full bg-[#E5A922] shrink-0 shadow-[0_0_6px_rgba(229,169,34,0.6)] animate-pulse" />
               <span className="whitespace-nowrap tracking-wide">{language === "ta" ? "மதுரை ரியல் எஸ்டேட்" : "Madurai Real Estate"}</span>
             </div>
           </div>
 
-          {/* Center Search Pill */}
-          <div className="flex-1 min-w-[90px] max-w-xl relative">
-            <Search className="absolute left-2.5 sm:left-4 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-neutral-400 pointer-events-none" />
+          {/* Center Search Pill & Autocomplete Suggestions */}
+          <div ref={searchContainerRef} className="flex-1 min-w-[90px] max-w-xl relative flex items-center">
+            {/* Relocated Search Icon/Button on the LEFT side */}
+            <button
+              type="button"
+              onClick={handleSearchSubmit}
+              className="absolute left-1 sm:left-1.5 top-1/2 -translate-y-1/2 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#E5A922]/40 flex items-center justify-center transition-all cursor-pointer shadow-xs shrink-0 z-10 hover:scale-105 active:scale-95"
+              title={language === "ta" ? "தேடுக" : "Search"}
+              aria-label={language === "ta" ? "தேடுக" : "Search"}
+            >
+              <Search className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-white" />
+            </button>
             <input
               type="text"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onFocus={() => {
+                if (searchQuery.trim().length >= 5) {
+                  setIsDropdownOpen(true);
+                }
+              }}
+              onChange={(e) => {
+                const val = e.target.value;
+                setSearchQuery(val);
+                if (val.trim().length >= 5) {
+                  setIsDropdownOpen(true);
+                } else {
+                  setIsDropdownOpen(false);
+                }
+                setHighlightedIndex(-1);
+              }}
               onKeyDown={(e) => {
-                if (e.key === "Enter" && searchQuery.trim()) {
-                  setActiveTab("projects");
+                if (isDropdownOpen && searchQuery.trim().length >= 5) {
+                  if (autocompleteSuggestions.length > 0) {
+                    if (e.key === "ArrowDown") {
+                      e.preventDefault();
+                      setHighlightedIndex((prev) =>
+                        prev < autocompleteSuggestions.length - 1 ? prev + 1 : 0
+                      );
+                      return;
+                    }
+                    if (e.key === "ArrowUp") {
+                      e.preventDefault();
+                      setHighlightedIndex((prev) =>
+                        prev > 0 ? prev - 1 : autocompleteSuggestions.length - 1
+                      );
+                      return;
+                    }
+                    if (e.key === "Enter") {
+                      if (highlightedIndex >= 0 && highlightedIndex < autocompleteSuggestions.length) {
+                        e.preventDefault();
+                        handleSelectSuggestion(autocompleteSuggestions[highlightedIndex]);
+                        return;
+                      }
+                    }
+                  }
+                  if (e.key === "Escape") {
+                    e.preventDefault();
+                    setIsDropdownOpen(false);
+                    setHighlightedIndex(-1);
+                    return;
+                  }
+                }
+
+                if (e.key === "Enter") {
+                  handleSearchSubmit();
                 }
               }}
               placeholder={
@@ -628,33 +979,125 @@ export default function HomePage() {
                   ? "திட்டங்கள், இடங்கள் தேடுங்கள்..."
                   : "Search projects, locations..."
               }
-              className="w-full h-8 sm:h-9 pl-7 sm:pl-10 pr-8 sm:pr-10 bg-white/92 backdrop-blur-md text-[11px] sm:text-xs md:text-sm font-medium text-neutral-800 placeholder-neutral-400 rounded-full border border-neutral-200/90 shadow-xs focus:outline-none focus:border-[#E5A922] focus:ring-1 focus:ring-[#E5A922]/20 transition-all"
+              className={`w-full h-8 sm:h-9 pl-8 sm:pl-10 ${searchQuery ? "pr-8 sm:pr-9" : "pr-3.5 sm:pr-4"} bg-white/95 backdrop-blur-md text-[11px] sm:text-xs md:text-sm font-medium text-neutral-800 placeholder-neutral-400 rounded-full border border-neutral-200/90 shadow-xs focus:outline-none focus:border-[#E5A922] focus:ring-1 focus:ring-[#E5A922]/20 transition-all leading-normal`}
             />
-            <button
-              onClick={() => {
-                if (searchQuery.trim()) {
-                  setActiveTab("projects");
-                }
-              }}
-              className="absolute right-1 top-1/2 -translate-y-1/2 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#E5A922]/40 flex items-center justify-center transition-all cursor-pointer shadow-xs shrink-0"
-              title="Search"
-            >
-              <Search className="h-3 w-3 text-white" />
-            </button>
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchQuery("");
+                  setIsDropdownOpen(false);
+                  setHighlightedIndex(-1);
+                }}
+                className="absolute right-2 sm:right-2.5 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-neutral-200 hover:bg-neutral-300 text-neutral-600 flex items-center justify-center transition-all cursor-pointer text-xs font-bold z-10 hover:scale-105 active:scale-95"
+                title={language === "ta" ? "தேடலை அழி" : "Clear search"}
+                aria-label={language === "ta" ? "தேடலை அழி" : "Clear search"}
+              >
+                <X className="h-3 w-3" />
+              </button>
+            )}
+
+            {/* Autocomplete Suggestions Dropdown (Directly below search bar, only when >= 5 characters) */}
+            {isDropdownOpen && searchQuery.trim().length >= 5 && (
+              <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-[calc(100vw-24px)] sm:w-full sm:left-0 sm:translate-x-0 bg-white rounded-2xl border border-neutral-200/95 shadow-2xl overflow-hidden z-50 animate-fadeIn max-h-[380px] flex flex-col">
+                {autocompleteSuggestions.length > 0 ? (
+                  <>
+                    <div className="px-3.5 py-2 bg-[#FAF8F3] border-b border-neutral-100 flex items-center justify-between text-[10px] font-bold text-neutral-500 uppercase tracking-wider shrink-0 select-none">
+                      <span>{language === "ta" ? "பரிந்துரைகள்" : "Suggestions"} ({autocompleteSuggestions.length})</span>
+                      <span className="hidden sm:inline text-neutral-400 font-normal">↑↓ to navigate · ↵ to select</span>
+                    </div>
+
+                    <div className="overflow-y-auto divide-y divide-neutral-100 py-1 max-h-[280px]">
+                      {autocompleteSuggestions.map((project, idx) => {
+                        const isHighlighted = highlightedIndex === idx;
+                        return (
+                          <div
+                            key={project.id}
+                            onClick={() => handleSelectSuggestion(project)}
+                            onMouseEnter={() => setHighlightedIndex(idx)}
+                            className={`px-3.5 py-2.5 flex items-center gap-3 cursor-pointer transition-colors ${
+                              isHighlighted
+                                ? "bg-[#F3F8F5] text-[#06351F] border-l-3 border-[#06351F]"
+                                : "hover:bg-neutral-50 text-neutral-800"
+                            }`}
+                          >
+                            <div className="relative w-10 h-10 rounded-xl overflow-hidden bg-neutral-100 shrink-0 border border-neutral-200/70">
+                              <Image
+                                src={project.image}
+                                alt={project.name.en}
+                                fill
+                                sizes="40px"
+                                className="object-cover"
+                              />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2">
+                                <h5 className="text-xs sm:text-sm font-black truncate">
+                                  {highlightMatch(project.name[language] || project.name.en, searchQuery)}
+                                </h5>
+                                <span className="hidden sm:inline-block px-2 py-0.5 rounded-full text-[9px] font-bold bg-[#FAF5E8] text-[#705820] border border-[#D9A52E]/30 shrink-0">
+                                  {project.categoryLabel?.[language] || project.category}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-1 text-[11px] text-neutral-500 mt-0.5 truncate">
+                                <MapPin className="h-3 w-3 text-[#D9A52E] shrink-0" />
+                                <span className="truncate">
+                                  {highlightMatch(project.location[language] || project.location.en, searchQuery)}
+                                </span>
+                              </div>
+                            </div>
+                            <div className="text-neutral-400 shrink-0">
+                              <ChevronRight className="h-4 w-4" />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={handleSearchSubmit}
+                      className="w-full px-3.5 py-2 bg-[#F8FAF9] hover:bg-[#EBF3EF] border-t border-neutral-100 text-left flex items-center justify-between text-xs font-bold text-[#06351F] transition-colors cursor-pointer shrink-0"
+                    >
+                      <span>
+                        {language === "ta"
+                          ? `"${searchQuery}" க்கான அனைத்து முடிவுகளையும் காண்க (${autocompleteSuggestions.length})`
+                          : `View all results for "${searchQuery}" (${autocompleteSuggestions.length})`}
+                      </span>
+                      <ArrowRight className="h-3.5 w-3.5 text-[#06351F]" />
+                    </button>
+                  </>
+                ) : (
+                  <div className="p-5 text-center space-y-1.5">
+                    <div className="w-10 h-10 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center mx-auto mb-1">
+                      <Search className="h-4.5 w-4.5" />
+                    </div>
+                    <p className="text-xs sm:text-sm font-black text-[#06351F]">
+                      {language === "ta" ? "பொருந்தும் திட்டங்கள் எதுவும் இல்லை" : "No matching properties found"}
+                    </p>
+                    <p className="text-[11px] text-neutral-500 max-w-xs mx-auto">
+                      {language === "ta"
+                        ? `"${searchQuery}" என்ற தேடலுக்கு பொருத்தமான திட்டங்கள் கிடைக்கவில்லை.`
+                        : `No properties matching "${searchQuery}". Try searching for another name or location.`}
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Right Quick Controls */}
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 justify-end">
             {/* IAF Veteran Trust Seal */}
-            <div className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#F3EEDF]/90 backdrop-blur-md border border-[#DDD4C0] text-[#705820] text-xs font-bold shadow-xs">
-              <ShieldCheck className="h-3.5 w-3.5 text-[#9E731C]" />
+            <div className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FAF5E8]/95 backdrop-blur-md border border-[#D9A52E]/50 text-[#705820] text-xs font-bold shadow-xs">
+              <ShieldCheck className="h-3.5 w-3.5 text-[#B8860B]" />
               <span>16+ Yrs IAF Vet</span>
             </div>
 
             {/* Language Toggle Dropdown Pill */}
             <button
               onClick={toggleLanguage}
-              className="h-8 sm:h-9 flex items-center gap-1 px-2.5 sm:px-3 rounded-full bg-white/85 backdrop-blur-md border border-neutral-200 hover:border-neutral-300 text-[#0A1C12] text-[11px] sm:text-xs font-semibold shadow-xs transition-colors cursor-pointer shrink-0"
+              className="h-8 sm:h-9 flex items-center gap-1 px-2.5 sm:px-3 rounded-full bg-white/95 backdrop-blur-md border border-neutral-200 hover:border-[#E5A922]/50 text-[#0A1C12] text-[11px] sm:text-xs font-semibold shadow-xs transition-colors cursor-pointer shrink-0"
             >
               <span>{language === "en" ? "தமிழ்" : "English"}</span>
               <ChevronDown className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-neutral-500" />
@@ -663,8 +1106,9 @@ export default function HomePage() {
             {/* Phone Direct */}
             <a
               href={`tel:${phone}`}
-              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#072818] hover:bg-[#0B3D26] text-[#E5A922] flex items-center justify-center transition-all shadow-xs cursor-pointer shrink-0"
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#051F12] border border-[#E5A922]/60 hover:border-[#E5A922] hover:bg-[#08301D] text-[#E5A922] flex items-center justify-center transition-all shadow-xs cursor-pointer shrink-0 hover:scale-105 active:scale-95"
               title={`Call ${phone}`}
+              aria-label={`Call ${phone}`}
             >
               <Phone className="h-3.5 w-3.5 text-[#E5A922]" />
             </a>
@@ -672,7 +1116,7 @@ export default function HomePage() {
         </header>
 
         {/* MAIN STORE CONTENT CANVAS */}
-        <main className={`flex-1 min-w-0 ${activeTab === "home" ? "flex flex-col p-0 pb-20 md:pb-0 justify-between" : "p-3.5 sm:p-6 lg:p-8 space-y-6 sm:space-y-8 pb-24 md:pb-8"}`}>
+        <main className={`flex-1 min-w-0 ${activeTab === "home" ? "flex flex-col p-0 justify-between" : "p-3.5 sm:p-6 lg:p-8 space-y-6 sm:space-y-8 pb-8 md:pb-6"}`}>
 
           {/* =================================================================== */}
           {/* 1. STORE HOME SCREEN (Visible ONLY when activeTab === "home")        */}
@@ -685,14 +1129,14 @@ export default function HomePage() {
               {/* ------------------------------------------------------------------- */}
               <section className="relative w-full overflow-hidden shrink-0 flex items-center pt-16 sm:pt-18 md:pt-20 lg:pt-22 pb-8 sm:pb-10 md:pb-12 lg:pb-14 px-4 sm:px-6 lg:px-10 min-h-[300px] sm:min-h-[330px] md:min-h-[360px] lg:min-h-[390px] xl:min-h-[415px]">
                 {/* Villa Image Covering the Section - Full Width, Uncropped Architecture */}
-                <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden -z-10">
+                <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden -z-10 [transform:translateZ(0)]">
                   <Image
                     src="/images/hero/modern-villa-header.jpg"
                     alt="Surya Promoters Luxury Villa Architecture"
                     fill
                     priority
                     sizes="100vw"
-                    className="object-cover object-[right_top] sm:object-[right_top]"
+                    className="object-cover object-[right_top] sm:object-[right_top] animate-heroSlowZoom"
                     style={{ filter: "brightness(1.05) contrast(1.06) saturate(1.08)" }}
                   />
 
@@ -730,18 +1174,18 @@ export default function HomePage() {
 
                 {/* Hero Left Text Content - Positioned Elegantly on the Left Side */}
                 <div className="w-full sm:w-[55%] md:w-[50%] lg:w-[46%] xl:w-[42%] flex flex-col items-start justify-center text-left z-10 pl-2 sm:pl-4 md:pl-6 lg:pl-10 xl:pl-12 pr-4">
-                  <div className="flex items-center gap-2 mb-2 sm:mb-2.5 lg:mb-3">
-                    <span className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full bg-white/92 backdrop-blur-sm border border-[#E5A922]/50 shadow-xs">
-                      <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#E5A922]" />
+                  <div className="flex items-center gap-2 mb-2 sm:mb-2.5 lg:mb-3 animate-heroBadgeFadeUp">
+                    <span className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full bg-white/92 backdrop-blur-sm border border-[#E5A922]/50 shadow-xs hover:border-[#E5A922] transition-colors">
+                      <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#E5A922] animate-pulse" />
                       <p className="text-[11px] sm:text-xs lg:text-[13px] font-extrabold text-[#9E731C] tracking-wide">
                         {language === "ta" ? "சிறந்த நாளைய விடியலுக்கான கட்டுமானம்" : "Building a Better Tomorrow"}
                       </p>
                     </span>
                   </div>
-                  <h1 className="text-2xl sm:text-3xl md:text-[38px] lg:text-[44px] xl:text-[48px] font-black text-[#0A2617] tracking-tight leading-tight drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">
+                  <h1 className="text-2xl sm:text-3xl md:text-[38px] lg:text-[44px] xl:text-[48px] font-black text-[#0A2617] tracking-tight leading-tight drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)] animate-heroFadeUp">
                     {language === "ta" ? "சூர்யா புரமோட்டர்ஸ்" : "Surya Promoters"}
                   </h1>
-                  <p className="mt-1.5 sm:mt-2 lg:mt-2.5 text-xs sm:text-sm lg:text-[15px] xl:text-base font-bold text-[#1E3A2B] max-w-sm sm:max-w-md lg:max-w-lg leading-relaxed drop-shadow-[0_1px_2px_rgba(255,255,255,0.7)]">
+                  <p className="mt-1.5 sm:mt-2 lg:mt-2.5 text-xs sm:text-sm lg:text-[15px] xl:text-base font-bold text-[#1E3A2B] max-w-sm sm:max-w-md lg:max-w-lg leading-relaxed drop-shadow-[0_1px_2px_rgba(255,255,255,0.7)] animate-heroSubtitleFadeUp">
                     {language === "ta" ? "2010 முதல் உங்களின் நம்பிக்கைக்குரிய ரியல் எஸ்டேட் பங்குதாரர்" : "Your Trusted Real Estate Partner Since 2010"}
                   </p>
                 </div>
@@ -785,7 +1229,7 @@ export default function HomePage() {
                         setActiveTab("projects");
                         setActiveCategory(null);
                       }}
-                      className="clean-interactive-card group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#E8CCA0] bg-gradient-to-r from-[#FBF4E6] via-[#F7EBD0] to-[#F0DEC0] shadow-[0_3px_14px_rgba(205,140,25,0.08)] hover:shadow-[0_10px_28px_rgba(205,140,25,0.20)] hover:border-[#DDA843] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
+                      className="clean-interactive-card animate-card-1 group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#E8CCA0] bg-gradient-to-r from-[#FBF4E6] via-[#F7EBD0] to-[#F0DEC0] shadow-[0_3px_14px_rgba(205,140,25,0.08)] hover:shadow-[0_12px_30px_rgba(205,140,25,0.22)] hover:border-[#DDA843] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 ease-out flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
                     >
                       {/* Background Photographic Image on Right with Natural Gradient Blend */}
                       <div className="absolute right-0 top-0 bottom-0 w-[34%] sm:w-[36%] md:w-[36%] lg:w-[38%] xl:w-[40%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
@@ -794,7 +1238,7 @@ export default function HomePage() {
                           alt="Our Projects"
                           fill
                           sizes="(max-width: 768px) 40vw, 320px"
-                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
+                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
                         />
                         {/* Soft Natural Gradient Transition towards text */}
                         <div
@@ -807,7 +1251,7 @@ export default function HomePage() {
 
                       {/* Left: Prominent Circular Gradient Icon, Title & Description */}
                       <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[62%] sm:max-w-[60%] lg:max-w-[58%]">
-                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#F5B731] via-[#E5A922] to-[#BD7B0C] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(205,140,25,0.25)] group-hover:scale-108 transition-transform duration-300">
+                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#F5B731] via-[#E5A922] to-[#BD7B0C] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(205,140,25,0.25)] group-hover:scale-110 transition-transform duration-300 ease-out">
                           <Building2 className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
                         </div>
                         <div className="min-w-0">
@@ -822,7 +1266,7 @@ export default function HomePage() {
 
                       {/* Right: Elegant Circular Arrow Button */}
                       <div className="relative z-10 shrink-0">
-                        <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-0.5 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
+                        <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-1 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
                           <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.6]" />
                         </div>
                       </div>
@@ -831,7 +1275,7 @@ export default function HomePage() {
                     {/* Card 2: Site Location (Fresh mint green fading into pale green) */}
                     <button
                       onClick={() => setActiveTab("location")}
-                      className="clean-interactive-card group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#A8DCB7] bg-gradient-to-r from-[#EAF7EE] via-[#DCF2E4] to-[#CEEBD7] shadow-[0_3px_14px_rgba(16,140,60,0.08)] hover:shadow-[0_10px_28px_rgba(16,140,60,0.20)] hover:border-[#22C55E] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
+                      className="clean-interactive-card animate-card-2 group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#A8DCB7] bg-gradient-to-r from-[#EAF7EE] via-[#DCF2E4] to-[#CEEBD7] shadow-[0_3px_14px_rgba(16,140,60,0.08)] hover:shadow-[0_12px_30px_rgba(16,140,60,0.22)] hover:border-[#22C55E] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 ease-out flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
                     >
                       {/* Background Photographic Image on Right with Natural Gradient Blend */}
                       <div className="absolute right-0 top-0 bottom-0 w-[34%] sm:w-[36%] md:w-[36%] lg:w-[38%] xl:w-[40%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
@@ -840,7 +1284,7 @@ export default function HomePage() {
                           alt="Site Location"
                           fill
                           sizes="(max-width: 768px) 40vw, 320px"
-                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
+                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
                         />
                         {/* Soft Natural Gradient Transition towards text */}
                         <div
@@ -853,7 +1297,7 @@ export default function HomePage() {
 
                       {/* Left: Prominent Circular Gradient Icon, Title & Description */}
                       <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[62%] sm:max-w-[60%] lg:max-w-[58%]">
-                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(173,18,26,0.30)] group-hover:scale-108 transition-transform duration-300 overflow-hidden relative">
+                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(173,18,26,0.30)] group-hover:scale-110 transition-transform duration-300 ease-out overflow-hidden relative">
                           <Image
                             src="/images/site-location-icon.png"
                             alt="Site Location"
@@ -875,7 +1319,7 @@ export default function HomePage() {
 
                       {/* Right: Elegant Circular Arrow Button */}
                       <div className="relative z-10 shrink-0">
-                        <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#15803D] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-0.5 transition-all duration-300 shadow-[0_2px_8px_rgba(21,128,61,0.35)]">
+                        <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#15803D] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-1 transition-all duration-300 shadow-[0_2px_8px_rgba(21,128,61,0.35)]">
                           <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.6]" />
                         </div>
                       </div>
@@ -884,7 +1328,7 @@ export default function HomePage() {
                     {/* Card 3: Gallery (Lavender fading into soft purple) */}
                     <button
                       onClick={() => setActiveTab("gallery")}
-                      className="clean-interactive-card group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#CFB8ED] bg-gradient-to-r from-[#F5EFFB] via-[#EBE0F7] to-[#DFCFF2] shadow-[0_3px_14px_rgba(147,51,234,0.08)] hover:shadow-[0_10px_28px_rgba(147,51,234,0.20)] hover:border-[#A855F7] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
+                      className="clean-interactive-card animate-card-3 group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#CFB8ED] bg-gradient-to-r from-[#F5EFFB] via-[#EBE0F7] to-[#DFCFF2] shadow-[0_3px_14px_rgba(147,51,234,0.08)] hover:shadow-[0_12px_30px_rgba(147,51,234,0.22)] hover:border-[#A855F7] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 ease-out flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
                     >
                       {/* Background Photographic Image on Right with Natural Gradient Blend */}
                       <div className="absolute right-0 top-0 bottom-0 w-[34%] sm:w-[36%] md:w-[36%] lg:w-[38%] xl:w-[40%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
@@ -893,7 +1337,7 @@ export default function HomePage() {
                           alt="Gallery"
                           fill
                           sizes="(max-width: 768px) 40vw, 320px"
-                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
+                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
                         />
                         {/* Soft Natural Gradient Transition towards text */}
                         <div
@@ -906,7 +1350,7 @@ export default function HomePage() {
 
                       {/* Left: Prominent Circular Gradient Icon, Title & Description */}
                       <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[62%] sm:max-w-[60%] lg:max-w-[58%]">
-                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#A855F7] via-[#9333EA] to-[#6B21A8] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(147,51,234,0.25)] group-hover:scale-108 transition-transform duration-300">
+                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#A855F7] via-[#9333EA] to-[#6B21A8] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(147,51,234,0.25)] group-hover:scale-110 transition-transform duration-300 ease-out">
                           <Camera className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
                         </div>
                         <div className="min-w-0">
@@ -921,7 +1365,7 @@ export default function HomePage() {
 
                       {/* Right: Elegant Circular Arrow Button */}
                       <div className="relative z-10 shrink-0">
-                        <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-0.5 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
+                        <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-1 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
                           <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.6]" />
                         </div>
                       </div>
@@ -930,7 +1374,7 @@ export default function HomePage() {
                     {/* Card 4: About Company (Light sage green fading into forest green tones) */}
                     <button
                       onClick={() => setActiveTab("about")}
-                      className="clean-interactive-card group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#AFD1B9] bg-gradient-to-r from-[#EEF5F0] via-[#E0ECE3] to-[#CFE2D4] shadow-[0_3px_14px_rgba(14,89,52,0.08)] hover:shadow-[0_10px_28px_rgba(14,89,52,0.20)] hover:border-[#16A34A] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
+                      className="clean-interactive-card animate-card-4 group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#AFD1B9] bg-gradient-to-r from-[#EEF5F0] via-[#E0ECE3] to-[#CFE2D4] shadow-[0_3px_14px_rgba(14,89,52,0.08)] hover:shadow-[0_12px_30px_rgba(14,89,52,0.22)] hover:border-[#16A34A] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 ease-out flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
                     >
                       {/* Background Photographic Image on Right with Natural Gradient Blend */}
                       <div className="absolute right-0 top-0 bottom-0 w-[34%] sm:w-[36%] md:w-[36%] lg:w-[38%] xl:w-[40%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
@@ -939,7 +1383,7 @@ export default function HomePage() {
                           alt="About Company"
                           fill
                           sizes="(max-width: 768px) 40vw, 320px"
-                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
+                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
                         />
                         {/* Soft Natural Gradient Transition towards text */}
                         <div
@@ -952,7 +1396,7 @@ export default function HomePage() {
 
                       {/* Left: Prominent Circular Gradient Icon, Title & Description */}
                       <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[62%] sm:max-w-[60%] lg:max-w-[58%]">
-                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#16A34A] via-[#0E5934] to-[#083D22] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(14,89,52,0.25)] group-hover:scale-108 transition-transform duration-300">
+                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#16A34A] via-[#0E5934] to-[#083D22] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(14,89,52,0.25)] group-hover:scale-110 transition-transform duration-300 ease-out">
                           <ShieldCheck className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
                         </div>
                         <div className="min-w-0">
@@ -967,7 +1411,7 @@ export default function HomePage() {
 
                       {/* Right: Elegant Circular Arrow Button */}
                       <div className="relative z-10 shrink-0">
-                        <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-0.5 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
+                        <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-1 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
                           <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.6]" />
                         </div>
                       </div>
@@ -976,7 +1420,7 @@ export default function HomePage() {
                     {/* Card 5: Download Layout (Warm peach fading into champagne cream) */}
                     <button
                       onClick={() => setActiveTab("download")}
-                      className="clean-interactive-card group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#F5BE9B] bg-gradient-to-r from-[#FDF2E8] via-[#FCE4D4] to-[#F7D4BE] shadow-[0_3px_14px_rgba(234,88,12,0.08)] hover:shadow-[0_10px_28px_rgba(234,88,12,0.20)] hover:border-[#EA580C] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
+                      className="clean-interactive-card animate-card-5 group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#F5BE9B] bg-gradient-to-r from-[#FDF2E8] via-[#FCE4D4] to-[#F7D4BE] shadow-[0_3px_14px_rgba(234,88,12,0.08)] hover:shadow-[0_12px_30px_rgba(234,88,12,0.22)] hover:border-[#EA580C] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 ease-out flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
                     >
                       {/* Background Photographic Image on Right with Natural Gradient Blend */}
                       <div className="absolute right-0 top-0 bottom-0 w-[34%] sm:w-[36%] md:w-[36%] lg:w-[38%] xl:w-[40%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
@@ -985,7 +1429,7 @@ export default function HomePage() {
                           alt="Download Layout"
                           fill
                           sizes="(max-width: 768px) 40vw, 320px"
-                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
+                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
                         />
                         {/* Soft Natural Gradient Transition towards text */}
                         <div
@@ -998,7 +1442,7 @@ export default function HomePage() {
 
                       {/* Left: Prominent Circular Gradient Icon, Title & Description */}
                       <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[62%] sm:max-w-[60%] lg:max-w-[58%]">
-                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#FB923C] via-[#EA580C] to-[#C2410C] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(234,88,12,0.25)] group-hover:scale-108 transition-transform duration-300">
+                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#FB923C] via-[#EA580C] to-[#C2410C] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(234,88,12,0.25)] group-hover:scale-110 transition-transform duration-300 ease-out">
                           <Download className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
                         </div>
                         <div className="min-w-0">
@@ -1013,7 +1457,7 @@ export default function HomePage() {
 
                       {/* Right: Elegant Circular Arrow Button */}
                       <div className="relative z-10 shrink-0">
-                        <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-0.5 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
+                        <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-1 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
                           <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.6]" />
                         </div>
                       </div>
@@ -1022,7 +1466,7 @@ export default function HomePage() {
                     {/* Card 6: Contact Us (Soft aqua fading into teal) */}
                     <button
                       onClick={() => setActiveTab("contact")}
-                      className="clean-interactive-card group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#9FD4D3] bg-gradient-to-r from-[#ECF7F7] via-[#DAEFEF] to-[#C5E5E5] shadow-[0_3px_14px_rgba(13,148,136,0.08)] hover:shadow-[0_10px_28px_rgba(13,148,136,0.20)] hover:border-[#0D9488] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
+                      className="clean-interactive-card animate-card-6 group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#9FD4D3] bg-gradient-to-r from-[#ECF7F7] via-[#DAEFEF] to-[#C5E5E5] shadow-[0_3px_14px_rgba(13,148,136,0.08)] hover:shadow-[0_12px_30px_rgba(13,148,136,0.22)] hover:border-[#0D9488] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 ease-out flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
                     >
                       {/* Background Photographic Image on Right with Natural Gradient Blend */}
                       <div className="absolute right-0 top-0 bottom-0 w-[34%] sm:w-[36%] md:w-[36%] lg:w-[38%] xl:w-[40%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
@@ -1031,7 +1475,7 @@ export default function HomePage() {
                           alt="Contact Us"
                           fill
                           sizes="(max-width: 768px) 40vw, 320px"
-                          className="object-cover object-[center_20%] transition-transform duration-500 ease-out group-hover:scale-105"
+                          className="object-cover object-[center_20%] transition-transform duration-500 ease-out group-hover:scale-108"
                         />
                         {/* Soft Natural Gradient Transition towards text */}
                         <div
@@ -1044,7 +1488,7 @@ export default function HomePage() {
 
                       {/* Left: Prominent Circular Gradient Icon, Title & Description */}
                       <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[62%] sm:max-w-[60%] lg:max-w-[58%]">
-                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#14B8A6] via-[#0D9488] to-[#0F766E] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(13,148,136,0.25)] group-hover:scale-108 transition-transform duration-300">
+                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#14B8A6] via-[#0D9488] to-[#0F766E] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(13,148,136,0.25)] group-hover:scale-110 transition-transform duration-300 ease-out">
                           <PhoneCall className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
                         </div>
                         <div className="min-w-0">
@@ -1059,7 +1503,7 @@ export default function HomePage() {
 
                       {/* Right: Elegant Circular Arrow Button */}
                       <div className="relative z-10 shrink-0">
-                        <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-0.5 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
+                        <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-1 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
                           <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.6]" />
                         </div>
                       </div>
@@ -1088,20 +1532,6 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-
-            {/* Full-Width Bottom Decorative Landscape & City Skyline Artwork */}
-            <div className="relative w-full h-7 sm:h-7.5 lg:h-8.5 xl:h-9 overflow-hidden pointer-events-none select-none shrink-0 mt-auto">
-              <Image
-                src="/images/reference/bottom-leaves-v2.png"
-                alt="Madurai Cityscape & Landscape"
-                fill
-                priority
-                sizes="(max-width: 1024px) 100vw, 1400px"
-                className="object-cover object-bottom"
-              />
-              {/* Natural smooth blend into ivory canvas at the top edge */}
-              <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-b from-[#FAF8F3] via-[#FAF8F3]/60 to-transparent pointer-events-none" />
-            </div>
             </div>
           )}
 
@@ -1111,7 +1541,111 @@ export default function HomePage() {
           {/* =================================================================== */}
           {activeTab === "projects" && (
             <section className="space-y-6 animate-fadeIn pt-1">
-              {activeCategory === null ? (
+              {searchQuery.trim() !== "" ? (
+                /* ----------------------------------------------------------------- */
+                /* SEARCH RESULTS VIEW (When search is active)                      */
+                /* ----------------------------------------------------------------- */
+                <div className="space-y-6">
+                  {/* Top-Left Back Arrow & Reset Controls */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <button
+                      onClick={() => {
+                        setSearchQuery("");
+                        setActiveCategory(null);
+                      }}
+                      className="group self-start inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-bold transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-xs"
+                      aria-label={language === "ta" ? "அனைத்து பிரிவுகளுக்கும் திரும்புக" : "Back to All Categories"}
+                      title={language === "ta" ? "அனைத்து பிரிவுகளுக்கும் திரும்புக" : "Back to All Categories"}
+                    >
+                      <ArrowLeft className="h-4 w-4 text-[#D9A52E] group-hover:-translate-x-1 transition-transform" />
+                      <span>{language === "ta" ? "அனைத்து பிரிவுகள்" : "All Categories"}</span>
+                    </button>
+
+                    <button
+                      onClick={() => setSearchQuery("")}
+                      className="self-start sm:self-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white text-neutral-700 hover:text-red-700 hover:bg-red-50 border border-neutral-200/90 text-xs font-bold transition-all cursor-pointer shadow-2xs hover:scale-105 active:scale-95"
+                    >
+                      <X className="h-3.5 w-3.5 text-neutral-500 hover:text-red-600" />
+                      <span>{language === "ta" ? "தேடலை அழி" : "Clear Search"}</span>
+                    </button>
+                  </div>
+
+                  {/* Search Results Banner */}
+                  <div className="bg-gradient-to-r from-[#06351F] via-[#092B1C] to-[#03210E] text-white rounded-3xl p-5 sm:p-7 shadow-lg border border-[#D9A52E]/30">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                      <div>
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D9A52E]/20 text-[#D9A52E] border border-[#D9A52E]/30 text-xs font-bold mb-2">
+                          <Search className="h-3.5 w-3.5" />
+                          <span>
+                            {language === "ta" ? "தேடல் முடிவுகள்" : "Search Results"}
+                          </span>
+                        </div>
+                        <h3 className="text-xl sm:text-2xl font-black text-white">
+                          {language === "ta" ? "தேடல்:" : "Results for:"}{" "}
+                          <span className="text-[#E5A922]">"{searchQuery}"</span>
+                        </h3>
+                        <p className="text-xs sm:text-sm text-neutral-300 mt-1 max-w-2xl leading-relaxed">
+                          {language === "ta"
+                            ? `${searchMatchingProjects.length} மனைத்திட்டங்கள் கண்டறியப்பட்டன.`
+                            : `Found ${searchMatchingProjects.length} ${searchMatchingProjects.length === 1 ? "property" : "properties"} matching your search.`}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Empty State vs Matching Projects Grid */}
+                  {searchMatchingProjects.length === 0 ? (
+                    <div className="bg-white rounded-3xl p-8 sm:p-12 text-center border border-neutral-200/90 shadow-sm space-y-4 max-w-xl mx-auto">
+                      <div className="w-16 h-16 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center mx-auto text-amber-700 shadow-inner">
+                        <Search className="h-8 w-8 text-amber-600" />
+                      </div>
+                      <div className="space-y-1.5">
+                        <h4 className="text-lg sm:text-xl font-black text-[#06351F]">
+                          No properties found
+                        </h4>
+                        <p className="text-xs sm:text-sm text-neutral-600 max-w-md mx-auto">
+                          {language === "ta"
+                            ? `"${searchQuery}" என்ற பெயரிலோ அல்லது இடத்திலோ எந்தவொரு மனைத்திட்டமும் கிடைக்கவில்லை. வேறு திட்டம் அல்லது இடத்தை தேட முயற்சிக்கவும்.`
+                            : `We couldn't find any properties matching "${searchQuery}". Please check the spelling or search by location like Alagar Kovil, Othakadai, or Madurai.`}
+                        </p>
+                      </div>
+                      <div className="pt-2">
+                        <button
+                          onClick={() => {
+                            setSearchQuery("");
+                            setActiveCategory(null);
+                          }}
+                          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white text-xs font-bold transition-all shadow-xs cursor-pointer hover:scale-105 active:scale-95"
+                        >
+                          <X className="h-3.5 w-3.5 text-[#E5A922]" />
+                          <span>{language === "ta" ? "தேடலை அழித்து அனைத்து திட்டங்களையும் காண்க" : "Clear Search & View All Projects"}</span>
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                        {searchMatchingProjects.map((project) => renderProjectCard(project))}
+                      </div>
+
+                      {/* Bottom Back Button */}
+                      <div className="flex items-center justify-center pt-4 pb-2">
+                        <button
+                          onClick={() => {
+                            setSearchQuery("");
+                            setActiveCategory(null);
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                          }}
+                          className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] shadow-sm hover:shadow-md text-xs sm:text-sm font-black transition-all cursor-pointer hover:scale-105 active:scale-95"
+                        >
+                          <ArrowLeft className="h-4 w-4 text-[#E5A922]" />
+                          <span>{language === "ta" ? "அனைத்து பிரிவுகளுக்கும் திரும்புக" : "Back to All Categories"}</span>
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              ) : activeCategory === null ? (
                 /* ----------------------------------------------------------------- */
                 /* SCREEN A: 3 CATEGORY SELECTION CARDS ONLY (No project cards below) */
                 /* ----------------------------------------------------------------- */
@@ -1320,190 +1854,7 @@ export default function HomePage() {
 
                   {/* Cards Grid for activeCategory */}
                   <div className={`grid grid-cols-1 md:grid-cols-2 ${activeCategoryProjects.length > 2 ? "lg:grid-cols-3" : "lg:grid-cols-2"} gap-5`}>
-                    {activeCategoryProjects.map((project) => {
-                      const projectExtra = PROJECT_DETAILS_MAP[project.id];
-                      const cardGallery = projectExtra?.galleryImages && projectExtra.galleryImages.length > 0
-                        ? projectExtra.galleryImages
-                        : [project.image];
-                      const cardImgIndex = cardImageIndices[project.id] ?? 0;
-                      const currentCardImage = cardGallery[cardImgIndex % cardGallery.length] || project.image;
-
-                      return (
-                      <div
-                        key={project.id}
-                        onClick={() => setSelectedProject(project)}
-                        className="bg-white rounded-[22px] overflow-hidden border border-neutral-200/90 shadow-sm hover:shadow-xl hover:border-[#D9A52E]/70 transition-all duration-300 flex flex-col group cursor-pointer"
-                      >
-                        {/* Card Thumbnail */}
-                        <div className="relative h-60 w-full overflow-hidden bg-neutral-900 group/cardimg">
-                          <Image
-                            src={currentCardImage}
-                            alt={project.name.en}
-                            fill
-                            sizes="(max-width: 768px) 100vw, 50vw"
-                            className="object-cover transition-transform duration-500 group-hover:scale-105 pointer-events-none"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
-
-                          {/* Next / Previous Arrows on Card */}
-                          {cardGallery.length > 1 && (
-                            <>
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setCardImageIndices((prev) => ({
-                                    ...prev,
-                                    [project.id]: (cardImgIndex - 1 + cardGallery.length) % cardGallery.length,
-                                  }));
-                                }}
-                                aria-label="Previous image"
-                                className="absolute left-2.5 top-1/2 -translate-y-1/2 z-20 h-9 w-9 rounded-full bg-black/65 hover:bg-[#D9A52E] text-white hover:text-[#06351F] border border-white/20 hover:border-[#D9A52E] flex items-center justify-center backdrop-blur-md shadow-lg transition-all hover:scale-110 active:scale-95 cursor-pointer pointer-events-auto opacity-80 sm:opacity-0 sm:group-hover/cardimg:opacity-100"
-                                title="Previous image"
-                              >
-                                <ChevronLeft className="h-5 w-5 stroke-[2.5]" />
-                              </button>
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setCardImageIndices((prev) => ({
-                                    ...prev,
-                                    [project.id]: (cardImgIndex + 1) % cardGallery.length,
-                                  }));
-                                }}
-                                aria-label="Next image"
-                                className="absolute right-2.5 top-1/2 -translate-y-1/2 z-20 h-9 w-9 rounded-full bg-black/65 hover:bg-[#D9A52E] text-white hover:text-[#06351F] border border-white/20 hover:border-[#D9A52E] flex items-center justify-center backdrop-blur-md shadow-lg transition-all hover:scale-110 active:scale-95 cursor-pointer pointer-events-auto opacity-80 sm:opacity-0 sm:group-hover/cardimg:opacity-100"
-                                title="Next image"
-                              >
-                                <ChevronRight className="h-5 w-5 stroke-[2.5]" />
-                              </button>
-                              <div className="absolute bottom-2 right-2 z-20 px-2.5 py-0.5 rounded-full bg-black/70 backdrop-blur-md text-[10px] font-mono font-bold text-white/90 border border-white/10 pointer-events-none">
-                                {(cardImgIndex % cardGallery.length) + 1} / {cardGallery.length}
-                              </div>
-                            </>
-                          )}
-
-                          {/* Sold Out Visual Watermark Overlay */}
-                          {(project as any).status === "sold" && (
-                            <div className="absolute inset-0 bg-black/40 backdrop-grayscale-[30%] flex items-center justify-center pointer-events-none z-10">
-                              <span className="px-4 py-1.5 rounded-xl bg-rose-600/95 text-white font-black text-xs uppercase tracking-widest border border-rose-300 shadow-xl rotate-[-6deg]">
-                                {language === "ta" ? "100% விற்பனையானது" : "100% SOLD OUT"}
-                              </span>
-                            </div>
-                          )}
-
-                          <div className="absolute top-3 left-3 flex items-center gap-1.5 z-20 pointer-events-none">
-                            {(project as any).status === "sold" ? (
-                              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-rose-600 text-white shadow-md uppercase tracking-wider border border-rose-400">
-                                {language === "ta" ? "விற்பனையானது" : "SOLD OUT"}
-                              </span>
-                            ) : (project as any).status === "upcoming" ? (
-                              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-amber-500 text-black shadow-md uppercase tracking-wider border border-amber-300">
-                                {language === "ta" ? "வரவிருக்கும் திட்டம்" : "UPCOMING"}
-                              </span>
-                            ) : (project as any).status === "completed" ? (
-                              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-blue-600 text-white shadow-md uppercase tracking-wider border border-blue-400">
-                                {language === "ta" ? "நிறைவடைந்தது" : "COMPLETED"}
-                              </span>
-                            ) : null}
-
-                            <div className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#06351F]/90 text-[#D9A52E] border border-[#D9A52E]/40 backdrop-blur-md">
-                              {project.statusBadge[language]}
-                            </div>
-                          </div>
-
-                          <div className="absolute top-3 right-3 flex items-center gap-1.5 z-10">
-                            {project.mapbhoomiUrl && (
-                              <a
-                                href={project.mapbhoomiUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                onClick={(e) => e.stopPropagation()}
-                                className="px-2.5 py-0.5 rounded-full text-[9px] font-black bg-[#06351F]/95 hover:bg-[#D9A52E] text-[#D9A52E] hover:text-[#06351F] border border-[#D9A52E]/60 flex items-center gap-1 shadow-md transition-all hover:scale-105 cursor-pointer pointer-events-auto"
-                                title="2D/3D views"
-                              >
-                                <Compass className="h-3 w-3" />
-                                <span>2D/3D views ↗</span>
-                              </a>
-                            )}
-                            <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase bg-white/95 text-[#06351F] pointer-events-none">
-                              {project.subcategoryLabel[language]}
-                            </span>
-                          </div>
-
-                          <div className="absolute bottom-3 left-3 right-3 text-white pointer-events-none">
-                            <h3 className="text-base font-black leading-tight drop-shadow-md group-hover:text-[#D9A52E] transition-colors">
-                              {project.name[language]}
-                            </h3>
-                            <div className="flex items-center gap-1.5 text-xs text-neutral-300 mt-0.5">
-                              <MapPin className="h-3 w-3 text-[#D9A52E] shrink-0" />
-                              <span className="line-clamp-1">{project.location[language]}</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Card Body */}
-                        <div className="p-4 flex-1 flex flex-col justify-between">
-                          <div>
-                            <p className="text-xs text-neutral-600 line-clamp-2 leading-relaxed mb-3">
-                              {project.description[language]}
-                            </p>
-
-                            <div className="space-y-1 mb-4 pb-3 border-b border-neutral-100">
-                              {project.highlights[language].slice(0, 2).map((h, i) => (
-                                <div key={i} className="flex items-center gap-1.5 text-[11px] text-neutral-700 font-medium">
-                                  <CheckCircle2 className="h-3 w-3 text-emerald-600 shrink-0" />
-                                  <span className="line-clamp-1">{h}</span>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-
-                          {/* Actions */}
-                          <div className="space-y-2">
-                            <div className="grid grid-cols-2 gap-2">
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setSelectedProject(project);
-                                }}
-                                className="w-full py-2 px-3 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white text-xs font-bold transition-all text-center cursor-pointer shadow-xs"
-                              >
-                                {language === "ta" ? "முழு விவரம்" : "Project Details"}
-                              </button>
-
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setSelectedProject(project);
-                                  setIsEnquiryModalOpen(true);
-                                }}
-                                className="w-full py-2 px-3 rounded-xl bg-[#0E5934] hover:bg-[#06351F] text-white text-xs font-black transition-all flex items-center justify-center gap-1 cursor-pointer shadow-xs border border-[#0E5934]"
-                              >
-                                <Sparkles className="h-3.5 w-3.5 text-[#D9A52E]" />
-                                <span>{language === "ta" ? "விசாரிக்க" : "Enquire"}</span>
-                              </button>
-                            </div>
-
-                            {/* Direct Mapbhoomi Layout Button */}
-                            {project.mapbhoomiUrl && (
-                              <a
-                                href={project.mapbhoomiUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                onClick={(e) => e.stopPropagation()}
-                                className="w-full py-2 px-3 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-black transition-all flex items-center justify-center gap-1.5 shadow-sm group/mb cursor-pointer"
-                              >
-                                <Compass className="h-3.5 w-3.5 text-[#E5A922] group-hover/mb:rotate-45 transition-transform shrink-0" />
-                                <span>{language === "ta" ? "2D/3D views (வரைபடம் ↗)" : "2D/3D views ↗"}</span>
-                              </a>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                      );
-                    })}
+                    {activeCategoryProjects.map((project) => renderProjectCard(project))}
                   </div>
 
                   {/* Bottom Back Button */}
@@ -1575,7 +1926,7 @@ export default function HomePage() {
                   <div
                     key={project.id}
                     onClick={() => setSelectedProject(project)}
-                    className="bg-white rounded-[22px] p-5 border border-neutral-200/90 shadow-sm hover:shadow-xl hover:border-[#D9A52E]/70 transition-all flex flex-col justify-between cursor-pointer group"
+                    className="bg-white rounded-[22px] p-5 border border-neutral-200/90 shadow-sm hover:shadow-xl hover:border-[#D9A52E]/70 hover:-translate-y-1 transition-all duration-300 ease-out flex flex-col justify-between cursor-pointer group"
                   >
                     <div>
                       {/* Top Header with Thumbnail & Titles */}
@@ -1586,7 +1937,7 @@ export default function HomePage() {
                             alt={project.name.en}
                             fill
                             sizes="72px"
-                            className="object-cover transition-transform duration-500 group-hover:scale-108"
+                            className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                           />
                         </div>
                         <div className="min-w-0">
@@ -1623,7 +1974,7 @@ export default function HomePage() {
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}
-                          className="w-full py-2 px-3 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+                          className="w-full py-2 px-3 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white border border-[#0E5934] text-xs font-black transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
                         >
                           <Compass className="h-3.5 w-3.5 text-[#E5A922]" />
                           <span>{language === "ta" ? "2D/3D நேரடி வரைபடம் ↗" : "2D/3D views ↗"}</span>
@@ -1635,7 +1986,7 @@ export default function HomePage() {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="w-full py-2.5 px-3 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs hover:shadow-md border border-[#0E5934]"
+                        className="w-full py-2.5 px-3 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white text-xs font-black transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-1.5 cursor-pointer shadow-xs hover:shadow-md border border-[#0E5934]"
                       >
                         <Navigation className="h-3.5 w-3.5 text-[#E5A922]" />
                         <span>{language === "ta" ? "கூகிள் மேப்ஸில் திறக்க" : "Open in Google Maps"}</span>
@@ -1647,7 +1998,7 @@ export default function HomePage() {
                           e.stopPropagation();
                           setSelectedProject(project);
                         }}
-                        className="w-full py-2 px-3 rounded-xl bg-[#0E5934] hover:bg-[#06351F] text-white text-xs font-bold transition-all text-center cursor-pointer shadow-xs"
+                        className="w-full py-2 px-3 rounded-xl bg-[#0E5934] hover:bg-[#06351F] text-white text-xs font-bold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] text-center cursor-pointer shadow-xs"
                       >
                         {language === "ta" ? "திட்டத்தின் குறிப்புகள்" : "View Overview"}
                       </button>
@@ -1712,7 +2063,7 @@ export default function HomePage() {
                   {GALLERY_VIDEO_FOLDERS.map((folder) => (
                     <div
                       key={folder.id}
-                      className="bg-white rounded-[22px] p-5 border border-neutral-200/90 shadow-sm hover:shadow-xl hover:border-[#D9A52E]/70 transition-all flex flex-col justify-between group"
+                      className="bg-white rounded-[22px] p-5 border border-neutral-200/90 shadow-sm hover:shadow-xl hover:border-[#D9A52E]/70 hover:-translate-y-1 transition-all duration-300 ease-out flex flex-col justify-between group"
                     >
                       <div>
                         <div className="flex items-center justify-between mb-3">
@@ -1735,7 +2086,7 @@ export default function HomePage() {
                             alt={folder.title.en}
                             fill
                             sizes="340px"
-                            className="object-cover opacity-90 group-hover/vid:scale-108 transition-transform duration-500"
+                            className="object-cover opacity-90 group-hover/vid:scale-108 transition-transform duration-500 ease-out"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-center justify-center">
                             <div className="h-13 w-13 rounded-full bg-[#0E5934] text-white flex items-center justify-center shadow-xl group-hover/vid:scale-115 transition-transform duration-300 border border-[#D9A52E]/40">
@@ -1753,7 +2104,7 @@ export default function HomePage() {
                             <button
                               key={idx}
                               onClick={() => setSelectedVideo({ title: vid.title[language], duration: vid.duration, url: vid.url })}
-                              className="w-full text-left flex items-center justify-between p-1.5 rounded-lg hover:bg-white text-[11px] text-neutral-700 cursor-pointer transition-colors"
+                              className="w-full text-left flex items-center justify-between p-1.5 rounded-lg hover:bg-white text-[11px] text-neutral-700 cursor-pointer transition-colors active:scale-[0.98]"
                             >
                               <span className="font-bold text-[#06351F] truncate">▶ {vid.title[language]}</span>
                               <span className="text-[10px] text-neutral-400 font-mono ml-2 shrink-0">{vid.duration}</span>
@@ -1764,7 +2115,7 @@ export default function HomePage() {
 
                       <button
                         onClick={() => setSelectedVideo({ title: folder.videos[0].title[language], duration: folder.videos[0].duration, url: folder.videos[0].url })}
-                        className="w-full py-2.5 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white font-black text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs border border-[#0E5934]"
+                        className="w-full py-2.5 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white font-black text-xs transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-1.5 cursor-pointer shadow-xs border border-[#0E5934]"
                       >
                         <Play className="h-3.5 w-3.5 fill-[#D9A52E]" />
                         <span>{language === "ta" ? "வீடியோ பார்க்க" : "Play Reel"}</span>
@@ -1794,7 +2145,7 @@ export default function HomePage() {
                   {GALLERY_IMAGE_FOLDERS.map((folder) => (
                     <div
                       key={folder.id}
-                      className="bg-white rounded-[22px] p-5 border border-neutral-200/90 shadow-sm hover:shadow-xl hover:border-[#D9A52E]/70 transition-all flex flex-col justify-between group"
+                      className="bg-white rounded-[22px] p-5 border border-neutral-200/90 shadow-sm hover:shadow-xl hover:border-[#D9A52E]/70 hover:-translate-y-1 transition-all duration-300 ease-out flex flex-col justify-between group"
                     >
                       <div>
                         <div className="flex items-center justify-between mb-3">
@@ -1819,7 +2170,7 @@ export default function HomePage() {
                             alt={folder.title.en}
                             fill
                             sizes="340px"
-                            className="object-cover group-hover/img:scale-108 transition-transform duration-500"
+                            className="object-cover group-hover/img:scale-108 transition-transform duration-500 ease-out"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent group-hover/img:opacity-80 transition-opacity" />
                         </div>
@@ -1835,7 +2186,7 @@ export default function HomePage() {
                           setSelectedFolderImages({ title: folder.title[language], images: folder.images });
                           setActiveFolderImageIndex(null);
                         }}
-                        className="w-full py-2.5 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white font-black text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs border border-[#0E5934]"
+                        className="w-full py-2.5 rounded-xl bg-[#06351F] hover:bg-[#0E5934] text-white font-black text-xs transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-1.5 cursor-pointer shadow-xs border border-[#0E5934]"
                       >
                         <Camera className="h-3.5 w-3.5 text-[#D9A52E]" />
                         <span>{language === "ta" ? "புகைப்படங்கள் பார்க்க" : "View Photo Folder"}</span>
@@ -2246,8 +2597,30 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* Right Aligned Action Buttons: Official Instagram Link + Google Maps */}
+                {/* Right Aligned Action Buttons: Official Facebook + Official Instagram + Google Maps */}
                 <div className="shrink-0 flex flex-wrap sm:flex-nowrap items-center md:justify-end gap-3">
+                  {/* Official Facebook Social Button */}
+                  <a
+                    href={facebookUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={language === "ta" ? "எங்கள் பேஸ்புக் பக்கத்தை பார்வையிடவும்" : "Visit our Facebook page"}
+                    title={language === "ta" ? "எங்கள் பேஸ்புக் பக்கத்தை பார்வையிடவும்" : "Visit our Facebook page"}
+                    className="px-5 py-3 rounded-xl bg-[#1877F2] hover:bg-[#166fe5] hover:opacity-95 text-white font-black text-xs inline-flex items-center gap-2 transition-all cursor-pointer shadow-md hover:scale-105 border border-white/20 group"
+                  >
+                    <div className="relative w-4 h-4 rounded-full overflow-hidden shrink-0 group-hover:scale-110 transition-transform">
+                      <Image
+                        src="/images/facebook-logo.png"
+                        alt="Facebook"
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                    <span>{language === "ta" ? "பேஸ்புக்" : "Facebook"}</span>
+                    <ExternalLink className="h-3.5 w-3.5 text-white/90" />
+                  </a>
+
+                  {/* Official Instagram Link */}
                   <a
                     href={instagramUrl}
                     target="_blank"
@@ -2277,6 +2650,9 @@ export default function HomePage() {
           )}
 
         </main>
+
+        {/* Persistent Bottom Landscape Border Across ALL Pages & Tabs */}
+        <BottomLandscape className="mb-14 md:mb-0" />
       </div>
 
       {/* ------------------------------------------------------------------------- */}
@@ -2287,7 +2663,7 @@ export default function HomePage() {
           {/* Home */}
           <button
             onClick={() => setActiveTab("home")}
-            className={`w-full flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all cursor-pointer select-none ${
+            className={`w-full flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all duration-200 active:scale-95 cursor-pointer select-none ${
               activeTab === "home" ? "text-[#06351F] font-black" : "text-neutral-500 font-medium hover:text-[#06351F]"
             }`}
           >
@@ -2307,7 +2683,7 @@ export default function HomePage() {
               setActiveTab("projects");
               setActiveCategory(null);
             }}
-            className={`w-full flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all cursor-pointer select-none ${
+            className={`w-full flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all duration-200 active:scale-95 cursor-pointer select-none ${
               activeTab === "projects" ? "text-[#06351F] font-black" : "text-neutral-500 font-medium hover:text-[#06351F]"
             }`}
           >
@@ -2324,7 +2700,7 @@ export default function HomePage() {
           {/* Site Location */}
           <button
             onClick={() => setActiveTab("location")}
-            className={`w-full flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all cursor-pointer select-none ${
+            className={`w-full flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all duration-200 active:scale-95 cursor-pointer select-none ${
               activeTab === "location" ? "text-[#06351F] font-black" : "text-neutral-500 font-medium hover:text-[#06351F]"
             }`}
           >
@@ -2341,7 +2717,7 @@ export default function HomePage() {
           {/* Download Layout */}
           <button
             onClick={() => setActiveTab("download")}
-            className={`w-full flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all cursor-pointer select-none ${
+            className={`w-full flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all duration-200 active:scale-95 cursor-pointer select-none ${
               activeTab === "download" ? "text-[#06351F] font-black" : "text-neutral-500 font-medium hover:text-[#06351F]"
             }`}
           >

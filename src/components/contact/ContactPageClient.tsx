@@ -30,6 +30,7 @@ export default function ContactPageClient() {
   const address = company?.address || "120 Feet Road, Near Mattuthavani Bus Stand, K.K. Nagar Corridor, Madurai, Tamil Nadu 625020";
   const mapsLink = company?.mapsLink || "https://www.google.com/maps?q=9.9253208,78.1702385&z=17&hl=en";
   const instagramUrl = (company as any)?.instagramUrl || "https://www.instagram.com/surya_promoters_madurai";
+  const facebookUrl = (company as any)?.facebookUrl || "https://www.facebook.com/share/1GoBJ8tdMS/";
   const instagramImage = (company as any)?.instagramImage || "/images/instagram-promo.jpg";
   const instagramHandle = (company as any)?.instagramHandle || "@surya_promoters_madurai";
 
@@ -214,6 +215,24 @@ export default function ContactPageClient() {
               </p>
             </div>
             <div className="mt-6 flex flex-wrap gap-2">
+              <a
+                href={facebookUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={language === "ta" ? "எங்கள் பேஸ்புக் பக்கத்தை பார்வையிடவும்" : "Visit our Facebook page"}
+                title={language === "ta" ? "எங்கள் பேஸ்புக் பக்கத்தை பார்வையிடவும்" : "Visit our Facebook page"}
+                className="flex-1 inline-flex items-center justify-center gap-2 py-3 px-3 rounded-xl bg-[#1877F2] hover:bg-[#166fe5] hover:opacity-95 text-white text-xs font-mono font-bold uppercase tracking-wider transition shadow-2xs hover:scale-105 group"
+              >
+                <div className="relative w-4 h-4 rounded-full overflow-hidden shrink-0 group-hover:scale-110 transition-transform">
+                  <Image
+                    src="/images/facebook-logo.png"
+                    alt="Facebook"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+                <span>{language === "ta" ? "பேஸ்புக்" : "Facebook"}</span>
+              </a>
               <a
                 href={instagramUrl}
                 target="_blank"

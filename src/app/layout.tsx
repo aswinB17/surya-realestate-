@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, Space_Mono, Inter } from "next/font/google";
 import { LanguageProvider } from "@/hooks/useLanguage";
 import { CmsProvider } from "@/hooks/useCmsData";
 import SmoothScroll from "@/components/animations/SmoothScroll";
+import FloatingWhatsApp from "@/components/layout/FloatingWhatsApp";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -81,6 +82,7 @@ export default function RootLayout({
         <LanguageProvider>
           <CmsProvider>
             <SmoothScroll>{children}</SmoothScroll>
+            <FloatingWhatsApp />
           </CmsProvider>
         </LanguageProvider>
       </body>

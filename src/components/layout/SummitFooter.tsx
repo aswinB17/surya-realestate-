@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail, MapPin, Clock, Globe } from "lucide-react";
+import BottomLandscape from "./BottomLandscape";
 
 export default function SummitFooter() {
   const [email, setEmail] = useState("");
@@ -190,6 +191,8 @@ export default function SummitFooter() {
           </div>
         </div>
       </div>
+      {/* Bottom Landscape Border */}
+      <BottomLandscape fadeColor="#0F172A" />
     </footer>
   );
 }

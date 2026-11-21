@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Phone, Mail, MapPin, Clock, ShieldCheck, ArrowRight, ExternalLink } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useCmsData } from "@/hooks/useCmsData";
+import BottomLandscape from "./BottomLandscape";
 
 export default function Footer() {
   const { language } = useLanguage();
@@ -182,6 +183,8 @@ export default function Footer() {
           </div>
         </div>
       </div>
+      {/* Bottom Landscape Border */}
+      <BottomLandscape fadeColor="#173D2B" />
     </footer>
   );
 }
