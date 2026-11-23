@@ -76,7 +76,7 @@ export default function AboutPage() {
       quote: "Mr. Manickam Natarajan's Air Force background reflects in every single interaction. True to their word, the document was transferred directly into my name within 15 days.",
       name: "Thiru. S. Arumugam",
       location: "Retd. State Officer, Madurai",
-      project: "Surya Green Enclave",
+      project: "Madurai Township Developments",
     },
   ];
 
@@ -159,7 +159,7 @@ export default function AboutPage() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#173D2B]/90 via-transparent to-transparent" />
               <div className="absolute bottom-6 left-6 right-6 text-white">
                 <span className="font-mono text-xs text-[#C6A66B] font-bold">PLANNED INFRASTRUCTURE</span>
-                <h3 className="font-display text-lg font-bold">Surya Green Enclave &amp; Township Developments</h3>
+                <h3 className="font-display text-lg font-bold">Madurai Township &amp; Plotted Developments</h3>
               </div>
             </div>
           </div>

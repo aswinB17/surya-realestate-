@@ -108,11 +108,10 @@ function ProjectsContent() {
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer ${
-                  selectedCategory === cat.id
-                    ? "bg-[#C6A66B] text-[#171B18] shadow-md scale-105"
-                    : "bg-white/10 text-white hover:bg-white/20 border border-white/10"
-                }`}
+                className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer ${selectedCategory === cat.id
+                  ? "bg-[#C6A66B] text-[#171B18] shadow-md scale-105"
+                  : "bg-white/10 text-white hover:bg-white/20 border border-white/10"
+                  }`}
               >
                 <span>{cat.name}</span>
                 <span className="ml-2 font-mono text-[11px] opacity-80">({cat.count})</span>
@@ -192,7 +191,7 @@ function ProjectsContent() {
               </div>
               <div className="p-6 space-y-4">
                 <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
-                  Commercial buildings and commercial land situated along prime Ring Road, Anna Nagar, and NH-44 corridors.
+                  Prime commercial land parcels situated along high-growth Ring Road and NH-44 corridors.
                 </p>
                 <button
                   onClick={() => setSelectedCategory("commercial")}
@@ -447,7 +446,7 @@ function ProjectsContent() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent" />
                   <div className="absolute top-4 left-4">
                     <span className="px-3 py-1 rounded-full bg-[#173D2B]/90 backdrop-blur-md text-white font-mono text-[10px] font-bold uppercase tracking-wider border border-white/20">
-                      {project.id === "plot-projects" ? "Subcategory A: Plot Projects" : "Subcategory B: Flat Projects"}
+                      {project.categoryLabel?.[language] || "Residential Projects"}
                     </span>
                   </div>
 

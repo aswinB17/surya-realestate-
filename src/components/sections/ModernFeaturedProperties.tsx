@@ -108,30 +108,6 @@ export default function ModernFeaturedProperties() {
         { icon: Layers, label: "3D Layout Live", labelTa: "3D வரைபடம்" },
       ],
     },
-    {
-      id: "surya-green-enclave",
-      num: "04",
-      slug: "surya-green-enclave",
-      projectType: "completed",
-      category: "residential",
-      categoryBadge: "DTCP & RERA Township",
-      categoryBadgeTa: "DTCP & RERA மனைப்பிரிவு",
-      title: "Surya Green Enclave",
-      titleTa: "சூர்யா கிரீன் என்கிளேவ்",
-      location: "Mudukangulam Road, Madurai",
-      locationTa: "முதுகுளத்தூர் சாலை, மதுரை",
-      propertyType: "Gated Community",
-      statusBadge: "COMPLETED",
-      statusBadgeTa: "நிறைவடைந்தது",
-      image: "/images/projects/flat-projects/1-exterior.jpg",
-      googleMapsUrl: "https://maps.google.com/?q=Madurai+Residential+Plots",
-      iconSpecs: [
-        { icon: Home, label: "DTCP & RERA Approved", labelTa: "DTCP மனைப்பிரிவு" },
-        { icon: Sparkles, label: "30-40ft Bitumen Road", labelTa: "அகலமான தார்ச்சாலை" },
-        { icon: ShieldCheck, label: "Individual Patta", labelTa: "தனிநபர் பட்டா" },
-        { icon: CheckCircle2, label: "100% Delivered", labelTa: "ஒப்படைக்கப்பட்டது" },
-      ],
-    },
   ];
 
   const runningCount = projects.filter((p) => p.projectType === "running").length;

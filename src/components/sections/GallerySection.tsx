@@ -13,16 +13,6 @@ export default function GallerySection() {
 
   const galleryItems = [
     {
-      src: "/images/projects/flat-projects/1-exterior.jpg",
-      title: "Surya Green Enclave Plots",
-      subtitle: "Mudukangulam Road Residential Corridor",
-    },
-    {
-      src: "/images/projects/surya-green-enclave-blueprint.jpg",
-      title: "Surya Green Enclave Blueprint",
-      subtitle: "15 Surveyed Villa Plots & Layout Masterplan",
-    },
-    {
       src: "/images/projects/madurai-farms/farmlayou1.png",
       title: "Madurai Farms Layout Blueprint",
       subtitle: "15 Surveyed Plots on Madurai Green Belt",

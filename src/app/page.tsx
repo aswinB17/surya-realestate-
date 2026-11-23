@@ -1697,7 +1697,7 @@ export default function HomePage() {
                             }
                           : cat.id === "commercial"
                           ? {
-                              image: "/images/generated/commercial-anna-nagar.jpg",
+                              image: "/images/pandi-kovil-commercial-land.jpg",
                               tag: "High-Exposure Corridors",
                               tagTa: "தேசிய நெடுஞ்சாலை பெருநிலங்கள்",
                               perks: ["NH-44 & Ring Road Access", "High Commercial Footfall", "Maximum Appreciation"],

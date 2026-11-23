@@ -91,42 +91,6 @@ const DOWNLOAD_ITEMS: DownloadItem[] = [
     },
   },
   {
-    id: "green-enclave-dtcp-blueprint",
-    name: {
-      en: "Surya Green Enclave DTCP Approved Layout & Bitumen Roads Blueprint",
-      ta: "சூர்யா கிரீன் என்கிளேவ் DTCP அங்கீகரிக்கப்பட்ட லேஅவுட் வரைபடம்",
-    },
-    project: { en: "Plot Projects (Green Enclave)", ta: "பிளாட் திட்டங்கள் (கிரீன் என்கிளேவ்)" },
-    category: "residential",
-    type: "map",
-    fileFormat: "JPG",
-    fileSize: "2.1 MB",
-    thumbnailUrl: "/images/projects/surya-green-enclave-blueprint.jpg",
-    downloadUrl: "/images/projects/surya-green-enclave-blueprint.jpg",
-    description: {
-      en: "Verified DTCP & RERA approved plotted layout plan showcasing plot numbering, 30-ft bitumen roads, open spaces, and boundary coordinates.",
-      ta: "DTCP & RERA அங்கீகரிக்கப்பட்ட வீட்டு மனை எண்கள், 30 அடி தார் சாலைகள் மற்றும் எல்லை அளவீடுகள் கொண்ட வரைபடம்.",
-    },
-  },
-  {
-    id: "green-enclave-brochure",
-    name: {
-      en: "Surya Green Enclave Residential Plots Investment Dossier",
-      ta: "சூர்யா கிரீன் என்கிளேவ் முதலீட்டாளர் விரிவான கையேடு",
-    },
-    project: { en: "Plot Projects (Green Enclave)", ta: "பிளாட் திட்டங்கள் (கிரீன் என்கிளேவ்)" },
-    category: "residential",
-    type: "brochure",
-    fileFormat: "PDF",
-    fileSize: "4.2 MB",
-    thumbnailUrl: "/images/projects/surya-green-enclave-blueprint.jpg",
-    downloadUrl: "/images/projects/surya-green-enclave-blueprint.jpg",
-    description: {
-      en: "Key investment metrics, bank loan approvals (SBI, HDFC), surrounding educational hub distances, and price appreciation charts.",
-      ta: "வங்கி கடன் வசதிகள், அருகிலுள்ள கல்லூரிகள், பள்ளிகள் மற்றும் மனை வளர்ச்சி சாத்தியக்கூறுகள் குறித்த விபரங்கள்.",
-    },
-  },
-  {
     id: "vaigai-elite-blueprint",
     name: {
       en: "Vaigai Elite Garden Commercial Outer Ring Road Corridor Masterplan",
@@ -178,42 +142,6 @@ const DOWNLOAD_ITEMS: DownloadItem[] = [
     description: {
       en: "High-density pedestrian and vehicle traffic statistics, showroom frontage zoning, and legal encumbrance certificate (EC).",
       ta: "அதிக மக்கள் நடமாட்டம் உள்ள பாண்டி கோவில் பகுதியின் வணிக வாய்ப்புகள் மற்றும் வில்லங்க சான்றிதழ் விவரங்கள்.",
-    },
-  },
-  {
-    id: "anna-nagar-commercial-plan",
-    name: {
-      en: "Anna Nagar Commercial Building Floorplans & Structural Elevation",
-      ta: "அண்ணா நகர் வணிக வளாக கட்டிட வடிவமைப்பு வரைபடம்",
-    },
-    project: { en: "Commercial Building – Anna Nagar", ta: "வணிக கட்டிடம் – அண்ணா நகர்" },
-    category: "commercial",
-    type: "map",
-    fileFormat: "PDF",
-    fileSize: "5.1 MB",
-    thumbnailUrl: "/images/gallery/gallery-6.jpg",
-    downloadUrl: "/images/gallery/gallery-6.jpg",
-    description: {
-      en: "Detailed multi-level commercial floor layout, parking basement plan, elevator core placement, and rental yield forecast.",
-      ta: "வணிக கட்டிட தரைத்தள வரைபடம், வாகன நிறுத்துமிடம் மற்றும் மாதாந்திர வாடகை வருவாய் மதிப்பீடு.",
-    },
-  },
-  {
-    id: "mpf-school-site-dossier",
-    name: {
-      en: "Mayilan Gundu Site – MPF International School Corridor Plan",
-      ta: "மயிலன் குண்டு தளம் – MPF பள்ளி வளாக சாலை திட்ட வரைபடம்",
-    },
-    project: { en: "Mayilan Gundu Site – MPF School", ta: "மயிலன் குண்டு தளம் – MPF பள்ளி" },
-    category: "commercial",
-    type: "map",
-    fileFormat: "PDF",
-    fileSize: "3.5 MB",
-    thumbnailUrl: "/images/gallery/gallery-5.jpg",
-    downloadUrl: "/images/gallery/gallery-5.jpg",
-    description: {
-      en: "Institutional zoning layout situated adjacent to MPF International School with bus transit turning radius clearances.",
-      ta: "MPF சர்வதேச பள்ளிக்கு அருகில் அமைந்துள்ள கல்வி மற்றும் வணிக நிறுவனங்களுக்கான நில வரைபடம்.",
     },
   },
   {
