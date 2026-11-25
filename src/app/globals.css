@@ -78,6 +78,7 @@ body {
     opacity: 0;
     transform: translateY(8px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -89,7 +90,8 @@ body {
 }
 
 /* Smooth scrolling with Lenis */
-html.lenis, html.lenis body {
+html.lenis,
+html.lenis body {
   height: auto;
 }
 
@@ -164,9 +166,11 @@ button:active {
   0% {
     transform: scale(1) translate3d(0, 0, 0);
   }
+
   50% {
     transform: scale(1.045) translate3d(-0.4%, -0.4%, 0);
   }
+
   100% {
     transform: scale(1) translate3d(0, 0, 0);
   }
@@ -183,6 +187,7 @@ button:active {
     opacity: 0;
     transform: translateY(14px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -207,6 +212,7 @@ button:active {
     opacity: 0;
     transform: translateY(18px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -216,18 +222,23 @@ button:active {
 .animate-card-1 {
   animation: cardSlideUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.06s backwards;
 }
+
 .animate-card-2 {
   animation: cardSlideUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.12s backwards;
 }
+
 .animate-card-3 {
   animation: cardSlideUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.18s backwards;
 }
+
 .animate-card-4 {
   animation: cardSlideUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.24s backwards;
 }
+
 .animate-card-5 {
   animation: cardSlideUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.30s backwards;
 }
+
 .animate-card-6 {
   animation: cardSlideUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.36s backwards;
 }
@@ -236,6 +247,7 @@ button:active {
 .smooth-hover-lift {
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 .smooth-hover-lift:hover {
   transform: translateY(-3px);
 }
@@ -244,9 +256,11 @@ button:active {
 .btn-micro {
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease;
 }
+
 .btn-micro:hover {
   transform: translateY(-1px);
 }
+
 .btn-micro:active {
   transform: scale(0.97);
 }
@@ -255,6 +269,7 @@ button:active {
 /* Accessibility: Respect User's Reduced-Motion Setting                      */
 /* ------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -264,4 +279,31 @@ button:active {
     scroll-behavior: auto !important;
   }
 }
+/* ------------------------------------------------------------------------- */
+/* Hero Heading Mobile Responsive Alignment (Strictly <640px Mobile Only)     */
+/* ------------------------------------------------------------------------- */
+@media (max-width: 639px) {
+  .hero-logo-emblem {
+    margin-right: 0.5px !important;
+    width: 24px !important;
+    height: 24px !important;
+    flex-shrink: 0 !important;
+  }
+  .hero-heading-text {
+    font-size: 19px !important;
+    letter-spacing: 0.06em !important;
+  }
+}
 
+@media (min-width: 375px) and (max-width: 639px) {
+  .hero-logo-emblem {
+    margin-right: 1px !important;
+    width: 26px !important;
+    height: 26px !important;
+    flex-shrink: 0 !important;
+  }
+  .hero-heading-text {
+    font-size: 21.5px !important;
+    letter-spacing: 0.08em !important;
+  }
+}

@@ -37,7 +37,7 @@ import {
   Star,
   Home,
 } from "lucide-react";
-import { PROJECT_DETAILS_MAP } from "@/data/projectDetailsExtra";
+import { PROJECT_DETAILS_MAP, ProjectExtendedDetails } from "@/data/projectDetailsExtra";
 
 interface ProjectDetailsProps {
   project: Project;
@@ -681,9 +681,9 @@ export default function ProjectDetails({ project: initialProject }: ProjectDetai
             </div>
           )}
 
-          {/* Extended Locality, Valuation & Customer Reviews from PROJECT_DETAILS_MAP */}
+          {/* Extended Locality, Valuation & Customer Reviews from CMS or PROJECT_DETAILS_MAP */}
           {(() => {
-            const extra = PROJECT_DETAILS_MAP[project.slug] || PROJECT_DETAILS_MAP[project.id];
+            const extra: ProjectExtendedDetails | undefined = (project as any).extendedDetails || PROJECT_DETAILS_MAP[project.slug] || PROJECT_DETAILS_MAP[project.id];
             if (!extra) return null;
 
             return (

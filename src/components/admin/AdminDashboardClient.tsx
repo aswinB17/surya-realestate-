@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCmsData, broadcastCmsUpdate } from "@/hooks/useCmsData";
+import ProjectManagementModal from "./ProjectManagementModal";
 import {
   CmsProject,
   CmsCategory,
@@ -348,21 +349,39 @@ export default function AdminDashboardClient() {
     setIsProjectModalOpen(true);
   };
 
-  const handleSaveProjectModal = async () => {
-    if (!editingProject) return;
+  const handleSaveProjectFromModal = async (project: CmsProject, isPublish: boolean) => {
+    const updatedProj: CmsProject = {
+      ...project,
+      status: isPublish ? "running" : "draft",
+    };
 
     let updatedProjects: CmsProject[];
-    const exists = cmsData.projects.some((p) => p.id === editingProject.id);
+    const exists = cmsData.projects.some((p) => p.id === updatedProj.id);
 
     if (exists) {
-      updatedProjects = cmsData.projects.map((p) => (p.id === editingProject.id ? editingProject : p));
+      updatedProjects = cmsData.projects.map((p) => (p.id === updatedProj.id ? updatedProj : p));
     } else {
-      updatedProjects = [editingProject, ...cmsData.projects];
+      updatedProjects = [updatedProj, ...cmsData.projects];
     }
 
     await saveSection("projects", updatedProjects);
+    showToast(
+      isPublish
+        ? `Published "${updatedProj.name.en}" successfully!`
+        : `Saved "${updatedProj.name.en}" as draft!`,
+      "success"
+    );
     setIsProjectModalOpen(false);
     setEditingProject(null);
+  };
+
+  const handleDeleteProjectFromModal = async (projectId: string) => {
+    const proj = cmsData.projects.find((p) => p.id === projectId);
+    if (proj) {
+      await handleDeleteProject(proj.id, proj.name.en);
+      setIsProjectModalOpen(false);
+      setEditingProject(null);
+    }
   };
 
   // -------------------------------------------------------------------------
@@ -2209,577 +2228,21 @@ export default function AdminDashboardClient() {
       </div>
 
       {/* =================================================================== */}
-      {/* MODAL: PROJECT ADD / EDIT DRAWER                                   */}
+      {/* MODAL: COMPREHENSIVE 10-SECTION PROJECT MANAGEMENT DRAWER           */}
       {/* =================================================================== */}
-      {isProjectModalOpen && editingProject && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-neutral-200 flex flex-col my-auto">
-            {/* Modal Header */}
-            <div className="sticky top-0 z-10 bg-white p-5 border-b border-neutral-200 flex items-center justify-between">
-              <div>
-                <h3 className="font-display font-black text-lg text-[#0A0D12]">
-                  {cmsData.projects.some((p) => p.id === editingProject.id) ? "Edit Real Estate Project" : "Add New Real Estate Project"}
-                </h3>
-                <p className="text-xs text-neutral-500">
-                  {editingProject.name.en || "Project Configuration"}
-                </p>
-              </div>
-              <button
-                onClick={() => setIsProjectModalOpen(false)}
-                className="p-2 rounded-full hover:bg-neutral-100 text-neutral-500 hover:text-black cursor-pointer"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-
-            {/* Modal Tabs */}
-            <div className="flex border-b border-neutral-200 px-5 bg-neutral-50">
-              {[
-                { id: "general", label: "1. Basic Details" },
-                { id: "media", label: "2. Images & Blueprint" },
-                { id: "highlights", label: "3. Descriptions" },
-                { id: "specs", label: "4. Specifications" },
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setProjectModalTab(tab.id as any)}
-                  className={`py-3 px-4 font-bold text-xs border-b-2 transition cursor-pointer ${
-                    projectModalTab === tab.id
-                      ? "border-[#EAB308] text-[#0A0D12]"
-                      : "border-transparent text-neutral-500 hover:text-neutral-800"
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-
-            {/* Modal Body */}
-            <div className="p-6 space-y-5 flex-1">
-              {/* TAB 1: GENERAL */}
-              {projectModalTab === "general" && (
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-[10px] font-mono font-bold uppercase text-neutral-700 mb-1">
-                        Project Name (English)
-                      </label>
-                      <input
-                        type="text"
-                        value={editingProject.name.en}
-                        onChange={(e) =>
-                          setEditingProject({
-                            ...editingProject,
-                            name: { ...editingProject.name, en: e.target.value },
-                          })
-                        }
-                        className="w-full px-3 py-2 rounded-xl border border-neutral-200 text-xs font-bold"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-[10px] font-mono font-bold uppercase text-neutral-700 mb-1">
-                        Project Name (Tamil)
-                      </label>
-                      <input
-                        type="text"
-                        value={editingProject.name.ta}
-                        onChange={(e) =>
-                          setEditingProject({
-                            ...editingProject,
-                            name: { ...editingProject.name, ta: e.target.value },
-                          })
-                        }
-                        className="w-full px-3 py-2 rounded-xl border border-neutral-200 text-xs font-bold text-[#B45309]"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div>
-                      <div className="flex items-center justify-between mb-1">
-                        <label className="block text-[10px] font-mono font-bold uppercase text-neutral-700">
-                          Category
-                        </label>
-                        <button
-                          type="button"
-                          onClick={() => handleOpenAddCategory()}
-                          className="text-[10px] text-[#B45309] font-bold hover:underline inline-flex items-center gap-0.5 cursor-pointer"
-                        >
-                          <Plus className="h-2.5 w-2.5" />
-                          <span>Add New</span>
-                        </button>
-                      </div>
-                      <select
-                        value={editingProject.category}
-                        onChange={(e) => {
-                          const catId = e.target.value;
-                          const selectedCat = (cmsData.categories || []).find((c) => c.id === catId);
-                          const matchingSubs = (cmsData.subcategories || []).filter((s) => s.categoryId === catId);
-                          setEditingProject({
-                            ...editingProject,
-                            category: catId,
-                            categoryLabel: selectedCat
-                              ? selectedCat.name
-                              : { en: catId, ta: catId },
-                            subcategory: matchingSubs[0]?.id || "",
-                            subcategoryLabel: matchingSubs[0]?.name || { en: "", ta: "" },
-                          });
-                        }}
-                        className="w-full px-3 py-2 rounded-xl border border-neutral-200 text-xs font-semibold"
-                      >
-                        {(cmsData.categories || []).map((cat) => (
-                          <option key={cat.id} value={cat.id}>
-                            {cat.name.en} ({cat.name.ta})
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div>
-                      <div className="flex items-center justify-between mb-1">
-                        <label className="block text-[10px] font-mono font-bold uppercase text-neutral-700">
-                          Subcategory
-                        </label>
-                        <button
-                          type="button"
-                          onClick={() => handleOpenAddSubcategory(undefined, editingProject.category)}
-                          className="text-[10px] text-[#B45309] font-bold hover:underline inline-flex items-center gap-0.5 cursor-pointer"
-                        >
-                          <Plus className="h-2.5 w-2.5" />
-                          <span>Add New</span>
-                        </button>
-                      </div>
-                      <select
-                        value={editingProject.subcategory}
-                        onChange={(e) => {
-                          const subId = e.target.value;
-                          const selectedSub = (cmsData.subcategories || []).find((s) => s.id === subId);
-                          setEditingProject({
-                            ...editingProject,
-                            subcategory: subId,
-                            subcategoryLabel: selectedSub ? selectedSub.name : { en: subId, ta: subId },
-                          });
-                        }}
-                        className="w-full px-3 py-2 rounded-xl border border-neutral-200 text-xs font-semibold"
-                      >
-                        {(cmsData.subcategories || [])
-                          .filter((s) => s.categoryId === editingProject.category)
-                          .map((sub) => (
-                            <option key={sub.id} value={sub.id}>
-                              {sub.name.en} ({sub.name.ta})
-                            </option>
-                          ))}
-                        {(cmsData.subcategories || []).filter((s) => s.categoryId === editingProject.category).length === 0 && (
-                          <option value="">No subcategories in this category</option>
-                        )}
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block text-[10px] font-mono font-bold uppercase text-neutral-700 mb-1">
-                        Status
-                      </label>
-                      <select
-                        value={editingProject.status}
-                        onChange={(e) =>
-                          setEditingProject({
-                            ...editingProject,
-                            status: e.target.value as any,
-                          })
-                        }
-                        className="w-full px-3 py-2 rounded-xl border border-neutral-200 text-xs font-semibold"
-                      >
-                        <option value="running">Running / Available</option>
-                        <option value="upcoming">Upcoming Launch</option>
-                        <option value="completed">Completed / Handed Over</option>
-                        <option value="sold">Sold Out</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-[10px] font-mono font-bold uppercase text-neutral-700 mb-1">
-                        Location (English)
-                      </label>
-                      <input
-                        type="text"
-                        value={editingProject.location.en}
-                        onChange={(e) =>
-                          setEditingProject({
-                            ...editingProject,
-                            location: { ...editingProject.location, en: e.target.value },
-                          })
-                        }
-                        className="w-full px-3 py-2 rounded-xl border border-neutral-200 text-xs"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-[10px] font-mono font-bold uppercase text-neutral-700 mb-1">
-                        Location (Tamil)
-                      </label>
-                      <input
-                        type="text"
-                        value={editingProject.location.ta}
-                        onChange={(e) =>
-                          setEditingProject({
-                            ...editingProject,
-                            location: { ...editingProject.location, ta: e.target.value },
-                          })
-                        }
-                        className="w-full px-3 py-2 rounded-xl border border-neutral-200 text-xs text-[#B45309]"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-[10px] font-mono font-bold uppercase text-neutral-700 mb-1">
-                        Price / Status Badge (English)
-                      </label>
-                      <input
-                        type="text"
-                        value={editingProject.statusBadge.en}
-                        onChange={(e) =>
-                          setEditingProject({
-                            ...editingProject,
-                            statusBadge: { ...editingProject.statusBadge, en: e.target.value },
-                          })
-                        }
-                        className="w-full px-3 py-2 rounded-xl border border-neutral-200 text-xs font-bold text-amber-700"
-                        placeholder="e.g. 5.23 Acres · 700 Ft Frontage or ₹1.67 Cr"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-[10px] font-mono font-bold uppercase text-neutral-700 mb-1">
-                        Price / Status Badge (Tamil)
-                      </label>
-                      <input
-                        type="text"
-                        value={editingProject.statusBadge.ta}
-                        onChange={(e) =>
-                          setEditingProject({
-                            ...editingProject,
-                            statusBadge: { ...editingProject.statusBadge, ta: e.target.value },
-                          })
-                        }
-                        className="w-full px-3 py-2 rounded-xl border border-neutral-200 text-xs font-bold text-[#B45309]"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-[10px] font-mono font-bold uppercase text-neutral-700 mb-1">
-                      Distance / Quick Info (English)
-                    </label>
-                    <input
-                      type="text"
-                      value={editingProject.distanceInfo.en}
-                      onChange={(e) =>
-                        setEditingProject({
-                          ...editingProject,
-                          distanceInfo: { ...editingProject.distanceInfo, en: e.target.value },
-                        })
-                      }
-                      className="w-full px-3 py-2 rounded-xl border border-neutral-200 text-xs"
-                      placeholder="e.g. 6 km from Viraganur Roundana · 700 ft NH Frontage"
-                    />
-                  </div>
-                </div>
-              )}
-
-              {/* TAB 2: MEDIA & BLUEPRINT */}
-              {projectModalTab === "media" && (
-                <div className="space-y-4">
-                  {/* Hero Cover Image */}
-                  <div>
-                    <label className="block text-[10px] font-mono font-bold uppercase text-neutral-700 mb-1">
-                      Primary Cover Image URL
-                    </label>
-                    <div className="flex gap-2">
-                      <input
-                        type="text"
-                        value={editingProject.image}
-                        onChange={(e) =>
-                          setEditingProject({
-                            ...editingProject,
-                            image: e.target.value,
-                          })
-                        }
-                        className="flex-1 px-3 py-2 rounded-xl border border-neutral-200 text-xs font-mono"
-                      />
-                      <label className="px-4 py-2 rounded-xl bg-neutral-800 hover:bg-black text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer shrink-0">
-                        <Upload className="h-3.5 w-3.5" />
-                        <span>Upload File</span>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          className="hidden"
-                          onChange={(e) =>
-                            handleFileUpload(e, (url) =>
-                              setEditingProject({ ...editingProject, image: url })
-                            )
-                          }
-                        />
-                      </label>
-                    </div>
-                  </div>
-
-                  {/* Blueprint Image */}
-                  <div>
-                    <label className="block text-[10px] font-mono font-bold uppercase text-neutral-700 mb-1">
-                      Blueprint / Layout Map URL
-                    </label>
-                    <div className="flex gap-2">
-                      <input
-                        type="text"
-                        value={editingProject.blueprint || ""}
-                        onChange={(e) =>
-                          setEditingProject({
-                            ...editingProject,
-                            blueprint: e.target.value,
-                          })
-                        }
-                        placeholder="/images/projects/vaigai/vaigai-elite-layout-plan.jpg"
-                        className="flex-1 px-3 py-2 rounded-xl border border-neutral-200 text-xs font-mono"
-                      />
-                      <label className="px-4 py-2 rounded-xl bg-neutral-800 hover:bg-black text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer shrink-0">
-                        <Upload className="h-3.5 w-3.5" />
-                        <span>Upload Blueprint</span>
-                        <input
-                          type="file"
-                          accept="image/*,application/pdf"
-                          className="hidden"
-                          onChange={(e) =>
-                            handleFileUpload(e, (url) =>
-                              setEditingProject({ ...editingProject, blueprint: url })
-                            )
-                          }
-                        />
-                      </label>
-                    </div>
-                  </div>
-
-                  {/* External Links */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-[10px] font-mono font-bold uppercase text-neutral-700 mb-1">
-                        Google Maps Location URL
-                      </label>
-                      <input
-                        type="text"
-                        value={editingProject.mapsUrl}
-                        onChange={(e) =>
-                          setEditingProject({
-                            ...editingProject,
-                            mapsUrl: e.target.value,
-                          })
-                        }
-                        className="w-full px-3 py-2 rounded-xl border border-neutral-200 text-xs"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-[10px] font-mono font-bold uppercase text-neutral-700 mb-1">
-                        Mapbhoomi 3D Layout URL
-                      </label>
-                      <input
-                        type="text"
-                        value={editingProject.mapbhoomiUrl || ""}
-                        onChange={(e) =>
-                          setEditingProject({
-                            ...editingProject,
-                            mapbhoomiUrl: e.target.value,
-                          })
-                        }
-                        placeholder="https://mapbhoomi.com/l/surya-promoters/..."
-                        className="w-full px-3 py-2 rounded-xl border border-neutral-200 text-xs"
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* TAB 3: HIGHLIGHTS & DESCRIPTION */}
-              {projectModalTab === "highlights" && (
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-[10px] font-mono font-bold uppercase text-neutral-700 mb-1">
-                      Full Description (English)
-                    </label>
-                    <textarea
-                      rows={3}
-                      value={editingProject.description.en}
-                      onChange={(e) =>
-                        setEditingProject({
-                          ...editingProject,
-                          description: { ...editingProject.description, en: e.target.value },
-                        })
-                      }
-                      className="w-full px-3 py-2 rounded-xl border border-neutral-200 text-xs"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[10px] font-mono font-bold uppercase text-neutral-700 mb-1">
-                      Full Description (Tamil)
-                    </label>
-                    <textarea
-                      rows={3}
-                      value={editingProject.description.ta}
-                      onChange={(e) =>
-                        setEditingProject({
-                          ...editingProject,
-                          description: { ...editingProject.description, ta: e.target.value },
-                        })
-                      }
-                      className="w-full px-3 py-2 rounded-xl border border-neutral-200 text-xs text-[#B45309]"
-                    />
-                  </div>
-
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <label className="text-[10px] font-mono font-bold uppercase text-neutral-700">
-                        Bullet Highlights (English)
-                      </label>
-                      <button
-                        onClick={() =>
-                          setEditingProject({
-                            ...editingProject,
-                            highlights: {
-                              ...editingProject.highlights,
-                              en: [...editingProject.highlights.en, "New Key Feature"],
-                              ta: [...editingProject.highlights.ta, "புதிய சிறப்பம்சம்"],
-                            },
-                          })
-                        }
-                        className="text-[10px] font-bold text-[#B45309] hover:underline"
-                      >
-                        + Add Bullet
-                      </button>
-                    </div>
-
-                    <div className="space-y-2">
-                      {editingProject.highlights.en.map((hl, hlIdx) => (
-                        <div key={hlIdx} className="flex gap-2">
-                          <input
-                            type="text"
-                            value={hl}
-                            onChange={(e) => {
-                              const updated = [...editingProject.highlights.en];
-                              updated[hlIdx] = e.target.value;
-                              setEditingProject({
-                                ...editingProject,
-                                highlights: { ...editingProject.highlights, en: updated },
-                              });
-                            }}
-                            className="flex-1 px-3 py-1.5 rounded-lg border border-neutral-200 text-xs"
-                          />
-                          <button
-                            onClick={() => {
-                              const updatedEn = editingProject.highlights.en.filter((_, i) => i !== hlIdx);
-                              const updatedTa = editingProject.highlights.ta.filter((_, i) => i !== hlIdx);
-                              setEditingProject({
-                                ...editingProject,
-                                highlights: { en: updatedEn, ta: updatedTa },
-                              });
-                            }}
-                            className="p-1.5 text-red-500 hover:text-red-700"
-                          >
-                            <Trash2 className="h-3.5 w-3.5" />
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* TAB 4: SPECIFICATIONS */}
-              {projectModalTab === "specs" && (
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <label className="text-[10px] font-mono font-bold uppercase text-neutral-700">
-                      Property Specs Key-Value Table
-                    </label>
-                    <button
-                      onClick={() =>
-                        setEditingProject({
-                          ...editingProject,
-                          specs: [
-                            ...editingProject.specs,
-                            {
-                              label: { en: "Feature", ta: "சிறப்பம்சம்" },
-                              value: { en: "Value", ta: "மதிப்பு" },
-                            },
-                          ],
-                        })
-                      }
-                      className="text-[10px] font-bold text-[#B45309] hover:underline"
-                    >
-                      + Add Spec Row
-                    </button>
-                  </div>
-
-                  <div className="space-y-2.5">
-                    {editingProject.specs.map((spec, sIdx) => (
-                      <div key={sIdx} className="flex items-center gap-2 p-2 bg-neutral-50 rounded-xl border border-neutral-200">
-                        <input
-                          type="text"
-                          value={spec.label.en}
-                          placeholder="Label (e.g. Land Area)"
-                          onChange={(e) => {
-                            const updated = [...editingProject.specs];
-                            updated[sIdx].label.en = e.target.value;
-                            setEditingProject({ ...editingProject, specs: updated });
-                          }}
-                          className="flex-1 px-3 py-1.5 rounded-lg border border-neutral-200 bg-white text-xs font-bold"
-                        />
-                        <input
-                          type="text"
-                          value={spec.value.en}
-                          placeholder="Value (e.g. 5.23 Acres)"
-                          onChange={(e) => {
-                            const updated = [...editingProject.specs];
-                            updated[sIdx].value.en = e.target.value;
-                            setEditingProject({ ...editingProject, specs: updated });
-                          }}
-                          className="flex-1 px-3 py-1.5 rounded-lg border border-neutral-200 bg-white text-xs font-semibold"
-                        />
-                        <button
-                          onClick={() => {
-                            const updated = editingProject.specs.filter((_, i) => i !== sIdx);
-                            setEditingProject({ ...editingProject, specs: updated });
-                          }}
-                          className="p-1.5 text-red-500 hover:text-red-700"
-                        >
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Modal Footer */}
-            <div className="sticky bottom-0 bg-white p-5 border-t border-neutral-200 flex items-center justify-end gap-3">
-              <button
-                onClick={() => setIsProjectModalOpen(false)}
-                className="px-5 py-2.5 rounded-xl border border-neutral-200 text-xs font-bold text-neutral-600 hover:bg-neutral-100 transition cursor-pointer"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleSaveProjectModal}
-                disabled={isSaving}
-                className="px-6 py-2.5 rounded-xl bg-[#0A0D12] hover:bg-[#B45309] text-white text-xs font-bold transition flex items-center gap-2 cursor-pointer shadow-md"
-              >
-                {isSaving ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4 text-[#EAB308]" />}
-                <span>Save Project & Publish</span>
-              </button>
-            </div>
-          </div>
-        </div>
+      {isProjectModalOpen && (
+        <ProjectManagementModal
+          isOpen={isProjectModalOpen}
+          onClose={() => {
+            setIsProjectModalOpen(false);
+            setEditingProject(null);
+          }}
+          project={editingProject}
+          categories={cmsData.categories}
+          subcategories={cmsData.subcategories}
+          onSave={handleSaveProjectFromModal}
+          onDelete={handleDeleteProjectFromModal}
+        />
       )}
 
       {/* =================================================================== */}

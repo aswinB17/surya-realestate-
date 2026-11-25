@@ -123,10 +123,10 @@ export default function HomePage() {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
   // Tab History tracking for seamless Back Arrow navigation
-    // Mobile Collapsible Navigation Drawer State
+  // Mobile Collapsible Navigation Drawer State
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const [tabHistory, setTabHistory] = useState<Array<"home" | "projects" | "location" | "gallery" | "about" | "download" | "contact">>([ "home" ]);
+  const [tabHistory, setTabHistory] = useState<Array<"home" | "projects" | "location" | "gallery" | "about" | "download" | "contact">>(["home"]);
 
   useEffect(() => {
     setTabHistory((prev) => {
@@ -687,7 +687,7 @@ export default function HomePage() {
         style={{ position: "fixed", top: 0, left: 0, height: "100vh" }}
         className="hidden md:flex fixed top-0 left-0 z-30 md:w-56 lg:w-64 shrink-0 bg-gradient-to-b from-[#052617] via-[#083822] to-[#041D12] text-white flex-col justify-between py-3.5 lg:py-4.5 px-3.5 select-none shadow-2xl border-r border-[#0A3D25] h-screen h-[100vh] max-h-screen overflow-y-auto"
       >
-        
+
         {/* Top Section: Logo & Nav Links */}
         <div className="space-y-3.5 lg:space-y-4">
           {/* Brand Identity: Ornate S Logo + SURYA PROMOTERS 2-Line Stack (Fixed, No Hover Reaction) */}
@@ -738,11 +738,10 @@ export default function HomePage() {
             {/* Nav Item: Store Home */}
             <button
               onClick={() => setActiveTab("home")}
-              className={`group w-full flex items-center gap-3 px-3.5 py-3 rounded-2xl text-left transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] cursor-pointer font-bold text-sm ${
-                activeTab === "home"
-                  ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
-                  : "text-[#E1ECE6] hover:bg-white/10 hover:text-white"
-              }`}
+              className={`group w-full flex items-center gap-3 px-3.5 py-3 rounded-2xl text-left transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] cursor-pointer font-bold text-sm ${activeTab === "home"
+                ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
+                : "text-[#E1ECE6] hover:bg-white/10 hover:text-white"
+                }`}
             >
               <Home className={`h-5 w-5 shrink-0 group-hover:scale-110 transition-transform duration-200 ease-out ${activeTab === "home" ? "text-[#0A1C12]" : "text-white/80"}`} />
               <span className="truncate">{language === "ta" ? "முகப்பு" : "Store Home"}</span>
@@ -754,11 +753,10 @@ export default function HomePage() {
                 setActiveTab(activeTab === "projects" ? "home" : "projects");
                 setActiveCategory(null);
               }}
-              className={`group w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] cursor-pointer font-semibold text-xs sm:text-sm ${
-                activeTab === "projects"
-                  ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
-                  : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
-              }`}
+              className={`group w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] cursor-pointer font-semibold text-xs sm:text-sm ${activeTab === "projects"
+                ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
+                : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
+                }`}
             >
               <Building2 className={`h-5 w-5 shrink-0 group-hover:scale-110 transition-transform duration-200 ease-out ${activeTab === "projects" ? "text-[#0A1C12]" : "text-white/70"}`} />
               <span className="truncate">{language === "ta" ? "திட்டங்கள்" : "Our Projects"}</span>
@@ -767,11 +765,10 @@ export default function HomePage() {
             {/* Nav Item: Site Location */}
             <button
               onClick={() => setActiveTab(activeTab === "location" ? "home" : "location")}
-              className={`group w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] cursor-pointer font-semibold text-xs sm:text-sm ${
-                activeTab === "location"
-                  ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
-                  : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
-              }`}
+              className={`group w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] cursor-pointer font-semibold text-xs sm:text-sm ${activeTab === "location"
+                ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
+                : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
+                }`}
             >
               <MapPin className={`h-5 w-5 shrink-0 group-hover:scale-110 transition-transform duration-200 ease-out ${activeTab === "location" ? "text-[#0A1C12]" : "text-white/70"}`} />
               <span className="truncate">{language === "ta" ? "தள அமைவிடம்" : "Site Location"}</span>
@@ -780,11 +777,10 @@ export default function HomePage() {
             {/* Nav Item: Gallery Folders */}
             <button
               onClick={() => setActiveTab(activeTab === "gallery" ? "home" : "gallery")}
-              className={`group w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] cursor-pointer font-semibold text-xs sm:text-sm ${
-                activeTab === "gallery"
-                  ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
-                  : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
-              }`}
+              className={`group w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] cursor-pointer font-semibold text-xs sm:text-sm ${activeTab === "gallery"
+                ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
+                : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
+                }`}
             >
               <Camera className={`h-5 w-5 shrink-0 group-hover:scale-110 transition-transform duration-200 ease-out ${activeTab === "gallery" ? "text-[#0A1C12]" : "text-white/70"}`} />
               <span className="truncate">{language === "ta" ? "புகைப்படங்கள் & வீடியோ" : "Gallery Folders"}</span>
@@ -793,11 +789,10 @@ export default function HomePage() {
             {/* Nav Item: Download Layout */}
             <button
               onClick={() => setActiveTab("download")}
-              className={`group w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] cursor-pointer font-semibold text-xs sm:text-sm ${
-                activeTab === "download"
-                  ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
-                  : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
-              }`}
+              className={`group w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] cursor-pointer font-semibold text-xs sm:text-sm ${activeTab === "download"
+                ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
+                : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
+                }`}
             >
               <Download className={`h-5 w-5 shrink-0 group-hover:scale-110 transition-transform duration-200 ease-out ${activeTab === "download" ? "text-[#0A1C12]" : "text-white/70"}`} />
               <span className="truncate">{language === "ta" ? "வரைபடம் பதிவிறக்கம்" : "Download Layout"}</span>
@@ -806,11 +801,10 @@ export default function HomePage() {
             {/* Nav Item: About Company */}
             <button
               onClick={() => setActiveTab("about")}
-              className={`group w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] cursor-pointer font-semibold text-xs sm:text-sm ${
-                activeTab === "about"
-                  ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
-                  : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
-              }`}
+              className={`group w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] cursor-pointer font-semibold text-xs sm:text-sm ${activeTab === "about"
+                ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
+                : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
+                }`}
             >
               <ShieldCheck className={`h-5 w-5 shrink-0 group-hover:scale-110 transition-transform duration-200 ease-out ${activeTab === "about" ? "text-[#0A1C12]" : "text-white/70"}`} />
               <span className="truncate">{language === "ta" ? "நிறுவனம் பற்றி" : "About Company"}</span>
@@ -819,11 +813,10 @@ export default function HomePage() {
             {/* Nav Item: Contact Us */}
             <button
               onClick={() => setActiveTab("contact")}
-              className={`group w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] cursor-pointer font-semibold text-xs sm:text-sm ${
-                activeTab === "contact"
-                  ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
-                  : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
-              }`}
+              className={`group w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-left transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] cursor-pointer font-semibold text-xs sm:text-sm ${activeTab === "contact"
+                ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] font-bold shadow-[0_4px_16px_rgba(234,179,8,0.4)]"
+                : "text-[#D8E6DE] hover:bg-white/10 hover:text-white"
+                }`}
             >
               <PhoneCall className={`h-5 w-5 shrink-0 group-hover:scale-110 transition-transform duration-200 ease-out ${activeTab === "contact" ? "text-[#0A1C12]" : "text-white/70"}`} />
               <span className="truncate">{language === "ta" ? "நேரடி தொடர்பு" : "Contact Us"}</span>
@@ -862,43 +855,24 @@ export default function HomePage() {
       {/* ------------------------------------------------------------------------- */}
       {/* RIGHT MAIN WINDOW CANVAS (Header + Dynamic Content Canvas)                */}
       {/* ------------------------------------------------------------------------- */}
-      <div className="flex-1 flex flex-col min-w-0 md:ml-56 lg:ml-64 bg-[#FAF8F3] relative min-h-screen">
+      <div className={`flex-1 flex flex-col min-w-0 md:ml-56 lg:ml-64 ${activeTab === "home" ? "bg-[#FAF8F3]" : "bg-white"} relative min-h-screen`}>
 
         {/* TOP APP STORE WINDOW HEADER (Search & Quick Controls) */}
         <header className={`${activeTab === "home" ? "absolute top-0 left-0 right-0 z-40 bg-transparent px-2.5 sm:px-5 lg:px-7 pt-2.5 sm:pt-3 pb-1" : "sticky top-0 z-40 bg-gradient-to-r from-[#052617] via-[#083822] to-[#041D12] px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3.5 border-b border-[#0A3D25] shadow-lg backdrop-blur-md"} w-full flex items-center justify-between gap-1.5 sm:gap-3 lg:gap-4 select-none`}>
-          {/* Far Left Header: Mobile Brand Identity OR Desktop Madurai Real Estate Location Badge (Immediately to Right of Sidebar) */}
+          {/* Far Left Header: Mobile Hamburger Menu Toggle OR Desktop Madurai Real Estate Location Badge */}
           <div className="flex items-center shrink-0">
-            {/* Mobile Brand Identity & Hamburger Menu Toggle */}
-            <div className="flex md:hidden items-center gap-2 shrink-0">
-              <button
-                onClick={() => setIsMobileMenuOpen(true)}
-                className={`p-1.5 sm:p-2 rounded-xl border transition-all cursor-pointer shadow-2xs flex items-center justify-center ${
-                  activeTab === "home"
-                    ? "bg-[#06351F]/85 text-[#D9A52E] border-[#D9A52E]/40 hover:bg-[#06351F]"
-                    : "bg-[#092D1B] text-[#D9A52E] border-[#E2B755]/40 hover:bg-[#0E4228]"
+            {/* Mobile Hamburger Menu Toggle */}
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              className={`md:hidden p-1.5 sm:p-2 rounded-xl border transition-all cursor-pointer shadow-2xs flex items-center justify-center hover:scale-105 active:scale-95 ${activeTab === "home"
+                ? "bg-[#06351F]/85 text-[#D9A52E] border-[#D9A52E]/40 hover:bg-[#06351F]"
+                : "bg-[#092D1B] text-[#D9A52E] border-[#E2B755]/40 hover:bg-[#0E4228]"
                 }`}
-                aria-label="Open Navigation Menu"
-                title="Menu"
-              >
-                <Menu className="h-4.5 w-4.5 sm:h-5 sm:w-5" />
-              </button>
-              <button
-                onClick={() => {
-                  setActiveTab("home");
-                  if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
-                }}
-                className="flex flex-col text-left cursor-pointer"
-              >
-                <span className="font-display font-extrabold text-[11px] sm:text-xs tracking-wider uppercase leading-tight text-[#D9A52E] drop-shadow-sm">
-                  SURYA PROMOTERS
-                </span>
-                <span className={`font-mono text-[8px] sm:text-[9px] tracking-[0.2em] uppercase font-bold leading-none ${
-                  activeTab === "home" ? "text-white/85" : "text-[#F1E4C3]/80"
-                }`}>
-                  ESTD. 2010
-                </span>
-              </button>
-            </div>
+              aria-label="Open Navigation Menu"
+              title="Menu"
+            >
+              <Menu className="h-4.5 w-4.5 sm:h-5 sm:w-5" />
+            </button>
 
             {/* Desktop Madurai Real Estate Badge - Relocated to Far Left immediately to the RIGHT of the sidebar */}
             <div className="hidden md:flex items-center gap-2 px-3.5 py-2 h-9 sm:h-9.5 rounded-full bg-white/95 backdrop-blur-md border border-[#E5A922]/50 text-xs font-bold text-[#0A2617] shadow-xs hover:border-[#E5A922] transition-colors shrink-0">
@@ -1015,11 +989,10 @@ export default function HomePage() {
                             key={project.id}
                             onClick={() => handleSelectSuggestion(project)}
                             onMouseEnter={() => setHighlightedIndex(idx)}
-                            className={`px-3.5 py-2.5 flex items-center gap-3 cursor-pointer transition-colors ${
-                              isHighlighted
-                                ? "bg-[#F3F8F5] text-[#06351F] border-l-3 border-[#06351F]"
-                                : "hover:bg-neutral-50 text-neutral-800"
-                            }`}
+                            className={`px-3.5 py-2.5 flex items-center gap-3 cursor-pointer transition-colors ${isHighlighted
+                              ? "bg-[#F3F8F5] text-[#06351F] border-l-3 border-[#06351F]"
+                              : "hover:bg-neutral-50 text-neutral-800"
+                              }`}
                           >
                             <div className="relative w-10 h-10 rounded-xl overflow-hidden bg-neutral-100 shrink-0 border border-neutral-200/70">
                               <Image
@@ -1116,7 +1089,7 @@ export default function HomePage() {
         </header>
 
         {/* MAIN STORE CONTENT CANVAS */}
-        <main className={`flex-1 min-w-0 ${activeTab === "home" ? "flex flex-col p-0 justify-between" : "p-3.5 sm:p-6 lg:p-8 space-y-6 sm:space-y-8 pb-8 md:pb-6"}`}>
+        <main className={`flex-1 min-w-0 ${activeTab === "home" ? "flex flex-col p-0 justify-between" : "p-3.5 sm:p-6 lg:p-8 space-y-6 sm:space-y-8 pb-8 md:pb-6 bg-white"}`}>
 
           {/* =================================================================== */}
           {/* 1. STORE HOME SCREEN (Visible ONLY when activeTab === "home")        */}
@@ -1125,67 +1098,139 @@ export default function HomePage() {
             <div className="flex-1 flex flex-col animate-fadeIn">
 
               {/* ------------------------------------------------------------------- */}
-              {/* UNIFIED HERO BANNER (Full-Width Luxury Villa Architectural Section) */}
+              {/* UNIFIED HERO BANNER (Premium Real-Estate Landscape Section)          */}
               {/* ------------------------------------------------------------------- */}
-              <section className="relative w-full overflow-hidden shrink-0 flex items-center pt-16 sm:pt-18 md:pt-20 lg:pt-22 pb-8 sm:pb-10 md:pb-12 lg:pb-14 px-4 sm:px-6 lg:px-10 min-h-[300px] sm:min-h-[330px] md:min-h-[360px] lg:min-h-[390px] xl:min-h-[415px]">
-                {/* Villa Image Covering the Section - Full Width, Uncropped Architecture */}
+              <section className="relative w-full overflow-hidden shrink-0 flex items-center justify-center pt-14 sm:pt-16 md:pt-20 lg:pt-22 pb-10 sm:pb-12 md:pb-14 lg:pb-16 px-4 sm:px-6 lg:px-10 min-h-[320px] sm:min-h-[350px] md:min-h-[380px] lg:min-h-[410px]">
+                {/* Farmland Sunset Image - Edge-to-Edge Full Screen Width, Cover & Center */}
                 <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden -z-10 [transform:translateZ(0)]">
                   <Image
-                    src="/images/hero/modern-villa-header.jpg"
-                    alt="Surya Promoters Luxury Villa Architecture"
+                    src="/images/hero/farmland-sunset-header.jpg"
+                    alt="Surya Promoters Farmland and Real Estate Development"
                     fill
                     priority
                     sizes="100vw"
-                    className="object-cover object-[right_top] sm:object-[right_top] animate-heroSlowZoom"
-                    style={{ filter: "brightness(1.05) contrast(1.06) saturate(1.08)" }}
-                  />
-
-                  {/* Translucent Subtle Cream Gradient on Left: Image Remains Visible Behind Text */}
-                  <div
-                    className="hidden md:block absolute inset-0 pointer-events-none"
+                    className="object-cover object-center animate-heroSlowZoom"
                     style={{
-                      background:
-                        "linear-gradient(to right, rgba(250, 248, 243, 0.72) 0%, rgba(250, 248, 243, 0.65) 22%, rgba(250, 248, 243, 0.35) 44%, rgba(250, 248, 243, 0.08) 60%, transparent 72%)"
+                      objectFit: "cover",
+                      objectPosition: "center",
                     }}
                   />
 
-                  {/* Subtle Clean Bottom Edge Transition */}
+                  {/* Subtle top edge fade strictly behind top header controls (so buttons remain readable without darkening the image) */}
                   <div
-                    className="absolute inset-x-0 bottom-0 h-6 sm:h-8 pointer-events-none"
+                    className="absolute inset-x-0 top-0 h-16 sm:h-20 pointer-events-none"
                     style={{
-                      background:
-                        "linear-gradient(to top, rgba(250, 248, 243, 0.75) 0%, transparent 100%)"
+                      background: "linear-gradient(to bottom, rgba(4, 29, 18, 0.25) 0%, transparent 100%)",
                     }}
                   />
 
-                  {/* Mobile Translucent Overlay for Text Readability on Small Screens */}
+                  {/* Smooth visual transition fade at the bottom blending the hero section into the canvas */}
                   <div
-                    className="md:hidden absolute inset-0 bg-gradient-to-r from-[#FAF8F3]/85 via-[#FAF8F3]/70 to-[#FAF8F3]/30 pointer-events-none"
-                  />
-
-                  {/* Subtle Top Header Soft Vignette for Search Controls Readability */}
-                  <div
-                    className="absolute inset-x-0 top-0 h-14 pointer-events-none"
+                    className="absolute inset-x-0 bottom-0 h-10 sm:h-14 md:h-18 pointer-events-none"
                     style={{
-                      background: "linear-gradient(to bottom, rgba(250, 248, 243, 0.35) 0%, transparent 100%)"
+                      background:
+                        "linear-gradient(to bottom, transparent 0%, rgba(250, 248, 243, 0.35) 40%, rgba(250, 248, 243, 0.85) 85%, #FAF8F3 100%)",
                     }}
                   />
                 </div>
 
-                {/* Hero Left Text Content - Positioned Elegantly on the Left Side */}
-                <div className="w-full sm:w-[55%] md:w-[50%] lg:w-[46%] xl:w-[42%] flex flex-col items-start justify-center text-left z-10 pl-2 sm:pl-4 md:pl-6 lg:pl-10 xl:pl-12 pr-4">
-                  <div className="flex items-center gap-2 mb-2 sm:mb-2.5 lg:mb-3 animate-heroBadgeFadeUp">
-                    <span className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full bg-white/92 backdrop-blur-sm border border-[#E5A922]/50 shadow-xs hover:border-[#E5A922] transition-colors">
-                      <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#E5A922] animate-pulse" />
-                      <p className="text-[11px] sm:text-xs lg:text-[13px] font-extrabold text-[#9E731C] tracking-wide">
+                {/* Centered Hero Content - Symmetrical, Balanced & Trustworthy */}
+                <div className="relative w-full max-w-4xl mx-auto flex flex-col items-center justify-center text-center z-10 px-3 sm:px-6">
+                  {/* Cinematic Dark Forest-Green Radial Gradient behind text only (Feathered seamlessly into bright sunset) */}
+                  <div
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[114%] sm:w-[104%] md:w-[94%] max-w-3xl h-[130%] sm:h-[138%] pointer-events-none -z-10 rounded-full"
+                    style={{
+                      background:
+                        "radial-gradient(ellipse 62% 52% at 50% 48%, rgba(2, 20, 12, 0.78) 0%, rgba(3, 25, 16, 0.65) 28%, rgba(4, 29, 18, 0.42) 52%, rgba(4, 29, 18, 0.14) 75%, transparent 100%)",
+                      filter: "blur(18px)",
+                    }}
+                  />
+
+                  {/* Tagline Badge: Transparent Dark Green Background + Thin Gold Border */}
+                  <div className="flex justify-center items-center mb-3.5 sm:mb-4 lg:mb-5 animate-heroBadgeFadeUp">
+                    <div className="inline-flex items-center gap-2 px-3.5 sm:px-4.5 py-1.5 sm:py-2 rounded-full bg-[#052617]/80 backdrop-blur-md border border-[#E5A922]/60 shadow-lg">
+                      <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#E5A922] shrink-0 animate-pulse" />
+                      <span className="text-[11px] sm:text-xs md:text-[13px] font-bold text-[#F1E4C3] tracking-wide">
                         {language === "ta" ? "சிறந்த நாளைய விடியலுக்கான கட்டுமானம்" : "Building a Better Tomorrow"}
-                      </p>
-                    </span>
+                      </span>
+                    </div>
                   </div>
-                  <h1 className="text-2xl sm:text-3xl md:text-[38px] lg:text-[44px] xl:text-[48px] font-black text-[#0A2617] tracking-tight leading-tight drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)] animate-heroFadeUp">
-                    {language === "ta" ? "சூர்யா புரமோட்டர்ஸ்" : "Surya Promoters"}
-                  </h1>
-                  <p className="mt-1.5 sm:mt-2 lg:mt-2.5 text-xs sm:text-sm lg:text-[15px] xl:text-base font-bold text-[#1E3A2B] max-w-sm sm:max-w-md lg:max-w-lg leading-relaxed drop-shadow-[0_1px_2px_rgba(255,255,255,0.7)] animate-heroSubtitleFadeUp">
+
+                  {/* Logo as First Letter "S" + "URYA PROMOTERS" Baseline Heading Lockup (5-8% Refined Scale) */}
+                  <div className="relative flex items-center justify-center animate-heroFadeUp">
+                    {/* Concentrated soft dark green backing right behind the heading text & logo */}
+                    <div
+                      className="absolute -inset-x-8 -inset-y-4 sm:-inset-x-12 sm:-inset-y-6 pointer-events-none -z-10 rounded-full"
+                      style={{
+                        background:
+                          "radial-gradient(ellipse 55% 55% at 50% 50%, rgba(2, 18, 11, 0.48) 0%, rgba(3, 24, 15, 0.22) 60%, transparent 100%)",
+                        filter: "blur(12px)",
+                      }}
+                    />
+
+                    {language === "ta" ? (
+                      <h1
+                        className="flex items-center justify-center gap-2 sm:gap-3 text-[#D9A52E] uppercase leading-none whitespace-nowrap"
+                        style={{
+                          textShadow:
+                            "0 2px 10px rgba(2, 18, 11, 0.90), 0 4px 20px rgba(1, 14, 8, 0.65)",
+                        }}
+                      >
+                        <span className="relative inline-flex items-center justify-center w-[25px] h-[25px] xs:w-[28px] xs:h-[28px] sm:w-[37px] sm:h-[37px] md:w-[44px] md:h-[44px] lg:w-[53px] lg:h-[53px] xl:w-[57px] xl:h-[57px] 2xl:w-[62px] 2xl:h-[62px] shrink-0 align-middle">
+                          <Image
+                            src="/images/surya-gold-logo.png"
+                            alt="Surya Promoters"
+                            fill
+                            priority
+                            sizes="(max-width: 640px) 36px, (max-width: 1024px) 52px, 60px"
+                            className="object-contain"
+                            style={{
+                              filter:
+                                "drop-shadow(0 2px 8px rgba(2, 18, 11, 0.85)) drop-shadow(0 4px 16px rgba(1, 14, 8, 0.55))",
+                            }}
+                          />
+                        </span>
+                        <span className="text-[19.5px] xs:text-[22.5px] sm:text-[28px] md:text-[33.5px] lg:text-[41px] xl:text-[45px] 2xl:text-[48.5px] font-black tracking-wide">
+                          சூர்யா புரமோட்டர்ஸ்
+                        </span>
+                      </h1>
+                    ) : (
+                      <h1
+                        className="inline-flex items-center justify-center font-display font-black text-[#D9A52E] uppercase leading-none whitespace-nowrap select-none"
+                        style={{
+                          textShadow:
+                            "0 2px 10px rgba(2, 18, 11, 0.90), 0 4px 20px rgba(1, 14, 8, 0.65)",
+                        }}
+                      >
+                        <span className="relative inline-flex items-center justify-center w-[24px] h-[24px] xs:w-[26px] xs:h-[26px] sm:w-[37px] sm:h-[37px] md:w-[44px] md:h-[44px] lg:w-[53px] lg:h-[53px] xl:w-[57px] xl:h-[57px] 2xl:w-[62px] 2xl:h-[62px] shrink-0 mr-1.5 sm:-mr-1.5 align-middle hero-logo-emblem">
+                          <Image
+                            src="/images/surya-gold-logo.png"
+                            alt="S"
+                            fill
+                            priority
+                            sizes="(max-width: 640px) 38px, (max-width: 1024px) 54px, 64px"
+                            className="object-contain"
+                            style={{
+                              filter:
+                                "drop-shadow(0 2px 8px rgba(2, 18, 11, 0.85)) drop-shadow(0 4px 16px rgba(1, 14, 8, 0.55))",
+                            }}
+                          />
+                        </span>
+                        <span className="text-[19px] xs:text-[21.5px] sm:text-[30px] md:text-[35.5px] lg:text-[43px] xl:text-[46.5px] 2xl:text-[50px] tracking-[0.06em] xs:tracking-[0.08em] sm:tracking-[0.10em] hero-heading-text">
+                          URYA&nbsp;PROMOTERS
+                        </span>
+                      </h1>
+                    )}
+                  </div>
+
+                  {/* Subtitle in Warm Champagne Ivory (#FFF0C2) with Subtle Dark Green Contrast Shadow */}
+                  <p
+                    className="-mt-1 sm:-mt-1.5 md:-mt-2 lg:-mt-2.5 text-[13px] sm:text-[15px] md:text-[17px] lg:text-[18px] font-medium text-[#FFF0C2] tracking-wide max-w-2xl mx-auto leading-normal animate-heroSubtitleFadeUp"
+                    style={{
+                      textShadow:
+                        "0 1px 4px rgba(3, 24, 15, 0.90), 0 2px 10px rgba(4, 29, 18, 0.65)",
+                    }}
+                  >
                     {language === "ta" ? "2010 முதல் உங்களின் நம்பிக்கைக்குரிய ரியல் எஸ்டேட் பங்குதாரர்" : "Your Trusted Real Estate Partner Since 2010"}
                   </p>
                 </div>
@@ -1206,332 +1251,332 @@ export default function HomePage() {
                 {/* Navigation Cards Container */}
                 <div className="relative z-20 min-h-0">
                   <section className="bg-white/92 backdrop-blur-sm rounded-[18px] lg:rounded-[22px] border border-[#EBE4D5] shadow-[0_8px_30px_rgba(10,40,20,0.05)] p-2 sm:p-2.5 lg:p-3 flex flex-col justify-between">
-                  
-                  {/* Section Header with Green Accent Bar + Cursive Golden Motto */}
-                  <div className="flex items-center justify-between pb-1 sm:pb-1.5 px-0.5">
-                    <div className="flex items-center gap-2">
-                      <span className="w-1.5 h-3.5 sm:h-4.5 rounded-full bg-[#0E5934]" />
-                      <h2 className="text-xs sm:text-sm lg:text-[15px] font-black text-[#0A2617] tracking-tight">
-                        {language === "ta" ? "பிரதான சேவைகள் & அம்சங்கள் (6 முக்கிய பிரிவுகள்)" : "Explore Surya Promoters (6 Main Icons)"}
-                      </h2>
+
+                    {/* Section Header with Green Accent Bar + Cursive Golden Motto */}
+                    <div className="flex items-center justify-between pb-1 sm:pb-1.5 px-0.5">
+                      <div className="flex items-center gap-2">
+                        <span className="w-1.5 h-3.5 sm:h-4.5 rounded-full bg-[#0E5934]" />
+                        <h2 className="text-xs sm:text-sm lg:text-[15px] font-black text-[#0A2617] tracking-tight">
+                          {language === "ta" ? "பிரதான சேவைகள் & அம்சங்கள் (6 முக்கிய பிரிவுகள்)" : "Explore Surya Promoters (6 Main Icons)"}
+                        </h2>
+                      </div>
+                      <div className="font-script text-xs sm:text-sm lg:text-[15px] text-[#BD8D1C] font-bold tracking-wide select-none">
+                        Dream • Plan • Own
+                      </div>
                     </div>
-                    <div className="font-script text-xs sm:text-sm lg:text-[15px] text-[#BD8D1C] font-bold tracking-wide select-none">
-                      Dream • Plan • Own
-                    </div>
-                  </div>
 
-                  {/* The 6 Wide Landscape Cards (2 Columns x 3 Rows) */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5 sm:gap-2 lg:gap-2.5 xl:gap-3">
+                    {/* The 6 Wide Landscape Cards (2 Columns x 3 Rows) */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5 sm:gap-2 lg:gap-2.5 xl:gap-3">
 
-                    {/* Card 1: Our Projects (Champagne gold fading into warm cream) */}
-                    <button
-                      onClick={() => {
-                        setActiveTab("projects");
-                        setActiveCategory(null);
-                      }}
-                      className="clean-interactive-card animate-card-1 group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#E8CCA0] bg-gradient-to-r from-[#FBF4E6] via-[#F7EBD0] to-[#F0DEC0] shadow-[0_3px_14px_rgba(205,140,25,0.08)] hover:shadow-[0_12px_30px_rgba(205,140,25,0.22)] hover:border-[#DDA843] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 ease-out flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
-                    >
-                      {/* Background Photographic Image on Right with Natural Gradient Blend */}
-                      <div className="absolute right-0 top-0 bottom-0 w-[34%] sm:w-[36%] md:w-[36%] lg:w-[38%] xl:w-[40%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
-                        <Image
-                          src="/images/cards/card-projects-luxury.jpg"
-                          alt="Our Projects"
-                          fill
-                          sizes="(max-width: 768px) 40vw, 320px"
-                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
-                        />
-                        {/* Soft Natural Gradient Transition towards text */}
-                        <div
-                          className="absolute inset-0"
-                          style={{
-                            background: "linear-gradient(to right, #F7EBD0 0%, rgba(247, 235, 208, 0.90) 12%, rgba(247, 235, 208, 0.20) 40%, transparent 70%)"
-                          }}
-                        />
-                      </div>
-
-                      {/* Left: Prominent Circular Gradient Icon, Title & Description */}
-                      <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[62%] sm:max-w-[60%] lg:max-w-[58%]">
-                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#F5B731] via-[#E5A922] to-[#BD7B0C] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(205,140,25,0.25)] group-hover:scale-110 transition-transform duration-300 ease-out">
-                          <Building2 className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
-                        </div>
-                        <div className="min-w-0">
-                          <h3 className="font-black text-[12.5px] sm:text-[13.5px] md:text-[12.5px] lg:text-[14px] xl:text-[15px] text-[#0D2317] group-hover:text-[#9A6206] transition-colors leading-tight line-clamp-1">
-                            {language === "ta" ? "எங்கள் திட்டங்கள்" : "Our Projects"}
-                          </h3>
-                          <p className="text-[10px] sm:text-[11px] md:text-[10px] lg:text-[11px] xl:text-[12px] text-[#4A5750] font-semibold mt-0.5 leading-snug line-clamp-1">
-                            {language === "ta" ? "வீடு, வணிகம் & பண்ணை மனைகள்" : "Residential, Commercial & Farm"}
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* Right: Elegant Circular Arrow Button */}
-                      <div className="relative z-10 shrink-0">
-                        <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-1 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
-                          <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.6]" />
-                        </div>
-                      </div>
-                    </button>
-
-                    {/* Card 2: Site Location (Fresh mint green fading into pale green) */}
-                    <button
-                      onClick={() => setActiveTab("location")}
-                      className="clean-interactive-card animate-card-2 group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#A8DCB7] bg-gradient-to-r from-[#EAF7EE] via-[#DCF2E4] to-[#CEEBD7] shadow-[0_3px_14px_rgba(16,140,60,0.08)] hover:shadow-[0_12px_30px_rgba(16,140,60,0.22)] hover:border-[#22C55E] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 ease-out flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
-                    >
-                      {/* Background Photographic Image on Right with Natural Gradient Blend */}
-                      <div className="absolute right-0 top-0 bottom-0 w-[34%] sm:w-[36%] md:w-[36%] lg:w-[38%] xl:w-[40%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
-                        <Image
-                          src="/images/cards/card-location-cadastral.jpg"
-                          alt="Site Location"
-                          fill
-                          sizes="(max-width: 768px) 40vw, 320px"
-                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
-                        />
-                        {/* Soft Natural Gradient Transition towards text */}
-                        <div
-                          className="absolute inset-0"
-                          style={{
-                            background: "linear-gradient(to right, #DCF2E4 0%, rgba(220, 242, 228, 0.90) 12%, rgba(220, 242, 228, 0.20) 40%, transparent 70%)"
-                          }}
-                        />
-                      </div>
-
-                      {/* Left: Prominent Circular Gradient Icon, Title & Description */}
-                      <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[62%] sm:max-w-[60%] lg:max-w-[58%]">
-                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(173,18,26,0.30)] group-hover:scale-110 transition-transform duration-300 ease-out overflow-hidden relative">
+                      {/* Card 1: Our Projects (Champagne gold fading into warm cream) */}
+                      <button
+                        onClick={() => {
+                          setActiveTab("projects");
+                          setActiveCategory(null);
+                        }}
+                        className="clean-interactive-card animate-card-1 group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#E8CCA0] bg-gradient-to-r from-[#FBF4E6] via-[#F7EBD0] to-[#F0DEC0] shadow-[0_3px_14px_rgba(205,140,25,0.08)] hover:shadow-[0_12px_30px_rgba(205,140,25,0.22)] hover:border-[#DDA843] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 ease-out flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
+                      >
+                        {/* Background Photographic Image on Right with Natural Gradient Blend */}
+                        <div className="absolute right-0 top-0 bottom-0 w-[34%] sm:w-[36%] md:w-[36%] lg:w-[38%] xl:w-[40%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
                           <Image
-                            src="/images/site-location-icon.png"
-                            alt="Site Location"
+                            src="/images/cards/card-projects-luxury.jpg"
+                            alt="Our Projects"
                             fill
-                            sizes="(max-width: 640px) 40px, (max-width: 1024px) 44px, 48px"
-                            className="object-cover"
-                            priority
+                            sizes="(max-width: 768px) 40vw, 320px"
+                            className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
+                          />
+                          {/* Soft Natural Gradient Transition towards text */}
+                          <div
+                            className="absolute inset-0"
+                            style={{
+                              background: "linear-gradient(to right, #F7EBD0 0%, rgba(247, 235, 208, 0.90) 12%, rgba(247, 235, 208, 0.20) 40%, transparent 70%)"
+                            }}
                           />
                         </div>
-                        <div className="min-w-0">
-                          <h3 className="font-black text-[12.5px] sm:text-[13.5px] md:text-[12.5px] lg:text-[14px] xl:text-[15px] text-[#0D2317] group-hover:text-[#15803D] transition-colors leading-tight line-clamp-1">
-                            {language === "ta" ? "தள அமைவிடம்" : "Site Location"}
-                          </h3>
-                          <p className="text-[10px] sm:text-[11px] md:text-[10px] lg:text-[11px] xl:text-[12px] text-[#4A5750] font-semibold mt-0.5 leading-snug line-clamp-1">
-                            {language === "ta" ? "3D & GPS நேரலை வரைபடங்கள்" : "3D Cadastral & GPS Maps"}
-                          </p>
-                        </div>
-                      </div>
 
-                      {/* Right: Elegant Circular Arrow Button */}
-                      <div className="relative z-10 shrink-0">
-                        <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#15803D] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-1 transition-all duration-300 shadow-[0_2px_8px_rgba(21,128,61,0.35)]">
-                          <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.6]" />
+                        {/* Left: Prominent Circular Gradient Icon, Title & Description */}
+                        <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[62%] sm:max-w-[60%] lg:max-w-[58%]">
+                          <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#F5B731] via-[#E5A922] to-[#BD7B0C] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(205,140,25,0.25)] group-hover:scale-110 transition-transform duration-300 ease-out">
+                            <Building2 className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
+                          </div>
+                          <div className="min-w-0">
+                            <h3 className="font-black text-[12.5px] sm:text-[13.5px] md:text-[12.5px] lg:text-[14px] xl:text-[15px] text-[#0D2317] group-hover:text-[#9A6206] transition-colors leading-tight line-clamp-1">
+                              {language === "ta" ? "எங்கள் திட்டங்கள்" : "Our Projects"}
+                            </h3>
+                            <p className="text-[10px] sm:text-[11px] md:text-[10px] lg:text-[11px] xl:text-[12px] text-[#4A5750] font-semibold mt-0.5 leading-snug line-clamp-1">
+                              {language === "ta" ? "வீடு, வணிகம் & பண்ணை மனைகள்" : "Residential, Commercial & Farm"}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    </button>
 
-                    {/* Card 3: Gallery (Lavender fading into soft purple) */}
-                    <button
-                      onClick={() => setActiveTab("gallery")}
-                      className="clean-interactive-card animate-card-3 group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#CFB8ED] bg-gradient-to-r from-[#F5EFFB] via-[#EBE0F7] to-[#DFCFF2] shadow-[0_3px_14px_rgba(147,51,234,0.08)] hover:shadow-[0_12px_30px_rgba(147,51,234,0.22)] hover:border-[#A855F7] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 ease-out flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
-                    >
-                      {/* Background Photographic Image on Right with Natural Gradient Blend */}
-                      <div className="absolute right-0 top-0 bottom-0 w-[34%] sm:w-[36%] md:w-[36%] lg:w-[38%] xl:w-[40%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
-                        <Image
-                          src="/images/cards/card-gallery-photos.jpg"
-                          alt="Gallery"
-                          fill
-                          sizes="(max-width: 768px) 40vw, 320px"
-                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
-                        />
-                        {/* Soft Natural Gradient Transition towards text */}
-                        <div
-                          className="absolute inset-0"
-                          style={{
-                            background: "linear-gradient(to right, #EBE0F7 0%, rgba(235, 224, 247, 0.90) 12%, rgba(235, 224, 247, 0.20) 40%, transparent 70%)"
-                          }}
-                        />
-                      </div>
-
-                      {/* Left: Prominent Circular Gradient Icon, Title & Description */}
-                      <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[62%] sm:max-w-[60%] lg:max-w-[58%]">
-                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#A855F7] via-[#9333EA] to-[#6B21A8] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(147,51,234,0.25)] group-hover:scale-110 transition-transform duration-300 ease-out">
-                          <Camera className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
+                        {/* Right: Elegant Circular Arrow Button */}
+                        <div className="relative z-10 shrink-0">
+                          <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-1 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
+                            <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.6]" />
+                          </div>
                         </div>
-                        <div className="min-w-0">
-                          <h3 className="font-black text-[12.5px] sm:text-[13.5px] md:text-[12.5px] lg:text-[14px] xl:text-[15px] text-[#0D2317] group-hover:text-[#7E22CE] transition-colors leading-tight line-clamp-1">
-                            {language === "ta" ? "புகைப்படங்கள் & வீடியோ" : "Gallery"}
-                          </h3>
-                          <p className="text-[10px] sm:text-[11px] md:text-[10px] lg:text-[11px] xl:text-[12px] text-[#4A5750] font-semibold mt-0.5 leading-snug line-clamp-1">
-                            {language === "ta" ? "வீடியோ & புகைப்பட ஆல்பங்கள்" : "Videos & Photos Folders"}
-                          </p>
-                        </div>
-                      </div>
+                      </button>
 
-                      {/* Right: Elegant Circular Arrow Button */}
-                      <div className="relative z-10 shrink-0">
-                        <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-1 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
-                          <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.6]" />
+                      {/* Card 2: Site Location (Fresh mint green fading into pale green) */}
+                      <button
+                        onClick={() => setActiveTab("location")}
+                        className="clean-interactive-card animate-card-2 group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#A8DCB7] bg-gradient-to-r from-[#EAF7EE] via-[#DCF2E4] to-[#CEEBD7] shadow-[0_3px_14px_rgba(16,140,60,0.08)] hover:shadow-[0_12px_30px_rgba(16,140,60,0.22)] hover:border-[#22C55E] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 ease-out flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
+                      >
+                        {/* Background Photographic Image on Right with Natural Gradient Blend */}
+                        <div className="absolute right-0 top-0 bottom-0 w-[34%] sm:w-[36%] md:w-[36%] lg:w-[38%] xl:w-[40%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
+                          <Image
+                            src="/images/cards/card-location-cadastral.jpg"
+                            alt="Site Location"
+                            fill
+                            sizes="(max-width: 768px) 40vw, 320px"
+                            className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
+                          />
+                          {/* Soft Natural Gradient Transition towards text */}
+                          <div
+                            className="absolute inset-0"
+                            style={{
+                              background: "linear-gradient(to right, #DCF2E4 0%, rgba(220, 242, 228, 0.90) 12%, rgba(220, 242, 228, 0.20) 40%, transparent 70%)"
+                            }}
+                          />
                         </div>
-                      </div>
-                    </button>
 
-                    {/* Card 4: About Company (Light sage green fading into forest green tones) */}
-                    <button
-                      onClick={() => setActiveTab("about")}
-                      className="clean-interactive-card animate-card-4 group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#AFD1B9] bg-gradient-to-r from-[#EEF5F0] via-[#E0ECE3] to-[#CFE2D4] shadow-[0_3px_14px_rgba(14,89,52,0.08)] hover:shadow-[0_12px_30px_rgba(14,89,52,0.22)] hover:border-[#16A34A] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 ease-out flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
-                    >
-                      {/* Background Photographic Image on Right with Natural Gradient Blend */}
-                      <div className="absolute right-0 top-0 bottom-0 w-[34%] sm:w-[36%] md:w-[36%] lg:w-[38%] xl:w-[40%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
-                        <Image
-                          src="/images/cards/card-about-handshake.jpg"
-                          alt="About Company"
-                          fill
-                          sizes="(max-width: 768px) 40vw, 320px"
-                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
-                        />
-                        {/* Soft Natural Gradient Transition towards text */}
-                        <div
-                          className="absolute inset-0"
-                          style={{
-                            background: "linear-gradient(to right, #E0ECE3 0%, rgba(224, 236, 227, 0.90) 12%, rgba(224, 236, 227, 0.20) 40%, transparent 70%)"
-                          }}
-                        />
-                      </div>
-
-                      {/* Left: Prominent Circular Gradient Icon, Title & Description */}
-                      <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[62%] sm:max-w-[60%] lg:max-w-[58%]">
-                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#16A34A] via-[#0E5934] to-[#083D22] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(14,89,52,0.25)] group-hover:scale-110 transition-transform duration-300 ease-out">
-                          <ShieldCheck className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
+                        {/* Left: Prominent Circular Gradient Icon, Title & Description */}
+                        <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[62%] sm:max-w-[60%] lg:max-w-[58%]">
+                          <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(173,18,26,0.30)] group-hover:scale-110 transition-transform duration-300 ease-out overflow-hidden relative">
+                            <Image
+                              src="/images/site-location-icon.png"
+                              alt="Site Location"
+                              fill
+                              sizes="(max-width: 640px) 40px, (max-width: 1024px) 44px, 48px"
+                              className="object-cover"
+                              priority
+                            />
+                          </div>
+                          <div className="min-w-0">
+                            <h3 className="font-black text-[12.5px] sm:text-[13.5px] md:text-[12.5px] lg:text-[14px] xl:text-[15px] text-[#0D2317] group-hover:text-[#15803D] transition-colors leading-tight line-clamp-1">
+                              {language === "ta" ? "தள அமைவிடம்" : "Site Location"}
+                            </h3>
+                            <p className="text-[10px] sm:text-[11px] md:text-[10px] lg:text-[11px] xl:text-[12px] text-[#4A5750] font-semibold mt-0.5 leading-snug line-clamp-1">
+                              {language === "ta" ? "3D & GPS நேரலை வரைபடங்கள்" : "3D Cadastral & GPS Maps"}
+                            </p>
+                          </div>
                         </div>
-                        <div className="min-w-0">
-                          <h3 className="font-black text-[12.5px] sm:text-[13.5px] md:text-[12.5px] lg:text-[14px] xl:text-[15px] text-[#0D2317] group-hover:text-[#0E5934] transition-colors leading-tight line-clamp-1">
-                            {language === "ta" ? "நிறுவனம் பற்றி" : "About Company"}
-                          </h3>
-                          <p className="text-[10px] sm:text-[11px] md:text-[10px] lg:text-[11px] xl:text-[12px] text-[#4A5750] font-semibold mt-0.5 leading-snug line-clamp-1">
-                            {language === "ta" ? "நிறுவனர் & 16+ வருட பாரம்பரியம்" : "Founder & 16+ Yrs Legacy"}
-                          </p>
-                        </div>
-                      </div>
 
-                      {/* Right: Elegant Circular Arrow Button */}
-                      <div className="relative z-10 shrink-0">
-                        <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-1 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
-                          <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.6]" />
+                        {/* Right: Elegant Circular Arrow Button */}
+                        <div className="relative z-10 shrink-0">
+                          <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#15803D] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-1 transition-all duration-300 shadow-[0_2px_8px_rgba(21,128,61,0.35)]">
+                            <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.6]" />
+                          </div>
                         </div>
-                      </div>
-                    </button>
+                      </button>
 
-                    {/* Card 5: Download Layout (Warm peach fading into champagne cream) */}
-                    <button
-                      onClick={() => setActiveTab("download")}
-                      className="clean-interactive-card animate-card-5 group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#F5BE9B] bg-gradient-to-r from-[#FDF2E8] via-[#FCE4D4] to-[#F7D4BE] shadow-[0_3px_14px_rgba(234,88,12,0.08)] hover:shadow-[0_12px_30px_rgba(234,88,12,0.22)] hover:border-[#EA580C] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 ease-out flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
-                    >
-                      {/* Background Photographic Image on Right with Natural Gradient Blend */}
-                      <div className="absolute right-0 top-0 bottom-0 w-[34%] sm:w-[36%] md:w-[36%] lg:w-[38%] xl:w-[40%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
-                        <Image
-                          src="/images/cards/card-download-blueprint.jpg"
-                          alt="Download Layout"
-                          fill
-                          sizes="(max-width: 768px) 40vw, 320px"
-                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
-                        />
-                        {/* Soft Natural Gradient Transition towards text */}
-                        <div
-                          className="absolute inset-0"
-                          style={{
-                            background: "linear-gradient(to right, #FCE4D4 0%, rgba(252, 228, 212, 0.90) 12%, rgba(252, 228, 212, 0.20) 40%, transparent 70%)"
-                          }}
-                        />
-                      </div>
-
-                      {/* Left: Prominent Circular Gradient Icon, Title & Description */}
-                      <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[62%] sm:max-w-[60%] lg:max-w-[58%]">
-                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#FB923C] via-[#EA580C] to-[#C2410C] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(234,88,12,0.25)] group-hover:scale-110 transition-transform duration-300 ease-out">
-                          <Download className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
+                      {/* Card 3: Gallery (Lavender fading into soft purple) */}
+                      <button
+                        onClick={() => setActiveTab("gallery")}
+                        className="clean-interactive-card animate-card-3 group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#CFB8ED] bg-gradient-to-r from-[#F5EFFB] via-[#EBE0F7] to-[#DFCFF2] shadow-[0_3px_14px_rgba(147,51,234,0.08)] hover:shadow-[0_12px_30px_rgba(147,51,234,0.22)] hover:border-[#A855F7] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 ease-out flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
+                      >
+                        {/* Background Photographic Image on Right with Natural Gradient Blend */}
+                        <div className="absolute right-0 top-0 bottom-0 w-[34%] sm:w-[36%] md:w-[36%] lg:w-[38%] xl:w-[40%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
+                          <Image
+                            src="/images/cards/card-gallery-photos.jpg"
+                            alt="Gallery"
+                            fill
+                            sizes="(max-width: 768px) 40vw, 320px"
+                            className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
+                          />
+                          {/* Soft Natural Gradient Transition towards text */}
+                          <div
+                            className="absolute inset-0"
+                            style={{
+                              background: "linear-gradient(to right, #EBE0F7 0%, rgba(235, 224, 247, 0.90) 12%, rgba(235, 224, 247, 0.20) 40%, transparent 70%)"
+                            }}
+                          />
                         </div>
-                        <div className="min-w-0">
-                          <h3 className="font-black text-[12.5px] sm:text-[13.5px] md:text-[12.5px] lg:text-[14px] xl:text-[15px] text-[#0D2317] group-hover:text-[#C2410C] transition-colors leading-tight line-clamp-1">
-                            {language === "ta" ? "வரைபடம் பதிவிறக்கம்" : "Download Layout"}
-                          </h3>
-                          <p className="text-[10px] sm:text-[11px] md:text-[10px] lg:text-[11px] xl:text-[12px] text-[#4A5750] font-semibold mt-0.5 leading-snug line-clamp-1">
-                            {language === "ta" ? "புளூபிரிண்ட், வரைபடம், PDF கையேடுகள்" : "Blueprints, Layouts & PDFs"}
-                          </p>
-                        </div>
-                      </div>
 
-                      {/* Right: Elegant Circular Arrow Button */}
-                      <div className="relative z-10 shrink-0">
-                        <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-1 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
-                          <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.6]" />
+                        {/* Left: Prominent Circular Gradient Icon, Title & Description */}
+                        <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[62%] sm:max-w-[60%] lg:max-w-[58%]">
+                          <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#A855F7] via-[#9333EA] to-[#6B21A8] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(147,51,234,0.25)] group-hover:scale-110 transition-transform duration-300 ease-out">
+                            <Camera className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
+                          </div>
+                          <div className="min-w-0">
+                            <h3 className="font-black text-[12.5px] sm:text-[13.5px] md:text-[12.5px] lg:text-[14px] xl:text-[15px] text-[#0D2317] group-hover:text-[#7E22CE] transition-colors leading-tight line-clamp-1">
+                              {language === "ta" ? "புகைப்படங்கள் & வீடியோ" : "Gallery"}
+                            </h3>
+                            <p className="text-[10px] sm:text-[11px] md:text-[10px] lg:text-[11px] xl:text-[12px] text-[#4A5750] font-semibold mt-0.5 leading-snug line-clamp-1">
+                              {language === "ta" ? "வீடியோ & புகைப்பட ஆல்பங்கள்" : "Videos & Photos Folders"}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    </button>
 
-                    {/* Card 6: Contact Us (Soft aqua fading into teal) */}
-                    <button
-                      onClick={() => setActiveTab("contact")}
-                      className="clean-interactive-card animate-card-6 group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#9FD4D3] bg-gradient-to-r from-[#ECF7F7] via-[#DAEFEF] to-[#C5E5E5] shadow-[0_3px_14px_rgba(13,148,136,0.08)] hover:shadow-[0_12px_30px_rgba(13,148,136,0.22)] hover:border-[#0D9488] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 ease-out flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
-                    >
-                      {/* Background Photographic Image on Right with Natural Gradient Blend */}
-                      <div className="absolute right-0 top-0 bottom-0 w-[34%] sm:w-[36%] md:w-[36%] lg:w-[38%] xl:w-[40%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
-                        <Image
-                          src="/images/cards/card-contact-support.jpg"
-                          alt="Contact Us"
-                          fill
-                          sizes="(max-width: 768px) 40vw, 320px"
-                          className="object-cover object-[center_20%] transition-transform duration-500 ease-out group-hover:scale-108"
-                        />
-                        {/* Soft Natural Gradient Transition towards text */}
-                        <div
-                          className="absolute inset-0"
-                          style={{
-                            background: "linear-gradient(to right, #DAEFEF 0%, rgba(218, 239, 239, 0.90) 12%, rgba(218, 239, 239, 0.20) 40%, transparent 70%)"
-                          }}
-                        />
-                      </div>
-
-                      {/* Left: Prominent Circular Gradient Icon, Title & Description */}
-                      <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[62%] sm:max-w-[60%] lg:max-w-[58%]">
-                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#14B8A6] via-[#0D9488] to-[#0F766E] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(13,148,136,0.25)] group-hover:scale-110 transition-transform duration-300 ease-out">
-                          <PhoneCall className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
+                        {/* Right: Elegant Circular Arrow Button */}
+                        <div className="relative z-10 shrink-0">
+                          <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-1 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
+                            <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.6]" />
+                          </div>
                         </div>
-                        <div className="min-w-0">
-                          <h3 className="font-black text-[12.5px] sm:text-[13.5px] md:text-[12.5px] lg:text-[14px] xl:text-[15px] text-[#0D2317] group-hover:text-[#0F766E] transition-colors leading-tight line-clamp-1">
-                            {language === "ta" ? "நேரடி தொடர்பு" : "Contact Us"}
-                          </h3>
-                          <p className="text-[10px] sm:text-[11px] md:text-[10px] lg:text-[11px] xl:text-[12px] text-[#4A5750] font-semibold mt-0.5 leading-snug line-clamp-1">
-                            {language === "ta" ? "அழைப்பு & தலைமை அலுவலகம்" : "Direct Helpline & Madurai HQ"}
-                          </p>
-                        </div>
-                      </div>
+                      </button>
 
-                      {/* Right: Elegant Circular Arrow Button */}
-                      <div className="relative z-10 shrink-0">
-                        <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-1 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
-                          <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.6]" />
+                      {/* Card 4: About Company (Light sage green fading into forest green tones) */}
+                      <button
+                        onClick={() => setActiveTab("about")}
+                        className="clean-interactive-card animate-card-4 group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#AFD1B9] bg-gradient-to-r from-[#EEF5F0] via-[#E0ECE3] to-[#CFE2D4] shadow-[0_3px_14px_rgba(14,89,52,0.08)] hover:shadow-[0_12px_30px_rgba(14,89,52,0.22)] hover:border-[#16A34A] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 ease-out flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
+                      >
+                        {/* Background Photographic Image on Right with Natural Gradient Blend */}
+                        <div className="absolute right-0 top-0 bottom-0 w-[34%] sm:w-[36%] md:w-[36%] lg:w-[38%] xl:w-[40%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
+                          <Image
+                            src="/images/cards/card-about-handshake.jpg"
+                            alt="About Company"
+                            fill
+                            sizes="(max-width: 768px) 40vw, 320px"
+                            className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
+                          />
+                          {/* Soft Natural Gradient Transition towards text */}
+                          <div
+                            className="absolute inset-0"
+                            style={{
+                              background: "linear-gradient(to right, #E0ECE3 0%, rgba(224, 236, 227, 0.90) 12%, rgba(224, 236, 227, 0.20) 40%, transparent 70%)"
+                            }}
+                          />
                         </div>
-                      </div>
-                    </button>
-                  </div>
-                </section>
-              </div>
 
-              {/* Trust Badges Bar immediately below the six-card container with balanced spacing */}
-              <div className="shrink-0 pt-2 sm:pt-2.5 lg:pt-3 pb-0.5 select-none z-20">
-                <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 lg:gap-8 text-[10.5px] sm:text-xs lg:text-[12px] font-bold text-[#294233]">
-                  <div className="flex items-center gap-1.5">
-                    <Home className="h-3.5 w-3.5 text-[#BD8D1C]" />
-                    <span>{language === "ta" ? "நம்பகமான கட்டுநர்" : "Trusted Builder"}</span>
-                  </div>
-                  <span className="hidden sm:inline text-neutral-300">|</span>
-                  <div className="flex items-center gap-1.5">
-                    <ShieldCheck className="h-3.5 w-3.5 text-[#0E5934]" />
-                    <span>{language === "ta" ? "தர உத்தரவாதம்" : "Quality Assurance"}</span>
-                  </div>
-                  <span className="hidden sm:inline text-neutral-300">|</span>
-                  <div className="flex items-center gap-1.5">
-                    <Users className="h-3.5 w-3.5 text-[#BD8D1C]" />
-                    <span>{language === "ta" ? "வாடிக்கையாளர் முதன்மை" : "Customer First"}</span>
+                        {/* Left: Prominent Circular Gradient Icon, Title & Description */}
+                        <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[62%] sm:max-w-[60%] lg:max-w-[58%]">
+                          <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#16A34A] via-[#0E5934] to-[#083D22] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(14,89,52,0.25)] group-hover:scale-110 transition-transform duration-300 ease-out">
+                            <ShieldCheck className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
+                          </div>
+                          <div className="min-w-0">
+                            <h3 className="font-black text-[12.5px] sm:text-[13.5px] md:text-[12.5px] lg:text-[14px] xl:text-[15px] text-[#0D2317] group-hover:text-[#0E5934] transition-colors leading-tight line-clamp-1">
+                              {language === "ta" ? "நிறுவனம் பற்றி" : "About Company"}
+                            </h3>
+                            <p className="text-[10px] sm:text-[11px] md:text-[10px] lg:text-[11px] xl:text-[12px] text-[#4A5750] font-semibold mt-0.5 leading-snug line-clamp-1">
+                              {language === "ta" ? "நிறுவனர் & 16+ வருட பாரம்பரியம்" : "Founder & 16+ Yrs Legacy"}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Right: Elegant Circular Arrow Button */}
+                        <div className="relative z-10 shrink-0">
+                          <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-1 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
+                            <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.6]" />
+                          </div>
+                        </div>
+                      </button>
+
+                      {/* Card 5: Download Layout (Warm peach fading into champagne cream) */}
+                      <button
+                        onClick={() => setActiveTab("download")}
+                        className="clean-interactive-card animate-card-5 group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#F5BE9B] bg-gradient-to-r from-[#FDF2E8] via-[#FCE4D4] to-[#F7D4BE] shadow-[0_3px_14px_rgba(234,88,12,0.08)] hover:shadow-[0_12px_30px_rgba(234,88,12,0.22)] hover:border-[#EA580C] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 ease-out flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
+                      >
+                        {/* Background Photographic Image on Right with Natural Gradient Blend */}
+                        <div className="absolute right-0 top-0 bottom-0 w-[34%] sm:w-[36%] md:w-[36%] lg:w-[38%] xl:w-[40%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
+                          <Image
+                            src="/images/cards/card-download-blueprint.jpg"
+                            alt="Download Layout"
+                            fill
+                            sizes="(max-width: 768px) 40vw, 320px"
+                            className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-108"
+                          />
+                          {/* Soft Natural Gradient Transition towards text */}
+                          <div
+                            className="absolute inset-0"
+                            style={{
+                              background: "linear-gradient(to right, #FCE4D4 0%, rgba(252, 228, 212, 0.90) 12%, rgba(252, 228, 212, 0.20) 40%, transparent 70%)"
+                            }}
+                          />
+                        </div>
+
+                        {/* Left: Prominent Circular Gradient Icon, Title & Description */}
+                        <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[62%] sm:max-w-[60%] lg:max-w-[58%]">
+                          <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#FB923C] via-[#EA580C] to-[#C2410C] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(234,88,12,0.25)] group-hover:scale-110 transition-transform duration-300 ease-out">
+                            <Download className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
+                          </div>
+                          <div className="min-w-0">
+                            <h3 className="font-black text-[12.5px] sm:text-[13.5px] md:text-[12.5px] lg:text-[14px] xl:text-[15px] text-[#0D2317] group-hover:text-[#C2410C] transition-colors leading-tight line-clamp-1">
+                              {language === "ta" ? "வரைபடம் பதிவிறக்கம்" : "Download Layout"}
+                            </h3>
+                            <p className="text-[10px] sm:text-[11px] md:text-[10px] lg:text-[11px] xl:text-[12px] text-[#4A5750] font-semibold mt-0.5 leading-snug line-clamp-1">
+                              {language === "ta" ? "புளூபிரிண்ட், வரைபடம், PDF கையேடுகள்" : "Blueprints, Layouts & PDFs"}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Right: Elegant Circular Arrow Button */}
+                        <div className="relative z-10 shrink-0">
+                          <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-1 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
+                            <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.6]" />
+                          </div>
+                        </div>
+                      </button>
+
+                      {/* Card 6: Contact Us (Soft aqua fading into teal) */}
+                      <button
+                        onClick={() => setActiveTab("contact")}
+                        className="clean-interactive-card animate-card-6 group relative overflow-hidden rounded-[18px] lg:rounded-[20px] h-[92px] sm:h-[100px] md:h-[86px] lg:h-[94px] xl:h-[102px] 2xl:h-[112px] px-3 sm:px-4 lg:px-4.5 py-2 sm:py-2.5 lg:py-2.5 text-left border border-[#9FD4D3] bg-gradient-to-r from-[#ECF7F7] via-[#DAEFEF] to-[#C5E5E5] shadow-[0_3px_14px_rgba(13,148,136,0.08)] hover:shadow-[0_12px_30px_rgba(13,148,136,0.22)] hover:border-[#0D9488] hover:-translate-y-1 active:translate-y-0 transition-all duration-300 ease-out flex items-center justify-between cursor-pointer outline-none focus:outline-none focus-visible:outline-none active:outline-none hover:outline-none focus:ring-0 focus-visible:ring-0 select-none no-underline [backface-visibility:hidden] [transform:translateZ(0)]"
+                      >
+                        {/* Background Photographic Image on Right with Natural Gradient Blend */}
+                        <div className="absolute right-0 top-0 bottom-0 w-[34%] sm:w-[36%] md:w-[36%] lg:w-[38%] xl:w-[40%] overflow-hidden rounded-r-[17px] lg:rounded-r-[19px] pointer-events-none [transform:translateZ(0)]">
+                          <Image
+                            src="/images/cards/card-contact-support.jpg"
+                            alt="Contact Us"
+                            fill
+                            sizes="(max-width: 768px) 40vw, 320px"
+                            className="object-cover object-[center_20%] transition-transform duration-500 ease-out group-hover:scale-108"
+                          />
+                          {/* Soft Natural Gradient Transition towards text */}
+                          <div
+                            className="absolute inset-0"
+                            style={{
+                              background: "linear-gradient(to right, #DAEFEF 0%, rgba(218, 239, 239, 0.90) 12%, rgba(218, 239, 239, 0.20) 40%, transparent 70%)"
+                            }}
+                          />
+                        </div>
+
+                        {/* Left: Prominent Circular Gradient Icon, Title & Description */}
+                        <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-3.5 z-10 min-w-0 max-w-[62%] sm:max-w-[60%] lg:max-w-[58%]">
+                          <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-9.5 md:h-9.5 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-gradient-to-br from-[#14B8A6] via-[#0D9488] to-[#0F766E] text-white flex items-center justify-center shrink-0 border-2 border-white/80 shadow-[0_3px_10px_rgba(13,148,136,0.25)] group-hover:scale-110 transition-transform duration-300 ease-out">
+                            <PhoneCall className="w-4.5 h-4.5 sm:w-5 sm:h-5 lg:w-5.5 lg:h-5.5 xl:w-6 xl:h-6 stroke-[2.2]" />
+                          </div>
+                          <div className="min-w-0">
+                            <h3 className="font-black text-[12.5px] sm:text-[13.5px] md:text-[12.5px] lg:text-[14px] xl:text-[15px] text-[#0D2317] group-hover:text-[#0F766E] transition-colors leading-tight line-clamp-1">
+                              {language === "ta" ? "நேரடி தொடர்பு" : "Contact Us"}
+                            </h3>
+                            <p className="text-[10px] sm:text-[11px] md:text-[10px] lg:text-[11px] xl:text-[12px] text-[#4A5750] font-semibold mt-0.5 leading-snug line-clamp-1">
+                              {language === "ta" ? "அழைப்பு & தலைமை அலுவலகம்" : "Direct Helpline & Madurai HQ"}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Right: Elegant Circular Arrow Button */}
+                        <div className="relative z-10 shrink-0">
+                          <div className="w-6.5 h-6.5 sm:w-7 sm:h-7 lg:w-7.5 lg:h-7.5 xl:w-8 xl:h-8 rounded-full bg-[#0E5934] text-white flex items-center justify-center group-hover:scale-110 group-hover:translate-x-1 transition-all duration-300 shadow-[0_2px_8px_rgba(14,89,52,0.35)]">
+                            <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.6]" />
+                          </div>
+                        </div>
+                      </button>
+                    </div>
+                  </section>
+                </div>
+
+                {/* Trust Badges Bar immediately below the six-card container with balanced spacing */}
+                <div className="shrink-0 pt-2 sm:pt-2.5 lg:pt-3 pb-0.5 select-none z-20">
+                  <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 lg:gap-8 text-[10.5px] sm:text-xs lg:text-[12px] font-bold text-[#294233]">
+                    <div className="flex items-center gap-1.5">
+                      <Home className="h-3.5 w-3.5 text-[#BD8D1C]" />
+                      <span>{language === "ta" ? "நம்பகமான கட்டுநர்" : "Trusted Builder"}</span>
+                    </div>
+                    <span className="hidden sm:inline text-neutral-300">|</span>
+                    <div className="flex items-center gap-1.5">
+                      <ShieldCheck className="h-3.5 w-3.5 text-[#0E5934]" />
+                      <span>{language === "ta" ? "தர உத்தரவாதம்" : "Quality Assurance"}</span>
+                    </div>
+                    <span className="hidden sm:inline text-neutral-300">|</span>
+                    <div className="flex items-center gap-1.5">
+                      <Users className="h-3.5 w-3.5 text-[#BD8D1C]" />
+                      <span>{language === "ta" ? "வாடிக்கையாளர் முதன்மை" : "Customer First"}</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
             </div>
           )}
 
@@ -1689,21 +1734,21 @@ export default function HomePage() {
                         // Photographic and metadata mapping for luxury presentation
                         const catMeta = cat.id === "residential"
                           ? {
-                              image: "/images/cards/card-projects-luxury.jpg",
-                              tag: "DTCP & RERA Approved",
-                              tagTa: "DTCP & RERA அங்கீகரிக்கப்பட்டது",
-                              perks: ["3 BHK Luxury Duplex Villas", "Premium Gated Communities", "Ready-to-Build Plots"],
-                              perksTa: ["3 BHK டூப்ளக்ஸ் வில்லாக்கள்", "கேட்டட் கம்யூனிட்டி", "உடனடி கட்டுமான மனைகள்"],
-                            }
+                            image: "/images/cards/card-projects-luxury.jpg",
+                            tag: "DTCP & RERA Approved",
+                            tagTa: "DTCP & RERA அங்கீகரிக்கப்பட்டது",
+                            perks: ["3 BHK Luxury Duplex Villas", "Premium Gated Communities", "Ready-to-Build Plots"],
+                            perksTa: ["3 BHK டூப்ளக்ஸ் வில்லாக்கள்", "கேட்டட் கம்யூனிட்டி", "உடனடி கட்டுமான மனைகள்"],
+                          }
                           : cat.id === "commercial"
-                          ? {
+                            ? {
                               image: "/images/pandi-kovil-commercial-land.jpg",
                               tag: "High-Exposure Corridors",
                               tagTa: "தேசிய நெடுஞ்சாலை பெருநிலங்கள்",
                               perks: ["NH-44 & Ring Road Access", "High Commercial Footfall", "Maximum Appreciation"],
                               perksTa: ["NH-44 & ரிங் ரோடு இணைப்பு", "வணிக பெருமதிப்பு", "அதிக வளர்ச்சி சாத்தியம்"],
                             }
-                          : {
+                            : {
                               image: "/images/projects/madurai-farms/panoramic-view.jpg",
                               tag: "Managed Agro Acreage",
                               tagTa: "இயற்கை பண்ணை நிலங்கள்",
@@ -1817,11 +1862,10 @@ export default function HomePage() {
                           <button
                             key={cat.id}
                             onClick={() => setActiveCategory(cat.id)}
-                            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
-                              isCatActive
-                                ? "bg-[#06351F] text-white shadow-xs font-black ring-2 ring-[#0E5934]"
-                                : "bg-white text-[#06351F] hover:bg-emerald-50 border border-neutral-200/90 shadow-2xs"
-                            }`}
+                            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${isCatActive
+                              ? "bg-[#06351F] text-white shadow-xs font-black ring-2 ring-[#0E5934]"
+                              : "bg-white text-[#06351F] hover:bg-emerald-50 border border-neutral-200/90 shadow-2xs"
+                              }`}
                           >
                             {idx + 1}. {cat.name[language] || cat.name.en} ({pCount})
                           </button>
@@ -2629,7 +2673,7 @@ export default function HomePage() {
                     title="Follow Surya Promoters on Instagram"
                   >
                     <svg className="h-4 w-4 fill-white shrink-0 group-hover:rotate-6 transition-transform" viewBox="0 0 24 24">
-                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                     </svg>
                     <span>{language === "ta" ? "இன்ஸ்டாகிராம்" : "Instagram"}</span>
                     <ExternalLink className="h-3.5 w-3.5 text-white/90" />
@@ -2663,13 +2707,11 @@ export default function HomePage() {
           {/* Home */}
           <button
             onClick={() => setActiveTab("home")}
-            className={`w-full flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all duration-200 active:scale-95 cursor-pointer select-none ${
-              activeTab === "home" ? "text-[#06351F] font-black" : "text-neutral-500 font-medium hover:text-[#06351F]"
-            }`}
+            className={`w-full flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all duration-200 active:scale-95 cursor-pointer select-none ${activeTab === "home" ? "text-[#06351F] font-black" : "text-neutral-500 font-medium hover:text-[#06351F]"
+              }`}
           >
-            <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors shrink-0 ${
-              activeTab === "home" ? "bg-[#06351F] text-[#D9A52E] shadow-xs" : "text-neutral-500"
-            }`}>
+            <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors shrink-0 ${activeTab === "home" ? "bg-[#06351F] text-[#D9A52E] shadow-xs" : "text-neutral-500"
+              }`}>
               <Home className="h-4.5 w-4.5 shrink-0" />
             </div>
             <span className="text-[10px] font-semibold mt-1 leading-none text-center truncate w-full block">
@@ -2683,13 +2725,11 @@ export default function HomePage() {
               setActiveTab("projects");
               setActiveCategory(null);
             }}
-            className={`w-full flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all duration-200 active:scale-95 cursor-pointer select-none ${
-              activeTab === "projects" ? "text-[#06351F] font-black" : "text-neutral-500 font-medium hover:text-[#06351F]"
-            }`}
+            className={`w-full flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all duration-200 active:scale-95 cursor-pointer select-none ${activeTab === "projects" ? "text-[#06351F] font-black" : "text-neutral-500 font-medium hover:text-[#06351F]"
+              }`}
           >
-            <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors shrink-0 ${
-              activeTab === "projects" ? "bg-[#06351F] text-[#D9A52E] shadow-xs" : "text-neutral-500"
-            }`}>
+            <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors shrink-0 ${activeTab === "projects" ? "bg-[#06351F] text-[#D9A52E] shadow-xs" : "text-neutral-500"
+              }`}>
               <Building2 className="h-4.5 w-4.5 shrink-0" />
             </div>
             <span className="text-[10px] font-semibold mt-1 leading-none text-center truncate w-full block">
@@ -2700,13 +2740,11 @@ export default function HomePage() {
           {/* Site Location */}
           <button
             onClick={() => setActiveTab("location")}
-            className={`w-full flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all duration-200 active:scale-95 cursor-pointer select-none ${
-              activeTab === "location" ? "text-[#06351F] font-black" : "text-neutral-500 font-medium hover:text-[#06351F]"
-            }`}
+            className={`w-full flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all duration-200 active:scale-95 cursor-pointer select-none ${activeTab === "location" ? "text-[#06351F] font-black" : "text-neutral-500 font-medium hover:text-[#06351F]"
+              }`}
           >
-            <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors shrink-0 ${
-              activeTab === "location" ? "bg-[#06351F] text-[#D9A52E] shadow-xs" : "text-neutral-500"
-            }`}>
+            <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors shrink-0 ${activeTab === "location" ? "bg-[#06351F] text-[#D9A52E] shadow-xs" : "text-neutral-500"
+              }`}>
               <MapPin className="h-4.5 w-4.5 shrink-0" />
             </div>
             <span className="text-[10px] font-semibold mt-1 leading-none text-center truncate w-full block">
@@ -2717,13 +2755,11 @@ export default function HomePage() {
           {/* Download Layout */}
           <button
             onClick={() => setActiveTab("download")}
-            className={`w-full flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all duration-200 active:scale-95 cursor-pointer select-none ${
-              activeTab === "download" ? "text-[#06351F] font-black" : "text-neutral-500 font-medium hover:text-[#06351F]"
-            }`}
+            className={`w-full flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all duration-200 active:scale-95 cursor-pointer select-none ${activeTab === "download" ? "text-[#06351F] font-black" : "text-neutral-500 font-medium hover:text-[#06351F]"
+              }`}
           >
-            <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors shrink-0 ${
-              activeTab === "download" ? "bg-[#06351F] text-[#D9A52E] shadow-xs" : "text-neutral-500"
-            }`}>
+            <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors shrink-0 ${activeTab === "download" ? "bg-[#06351F] text-[#D9A52E] shadow-xs" : "text-neutral-500"
+              }`}>
               <Download className="h-4.5 w-4.5 shrink-0" />
             </div>
             <span className="text-[10px] font-semibold mt-1 leading-none text-center truncate w-full block">
@@ -2734,13 +2770,11 @@ export default function HomePage() {
           {/* Contact */}
           <button
             onClick={() => setActiveTab("contact")}
-            className={`w-full flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all cursor-pointer select-none ${
-              activeTab === "contact" ? "text-[#06351F] font-black" : "text-neutral-500 font-medium hover:text-[#06351F]"
-            }`}
+            className={`w-full flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all cursor-pointer select-none ${activeTab === "contact" ? "text-[#06351F] font-black" : "text-neutral-500 font-medium hover:text-[#06351F]"
+              }`}
           >
-            <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors shrink-0 ${
-              activeTab === "contact" ? "bg-[#06351F] text-[#D9A52E] shadow-xs" : "text-neutral-500"
-            }`}>
+            <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors shrink-0 ${activeTab === "contact" ? "bg-[#06351F] text-[#D9A52E] shadow-xs" : "text-neutral-500"
+              }`}>
               <PhoneCall className="h-4.5 w-4.5 shrink-0" />
             </div>
             <span className="text-[10px] font-semibold mt-1 leading-none text-center truncate w-full block">
@@ -2750,7 +2784,7 @@ export default function HomePage() {
         </div>
       </nav>
 
-      
+
       {/* ------------------------------------------------------------------------- */}
       {/* MOBILE COLLAPSIBLE NAVIGATION DRAWER (Sidebar collapsed for mobile/tablet) */}
       {/* ------------------------------------------------------------------------- */}
@@ -2837,11 +2871,10 @@ export default function HomePage() {
                         setIsMobileMenuOpen(false);
                         if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
                       }}
-                      className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-left transition-all cursor-pointer font-bold text-xs ${
-                        isActive
-                          ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] shadow-sm font-black"
-                          : "text-[#E1ECE6] hover:bg-white/10 hover:text-white"
-                      }`}
+                      className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-left transition-all cursor-pointer font-bold text-xs ${isActive
+                        ? "bg-gradient-to-r from-[#F5B731] via-[#EAB308] to-[#D98E14] text-[#0A1C12] shadow-sm font-black"
+                        : "text-[#E1ECE6] hover:bg-white/10 hover:text-white"
+                        }`}
                     >
                       <Icon className={`h-4.5 w-4.5 shrink-0 ${isActive ? "text-[#0A1C12]" : "text-[#D9A52E]"}`} />
                       <span className="truncate">{item.label}</span>
@@ -3013,8 +3046,8 @@ export default function HomePage() {
                             <button
                               onClick={() => setModalMediaMode("photos")}
                               className={`px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all cursor-pointer ${modalMediaMode === "photos"
-                                  ? "bg-[#06351F] text-white border border-[#0E5934]"
-                                  : "text-white/80 hover:text-white"
+                                ? "bg-[#06351F] text-white border border-[#0E5934]"
+                                : "text-white/80 hover:text-white"
                                 }`}
                             >
                               Photos ({currentImgIndex + 1}/{gallery.length})
@@ -3022,8 +3055,8 @@ export default function HomePage() {
                             <button
                               onClick={() => setModalMediaMode("video")}
                               className={`px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider flex items-center gap-1 transition-all cursor-pointer ${modalMediaMode === "video"
-                                  ? "bg-[#06351F] text-white border border-[#0E5934]"
-                                  : "text-white/80 hover:text-white"
+                                ? "bg-[#06351F] text-white border border-[#0E5934]"
+                                : "text-white/80 hover:text-white"
                                 }`}
                             >
                               <Play className="h-3 w-3 fill-current" />
@@ -3067,8 +3100,8 @@ export default function HomePage() {
                               setModalMediaMode("photos");
                             }}
                             className={`relative h-14 w-20 sm:h-16 sm:w-24 rounded-xl overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${modalMediaMode === "photos" && activeImage === thumb
-                                ? "border-[#0E5934] scale-105 shadow-md ring-2 ring-[#0E5934]/40"
-                                : "border-neutral-200 opacity-70 hover:opacity-100 hover:border-neutral-400"
+                              ? "border-[#0E5934] scale-105 shadow-md ring-2 ring-[#0E5934]/40"
+                              : "border-neutral-200 opacity-70 hover:opacity-100 hover:border-neutral-400"
                               }`}
                           >
                             <Image src={thumb} alt={`Photo ${idx + 1}`} fill sizes="100px" className="object-cover" />
@@ -3484,14 +3517,14 @@ export default function HomePage() {
                             : selectedProject.id === "vaigai-elite"
                               ? "https://maps.google.com/maps?q=9.859703,78.221955&hl=en&z=15&output=embed"
                               : selectedProject.id === "vaigai-river"
-                              ? "https://maps.google.com/maps?q=9.905039,78.165845&hl=en&z=16&output=embed"
-                              : selectedProject.id === "pandi-kovil"
-                              ? "https://maps.google.com/maps?q=9.934271,78.166845&hl=en&z=16&output=embed"
-                            : selectedProject.id === "madurai-farms"
-                              ? "https://maps.google.com/maps?q=9.669621,78.209693&hl=en&z=15&output=embed"
-                              : `https://maps.google.com/maps?q=${encodeURIComponent(
-                                selectedProject.location.en + ", Madurai"
-                              )}&t=&z=14&ie=UTF8&iwloc=&output=embed`
+                                ? "https://maps.google.com/maps?q=9.905039,78.165845&hl=en&z=16&output=embed"
+                                : selectedProject.id === "pandi-kovil"
+                                  ? "https://maps.google.com/maps?q=9.934271,78.166845&hl=en&z=16&output=embed"
+                                  : selectedProject.id === "madurai-farms"
+                                    ? "https://maps.google.com/maps?q=9.669621,78.209693&hl=en&z=15&output=embed"
+                                    : `https://maps.google.com/maps?q=${encodeURIComponent(
+                                      selectedProject.location.en + ", Madurai"
+                                    )}&t=&z=14&ie=UTF8&iwloc=&output=embed`
                         }
                         width="100%"
                         height="100%"
@@ -3517,19 +3550,19 @@ export default function HomePage() {
                               ? language === "ta"
                                 ? "மதுரை – ராமேஸ்வரம் தேசிய நெடுஞ்சாலை, மணலூர் (விரகனூர் ரவுண்டானாவிலிருந்து 6 கி.மீ)"
                                 : "Madurai – Rameshwaram NH, Manalur (6 km from Viraganur Roundana)"
-                            : selectedProject.id === "vaigai-river"
-                              ? language === "ta"
-                                ? "வண்டியூர், மதுரை – வைகை நதிக்கரை & பை பாஸ் சாலை (அண்ணா நகரிலிருந்து 2 நிமிடம்)"
-                                : "Vandiyur, Madurai – Vaigai Riverfront & Bye Pass Road (2 Mins from Anna Nagar)"
-                            : selectedProject.id === "pandi-kovil"
-                              ? language === "ta"
-                                ? "பாண்டி கோவில், மதுரை – மதுரை விமான நிலைய சாலை (மாட்டுத்தாவணியிலிருந்து 2 கி.மீ)"
-                                : "Pandi Kovil, Madurai – On Madurai Airport Road (2 KM from Mattuthavani)"
-                            : selectedProject.id === "madurai-farms"
-                              ? language === "ta"
-                                ? "மதுரை வேளாண் பசுமை மண்டலம் – முடுக்கங்குளம் மெயின் ரோடு (நேரடி GPS அமைவிடம்)"
-                                : "Madurai Agro Green Belt – Mudukangulam Main Road (Verified GPS Location)"
-                              : selectedProject.location[language]}
+                              : selectedProject.id === "vaigai-river"
+                                ? language === "ta"
+                                  ? "வண்டியூர், மதுரை – வைகை நதிக்கரை & பை பாஸ் சாலை (அண்ணா நகரிலிருந்து 2 நிமிடம்)"
+                                  : "Vandiyur, Madurai – Vaigai Riverfront & Bye Pass Road (2 Mins from Anna Nagar)"
+                                : selectedProject.id === "pandi-kovil"
+                                  ? language === "ta"
+                                    ? "பாண்டி கோவில், மதுரை – மதுரை விமான நிலைய சாலை (மாட்டுத்தாவணியிலிருந்து 2 கி.மீ)"
+                                    : "Pandi Kovil, Madurai – On Madurai Airport Road (2 KM from Mattuthavani)"
+                                  : selectedProject.id === "madurai-farms"
+                                    ? language === "ta"
+                                      ? "மதுரை வேளாண் பசுமை மண்டலம் – முடுக்கங்குளம் மெயின் ரோடு (நேரடி GPS அமைவிடம்)"
+                                      : "Madurai Agro Green Belt – Mudukangulam Main Road (Verified GPS Location)"
+                                    : selectedProject.location[language]}
                         </span>
                       </div>
                       <span className="self-start sm:self-auto px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-emerald-600 text-white shrink-0">
@@ -3562,12 +3595,12 @@ export default function HomePage() {
                               {selectedProject.id === "vaigai-elite"
                                 ? (language === "ta" ? "5.23 ஏக்கர் (523 சென்ட்) · 40 அடி சாலை" : "5.23 Acres (523 Cents) · 40 Ft Road")
                                 : selectedProject.id === "vaigai-river"
-                                ? (language === "ta" ? "27.4 சென்ட் · அண்ணா நகர் ரிவர் பெல்ட் & 70 அடி ரோடு" : "27.4 Cents · Anna Nagar River Belt & 70 Ft Road")
-                                : selectedProject.id === "pandi-kovil"
-                                ? (language === "ta" ? "60 சென்ட் (52.4 சென்ட் சர்வே) · 130 அடி முகப்பு · S.No 2-1B3" : "60 Cents (52.4 Cts Surveyed) · 130 Ft Frontage · S.No 2-1B3")
-                                : selectedProject.id === "madurai-farms"
-                                ? (language === "ta" ? "15 பண்ணை மனைகள் · மீன் குளங்கள் & வசதிகள் (2 வரைபடங்கள்)" : "15 Farm Plots · Fish Ponds & Facilities (2 Layout Plans)")
-                                : (language === "ta" ? "கள வரைபடம்" : "Layout Blueprint")}
+                                  ? (language === "ta" ? "27.4 சென்ட் · அண்ணா நகர் ரிவர் பெல்ட் & 70 அடி ரோடு" : "27.4 Cents · Anna Nagar River Belt & 70 Ft Road")
+                                  : selectedProject.id === "pandi-kovil"
+                                    ? (language === "ta" ? "60 சென்ட் (52.4 சென்ட் சர்வே) · 130 அடி முகப்பு · S.No 2-1B3" : "60 Cents (52.4 Cts Surveyed) · 130 Ft Frontage · S.No 2-1B3")
+                                    : selectedProject.id === "madurai-farms"
+                                      ? (language === "ta" ? "15 பண்ணை மனைகள் · மீன் குளங்கள் & வசதிகள் (2 வரைபடங்கள்)" : "15 Farm Plots · Fish Ponds & Facilities (2 Layout Plans)")
+                                      : (language === "ta" ? "கள வரைபடம்" : "Layout Blueprint")}
                             </span>
                           </div>
                           <div className="flex items-center gap-2">
@@ -3629,11 +3662,10 @@ export default function HomePage() {
                                 key={bpIdx}
                                 type="button"
                                 onClick={() => setModalActiveBlueprintIndex(bpIdx)}
-                                className={`p-2 rounded-xl border-2 transition-all cursor-pointer flex items-center gap-2.5 text-left ${
-                                  modalActiveBlueprintIndex === bpIdx
-                                    ? "border-[#0E5934] bg-emerald-50 shadow-xs"
-                                    : "border-neutral-200 hover:border-neutral-300 bg-white"
-                                }`}
+                                className={`p-2 rounded-xl border-2 transition-all cursor-pointer flex items-center gap-2.5 text-left ${modalActiveBlueprintIndex === bpIdx
+                                  ? "border-[#0E5934] bg-emerald-50 shadow-xs"
+                                  : "border-neutral-200 hover:border-neutral-300 bg-white"
+                                  }`}
                               >
                                 <div className="relative h-12 w-16 rounded-lg overflow-hidden shrink-0 border border-neutral-200 bg-neutral-100">
                                   <Image src={bp.image} alt={bp.title.en} fill className="object-contain" sizes="80px" />
@@ -3651,172 +3683,172 @@ export default function HomePage() {
                           </div>
                         )}
 
-                      {/* Extra layout details specifically for vaigai-elite */}
-                      {selectedProject.id === "vaigai-elite" && (
-                        <div className="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 space-y-2.5 text-xs">
-                          <div className="flex flex-wrap items-center justify-between gap-1 text-[11px] font-bold text-neutral-500 uppercase tracking-wide">
-                            <span>{language === "ta" ? "அளவீடுகள் & உட்பிரிவுகள் (Subdivisions)" : "Parcels & Subdivisions"}</span>
-                            <span className="text-emerald-700 font-extrabold">{language === "ta" ? "கிடைக்கும் பரப்பு: 523 சென்ட் (5.23 ஏக்கர்)" : "Available Extent: 523 Cents (5.23 Acres)"}</span>
+                        {/* Extra layout details specifically for vaigai-elite */}
+                        {selectedProject.id === "vaigai-elite" && (
+                          <div className="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 space-y-2.5 text-xs">
+                            <div className="flex flex-wrap items-center justify-between gap-1 text-[11px] font-bold text-neutral-500 uppercase tracking-wide">
+                              <span>{language === "ta" ? "அளவீடுகள் & உட்பிரிவுகள் (Subdivisions)" : "Parcels & Subdivisions"}</span>
+                              <span className="text-emerald-700 font-extrabold">{language === "ta" ? "கிடைக்கும் பரப்பு: 523 சென்ட் (5.23 ஏக்கர்)" : "Available Extent: 523 Cents (5.23 Acres)"}</span>
+                            </div>
+                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2">
+                              <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
+                                <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "பிரிவு 1" : "Parcel 1"}</span>
+                                <span className="text-xs font-black text-neutral-800">96 Cents</span>
+                              </div>
+                              <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
+                                <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "பிரிவு 2" : "Parcel 2"}</span>
+                                <span className="text-xs font-black text-neutral-800">97 Cents</span>
+                              </div>
+                              <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
+                                <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "பிரிவு 3" : "Parcel 3"}</span>
+                                <span className="text-xs font-black text-neutral-800">159 Cents</span>
+                              </div>
+                              <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
+                                <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "பிரிவு 4" : "Parcel 4"}</span>
+                                <span className="text-xs font-black text-neutral-800">139 Cents</span>
+                              </div>
+                              <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
+                                <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "பிரிவு 5" : "Parcel 5"}</span>
+                                <span className="text-xs font-black text-neutral-800">32 Cents</span>
+                              </div>
+                              <div className="p-2 rounded-lg bg-rose-50 border border-rose-200 text-center shadow-xs">
+                                <span className="text-[10px] font-bold text-rose-500 block">{language === "ta" ? "பிரிவு" : "Parcel"}</span>
+                                <span className="text-xs font-black text-rose-700">93 Cts (Sold)</span>
+                              </div>
+                            </div>
+                            <div className="text-[11px] text-neutral-600 flex flex-col sm:flex-row sm:items-center justify-between gap-1 pt-1 border-t border-neutral-200">
+                              <span>🛣️ <strong>{language === "ta" ? "சாலை வசதி:" : "Road Access:"}</strong> {language === "ta" ? "40 அடி அகல சாலை + வைகை கால்வாய் பாலம் வழியாக 4-வழி தேசிய நெடுஞ்சாலை நேரடி இணைப்பு" : "40 Ft Wide Road + Bridge over canal connecting directly to 4-Lane Madurai–Rameshwaram NH"}</span>
+                              <span className="text-neutral-500">📍 {language === "ta" ? "மணலூர் கிராமம், திருப்புவனம் தாலுகா" : "Manaloor Village, Thirupuvanam Taluk"}</span>
+                            </div>
                           </div>
-                          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2">
-                            <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
-                              <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "பிரிவு 1" : "Parcel 1"}</span>
-                              <span className="text-xs font-black text-neutral-800">96 Cents</span>
-                            </div>
-                            <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
-                              <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "பிரிவு 2" : "Parcel 2"}</span>
-                              <span className="text-xs font-black text-neutral-800">97 Cents</span>
-                            </div>
-                            <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
-                              <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "பிரிவு 3" : "Parcel 3"}</span>
-                              <span className="text-xs font-black text-neutral-800">159 Cents</span>
-                            </div>
-                            <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
-                              <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "பிரிவு 4" : "Parcel 4"}</span>
-                              <span className="text-xs font-black text-neutral-800">139 Cents</span>
-                            </div>
-                            <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
-                              <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "பிரிவு 5" : "Parcel 5"}</span>
-                              <span className="text-xs font-black text-neutral-800">32 Cents</span>
-                            </div>
-                            <div className="p-2 rounded-lg bg-rose-50 border border-rose-200 text-center shadow-xs">
-                              <span className="text-[10px] font-bold text-rose-500 block">{language === "ta" ? "பிரிவு" : "Parcel"}</span>
-                              <span className="text-xs font-black text-rose-700">93 Cts (Sold)</span>
-                            </div>
-                          </div>
-                          <div className="text-[11px] text-neutral-600 flex flex-col sm:flex-row sm:items-center justify-between gap-1 pt-1 border-t border-neutral-200">
-                            <span>🛣️ <strong>{language === "ta" ? "சாலை வசதி:" : "Road Access:"}</strong> {language === "ta" ? "40 அடி அகல சாலை + வைகை கால்வாய் பாலம் வழியாக 4-வழி தேசிய நெடுஞ்சாலை நேரடி இணைப்பு" : "40 Ft Wide Road + Bridge over canal connecting directly to 4-Lane Madurai–Rameshwaram NH"}</span>
-                            <span className="text-neutral-500">📍 {language === "ta" ? "மணலூர் கிராமம், திருப்புவனம் தாலுகா" : "Manaloor Village, Thirupuvanam Taluk"}</span>
-                          </div>
-                        </div>
-                      )}
+                        )}
 
-                      {/* Extra layout details specifically for vaigai-river */}
-                      {selectedProject.id === "vaigai-river" && (
-                        <div className="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 space-y-2.5 text-xs">
-                          <div className="flex flex-wrap items-center justify-between gap-1 text-[11px] font-bold text-neutral-500 uppercase tracking-wide">
-                            <span>{language === "ta" ? "கள வரைபட அளவீடுகள் (Site Layout Specs)" : "Site Layout Dimensions & Road Specs"}</span>
-                            <span className="text-emerald-700 font-extrabold">{language === "ta" ? "மொத்த பரப்பு: 27.4 சென்ட் (Commercial Land)" : "Total Extent: 27.4 Cents (Commercial Land)"}</span>
+                        {/* Extra layout details specifically for vaigai-river */}
+                        {selectedProject.id === "vaigai-river" && (
+                          <div className="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 space-y-2.5 text-xs">
+                            <div className="flex flex-wrap items-center justify-between gap-1 text-[11px] font-bold text-neutral-500 uppercase tracking-wide">
+                              <span>{language === "ta" ? "கள வரைபட அளவீடுகள் (Site Layout Specs)" : "Site Layout Dimensions & Road Specs"}</span>
+                              <span className="text-emerald-700 font-extrabold">{language === "ta" ? "மொத்த பரப்பு: 27.4 சென்ட் (Commercial Land)" : "Total Extent: 27.4 Cents (Commercial Land)"}</span>
+                            </div>
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                              <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
+                                <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "தெற்கு எல்லை (நதி)" : "South Boundary (River)"}</span>
+                                <span className="text-xs font-black text-neutral-800">150' 2"</span>
+                              </div>
+                              <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
+                                <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "சாலை முகப்பு (Top)" : "Road Frontage (Top)"}</span>
+                                <span className="text-xs font-black text-neutral-800">63'6" + 116'1"</span>
+                              </div>
+                              <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
+                                <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "மேற்கு எல்லை" : "West Boundary"}</span>
+                                <span className="text-xs font-black text-neutral-800">52' 4"</span>
+                              </div>
+                              <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
+                                <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "கிழக்கு எல்லை" : "East Boundary"}</span>
+                                <span className="text-xs font-black text-neutral-800">61'6" + 25'</span>
+                              </div>
+                            </div>
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-[11px]">
+                              <div className="p-2.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-900 font-semibold flex items-center gap-1.5">
+                                <span>🌊</span>
+                                <span>{language === "ta" ? "வைகை நதி பார்வை: சுமார் 100 மீ" : "Vaigai River View: Approx. 100 m"}</span>
+                              </div>
+                              <div className="p-2.5 rounded-lg bg-blue-50 border border-blue-200 text-blue-900 font-semibold flex items-center gap-1.5">
+                                <span>🛣️</span>
+                                <span>{language === "ta" ? "70 அடி ரோடு & அண்ணா நகர் ரிவர் பெல்ட் சாலை" : "70 Ft Road & Anna Nagar River Belt Road"}</span>
+                              </div>
+                              <div className="p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 font-semibold flex items-center gap-1.5">
+                                <span>🏢</span>
+                                <span>{language === "ta" ? "அருகில் கார் ஷோரூம் & மருத்துவமனை" : "Adjacent Car Showroom & Hospital"}</span>
+                              </div>
+                            </div>
+                            <div className="text-[11px] text-neutral-600 flex flex-col sm:flex-row sm:items-center justify-between gap-1 pt-1 border-t border-neutral-200">
+                              <span>📋 <strong>{language === "ta" ? "சர்வே எண்கள்:" : "Survey Nos:"}</strong> 85/1A2, 1A3, 1B, 4A</span>
+                              <span className="text-neutral-500">📍 {language === "ta" ? "வண்டியூர் பிட்-2 கிராமம், மதுரை கிழக்கு தாலுகா" : "Vandiyur Bit-2 Village, Madurai East Taluk"}</span>
+                            </div>
                           </div>
-                          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                            <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
-                              <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "தெற்கு எல்லை (நதி)" : "South Boundary (River)"}</span>
-                              <span className="text-xs font-black text-neutral-800">150' 2"</span>
-                            </div>
-                            <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
-                              <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "சாலை முகப்பு (Top)" : "Road Frontage (Top)"}</span>
-                              <span className="text-xs font-black text-neutral-800">63'6" + 116'1"</span>
-                            </div>
-                            <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
-                              <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "மேற்கு எல்லை" : "West Boundary"}</span>
-                              <span className="text-xs font-black text-neutral-800">52' 4"</span>
-                            </div>
-                            <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
-                              <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "கிழக்கு எல்லை" : "East Boundary"}</span>
-                              <span className="text-xs font-black text-neutral-800">61'6" + 25'</span>
-                            </div>
-                          </div>
-                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-[11px]">
-                            <div className="p-2.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-900 font-semibold flex items-center gap-1.5">
-                              <span>🌊</span>
-                              <span>{language === "ta" ? "வைகை நதி பார்வை: சுமார் 100 மீ" : "Vaigai River View: Approx. 100 m"}</span>
-                            </div>
-                            <div className="p-2.5 rounded-lg bg-blue-50 border border-blue-200 text-blue-900 font-semibold flex items-center gap-1.5">
-                              <span>🛣️</span>
-                              <span>{language === "ta" ? "70 அடி ரோடு & அண்ணா நகர் ரிவர் பெல்ட் சாலை" : "70 Ft Road & Anna Nagar River Belt Road"}</span>
-                            </div>
-                            <div className="p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 font-semibold flex items-center gap-1.5">
-                              <span>🏢</span>
-                              <span>{language === "ta" ? "அருகில் கார் ஷோரூம் & மருத்துவமனை" : "Adjacent Car Showroom & Hospital"}</span>
-                            </div>
-                          </div>
-                          <div className="text-[11px] text-neutral-600 flex flex-col sm:flex-row sm:items-center justify-between gap-1 pt-1 border-t border-neutral-200">
-                            <span>📋 <strong>{language === "ta" ? "சர்வே எண்கள்:" : "Survey Nos:"}</strong> 85/1A2, 1A3, 1B, 4A</span>
-                            <span className="text-neutral-500">📍 {language === "ta" ? "வண்டியூர் பிட்-2 கிராமம், மதுரை கிழக்கு தாலுகா" : "Vandiyur Bit-2 Village, Madurai East Taluk"}</span>
-                          </div>
-                        </div>
-                      )}
+                        )}
 
-                      {/* Extra layout details specifically for pandi-kovil */}
-                      {selectedProject.id === "pandi-kovil" && (
-                        <div className="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 space-y-2.5 text-xs">
-                          <div className="flex flex-wrap items-center justify-between gap-1 text-[11px] font-bold text-neutral-500 uppercase tracking-wide">
-                            <span>{language === "ta" ? "கள வரைபட அளவீடுகள் & சாலை முகப்பு" : "Site Dimensions & Road Frontage"}</span>
-                            <span className="text-emerald-700 font-extrabold">{language === "ta" ? "மொத்த பரப்பு: 60 சென்ட் / 52.4 சென்ட் (130 அடி முகப்பு)" : "Total Extent: 60 Cents / 52.4 Cents (130 Ft Frontage)"}</span>
+                        {/* Extra layout details specifically for pandi-kovil */}
+                        {selectedProject.id === "pandi-kovil" && (
+                          <div className="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 space-y-2.5 text-xs">
+                            <div className="flex flex-wrap items-center justify-between gap-1 text-[11px] font-bold text-neutral-500 uppercase tracking-wide">
+                              <span>{language === "ta" ? "கள வரைபட அளவீடுகள் & சாலை முகப்பு" : "Site Dimensions & Road Frontage"}</span>
+                              <span className="text-emerald-700 font-extrabold">{language === "ta" ? "மொத்த பரப்பு: 60 சென்ட் / 52.4 சென்ட் (130 அடி முகப்பு)" : "Total Extent: 60 Cents / 52.4 Cents (130 Ft Frontage)"}</span>
+                            </div>
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                              <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
+                                <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "நில அளவு" : "Total Area"}</span>
+                                <span className="text-xs font-black text-neutral-800">60 Cent (52.4 Cts)</span>
+                              </div>
+                              <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
+                                <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "சாலை முகப்பு (24 அடி சாலை)" : "Road Frontage (24ft)"}</span>
+                                <span className="text-xs font-black text-neutral-800">130 Ft Wide</span>
+                              </div>
+                              <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
+                                <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "பக்கவாட்டு நீளம்" : "Side Boundaries"}</span>
+                                <span className="text-xs font-black text-neutral-800">160' (W) & 187' (E)</span>
+                              </div>
+                              <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
+                                <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "பின்புற அகலம்" : "Rear Width"}</span>
+                                <span className="text-xs font-black text-neutral-800">130 Ft (South)</span>
+                              </div>
+                            </div>
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-[11px]">
+                              <div className="p-2.5 rounded-lg bg-blue-50 border border-blue-200 text-blue-900 font-semibold flex items-center gap-1.5">
+                                <span>🛣️</span>
+                                <span>{language === "ta" ? "24 அடி சாலை முகப்பு (பாண்டி கோவில் மெயின் ரோடு நேரடி இணைப்பு)" : "24 Ft Road Frontage (Direct access to Pandi Kovil Main Road)"}</span>
+                              </div>
+                              <div className="p-2.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-900 font-semibold flex items-center gap-1.5">
+                                <span>🏢</span>
+                                <span>{language === "ta" ? "HCL Tech, குரு, ரியோ & விக்ரம் மருத்துவமனைகள்" : "HCL Tech, Guru, Rio, Vikram & Meenakshi Mission"}</span>
+                              </div>
+                              <div className="p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 font-semibold flex items-center gap-1.5">
+                                <span>🏛️</span>
+                                <span>{language === "ta" ? "திருமண மண்டபம், குடோன் & வணிக வளாகத்திற்கு உகந்தது" : "Ideal for Marriage Hall, Warehouse, Hostel & Retail"}</span>
+                              </div>
+                            </div>
+                            <div className="text-[11px] text-neutral-600 flex flex-col sm:flex-row sm:items-center justify-between gap-1 pt-1 border-t border-neutral-200">
+                              <span>📋 <strong>{language === "ta" ? "சர்வே எண்:" : "Survey No:"}</strong> S.NO: 2-1B3 · {language === "ta" ? "மேலமடை பிட் 2 கிராமம், மதுரை கிழக்கு தாலுகா" : "Melamadai Bit 2 Village, Madurai East Taluk"}</span>
+                              <span className="text-neutral-500">📍 {language === "ta" ? "பாண்டி கோவில், மதுரை" : "Pandi Kovil, Madurai"}</span>
+                            </div>
                           </div>
-                          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                            <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
-                              <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "நில அளவு" : "Total Area"}</span>
-                              <span className="text-xs font-black text-neutral-800">60 Cent (52.4 Cts)</span>
-                            </div>
-                            <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
-                              <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "சாலை முகப்பு (24 அடி சாலை)" : "Road Frontage (24ft)"}</span>
-                              <span className="text-xs font-black text-neutral-800">130 Ft Wide</span>
-                            </div>
-                            <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
-                              <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "பக்கவாட்டு நீளம்" : "Side Boundaries"}</span>
-                              <span className="text-xs font-black text-neutral-800">160' (W) & 187' (E)</span>
-                            </div>
-                            <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
-                              <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "பின்புற அகலம்" : "Rear Width"}</span>
-                              <span className="text-xs font-black text-neutral-800">130 Ft (South)</span>
-                            </div>
-                          </div>
-                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-[11px]">
-                            <div className="p-2.5 rounded-lg bg-blue-50 border border-blue-200 text-blue-900 font-semibold flex items-center gap-1.5">
-                              <span>🛣️</span>
-                              <span>{language === "ta" ? "24 அடி சாலை முகப்பு (பாண்டி கோவில் மெயின் ரோடு நேரடி இணைப்பு)" : "24 Ft Road Frontage (Direct access to Pandi Kovil Main Road)"}</span>
-                            </div>
-                            <div className="p-2.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-900 font-semibold flex items-center gap-1.5">
-                              <span>🏢</span>
-                              <span>{language === "ta" ? "HCL Tech, குரு, ரியோ & விக்ரம் மருத்துவமனைகள்" : "HCL Tech, Guru, Rio, Vikram & Meenakshi Mission"}</span>
-                            </div>
-                            <div className="p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 font-semibold flex items-center gap-1.5">
-                              <span>🏛️</span>
-                              <span>{language === "ta" ? "திருமண மண்டபம், குடோன் & வணிக வளாகத்திற்கு உகந்தது" : "Ideal for Marriage Hall, Warehouse, Hostel & Retail"}</span>
-                            </div>
-                          </div>
-                          <div className="text-[11px] text-neutral-600 flex flex-col sm:flex-row sm:items-center justify-between gap-1 pt-1 border-t border-neutral-200">
-                            <span>📋 <strong>{language === "ta" ? "சர்வே எண்:" : "Survey No:"}</strong> S.NO: 2-1B3 · {language === "ta" ? "மேலமடை பிட் 2 கிராமம், மதுரை கிழக்கு தாலுகா" : "Melamadai Bit 2 Village, Madurai East Taluk"}</span>
-                            <span className="text-neutral-500">📍 {language === "ta" ? "பாண்டி கோவில், மதுரை" : "Pandi Kovil, Madurai"}</span>
-                          </div>
-                        </div>
-                      )}
+                        )}
 
-                      {/* Extra layout details specifically for madurai-farms */}
-                      {selectedProject.id === "madurai-farms" && (
-                        <div className="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 space-y-2.5 text-xs">
-                          <div className="flex flex-wrap items-center justify-between gap-1 text-[11px] font-bold text-neutral-500 uppercase tracking-wide">
-                            <span>{language === "ta" ? "பண்ணை மனை வரைபட அளவீடுகள் (15 Plots Layout)" : "15-Plot Farm Layout Dimensions & Amenities"}</span>
-                            <span className="text-emerald-700 font-extrabold">{language === "ta" ? "15 அங்கீகரிக்கப்பட்ட பண்ணை மனைகள் (8 முதல் 10.9 சென்ட்)" : "15 Demarcated Plots (8.0 to 10.9 Cents)"}</span>
+                        {/* Extra layout details specifically for madurai-farms */}
+                        {selectedProject.id === "madurai-farms" && (
+                          <div className="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 space-y-2.5 text-xs">
+                            <div className="flex flex-wrap items-center justify-between gap-1 text-[11px] font-bold text-neutral-500 uppercase tracking-wide">
+                              <span>{language === "ta" ? "பண்ணை மனை வரைபட அளவீடுகள் (15 Plots Layout)" : "15-Plot Farm Layout Dimensions & Amenities"}</span>
+                              <span className="text-emerald-700 font-extrabold">{language === "ta" ? "15 அங்கீகரிக்கப்பட்ட பண்ணை மனைகள் (8 முதல் 10.9 சென்ட்)" : "15 Demarcated Plots (8.0 to 10.9 Cents)"}</span>
+                            </div>
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                              <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
+                                <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "மனைப்பிரிவுகள்" : "Farm Plots"}</span>
+                                <span className="text-xs font-black text-neutral-800">15 Plots (8–10.9 Cts)</span>
+                              </div>
+                              <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
+                                <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "தண்ணீர் வசதி" : "Water Features"}</span>
+                                <span className="text-xs font-black text-neutral-800">Fish Pond + Bore Well</span>
+                              </div>
+                              <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
+                                <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "அணுகு சாலை" : "Approach Road"}</span>
+                                <span className="text-xs font-black text-neutral-800">Mudukangulam Main Rd</span>
+                              </div>
+                              <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
+                                <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "வசதிகள்" : "Infrastructure"}</span>
+                                <span className="text-xs font-black text-neutral-800">Shed + Pier + Drip</span>
+                              </div>
+                            </div>
+                            <div className="text-[11px] text-neutral-600 flex flex-col sm:flex-row sm:items-center justify-between gap-1 pt-1 border-t border-neutral-200">
+                              <span>📋 <strong>{language === "ta" ? "சர்வே எண்கள்:" : "Survey Nos:"}</strong> 201/3B, 205/4, 207/4, 208/1, 208/2A, 208/2B, 209</span>
+                              <span className="text-neutral-500">📍 {language === "ta" ? "முடுக்கங்குளம் கிராமம், காரியாபட்டி தாலுகா, விருதுநகர் மாவட்டம்" : "Mudukangulam Village, Kariyapatti Taluk, Virudunagar Dist"}</span>
+                            </div>
                           </div>
-                          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                            <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
-                              <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "மனைப்பிரிவுகள்" : "Farm Plots"}</span>
-                              <span className="text-xs font-black text-neutral-800">15 Plots (8–10.9 Cts)</span>
-                            </div>
-                            <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
-                              <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "தண்ணீர் வசதி" : "Water Features"}</span>
-                              <span className="text-xs font-black text-neutral-800">Fish Pond + Bore Well</span>
-                            </div>
-                            <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
-                              <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "அணுகு சாலை" : "Approach Road"}</span>
-                              <span className="text-xs font-black text-neutral-800">Mudukangulam Main Rd</span>
-                            </div>
-                            <div className="p-2 rounded-lg bg-white border border-neutral-200 text-center shadow-xs">
-                              <span className="text-[10px] font-bold text-neutral-400 block">{language === "ta" ? "வசதிகள்" : "Infrastructure"}</span>
-                              <span className="text-xs font-black text-neutral-800">Shed + Pier + Drip</span>
-                            </div>
-                          </div>
-                          <div className="text-[11px] text-neutral-600 flex flex-col sm:flex-row sm:items-center justify-between gap-1 pt-1 border-t border-neutral-200">
-                            <span>📋 <strong>{language === "ta" ? "சர்வே எண்கள்:" : "Survey Nos:"}</strong> 201/3B, 205/4, 207/4, 208/1, 208/2A, 208/2B, 209</span>
-                            <span className="text-neutral-500">📍 {language === "ta" ? "முடுக்கங்குளம் கிராமம், காரியாபட்டி தாலுகா, விருதுநகர் மாவட்டம்" : "Mudukangulam Village, Kariyapatti Taluk, Virudunagar Dist"}</span>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })()}
+                        )}
+                      </div>
+                    );
+                  })()}
                 </div>
 
                 {/* 5. ACTION FOOTER (Pinned at bottom of popup) */}
@@ -3995,7 +4027,7 @@ export default function HomePage() {
                   e.stopPropagation();
                   setActiveFolderImageIndex(
                     (activeFolderImageIndex - 1 + selectedFolderImages.images.length) %
-                      selectedFolderImages.images.length
+                    selectedFolderImages.images.length
                   );
                 }}
                 aria-label="Previous image"
@@ -4055,11 +4087,10 @@ export default function HomePage() {
                     key={tIdx}
                     type="button"
                     onClick={() => setActiveFolderImageIndex(tIdx)}
-                    className={`relative h-12 w-16 sm:h-14 sm:w-20 rounded-xl overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${
-                      activeFolderImageIndex === tIdx
-                        ? "border-[#0E5934] scale-105 shadow-md ring-2 ring-[#0E5934]/40"
-                        : "border-white/20 opacity-60 hover:opacity-100 hover:border-white/50"
-                    }`}
+                    className={`relative h-12 w-16 sm:h-14 sm:w-20 rounded-xl overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${activeFolderImageIndex === tIdx
+                      ? "border-[#0E5934] scale-105 shadow-md ring-2 ring-[#0E5934]/40"
+                      : "border-white/20 opacity-60 hover:opacity-100 hover:border-white/50"
+                      }`}
                   >
                     <Image src={tImg} alt={`Thumbnail ${tIdx + 1}`} fill sizes="80px" className="object-cover" />
                   </button>
@@ -4198,11 +4229,10 @@ export default function HomePage() {
                           activeTab: "layout",
                         })
                       }
-                      className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-                        selectedDownloadPreview.activeTab === "layout"
-                          ? "bg-[#06351F] text-white shadow-xs"
-                          : "text-neutral-600 hover:text-neutral-900"
-                      }`}
+                      className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${selectedDownloadPreview.activeTab === "layout"
+                        ? "bg-[#06351F] text-white shadow-xs"
+                        : "text-neutral-600 hover:text-neutral-900"
+                        }`}
                     >
                       <Map className="h-4 w-4 text-[#D9A52E]" />
                       <span>{language === "ta" ? "மனை வரைபடம் (Layout Map)" : "Layout Map / Blueprint"}</span>
@@ -4214,11 +4244,10 @@ export default function HomePage() {
                           activeTab: "brochure",
                         })
                       }
-                      className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-                        selectedDownloadPreview.activeTab === "brochure"
-                          ? "bg-[#06351F] text-white shadow-xs"
-                          : "text-neutral-600 hover:text-neutral-900"
-                      }`}
+                      className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${selectedDownloadPreview.activeTab === "brochure"
+                        ? "bg-[#06351F] text-white shadow-xs"
+                        : "text-neutral-600 hover:text-neutral-900"
+                        }`}
                     >
                       <FileText className="h-4 w-4 text-[#D9A52E]" />
                       <span>{language === "ta" ? "திட்ட கையேடு (Project Brochure)" : "Official Project Brochure"}</span>
@@ -4262,8 +4291,8 @@ export default function HomePage() {
                           ? "இரண்டையும் பதிவிறக்கு (வரைபடம் + கையேடு)"
                           : "Download Both (Layout + Brochure)"
                         : language === "ta"
-                        ? "பதிவிறக்க"
-                        : "Download File"}
+                          ? "பதிவிறக்க"
+                          : "Download File"}
                     </span>
                   </button>
 

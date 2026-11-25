@@ -217,7 +217,7 @@ export default function GalleryPage() {
   const filteredImages = dynamicImages.filter((img) => imageFilter === "all" || img.category === imageFilter);
 
   return (
-    <main className="min-h-screen bg-[#F5F4EE] text-[#171B18] font-sans selection:bg-[#C6A66B]/30">
+    <main className="min-h-screen bg-white text-[#171B18] font-sans selection:bg-[#C6A66B]/30">
       <Navbar />
 
       {/* Hero Banner */}

@@ -27,6 +27,7 @@ export interface Project {
   subcategory?: string;
   subcategoryLabel?: LocalizedString;
   location: LocalizedString;
+  fullAddress?: LocalizedString;
   googleMapsUrl: string;
   photographyReferenceUrl?: string;
   mapBhoomiUrl?: string;
@@ -35,6 +36,9 @@ export interface Project {
   mapBhoomiAvailableUnits?: number;
   heroImage: string;
   galleryImages: string[];
+  interiorImages?: string[];
+  exteriorImages?: string[];
+  layoutImages?: string[];
   videoUrl?: string;
   videoUrls?: string[];
   description: LocalizedString;
@@ -45,6 +49,15 @@ export interface Project {
   nearbyFeatures?: NearbyFeatureItem[];
   status: ProjectStatus;
   projectType?: 'running' | 'completed' | 'upcoming';
+  isPublished?: boolean;
+  isDraft?: boolean;
+  rating?: string;
+  verifiedReviewCount?: string;
+  overviewSpecs?: any;
+  detailedHighlights?: any[];
+  extendedDetails?: any;
+  locationMap?: any;
+  contactInfo?: any;
 }
 
 export interface ServiceItem {

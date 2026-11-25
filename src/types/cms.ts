@@ -32,6 +32,96 @@ export interface CmsSubcategory {
   name: LocalizedText;
 }
 
+export interface LocalityPoint {
+  name: LocalizedText;
+  distance: string;
+  time?: string;
+}
+
+export interface ProjectReview {
+  id?: string;
+  name: string;
+  role: LocalizedText;
+  rating: number;
+  date: string;
+  comment: LocalizedText;
+  isVerifiedBuyer?: boolean;
+}
+
+export interface GroundwaterFacility {
+  depth?: LocalizedText;
+  quality?: LocalizedText;
+  tdsValue?: string;
+  waterHardness?: string;
+  source?: LocalizedText;
+}
+
+export interface CommunityEnvironment {
+  density?: LocalizedText;
+  surrounding?: LocalizedText;
+  atmosphere?: LocalizedText;
+  roadConditions?: LocalizedText;
+  drainage?: LocalizedText;
+}
+
+export interface GroundValueROI {
+  currentRate?: LocalizedText;
+  pricePerSqFt?: string;
+  guidelineValue?: LocalizedText;
+  landExtent?: string;
+  verifiedPriceStatus?: LocalizedText;
+  threeYearROI?: string;
+  fiveYearROI?: string;
+  growthDrivers?: LocalizedList;
+}
+
+export interface ProjectMapLocation {
+  googleMapsUrl?: string;
+  latitude?: string;
+  longitude?: string;
+  fullAddress?: LocalizedText;
+  pinLocation?: LocalizedText;
+  isVerifiedPinpoint?: boolean;
+}
+
+export interface ProjectContactInfo {
+  advisorPhone?: string;
+  enquiryPhone?: string;
+  googleMapsLink?: string;
+  customCallAction?: LocalizedText;
+  customEnquiryAction?: LocalizedText;
+}
+
+export interface ProjectOverviewSpecs {
+  configuration?: LocalizedText;
+  builtUpArea?: string;
+  landArea?: string;
+  facing?: LocalizedText;
+  features?: LocalizedList;
+  price?: string;
+  isPriceNegotiable?: boolean;
+}
+
+export interface DetailedHighlight {
+  title: LocalizedText;
+  description?: LocalizedText;
+  icon?: string;
+}
+
+export interface ProjectExtendedDetailsData {
+  transportation?: LocalityPoint[];
+  hospitals?: LocalityPoint[];
+  schoolsAndColleges?: LocalityPoint[];
+  groundwater?: GroundwaterFacility;
+  neighborhood?: CommunityEnvironment;
+  groundValue?: GroundValueROI;
+  customerReviews?: ProjectReview[];
+  overallRating?: string;
+  clientApprovalRate?: string;
+  happyFamiliesCount?: string;
+  yearsOfTrust?: string;
+}
+
 export interface CmsProject {
   id: string;
   slug: string;
@@ -42,8 +132,12 @@ export interface CmsProject {
   subcategoryLabel: LocalizedText;
   location: LocalizedText;
   distanceInfo: LocalizedText;
+  fullAddress?: LocalizedText;
   image: string;
   galleryImages?: string[];
+  interiorImages?: string[];
+  exteriorImages?: string[];
+  layoutImages?: string[];
   videoUrl?: string;
   videoUrls?: string[];
   blueprint?: string;
@@ -52,14 +146,22 @@ export interface CmsProject {
   brochureUrl?: string;
   statusBadge: LocalizedText;
   rating: string;
-  status: "running" | "completed" | "upcoming" | "available" | "sold";
+  verifiedReviewCount?: string;
+  status: "running" | "completed" | "upcoming" | "available" | "sold" | "draft";
+  isPublished?: boolean;
+  isDraft?: boolean;
   description: LocalizedText;
   fullOverview?: LocalizedText;
   highlights: LocalizedList;
+  detailedHighlights?: DetailedHighlight[];
   suitableActivities?: LocalizedList;
   marketingBanner?: LocalizedText;
   mapsUrl: string;
   specs: CmsProjectSpec[];
+  overviewSpecs?: ProjectOverviewSpecs;
+  extendedDetails?: ProjectExtendedDetailsData;
+  locationMap?: ProjectMapLocation;
+  contactInfo?: ProjectContactInfo;
 }
 
 export interface CmsGalleryVideo {

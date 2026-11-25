@@ -74,7 +74,7 @@ function ProjectsContent() {
   );
 
   return (
-    <main className="min-h-screen bg-[#F5F4EE] text-[#171B18] font-sans selection:bg-[#C6A66B]/30">
+    <main className="min-h-screen bg-white text-[#171B18] font-sans selection:bg-[#C6A66B]/30">
       <Navbar />
 
       {/* Hero Banner */}
@@ -596,7 +596,7 @@ export default function ProjectsPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-[#F5F4EE] flex items-center justify-center">
+        <div className="min-h-screen bg-white flex items-center justify-center">
           <div className="h-8 w-8 animate-spin rounded-full border-3 border-[#173D2B] border-t-transparent" />
         </div>
       }
