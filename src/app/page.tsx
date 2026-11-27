@@ -48,11 +48,7 @@ import {
   PhoneCall,
   Share2,
   Car,
-  HeartPulse,
-  GraduationCap,
-  Droplets,
   TrendingUp,
-  DollarSign,
   ThumbsUp,
   Building,
   Factory,
@@ -1731,10 +1727,9 @@ export default function HomePage() {
                         const IconComp = getPageCategoryIcon(cat.icon);
                         const catNum = String(idx + 1).padStart(2, "0");
 
-                        // Photographic and metadata mapping for luxury presentation
+                        // Metadata mapping for luxury presentation
                         const catMeta = cat.id === "residential"
                           ? {
-                            image: "/images/cards/card-projects-luxury.jpg",
                             tag: "DTCP & RERA Approved",
                             tagTa: "DTCP & RERA அங்கீகரிக்கப்பட்டது",
                             perks: ["3 BHK Luxury Duplex Villas", "Premium Gated Communities", "Ready-to-Build Plots"],
@@ -1742,14 +1737,12 @@ export default function HomePage() {
                           }
                           : cat.id === "commercial"
                             ? {
-                              image: "/images/pandi-kovil-commercial-land.jpg",
                               tag: "High-Exposure Corridors",
                               tagTa: "தேசிய நெடுஞ்சாலை பெருநிலங்கள்",
                               perks: ["NH-44 & Ring Road Access", "High Commercial Footfall", "Maximum Appreciation"],
                               perksTa: ["NH-44 & ரிங் ரோடு இணைப்பு", "வணிக பெருமதிப்பு", "அதிக வளர்ச்சி சாத்தியம்"],
                             }
                             : {
-                              image: "/images/projects/madurai-farms/panoramic-view.jpg",
                               tag: "Managed Agro Acreage",
                               tagTa: "இயற்கை பண்ணை நிலங்கள்",
                               perks: ["Abundant Ground Water", "Teak & Fruit Plantations", "Gated Boundary & Security"],
@@ -1763,20 +1756,11 @@ export default function HomePage() {
                             className="bg-white rounded-[22px] border border-neutral-200/90 hover:border-[#D9A52E] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden group cursor-pointer"
                           >
                             <div>
-                              {/* Top Photographic Cover with Gradient Overlay */}
-                              <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-neutral-900">
-                                <Image
-                                  src={catMeta.image}
-                                  alt={cat.name.en}
-                                  fill
-                                  sizes="(max-width: 768px) 100vw, 33vw"
-                                  className="object-cover transition-transform duration-700 group-hover:scale-108"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/30" />
-
+                              {/* Top Solid Dark Green Header (No Photo/Gradient) */}
+                              <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-[#06351F] border-b border-[#D9A52E]/20">
                                 {/* Top Badges */}
-                                <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
-                                  <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-[#06351F]/90 text-[#D9A52E] border border-[#D9A52E]/40 backdrop-blur-md">
+                                <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between z-10">
+                                  <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-black/25 text-[#D9A52E] border border-[#D9A52E]/40">
                                     Category {catNum}
                                   </span>
                                   <span className="px-3 py-1 rounded-full text-[11px] font-black bg-[#D9A52E] text-[#06351F] shadow-md">
@@ -1784,16 +1768,16 @@ export default function HomePage() {
                                   </span>
                                 </div>
 
-                                {/* Floating Icon & Tag on Image Bottom */}
-                                <div className="absolute bottom-3 left-3 right-3 flex items-center gap-2.5 z-10">
-                                  <div className="h-11 w-11 rounded-xl bg-white/95 text-[#06351F] border border-[#D9A52E]/40 flex items-center justify-center shrink-0 shadow-lg group-hover:bg-[#D9A52E] group-hover:text-[#06351F] transition-colors">
+                                {/* Floating Icon & Tag on Header Bottom */}
+                                <div className="absolute bottom-3.5 left-3.5 right-3.5 flex items-center gap-2.5 z-10">
+                                  <div className="h-11 w-11 rounded-xl bg-white text-[#06351F] border border-[#D9A52E]/40 flex items-center justify-center shrink-0 shadow-lg group-hover:bg-[#D9A52E] group-hover:text-[#06351F] transition-colors">
                                     <IconComp className="h-5 w-5 stroke-[2.2]" />
                                   </div>
                                   <div className="min-w-0">
-                                    <span className="text-[10px] font-bold text-[#D9A52E] uppercase tracking-wider block drop-shadow-sm truncate">
+                                    <span className="text-[10px] font-bold text-[#D9A52E] uppercase tracking-wider block truncate">
                                       {language === "ta" ? catMeta.tagTa : catMeta.tag}
                                     </span>
-                                    <span className="text-white text-xs font-semibold drop-shadow-md block truncate">
+                                    <span className="text-white text-xs font-semibold block truncate">
                                       {cat.description?.[language] || cat.description?.en}
                                     </span>
                                   </div>
@@ -3075,9 +3059,6 @@ export default function HomePage() {
                         <div className="flex items-center gap-1 text-[#EAB308] text-xs font-black mb-1">
                           <Star className="h-3.5 w-3.5 fill-[#EAB308]" />
                           <span>{selectedProject.rating}</span>
-                          <span className="text-white/70 font-normal">
-                            ({projectExtra?.customerReviews.length || 2} verified client reviews)
-                          </span>
                         </div>
                         <h2 className="text-xl sm:text-3xl font-black drop-shadow-md">
                           {selectedProject.name[language]}
@@ -3187,7 +3168,7 @@ export default function HomePage() {
                     {/* Highlights */}
                     <div className="p-4 rounded-2xl bg-neutral-50 border border-neutral-100 space-y-2">
                       <h3 className="text-sm font-black text-neutral-900">
-                        {language === "ta" ? "முக்கிய சிறப்பம்சங்கள்" : "Key Highlights"}
+                        {language === "ta" ? "முக்கிய சிறப்பம்சங்கள்" : (selectedProject.id === "madurai-farms" ? "Key Insights" : "Key Highlights")}
                       </h3>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         {selectedProject.highlights[language].map((hl, idx) => (
@@ -3223,12 +3204,12 @@ export default function HomePage() {
                     )}
                   </div>
 
-                  {/* SECTION 2: LOCALITY & INFRASTRUCTURE */}
-                  {projectExtra && (
+                  {/* SECTION 2: LOCALITY & CONNECTIVITY */}
+                  {projectExtra && projectExtra.transportation && projectExtra.transportation.length > 0 && (
                     <div className="space-y-4 pt-4 border-t border-neutral-100">
                       <div className="flex items-center gap-2">
                         <span className="text-xs font-black uppercase tracking-wider text-neutral-900 bg-neutral-100 px-3 py-1.5 rounded-lg border border-neutral-200/80">
-                          {language === "ta" ? "அமைவிடம் & வசதிகள்" : "Locality & Infra"}
+                          {language === "ta" ? "அமைவிடம் & போக்குவரத்து" : "Locality & Connectivity"}
                         </span>
                       </div>
 
@@ -3241,235 +3222,32 @@ export default function HomePage() {
                           </h4>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                          {projectExtra.transportation.map((item, idx) => (
-                            <div key={idx} className="p-2.5 rounded-xl bg-white border border-neutral-200/70 flex items-center justify-between">
-                              <span className="text-xs font-bold text-neutral-800">{item.name[language]}</span>
-                              <div className="flex items-center gap-1.5 shrink-0 text-right">
-                                <span className="text-[11px] font-mono font-bold text-neutral-900 bg-neutral-100 px-2 py-0.5 rounded-md">
-                                  {item.distance}
+                          {projectExtra.transportation.map((item, idx) => {
+                            const isLong = item.distance && item.distance.length > 30;
+                            return (
+                              <div
+                                key={idx}
+                                className={`p-2.5 rounded-xl bg-white border border-neutral-200/70 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2 ${
+                                  isLong ? "sm:col-span-2" : ""
+                                }`}
+                              >
+                                <span className="text-xs font-bold text-neutral-800 shrink-0">
+                                  {item.name[language]}
                                 </span>
-                                {item.time && (
-                                  <span className="text-[10px] text-neutral-500 font-medium">({item.time})</span>
-                                )}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Hospitals & Healthcare */}
-                      <div className="p-4 rounded-2xl bg-neutral-50 border border-neutral-100 space-y-2.5">
-                        <div className="flex items-center gap-2">
-                          <HeartPulse className="h-4 w-4 text-rose-600" />
-                          <h4 className="text-xs font-black uppercase tracking-wider text-neutral-900">
-                            {language === "ta" ? "அருகிலுள்ள மருத்துவமனைகள்" : "Nearby Hospitals & Healthcare"}
-                          </h4>
-                        </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                          {projectExtra.hospitals.map((item, idx) => (
-                            <div key={idx} className="p-2.5 rounded-xl bg-white border border-neutral-200/70 flex items-center justify-between">
-                              <span className="text-xs font-bold text-neutral-800">{item.name[language]}</span>
-                              <span className="text-[11px] font-mono font-bold text-neutral-900 bg-neutral-100 px-2 py-0.5 rounded-md">
-                                {item.distance} {item.time && `· ${item.time}`}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Schools & Colleges */}
-                      <div className="p-4 rounded-2xl bg-neutral-50 border border-neutral-100 space-y-2.5">
-                        <div className="flex items-center gap-2">
-                          <GraduationCap className="h-4 w-4 text-blue-600" />
-                          <h4 className="text-xs font-black uppercase tracking-wider text-neutral-900">
-                            {language === "ta" ? "பள்ளிகள் & கல்லூரிகள்" : "Nearby Schools & Colleges"}
-                          </h4>
-                        </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                          {projectExtra.schoolsAndColleges.map((item, idx) => (
-                            <div key={idx} className="p-2.5 rounded-xl bg-white border border-neutral-200/70 flex items-center justify-between">
-                              <span className="text-xs font-bold text-neutral-800">{item.name[language]}</span>
-                              <span className="text-[11px] font-mono font-bold text-neutral-900 bg-neutral-100 px-2 py-0.5 rounded-md">
-                                {item.distance} {item.time && `· ${item.time}`}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Groundwater Facility */}
-                      <div className="p-4 rounded-2xl bg-cyan-50/60 border border-cyan-100 space-y-2.5">
-                        <div className="flex items-center gap-2">
-                          <Droplets className="h-4 w-4 text-cyan-600" />
-                          <h4 className="text-xs font-black uppercase tracking-wider text-cyan-950">
-                            {language === "ta" ? "நிலத்தடி நீர் வசதி & தரம்" : "Groundwater Facility & Potable Table"}
-                          </h4>
-                        </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                          <div className="p-2.5 rounded-xl bg-white border border-cyan-200/60">
-                            <span className="text-[10px] uppercase font-bold text-neutral-400 block">
-                              {language === "ta" ? "நீர் மட்டம் ஆழம்" : "Water Table Depth"}
-                            </span>
-                            <span className="text-xs font-black text-neutral-900 block mt-0.5">
-                              {projectExtra.groundwater.depth[language]}
-                            </span>
-                          </div>
-                          <div className="p-2.5 rounded-xl bg-white border border-cyan-200/60">
-                            <span className="text-[10px] uppercase font-bold text-neutral-400 block">
-                              {language === "ta" ? "குடிநீர் தரம்" : "Tested Quality"}
-                            </span>
-                            <span className="text-xs font-black text-emerald-700 block mt-0.5">
-                              {projectExtra.groundwater.quality[language]}
-                            </span>
-                          </div>
-                          <div className="p-2.5 rounded-xl bg-white border border-cyan-200/60">
-                            <span className="text-[10px] uppercase font-bold text-neutral-400 block">
-                              {language === "ta" ? "நீர் ஆதாரம்" : "Water Source"}
-                            </span>
-                            <span className="text-xs font-black text-neutral-900 block mt-0.5">
-                              {projectExtra.groundwater.source[language]}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Neighbour Houses & Community */}
-                      <div className="p-4 rounded-2xl bg-neutral-50 border border-neutral-100 space-y-2.5">
-                        <div className="flex items-center gap-2">
-                          <Home className="h-4 w-4 text-neutral-800" />
-                          <h4 className="text-xs font-black uppercase tracking-wider text-neutral-900">
-                            {language === "ta" ? "அண்டை வீடுகள் & குடியிருப்பு சூழல்" : "Neighbour Houses & Community Environment"}
-                          </h4>
-                        </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                          <div className="p-2.5 rounded-xl bg-white border border-neutral-200">
-                            <span className="text-[10px] uppercase font-bold text-neutral-400 block">
-                              {language === "ta" ? "குடியிருப்பு அடர்த்தி" : "Community Density"}
-                            </span>
-                            <span className="text-xs font-bold text-neutral-800 block mt-0.5">
-                              {projectExtra.neighborhood.density[language]}
-                            </span>
-                          </div>
-                          <div className="p-2.5 rounded-xl bg-white border border-neutral-200">
-                            <span className="text-[10px] uppercase font-bold text-neutral-400 block">
-                              {language === "ta" ? "சூழ்ந்துள்ள வீடுகள்" : "Surrounding Dwellings"}
-                            </span>
-                            <span className="text-xs font-bold text-neutral-800 block mt-0.5">
-                              {projectExtra.neighborhood.surrounding[language]}
-                            </span>
-                          </div>
-                          <div className="p-2.5 rounded-xl bg-white border border-neutral-200">
-                            <span className="text-[10px] uppercase font-bold text-neutral-400 block">
-                              {language === "ta" ? "சூழல் & பாதுகாப்பு" : "Atmosphere & Security"}
-                            </span>
-                            <span className="text-xs font-bold text-neutral-800 block mt-0.5">
-                              {projectExtra.neighborhood.atmosphere[language]}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* SECTION 3: GROUND VALUE & FUTURE ROI PREDICTION */}
-                  {projectExtra && (
-                    <div className="space-y-4 pt-4 border-t border-neutral-100">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-black uppercase tracking-wider text-neutral-900 bg-neutral-100 px-3 py-1.5 rounded-lg border border-neutral-200/80">
-                          {language === "ta" ? "விலை & எதிர்கால மதிப்பு" : "Ground Value & ROI"}
-                        </span>
-                      </div>
-
-                      {/* Current Ground Value Card */}
-                      <div className="p-5 rounded-2xl bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent border border-amber-300/60 space-y-3">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <DollarSign className="h-5 w-5 text-amber-700" />
-                            <h4 className="text-sm font-black text-neutral-900">
-                              {language === "ta" ? "தற்போதைய மனை / நில மதிப்பு" : "Current Ground Value & Prevailing Rate"}
-                            </h4>
-                          </div>
-                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-[#0A0D12] text-[#EAB308]">
-                            Verified Market Price
-                          </span>
-                        </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                          <div className="p-3.5 rounded-xl bg-white border border-amber-200 shadow-xs">
-                            <span className="text-[10px] uppercase font-bold text-neutral-400 block">
-                              {language === "ta" ? "தற்போதைய சந்தை விலை" : "Current Market Rate"}
-                            </span>
-                            <span className="text-base sm:text-lg font-black text-[#0A0D12] block mt-1">
-                              {projectExtra.groundValue.currentRate[language]}
-                            </span>
-                          </div>
-                          <div className="p-3.5 rounded-xl bg-white border border-neutral-200 shadow-xs">
-                            <span className="text-[10px] uppercase font-bold text-neutral-400 block">
-                              {language === "ta" ? "அரசு வழிகாட்டி மதிப்பு" : "Government Guideline Value"}
-                            </span>
-                            <span className="text-base sm:text-lg font-black text-neutral-700 block mt-1">
-                              {projectExtra.groundValue.guidelineValue[language]}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* SECTION 4: CUSTOMER REVIEWS */}
-                  {projectExtra && (
-                    <div className="space-y-4 pt-4 border-t border-neutral-100">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-black uppercase tracking-wider text-neutral-900 bg-neutral-100 px-3 py-1.5 rounded-lg border border-neutral-200/80">
-                          {language === "ta" ? "வாடிக்கையாளர் கருத்து" : "Customer Reviews"}
-                        </span>
-                      </div>
-
-                      {/* Overall Rating Banner */}
-                      <div className="p-4 sm:p-5 rounded-2xl bg-[#0A0D12] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md">
-                        <div className="flex items-center gap-3">
-                          <div className="h-12 w-12 rounded-2xl bg-[#EAB308] text-[#0A0D12] flex flex-col items-center justify-center font-black shrink-0">
-                            <span className="text-base leading-none">5.0</span>
-                            <div className="flex text-[8px] mt-0.5">★★★★★</div>
-                          </div>
-                          <div>
-                            <h4 className="text-sm font-black text-white">
-                              {language === "ta" ? "உறுதிப்படுத்தப்பட்ட வாடிக்கையாளர் மதிப்புரை" : "Verified Customer Satisfaction"}
-                            </h4>
-                            <p className="text-xs text-neutral-300 mt-0.5">
-                              98.6% Client Approval Rating · 500+ Happy Families · 16+ Years IAF Veteran Trust
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Reviews Grid */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {projectExtra.customerReviews.map((rev, rIdx) => (
-                          <div key={rIdx} className="p-4 rounded-2xl bg-neutral-50 border border-neutral-100 space-y-2 flex flex-col justify-between">
-                            <div className="space-y-1.5">
-                              <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-1 text-[#EAB308]">
-                                  {Array.from({ length: rev.rating }).map((_, s) => (
-                                    <Star key={s} className="h-3.5 w-3.5 fill-[#EAB308]" />
-                                  ))}
+                                <div className="flex items-center gap-1.5 text-left sm:text-right flex-wrap sm:flex-nowrap">
+                                  <span className="text-[11px] font-mono font-bold text-neutral-900 bg-neutral-100 px-2 py-0.5 rounded-md break-words max-w-full">
+                                    {item.distance}
+                                  </span>
+                                  {item.time && (
+                                    <span className="text-[10px] text-neutral-500 font-medium shrink-0">
+                                      ({item.time})
+                                    </span>
+                                  )}
                                 </div>
-                                <span className="text-[10px] text-neutral-400 font-medium">{rev.date}</span>
                               </div>
-                              <p className="text-xs text-neutral-700 leading-relaxed italic">
-                                &ldquo;{rev.comment[language]}&rdquo;
-                              </p>
-                            </div>
-                            <div className="pt-2 border-t border-neutral-200/60 flex items-center justify-between mt-2">
-                              <div>
-                                <span className="text-xs font-black text-neutral-900 block">{rev.name}</span>
-                                <span className="text-[10px] text-neutral-500 block">{rev.role[language]}</span>
-                              </div>
-                              <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-emerald-100 text-emerald-800">
-                                Verified Buyer ✓
-                              </span>
-                            </div>
-                          </div>
-                        ))}
+                            );
+                          })}
+                        </div>
                       </div>
                     </div>
                   )}

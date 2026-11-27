@@ -282,39 +282,22 @@ export const projectsData: Project[] = [
     },
     nearbyFeatures: [
       {
+        name: { en: "Mattuthavani", ta: "மாட்டுத்தாவணி" },
+        distance: { en: "2 km (4 mins)", ta: "2 கி.மீ (4 நிமிடங்கள்)" },
+        category: "transport",
+      },
+      {
+        name: { en: "Anna Nagar", ta: "அண்ணா நகர்" },
+        distance: { en: "2.5 km (5 mins)", ta: "2.5 கி.மீ (5 நிமிடங்கள்)" },
+        category: "landmark",
+      },
+      {
         name: { en: "Madurai Airport Road", ta: "மதுரை விமான நிலைய சாலை" },
-        distance: { en: "Direct Frontage", ta: "நேரடி முகப்பு" },
+        distance: {
+          en: "Direct access with 130 ft frontage (Near Sivagangai Roundana)",
+          ta: "130 அடி முகப்புடன் நேரடி அணுகல் (சிவகங்கை ரவுண்டானா அருகில்)",
+        },
         category: "road",
-      },
-      {
-        name: { en: "Mattuthavani Integrated Bus Terminal", ta: "மாட்டுத்தாவணி பேருந்து நிலையம்" },
-        distance: { en: "2 KM", ta: "2 கி.மீ" },
-        category: "transport",
-      },
-      {
-        name: { en: "Anna Nagar, Madurai", ta: "அண்ணா நகர், மதுரை" },
-        distance: { en: "5 Mins", ta: "5 நிமிடங்கள்" },
-        category: "landmark",
-      },
-      {
-        name: { en: "Sivagangai Roundana", ta: "சிவகங்கை ரவுண்டானா" },
-        distance: { en: "Nearby (800 m)", ta: "அருகில்" },
-        category: "landmark",
-      },
-      {
-        name: { en: "HCL Tech (IT Company Campus)", ta: "எச்சிஎல் டெக் வளாகம்" },
-        distance: { en: "1.5 KM", ta: "1.5 கி.மீ" },
-        category: "landmark",
-      },
-      {
-        name: { en: "Guru Hospital & Meenakshi Mission", ta: "குரு & மீனாட்சி மிஷன் மருத்துவமனை" },
-        distance: { en: "3 Mins", ta: "3 நிமிடங்கள்" },
-        category: "landmark",
-      },
-      {
-        name: { en: "Madurai International Airport", ta: "மதுரை சர்வதேச விமான நிலையம்" },
-        distance: { en: "9 KM", ta: "9 கி.மீ" },
-        category: "transport",
       },
     ],
   },
@@ -389,16 +372,18 @@ export const projectsData: Project[] = [
     },
     highlights: {
       en: [
-        "Flourishing multi-crop fruit plantations with mature trees",
-        "24x7 perennial groundwater aquifer with dedicated drip lines",
-        "Wide motorable internal concrete pathways and streetlights",
-        "100% Computer Patta, verified parent deeds and gated community security",
+        "Fertile red soil with full fencing, gated entrance and CCTV security.",
+        "50+ varieties of trees, including fruit-bearing trees, coconut palms, teak and red sandalwood.",
+        "Fishing ponds and dedicated sheds for cows and goats.",
+        "Outdoor games and sports facilities for children and families.",
+        "Large swimming pool and Airbnb accommodation available.",
       ],
       ta: [
-        "செழித்து வளரும் பலவகை பழ மரங்கள் மற்றும் நிழல் தரும் மரங்கள்",
-        "வற்றாத நிலத்தடி நீர் வசதி மற்றும் சொட்டு நீர்ப்பாசன குழாய்கள்",
-        "அகலமான கான்கிரீட் சாலைகள் மற்றும் மின்விளக்குகள்",
-        "100% கம்ப்யூட்டர் பட்டா மற்றும் முழுமையான பாதுகாப்பு",
+        "முழு வேலி, நுழைவு வாயில் மற்றும் CCTV பாதுகாப்புடன் கூடிய வளமான செம்மண் பூமி.",
+        "பழ மரங்கள், தென்னை, தேக்கு மற்றும் செம்மரம் உட்பட 50+ வகையான மரங்கள்.",
+        "மீன் வளர்ப்பு குளங்கள் மற்றும் மாடு, ஆடுகளுக்கான பிரத்யேக கொட்டகைகள்.",
+        "குழந்தைகள் மற்றும் குடும்பத்தினருக்கான வெளிப்புற விளையாட்டு மைதானம் மற்றும் வசதிகள்.",
+        "பெரிய நீச்சல் குளம் மற்றும் ஏர்பிஎன்பி (Airbnb) தங்கும் விடுதி வசதி.",
       ],
     },
     nearbyFeatures: [

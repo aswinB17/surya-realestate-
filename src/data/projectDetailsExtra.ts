@@ -298,11 +298,9 @@ export const PROJECT_DETAILS_MAP: Record<string, ProjectExtendedDetails> = {
     ],
     videoUrl: "/videos/pandi-kovil-video.mp4",
     transportation: [
-      { name: { en: "Madurai Airport Road (Direct 130 Ft Frontage)", ta: "மதுரை விமான நிலைய சாலை (நேரடி 130 அடி முகப்பு)" }, distance: "0 km (Direct Access)", time: "0 mins" },
-      { name: { en: "Mattuthavani Integrated Bus Terminal", ta: "மாட்டுத்தாவணி பேருந்து நிலையம்" }, distance: "2.0 km", time: "4 mins" },
-      { name: { en: "Anna Nagar Commercial Hub", ta: "அண்ணா நகர் வர்த்தக மையம்" }, distance: "2.5 km", time: "5 mins" },
-      { name: { en: "Sivagangai Roundana Junction", ta: "சிவகங்கை ரவுண்டானா சந்திப்பு" }, distance: "800 meters", time: "2 mins" },
-      { name: { en: "Madurai International Airport", ta: "மதுரை சர்வதேச விமான நிலையம்" }, distance: "9.0 km", time: "12 mins" },
+      { name: { en: "Mattuthavani", ta: "மாட்டுத்தாவணி" }, distance: "2 km", time: "4 mins" },
+      { name: { en: "Anna Nagar", ta: "அண்ணா நகர்" }, distance: "2.5 km", time: "5 mins" },
+      { name: { en: "Madurai Airport Road", ta: "மதுரை விமான நிலைய சாலை" }, distance: "Direct access with 130 ft frontage (Near Sivagangai Roundana)" },
     ],
     hospitals: [
       { name: { en: "Guru Hospital (Multi-Speciality)", ta: "குரு மருத்துவமனை" }, distance: "1.2 km", time: "3 mins" },
@@ -389,9 +387,9 @@ export const PROJECT_DETAILS_MAP: Record<string, ProjectExtendedDetails> = {
     ],
     videoUrl: "/videos/madurai-farms-tour.mp4",
     transportation: [
-      { name: { en: "Madurai City Center (Goripalayam)", ta: "மதுரை நகர மையம் (கோரிப்பாளையம்)" }, distance: "16 km", time: "25 mins" },
-      { name: { en: "Direct Tar Highway Approach Road", ta: "நேரடி தார் நெடுஞ்சாலை அணுகுமுறை" }, distance: "0 km (Direct)", time: "0 mins" },
-      { name: { en: "Madurai Junction Station", ta: "மதுரை ரயில் நிலையம்" }, distance: "19 km", time: "30 mins" },
+      { name: { en: "Madurai", ta: "மதுரை" }, distance: "45 km", time: "45 min" },
+      { name: { en: "Kariyapatti", ta: "காரியாபட்டி" }, distance: "10 km", time: "10 min" },
+      { name: { en: "Tiruppuvanam", ta: "திருப்புவனம்" }, distance: "15 km", time: "20 min" },
     ],
     hospitals: [
       { name: { en: "Sub-District Multi-Speciality Clinic", ta: "வட்டார மருத்துவமனை" }, distance: "3.5 km", time: "6 mins" },

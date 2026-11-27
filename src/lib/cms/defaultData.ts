@@ -446,8 +446,8 @@ export const initialCmsData: CmsData = {
         ta: "விவசாய பசுமை மண்டலம், மதுரை",
       },
       distanceInfo: {
-        en: "Scenic Countryside · 25 min from Madurai city center",
-        ta: "இயற்கை எழில் கொஞ்சும் கிராமப்புறம் · 25 நிமிடம்",
+        en: "Scenic Countryside · 45 min from Madurai city center",
+        ta: "இயற்கை எழில் கொஞ்சும் கிராமப்புறம் · 45 நிமிடம்",
       },
       image: "/images/projects/madurai-farms/aerial-cottage.jpg",
       galleryImages: [
@@ -487,16 +487,18 @@ export const initialCmsData: CmsData = {
       },
       highlights: {
         en: [
-          "Rich fertile red soil with shallow sweet water table",
-          "Pre-planted yielding fruit trees with automated drip systems",
-          "Gated community with 24/7 security & ongoing farm maintenance",
-          "Generates continuous organic agricultural yield & tax-free income",
+          "Fertile red soil with full fencing, gated entrance and CCTV security.",
+          "50+ varieties of trees, including fruit-bearing trees, coconut palms, teak and red sandalwood.",
+          "Fishing ponds and dedicated sheds for cows and goats.",
+          "Outdoor games and sports facilities for children and families.",
+          "Large swimming pool and Airbnb accommodation available.",
         ],
         ta: [
-          "வற்றாத நிலத்தடி நீருடன் கூடிய வளமான செம்மண் பூமி",
-          "சொட்டு நீர் பாசனத்துடன் கூடிய பலன் தரும் பழ மரங்கள்",
-          "24/7 காவலாளி மற்றும் தோட்டப் பராமரிப்பு வசதி",
-          "வரிவிலக்குடன் கூடிய தொடர் விவசாய வருமானம்",
+          "முழு வேலி, நுழைவு வாயில் மற்றும் CCTV பாதுகாப்புடன் கூடிய வளமான செம்மண் பூமி.",
+          "பழ மரங்கள், தென்னை, தேக்கு மற்றும் செம்மரம் உட்பட 50+ வகையான மரங்கள்.",
+          "மீன் வளர்ப்பு குளங்கள் மற்றும் மாடு, ஆடுகளுக்கான பிரத்யேக கொட்டகைகள்.",
+          "குழந்தைகள் மற்றும் குடும்பத்தினருக்கான வெளிப்புற விளையாட்டு மைதானம் மற்றும் வசதிகள்.",
+          "பெரிய நீச்சல் குளம் மற்றும் ஏர்பிஎன்பி (Airbnb) தங்கும் விடுதி வசதி.",
         ],
       },
       mapsUrl: "https://goo.gl/maps/reSXDDNmSNzkve699?g_st=aw",
