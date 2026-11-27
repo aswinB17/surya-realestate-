@@ -1721,46 +1721,42 @@ export default function HomePage() {
                     </div>
 
                     {/* 3 Luxury Category Selection Cards */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch">
                       {categoriesList.map((cat, idx) => {
                         const count = ALL_PROJECTS.filter((p) => p.category === cat.id).length;
                         const IconComp = getPageCategoryIcon(cat.icon);
                         const catNum = String(idx + 1).padStart(2, "0");
-
-                        // Metadata mapping for luxury presentation
-                        const catMeta = cat.id === "residential"
-                          ? {
-                            tag: "DTCP & RERA Approved",
-                            tagTa: "DTCP & RERA அங்கீகரிக்கப்பட்டது",
-                            perks: ["3 BHK Luxury Duplex Villas", "Premium Gated Communities", "Ready-to-Build Plots"],
-                            perksTa: ["3 BHK டூப்ளக்ஸ் வில்லாக்கள்", "கேட்டட் கம்யூனிட்டி", "உடனடி கட்டுமான மனைகள்"],
-                          }
-                          : cat.id === "commercial"
-                            ? {
-                              tag: "High-Exposure Corridors",
-                              tagTa: "தேசிய நெடுஞ்சாலை பெருநிலங்கள்",
-                              perks: ["NH-44 & Ring Road Access", "High Commercial Footfall", "Maximum Appreciation"],
-                              perksTa: ["NH-44 & ரிங் ரோடு இணைப்பு", "வணிக பெருமதிப்பு", "அதிக வளர்ச்சி சாத்தியம்"],
-                            }
-                            : {
-                              tag: "Managed Agro Acreage",
-                              tagTa: "இயற்கை பண்ணை நிலங்கள்",
-                              perks: ["Abundant Ground Water", "Teak & Fruit Plantations", "Gated Boundary & Security"],
-                              perksTa: ["வற்றாத நிலத்தடி நீர்", "பழ மர தோட்டங்கள்", "வேலி & தார் சாலை வசதி"],
-                            };
+                        const catImage =
+                          cat.id === "residential"
+                            ? "/images/categories/residential.jpg"
+                            : cat.id === "commercial"
+                            ? "/images/categories/commercial.jpg"
+                            : "/images/categories/farmland.jpg";
 
                         return (
                           <div
                             key={cat.id}
                             onClick={() => setActiveCategory(cat.id)}
-                            className="bg-white rounded-[22px] border border-neutral-200/90 hover:border-[#D9A52E] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden group cursor-pointer"
+                            className="bg-white rounded-[22px] border border-neutral-200/90 hover:border-[#D9A52E] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden group cursor-pointer h-full"
                           >
-                            <div>
-                              {/* Top Solid Dark Green Header (No Photo/Gradient) */}
-                              <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-[#06351F] border-b border-[#D9A52E]/20">
+                            <div className="flex flex-col flex-1">
+                              {/* Top Solid Dark Green Header with 50% Opacity Background Image */}
+                              <div className="relative h-48 sm:h-56 md:h-[260px] lg:h-[270px] w-full overflow-hidden bg-[#06351F] border-b border-[#D9A52E]/20 p-4 sm:p-5 flex flex-col justify-between">
+                                {/* Category Photographic Image at ~50% Opacity */}
+                                {catImage && (
+                                  <Image
+                                    src={catImage}
+                                    alt={cat.name[language] || cat.name.en}
+                                    fill
+                                    sizes="(max-width: 768px) 100vw, 33vw"
+                                    className="object-cover opacity-50 pointer-events-none transition-transform duration-700 group-hover:scale-105"
+                                  />
+                                )}
+                                <div className="absolute inset-0 bg-[#06351F]/30 pointer-events-none" />
+
                                 {/* Top Badges */}
-                                <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between z-10">
-                                  <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-black/25 text-[#D9A52E] border border-[#D9A52E]/40">
+                                <div className="flex items-center justify-between z-10 relative">
+                                  <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-black/40 backdrop-blur-xs text-[#D9A52E] border border-[#D9A52E]/40">
                                     Category {catNum}
                                   </span>
                                   <span className="px-3 py-1 rounded-full text-[11px] font-black bg-[#D9A52E] text-[#06351F] shadow-md">
@@ -1768,40 +1764,19 @@ export default function HomePage() {
                                   </span>
                                 </div>
 
-                                {/* Floating Icon & Tag on Header Bottom */}
-                                <div className="absolute bottom-3.5 left-3.5 right-3.5 flex items-center gap-2.5 z-10">
-                                  <div className="h-11 w-11 rounded-xl bg-white text-[#06351F] border border-[#D9A52E]/40 flex items-center justify-center shrink-0 shadow-lg group-hover:bg-[#D9A52E] group-hover:text-[#06351F] transition-colors">
+                                {/* Category Icon */}
+                                <div className="z-10 relative">
+                                  <div className="h-11 w-11 rounded-xl bg-white text-[#06351F] border border-[#D9A52E]/40 flex items-center justify-center shadow-lg group-hover:bg-[#D9A52E] group-hover:text-[#06351F] transition-colors">
                                     <IconComp className="h-5 w-5 stroke-[2.2]" />
-                                  </div>
-                                  <div className="min-w-0">
-                                    <span className="text-[10px] font-bold text-[#D9A52E] uppercase tracking-wider block truncate">
-                                      {language === "ta" ? catMeta.tagTa : catMeta.tag}
-                                    </span>
-                                    <span className="text-white text-xs font-semibold block truncate">
-                                      {cat.description?.[language] || cat.description?.en}
-                                    </span>
                                   </div>
                                 </div>
                               </div>
 
-                              {/* Card Content */}
-                              <div className="p-5">
-                                <h4 className="text-lg font-black text-[#06351F] group-hover:text-[#BD8D1C] transition-colors mb-2">
-                                  {idx + 1}. {cat.name[language] || cat.name.en}
+                              {/* Card Content - Category Name */}
+                              <div className="p-5 pb-3">
+                                <h4 className="text-lg sm:text-xl font-black text-[#06351F] group-hover:text-[#BD8D1C] transition-colors">
+                                  {cat.name[language] || cat.name.en}
                                 </h4>
-                                <p className="text-xs text-neutral-600 leading-relaxed mb-4 line-clamp-2">
-                                  {cat.description?.[language] || cat.description?.en}
-                                </p>
-
-                                {/* 3 Feature Bullets */}
-                                <div className="space-y-1.5 pt-3 border-t border-neutral-100 mb-2">
-                                  {(language === "ta" ? catMeta.perksTa : catMeta.perks).map((perk, pIdx) => (
-                                    <div key={pIdx} className="flex items-center gap-2 text-[11px] text-neutral-700 font-medium">
-                                      <CheckCircle2 className="h-3.5 w-3.5 text-[#D9A52E] shrink-0" />
-                                      <span className="truncate">{perk}</span>
-                                    </div>
-                                  ))}
-                                </div>
                               </div>
                             </div>
 
